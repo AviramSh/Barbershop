@@ -27,7 +27,7 @@
         android:singleLine="true"
         android:visibility="visible"
         tools:layout_editor_absoluteX="67dp"
-        tools:layout_editor_absoluteY="205dp" />
+        tools:layout_editor_absoluteY="189dp" />
 
     <EditText
         android:id="@+id/editText4"
@@ -36,21 +36,18 @@
         android:gravity="center"
         android:ems="10"
         android:inputType="textPassword"
-        tools:layout_editor_absoluteY="289dp"
+        tools:layout_editor_absoluteY="280dp"
         tools:layout_editor_absoluteX="67dp" />
 
-    <EditText
+    <TextView
         android:id="@+id/editText5"
-        style="@style/Widget.AppCompat.AutoCompleteTextView"
-        android:layout_width="54dp"
-        android:layout_height="34dp"
-        android:ems="10"
-        android:inputType="textPersonName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/register"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="12sp"
-        tools:layout_editor_absoluteX="165dp"
-        tools:layout_editor_absoluteY="349dp" />
+        tools:layout_editor_absoluteX="280dp"
+        tools:layout_editor_absoluteY="350dp" />
 
     <Button
         android:id="@+id/loginBt"
@@ -70,23 +67,31 @@
         tools:layout_editor_absoluteX="39dp"
         tools:layout_editor_absoluteY="420dp" />
 
-    <EditText
+    <TextView
         android:id="@+id/usernameTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
         android:text="@string/user_nameTV"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="162dp" />
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="138dp"
+        tools:layout_editor_absoluteY="160dp" />
 
-    <EditText
+    <TextView
         android:id="@+id/passwordTV"
-        android:layout_width="89dp"
-        android:layout_height="38dp"
-        android:ems="10"
-        android:inputType="textPersonName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
         android:text="@string/password"
         tools:layout_editor_absoluteY="251dp"
-        tools:layout_editor_absoluteX="148dp" />
+        tools:layout_editor_absoluteX="139dp" />
+
+    <TextView
+        android:id="@+id/fPasswordTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fPassword"
+        android:textColor="@android:color/holo_blue_dark"
+        tools:layout_editor_absoluteX="56dp"
+        tools:layout_editor_absoluteY="350dp" />
 
 </android.support.constraint.ConstraintLayout>

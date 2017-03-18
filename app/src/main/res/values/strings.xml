@@ -5,6 +5,7 @@
     <string name="exit">Exit</string>
     <string name="register">Register</string>
     <string name="password">Password</string>
+    <string name="fPassword">Forgot Password?</string>
 
 
 </resources>
