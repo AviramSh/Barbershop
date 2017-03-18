@@ -18,10 +18,10 @@
     <EditText
         android:id="@+id/usernameET"
         android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:gravity="center"
         android:ems="10"
-        android:fontFamily="sans-serif"
+        android:background="@color/textBackground"
         android:inputType="textPersonName"
         android:padding="12dp"
         android:singleLine="true"
@@ -32,8 +32,9 @@
     <EditText
         android:id="@+id/editText4"
         android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:gravity="center"
+        android:background="@color/textBackground"
         android:ems="10"
         android:inputType="textPassword"
         tools:layout_editor_absoluteY="280dp"
@@ -74,7 +75,7 @@
         android:text="@string/user_nameTV"
         android:textSize="24sp"
         tools:layout_editor_absoluteX="138dp"
-        tools:layout_editor_absoluteY="160dp" />
+        tools:layout_editor_absoluteY="153dp" />
 
     <TextView
         android:id="@+id/passwordTV"
@@ -82,7 +83,7 @@
         android:layout_height="wrap_content"
         android:textSize="24sp"
         android:text="@string/password"
-        tools:layout_editor_absoluteY="251dp"
+        tools:layout_editor_absoluteY="241dp"
         tools:layout_editor_absoluteX="139dp" />
 
     <TextView
