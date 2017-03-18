@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Barbershop</string>
+    <string name="user_nameTV">Username</string>
+    <string name="login">Login</string>
+    <string name="exit">Exit</string>
+    <string name="register">Register</string>
+    <string name="password">Password</string>
+
+
 </resources>
