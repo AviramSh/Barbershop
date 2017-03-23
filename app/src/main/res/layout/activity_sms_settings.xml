@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:layout_gravity="center"
+    tools:context="com.esh_tech.aviram.barbershop.InitialSettings.smsSettings">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="119dp"
+        android:layout_height="110dp"
+        app:srcCompat="@drawable/message50"
+        tools:layout_editor_absoluteX="133dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/messages"
+        android:gravity="center"
+        android:textSize="35sp"
+        tools:layout_editor_absoluteY="126dp"
+        tools:layout_editor_absoluteX="140dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="217dp"
+        android:layout_height="wrap_content"
+        android:text="@string/systemSms"
+        android:gravity="start"
+        android:background="@color/background"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="249dp" />
+
+    <EditText
+        android:id="@+id/textView4"
+        android:layout_width="217dp"
+        android:layout_height="69dp"
+        android:hint="@string/customSms"
+        android:gravity="start"
+        android:background="#ffff"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="308dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/next"
+        android:background="@color/background"
+        tools:layout_editor_absoluteX="152dp"
+        tools:layout_editor_absoluteY="415dp" />
+
+    <RadioGroup
+        android:layout_width="113dp"
+        android:layout_height="167dp"
+        tools:layout_editor_absoluteX="268dp"
+        tools:layout_editor_absoluteY="219dp">
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="@string/defaultSms"
+            tools:layout_editor_absoluteX="244dp"
+            tools:layout_editor_absoluteY="261dp" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/customSms"
+            tools:layout_editor_absoluteX="-3dp"
+            tools:layout_editor_absoluteY="61dp" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/smstime"
+        android:textSize="24dp"
+        tools:layout_editor_absoluteX="179dp"
+        tools:layout_editor_absoluteY="190dp" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="62dp"
+        android:entries="@array/spinner_smstime"
+        android:layout_height="29dp"
+        android:background="#ffff"
+        tools:layout_editor_absoluteY="190dp"
+        tools:layout_editor_absoluteX="90dp" />
+
+</android.support.constraint.ConstraintLayout>

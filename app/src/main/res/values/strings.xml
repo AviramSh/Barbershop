@@ -1,11 +1,65 @@
 <resources>
     <string name="app_name">Barbershop</string>
-    <string name="user_nameTV">Username</string>
+    <string name="user_nameTV">שם משתמש</string>
     <string name="login">Login</string>
     <string name="exit">Exit</string>
     <string name="register">Register</string>
     <string name="password">Password</string>
     <string name="fPassword">Forgot Password?</string>
+    <string name="customers">Customers</string>
+    <string name="appointment">Appointment</string>
+    <string name="calendar">Calendar</string>
+    <string name="settings">Settings</string>
+    <string name="balance">Balance</string>
+    <string name="nameTV">שם</string>
+    <string name="familyname">משפחה</string>
+    <string name="businessname">שם העסק</string>
+    <string name="phone">טלפון</string>
+    <string name="phonebusines">טלפון העסק</string>
+    <string name="businesAddress">כתובת העסק</string>
 
+    <string name="sunday">יום ראשון</string>
+    <string name="monday">יום שני</string>
+    <string name="tuesday">יום שלישי</string>
+    <string name="wednesday">יום רביעי</string>
+    <string name="thursday">יום חמישי</string>
+    <string name="friday">יום שישי</string>
+    <string name="saturday">יום שבת</string>
+    <string name="addCustomers">הוסף לקוחות</string>
+    <string name="manHaircut">תספורת גבר</string>
+    <string name="womanHaircut">תספורת אישה</string>
+    <string name="time">זמן</string>
+    <string name="cost">מחיר</string>
+    <string name="messages">הודעות</string>
+    <string name="defaultSms">ברירת מחדל</string>
+    <string name="customSms">משתמש</string>
+    <string name="systemSms">שלום \"שם הלקוח\" להזכירך תורך ב\"שעה ותאריך\" תודה</string>
+    <string name="smstime">זמן לשליחת הודעה</string>
+
+
+    <string-array name="spinner_hours">
+        <item>07:00</item>
+        <item>08:00</item>
+        <item>09:00</item>
+        <item>10:00</item>
+        <item>11:00</item>
+        <item>12:00</item>
+        <item>13:00</item>
+        <item>14:00</item>
+        <item>15:00</item>
+        <item>16:00</item>
+    </string-array>
+
+    <string-array name="spinner_smstime">
+        <item>00:30</item>
+        <item>01:00</item>
+        <item>01:30</item>
+        <item>02:00</item>
+        <item>02:30</item>
+        <item>03:00</item>
+        <item>03:30</item>
+        <item>04:30</item>
+        <item>05:00</item>
+    </string-array>
 
 </resources>

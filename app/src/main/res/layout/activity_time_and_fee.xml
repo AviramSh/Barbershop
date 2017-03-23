@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/background"
+    tools:context="com.esh_tech.aviram.barbershop.InitialSettings.TimeAndFee">
+
+    <ImageButton
+        android:id="@+id/imageButton15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/userfemale48"
+        tools:layout_editor_absoluteY="199dp"
+        tools:layout_editor_absoluteX="156dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/usermale48"
+        tools:layout_editor_absoluteX="156dp"
+        tools:layout_editor_absoluteY="69dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/manHaircut"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="130dp"
+        tools:layout_editor_absoluteY="153dp" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/womanHaircut"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="121dp"
+        tools:layout_editor_absoluteY="277dp" />
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="54dp"
+        android:layout_height="42dp"
+        android:text="@string/time"
+        android:gravity="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="30sp"
+        tools:layout_editor_absoluteX="301dp"
+        tools:layout_editor_absoluteY="61dp" />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cost"
+        android:textColor="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:textSize="30sp"
+        tools:layout_editor_absoluteX="26dp"
+        tools:layout_editor_absoluteY="61dp" />
+
+    <EditText
+        android:id="@+id/editText7"
+        android:layout_width="48dp"
+        android:layout_height="40dp"
+        android:inputType="textPersonName"
+        android:text="35"
+        android:background="#ffff"
+        android:gravity="center"
+        tools:layout_editor_absoluteX="307dp"
+        tools:layout_editor_absoluteY="142dp" />
+
+    <EditText
+        android:id="@+id/editText8"
+        android:layout_width="48dp"
+        android:layout_height="40dp"
+        android:inputType="textPersonName"
+        android:text="35"
+        android:background="#ffff"
+        android:gravity="center"
+        tools:layout_editor_absoluteY="137dp"
+        tools:layout_editor_absoluteX="34dp" />
+
+    <EditText
+        android:id="@+id/editText9"
+        android:layout_width="39dp"
+        android:layout_height="38dp"
+        android:inputType="textPersonName"
+        android:text="35"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:background="#ffff"
+        tools:layout_editor_absoluteY="323dp"
+        tools:layout_editor_absoluteX="34dp" />
+
+    <EditText
+        android:id="@+id/editText10"
+        android:layout_width="36dp"
+        android:layout_height="39dp"
+        android:inputType="textPersonName"
+        android:text="35"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:background="#ffff"
+        tools:layout_editor_absoluteY="326dp"
+        tools:layout_editor_absoluteX="307dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/next"
+        android:background="@color/background"
+        tools:layout_editor_absoluteY="395dp"
+        tools:layout_editor_absoluteX="152dp" />
+
+</android.support.constraint.ConstraintLayout>
