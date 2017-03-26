@@ -1,16 +1,16 @@
 <resources>
     <string name="app_name">Barbershop</string>
     <string name="user_nameTV">שם משתמש</string>
-    <string name="login">Login</string>
-    <string name="exit">Exit</string>
+    <string name="login">התחבר</string>
+    <string name="exit">יציאה</string>
     <string name="register">Register</string>
-    <string name="password">Password</string>
-    <string name="fPassword">Forgot Password?</string>
-    <string name="customers">Customers</string>
-    <string name="appointment">Appointment</string>
-    <string name="calendar">Calendar</string>
-    <string name="settings">Settings</string>
-    <string name="balance">Balance</string>
+    <string name="password">סיסמה</string>
+    <string name="fPassword">שכחתי סיסמה</string>
+    <string name="customers">לקוחות</string>
+    <string name="appointment">תורים</string>
+    <string name="calendar">לוח שנה</string>
+    <string name="settings">הגדרות</string>
+    <string name="balance">מאזן</string>
     <string name="nameTV">שם</string>
     <string name="familyname">משפחה</string>
     <string name="businessname">שם העסק</string>
@@ -35,6 +35,54 @@
     <string name="customSms">משתמש</string>
     <string name="systemSms">שלום \"שם הלקוח\" להזכירך תורך ב\"שעה ותאריך\" תודה</string>
     <string name="smstime">זמן לשליחת הודעה</string>
+    <string name="customerretention">שימור לקוחת</string>
+    <string name="nextturn">התור הבא</string>
+    <string name="templist">\n
+        מאיר אליהו
+         \t \t \t 12:30
+    \n=====================\n
+    רן פלק
+        \t \t \t \t \t \t \t
+          12:45
+    \n=====================\n
+    אלון משה
+        \t \t \t \t\t
+          13:00
+    \n=====================\n</string>
+    <string name="newturn">תור חדש</string>
+    <string name="stock">מלאי</string>
+    <string name="search">חיפוש</string>
+    <string name="phone2">טלפון 2</string>
+    <string name="haircutcounter">מונה תספורות</string>
+    <string name="credit">אשראי</string>
+    <string name="saveBt">שמור</string>
+    <string name="cancel">ביטול</string>
+    <string name="reminder">תזכורת</string>
+    <string name="from"> החל מ- </string>
+    <string name="start">החל</string>
+    <string name="until">ועד</string>
+    <string name="haircuts">תספורות</string>
+    <string name="pay">תשלום</string>
+    <string name="back">חזרה</string>
+    <string name="stocklist">רשימת מלאי</string>
+    <string name="product">מוצר</string>
+    <string name="amount">כמות</string>
+    <string name="appointmentList">רשימת תורים</string>
+    <string name="today">היום</string>
+    <string name="hour">שעה</string>
+    <string name="free">פנוי</string>
+    <string name="taken">תפוס</string>
+    <string name="freeturn">תור פנוי</string>
+    <string name="sortBy">מיין לפי</string>
+    <string name="all">הכל</string>
+    <string name="chooseDate">בחר תאריך</string>
+    <string name="myProfile">הפרופיל שלי</string>
+    <string name="workdays">ימי עבודה</string>
+    <string name="myBarbershop">המספרה שלי</string>
+    <string name="changePassword">שינוי סיסמה</string>
+    <string name="about">אודות</string>
+    <string name="logout">התנתק</string>
+    <string name="savePassword">שמור סיסמה</string>
 
 
     <string-array name="spinner_hours">

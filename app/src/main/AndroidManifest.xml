@@ -24,7 +24,11 @@
         <activity android:name=".InitialSettings.WorkingHoursActivity" />
         <activity android:name=".InitialSettings.FillCustomers" />
         <activity android:name=".InitialSettings.TimeAndFee" />
-        <activity android:name=".InitialSettings.smsSettings"></activity>
+        <activity android:name=".InitialSettings.smsSettings" />
+        <activity android:name=".NewCustomerActivity" />
+        <activity android:name=".BalanceActivity" />
+        <activity android:name=".StockActivity" />
+        <activity android:name=".AppointmentListActivity"></activity>
     </application>
 
 </manifest>

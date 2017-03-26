@@ -8,9 +8,188 @@
     tools:context="com.esh_tech.aviram.barbershop.SettingsActivity">
 
 
-    <ListView
+    <LinearLayout
         android:layout_width="368dp"
         android:layout_height="495dp"
+        android:orientation="vertical"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp" />
+        tools:layout_editor_absoluteY="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView35"
+                android:layout_width="wrap_content"
+                android:layout_height="61dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/myProfile"
+                android:textSize="24sp" />
+
+            <ImageButton
+                android:id="@+id/imageButton40"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                app:srcCompat="@drawable/usermale48" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView35"
+                android:layout_width="wrap_content"
+                android:layout_height="61dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/haircuts"
+                android:textSize="24sp" />
+
+            <ImageButton
+                android:id="@+id/imageButton40"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                app:srcCompat="@drawable/barbershop" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView35"
+                android:layout_width="wrap_content"
+                android:layout_height="61dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/myBarbershop"
+                android:textSize="24sp" />
+
+            <ImageButton
+                android:id="@+id/imageButton40"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                app:srcCompat="@drawable/business48" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView35"
+                android:layout_width="wrap_content"
+                android:layout_height="61dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/workdays"
+                android:textSize="24sp" />
+
+            <ImageButton
+                android:id="@+id/imageButton40"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                app:srcCompat="@drawable/calendar" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView35"
+                android:layout_width="wrap_content"
+                android:layout_height="61dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/changePassword"
+                android:textSize="24sp" />
+
+            <ImageButton
+                android:id="@+id/imageButton40"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                app:srcCompat="@drawable/password50" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView35"
+                android:layout_width="wrap_content"
+                android:layout_height="61dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/messages"
+                android:textSize="24sp" />
+
+            <ImageButton
+                android:id="@+id/imageButton40"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                app:srcCompat="@drawable/message50" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView35"
+                android:layout_width="wrap_content"
+                android:layout_height="61dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/about"
+                android:textSize="24sp" />
+
+            <ImageButton
+                android:id="@+id/imageButton40"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                app:srcCompat="@drawable/about50" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView35"
+                android:layout_width="wrap_content"
+                android:layout_height="61dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/logout"
+                android:textSize="24sp" />
+
+            <ImageButton
+                android:id="@+id/imageButton40"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                app:srcCompat="@drawable/exit40" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

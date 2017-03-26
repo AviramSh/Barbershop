@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/userfemale48"
-        tools:layout_editor_absoluteY="199dp"
+        tools:layout_editor_absoluteY="221dp"
         tools:layout_editor_absoluteX="156dp" />
 
     <ImageButton
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/usermale48"
         tools:layout_editor_absoluteX="156dp"
-        tools:layout_editor_absoluteY="69dp" />
+        tools:layout_editor_absoluteY="45dp" />
 
     <TextView
         android:id="@+id/textView4"
@@ -32,7 +32,7 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
         tools:layout_editor_absoluteX="130dp"
-        tools:layout_editor_absoluteY="153dp" />
+        tools:layout_editor_absoluteY="141dp" />
 
     <TextView
         android:id="@+id/textView18"
@@ -42,7 +42,7 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
         tools:layout_editor_absoluteX="121dp"
-        tools:layout_editor_absoluteY="277dp" />
+        tools:layout_editor_absoluteY="299dp" />
 
     <TextView
         android:id="@+id/textView25"
@@ -74,8 +74,8 @@
         android:text="35"
         android:background="#ffff"
         android:gravity="center"
-        tools:layout_editor_absoluteX="307dp"
-        tools:layout_editor_absoluteY="142dp" />
+        tools:layout_editor_absoluteX="301dp"
+        tools:layout_editor_absoluteY="148dp" />
 
     <EditText
         android:id="@+id/editText8"
@@ -85,32 +85,32 @@
         android:text="35"
         android:background="#ffff"
         android:gravity="center"
-        tools:layout_editor_absoluteY="137dp"
-        tools:layout_editor_absoluteX="34dp" />
+        tools:layout_editor_absoluteY="141dp"
+        tools:layout_editor_absoluteX="42dp" />
 
     <EditText
         android:id="@+id/editText9"
-        android:layout_width="39dp"
-        android:layout_height="38dp"
+        android:layout_width="48dp"
+        android:layout_height="45dp"
         android:inputType="textPersonName"
         android:text="35"
         android:gravity="center"
         android:textColor="@color/colorPrimary"
         android:background="#ffff"
-        tools:layout_editor_absoluteY="323dp"
-        tools:layout_editor_absoluteX="34dp" />
+        tools:layout_editor_absoluteY="299dp"
+        tools:layout_editor_absoluteX="42dp" />
 
     <EditText
         android:id="@+id/editText10"
-        android:layout_width="36dp"
-        android:layout_height="39dp"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
         android:inputType="textPersonName"
         android:text="35"
         android:gravity="center"
         android:textColor="@color/colorPrimary"
         android:background="#ffff"
-        tools:layout_editor_absoluteY="326dp"
-        tools:layout_editor_absoluteX="307dp" />
+        tools:layout_editor_absoluteY="289dp"
+        tools:layout_editor_absoluteX="301dp" />
 
     <ImageButton
         android:id="@+id/imageButton17"

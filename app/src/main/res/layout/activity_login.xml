@@ -40,15 +40,14 @@
         tools:layout_editor_absoluteY="280dp"
         tools:layout_editor_absoluteX="67dp" />
 
-    <TextView
+    <CheckBox
         android:id="@+id/editText5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/register"
-        android:textColor="@android:color/holo_blue_dark"
+        android:text="@string/savePassword"
         android:textSize="12sp"
-        tools:layout_editor_absoluteX="280dp"
-        tools:layout_editor_absoluteY="350dp" />
+        tools:layout_editor_absoluteX="67dp"
+        tools:layout_editor_absoluteY="328dp" />
 
     <Button
         android:id="@+id/loginBt"
@@ -56,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login"
-        tools:layout_editor_absoluteX="257dp"
+        tools:layout_editor_absoluteX="43dp"
         tools:layout_editor_absoluteY="420dp" />
 
     <Button
@@ -65,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/exit"
-        tools:layout_editor_absoluteX="39dp"
+        tools:layout_editor_absoluteX="280dp"
         tools:layout_editor_absoluteY="420dp" />
 
     <TextView
@@ -74,7 +73,7 @@
         android:layout_height="wrap_content"
         android:text="@string/user_nameTV"
         android:textSize="24sp"
-        tools:layout_editor_absoluteX="138dp"
+        tools:layout_editor_absoluteX="130dp"
         tools:layout_editor_absoluteY="153dp" />
 
     <TextView
@@ -84,7 +83,7 @@
         android:textSize="24sp"
         android:text="@string/password"
         tools:layout_editor_absoluteY="241dp"
-        tools:layout_editor_absoluteX="139dp" />
+        tools:layout_editor_absoluteX="158dp" />
 
     <TextView
         android:id="@+id/fPasswordTv"
@@ -92,7 +91,7 @@
         android:layout_height="wrap_content"
         android:text="@string/fPassword"
         android:textColor="@android:color/holo_blue_dark"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="350dp" />
+        tools:layout_editor_absoluteX="227dp"
+        tools:layout_editor_absoluteY="335dp" />
 
 </android.support.constraint.ConstraintLayout>

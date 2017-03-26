@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context="com.esh_tech.aviram.barbershop.StockActivity">
+
+
+    <TextView
+        android:id="@+id/textView32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stocklist"
+        android:textSize="30sp"
+        tools:layout_editor_absoluteX="208dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/screatenew"
+        android:background="@color/background"
+        tools:layout_editor_absoluteY="16dp"
+        tools:layout_editor_absoluteX="33dp" />
+
+    <LinearLayout
+        android:layout_width="268dp"
+        android:layout_height="359dp"
+        android:orientation="vertical"
+        android:background="#ffff"
+        tools:layout_editor_absoluteX="116dp"
+        tools:layout_editor_absoluteY="74dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editText14"
+                android:layout_width="94dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                android:text="@string/amount"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/editText16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/product"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editText18"
+                android:layout_width="96dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                android:text="15" />
+
+            <EditText
+                android:id="@+id/editText19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="סכין טער" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editText18"
+                android:layout_width="96dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                android:text="21" />
+
+            <EditText
+                android:id="@+id/editText19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="שמפו" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editText18"
+                android:layout_width="96dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                android:text="23" />
+
+            <EditText
+                android:id="@+id/editText19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="מגבות" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editText18"
+                android:layout_width="96dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                android:text="31" />
+
+            <EditText
+                android:id="@+id/editText19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="מספריים" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton28"
+        android:layout_width="41dp"
+        android:layout_height="38dp"
+        app:srcCompat="@drawable/plusmath48"
+        android:background="#2ef206"
+        tools:layout_editor_absoluteY="123dp"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton29"
+        android:layout_width="49dp"
+        android:layout_height="37dp"
+        android:background="#ddfc0000"
+        app:srcCompat="@drawable/minus48"
+        tools:layout_editor_absoluteX="69dp"
+        tools:layout_editor_absoluteY="123dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton30"
+        android:layout_width="41dp"
+        android:layout_height="38dp"
+        android:background="#2ef206"
+        app:srcCompat="@drawable/plusmath48"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="168dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton31"
+        android:layout_width="45dp"
+        android:layout_height="37dp"
+        android:background="#ddfc0000"
+        app:srcCompat="@drawable/minus48"
+        tools:layout_editor_absoluteX="71dp"
+        tools:layout_editor_absoluteY="168dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton34"
+        android:layout_width="41dp"
+        android:layout_height="38dp"
+        android:background="#2ef206"
+        app:srcCompat="@drawable/plusmath48"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="206dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton33"
+        android:layout_width="45dp"
+        android:layout_height="37dp"
+        android:background="#ddfc0000"
+        app:srcCompat="@drawable/minus48"
+        tools:layout_editor_absoluteX="71dp"
+        tools:layout_editor_absoluteY="207dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton35"
+        android:layout_width="45dp"
+        android:layout_height="37dp"
+        android:background="#ddfc0000"
+        app:srcCompat="@drawable/minus48"
+        tools:layout_editor_absoluteX="73dp"
+        tools:layout_editor_absoluteY="254dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton32"
+        android:layout_width="41dp"
+        android:layout_height="38dp"
+        android:background="#2ef206"
+        app:srcCompat="@drawable/plusmath48"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="254dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton36"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/checkmark48"
+        android:background="@color/background"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="447dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton37"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/scancel"
+        android:background="@color/background"
+        tools:layout_editor_absoluteY="447dp"
+        tools:layout_editor_absoluteX="168dp" />
+</android.support.constraint.ConstraintLayout>
