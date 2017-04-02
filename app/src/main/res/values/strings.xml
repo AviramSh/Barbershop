@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Barbershop</string>
+    <string name="app_name">Scissors</string>
     <string name="user_nameTV">שם משתמש</string>
     <string name="login">התחבר</string>
     <string name="exit">יציאה</string>

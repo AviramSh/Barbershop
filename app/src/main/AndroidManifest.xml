@@ -28,7 +28,9 @@
         <activity android:name=".NewCustomerActivity" />
         <activity android:name=".BalanceActivity" />
         <activity android:name=".StockActivity" />
-        <activity android:name=".AppointmentListActivity"></activity>
+        <activity android:name=".AppointmentListActivity" />
+        <activity android:name=".InitialSettings.UserPasswordActivity" />
+        <activity android:name=".SplashScreenActivity"></activity>
     </application>
 
 </manifest>

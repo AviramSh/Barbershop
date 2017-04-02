@@ -16,13 +16,6 @@
         tools:layout_editor_absoluteX="288dp"
         tools:layout_editor_absoluteY="415dp" />
 
-    <ListView
-        android:layout_width="370dp"
-        android:layout_height="368dp"
-        android:background="@color/colorPrimary"
-        tools:layout_editor_absoluteY="31dp"
-        tools:layout_editor_absoluteX="7dp" />
-
     <ImageButton
         android:id="@+id/imageButton2"
         android:layout_width="wrap_content"
@@ -31,4 +24,49 @@
         app:srcCompat="@drawable/search"
         tools:layout_editor_absoluteX="152dp"
         tools:layout_editor_absoluteY="415dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton41"
+        android:layout_width="178dp"
+        android:layout_height="191dp"
+        app:srcCompat="@drawable/user96"
+        tools:layout_editor_absoluteX="103dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <EditText
+        android:id="@+id/editText20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="אלון משה"
+        tools:layout_editor_absoluteX="153dp"
+        tools:layout_editor_absoluteY="299dp" />
+
+    <EditText
+        android:id="@+id/editText23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="0501111111"
+        tools:layout_editor_absoluteX="153dp"
+        tools:layout_editor_absoluteY="356dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton42"
+        android:layout_width="83dp"
+        android:layout_height="83dp"
+        android:background="@color/background"
+        app:srcCompat="@drawable/phone48"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="416dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton43"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/photos50"
+        tools:layout_editor_absoluteY="286dp"
+        tools:layout_editor_absoluteX="16dp" />
 </android.support.constraint.ConstraintLayout>
