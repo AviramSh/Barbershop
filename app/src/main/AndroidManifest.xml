@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NewAppointmentActivity">
+        <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,17 +20,17 @@
         <activity android:name=".CustomersListActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".InitialSettings.UserRegistrationActivity" />
-        <activity android:name=".InitialSettings.WorkingHoursActivity" />
-        <activity android:name=".InitialSettings.FillCustomers" />
-        <activity android:name=".InitialSettings.TimeAndFee" />
-        <activity android:name=".InitialSettings.smsSettings" />
+        <activity android:name=".UserRegistrationActivity" />
+        <activity android:name=".WorkingHoursActivity" />
+        <activity android:name=".FillCustomers" />
+        <activity android:name=".TimeAndFee" />
+        <activity android:name=".smsSettings" />
         <activity android:name=".NewCustomerActivity" />
         <activity android:name=".BalanceActivity" />
         <activity android:name=".StockActivity" />
         <activity android:name=".AppointmentListActivity" />
-        <activity android:name=".InitialSettings.UserPasswordActivity" />
-        <activity android:name=".SplashScreenActivity"></activity>
+        <activity android:name=".UserPasswordActivity" />
+        <activity android:name=".NewAppointmentActivity"></activity>
     </application>
 
 </manifest>

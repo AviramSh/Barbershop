@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@color/background"
-    tools:context="com.esh_tech.aviram.barbershop.InitialSettings.TimeAndFee">
+    tools:context="com.esh_tech.aviram.barbershop.TimeAndFee">
 
     <ImageButton
         android:id="@+id/imageButton15"

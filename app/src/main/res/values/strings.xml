@@ -83,6 +83,7 @@
     <string name="about">אודות</string>
     <string name="logout">התנתק</string>
     <string name="savePassword">שמור סיסמה</string>
+    <string name="repassword">חזור על הסיסמה</string>
 
 
     <string-array name="spinner_hours">

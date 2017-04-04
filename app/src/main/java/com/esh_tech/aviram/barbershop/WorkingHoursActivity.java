@@ -1,4 +1,4 @@
-package com.esh_tech.aviram.barbershop.InitialSettings;
+package com.esh_tech.aviram.barbershop;
 import com.esh_tech.aviram.barbershop.Codes.Barbershop;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

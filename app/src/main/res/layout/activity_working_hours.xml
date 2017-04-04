@@ -5,200 +5,296 @@
     android:background="@color/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.esh_tech.aviram.barbershop.InitialSettings.WorkingHoursActivity">
+    tools:context="com.esh_tech.aviram.barbershop.WorkingHoursActivity">
 
     //sunday
-    <CheckBox
-        android:checked="true"
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="18dp"
-        android:text="@string/sunday"
-        android:textColor="@color/colorPrimaryDark"
-        tools:layout_editor_absoluteX="142dp"
-        tools:layout_editor_absoluteY="6dp" />
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/spinner_hours"
-        tools:layout_editor_absoluteY="38dp"
-        tools:layout_editor_absoluteX="54dp" />
+    <LinearLayout
+        android:layout_width="368dp"
+        android:layout_height="399dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/spinner_hours"
-        tools:layout_editor_absoluteY="38dp"
-        tools:layout_editor_absoluteX="227dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spinner16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/spinner_hours"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="378dp" />
+
+            <Spinner
+                android:id="@+id/spinner17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/spinner_hours"
+                tools:layout_editor_absoluteX="140dp"
+                tools:layout_editor_absoluteY="378dp" />
+
+            <CheckBox
+                android:id="@+id/checkBox7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="false"
+                android:text="@string/saturday"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18dp"
+                tools:layout_editor_absoluteX="274dp"
+                tools:layout_editor_absoluteY="370dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp">
+
+            <Spinner
+                android:id="@+id/spinner4"
+                android:layout_width="105dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:entries="@array/spinner_hours"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="30dp" />
+
+            <Spinner
+                android:id="@+id/spinner5"
+                android:layout_width="104dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:entries="@array/spinner_hours"
+                tools:layout_editor_absoluteX="140dp"
+                tools:layout_editor_absoluteY="30dp" />
+
+            <CheckBox
+                android:id="@+id/editText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/sunday"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18dp"
+                tools:layout_editor_absoluteX="267dp"
+                tools:layout_editor_absoluteY="30dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp">
+
+            <Spinner
+                android:id="@+id/spinner6"
+                android:layout_width="106dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:entries="@array/spinner_hours"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="84dp" />
+
+            <Spinner
+                android:id="@+id/spinner7"
+                android:layout_width="105dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:entries="@array/spinner_hours"
+                tools:layout_editor_absoluteX="140dp"
+                tools:layout_editor_absoluteY="84dp" />
+
+            <CheckBox
+                android:id="@+id/checkBox2"
+                android:layout_width="97dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/monday"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18dp"
+                tools:layout_editor_absoluteX="271dp"
+                tools:layout_editor_absoluteY="86dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spinner8"
+                android:layout_width="105dp"
+                android:layout_height="33dp"
+                android:layout_weight="1"
+                android:entries="@array/spinner_hours"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="144dp" />
+
+            <Spinner
+                android:id="@+id/spinner9"
+                android:layout_width="106dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:entries="@array/spinner_hours"
+                tools:layout_editor_absoluteX="140dp"
+                tools:layout_editor_absoluteY="144dp" />
+
+            <CheckBox
+                android:id="@+id/checkBox3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/tuesday"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18dp"
+                tools:layout_editor_absoluteX="265dp"
+                tools:layout_editor_absoluteY="144dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spinner10"
+                android:layout_width="104dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:entries="@array/spinner_hours"
+                tools:layout_editor_absoluteX="142dp"
+                tools:layout_editor_absoluteY="197dp" />
+
+            <Spinner
+                android:id="@+id/spinner11"
+                android:layout_width="106dp"
+                android:layout_height="28dp"
+                android:layout_weight="1"
+                android:entries="@array/spinner_hours"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="197dp" />
+
+            <CheckBox
+                android:id="@+id/checkBox4"
+                android:layout_width="103dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/wednesday"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18dp"
+                tools:layout_editor_absoluteX="265dp"
+                tools:layout_editor_absoluteY="197dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spinner12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/spinner_hours"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="252dp" />
+
+            <Spinner
+                android:id="@+id/spinner13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/spinner_hours"
+                tools:layout_editor_absoluteX="140dp"
+                tools:layout_editor_absoluteY="252dp" />
+
+            <CheckBox
+                android:id="@+id/checkBox5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/thursday"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18dp"
+                tools:layout_editor_absoluteX="263dp"
+                tools:layout_editor_absoluteY="252dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spinner14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/spinner_hours"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="308dp" />
+
+            <Spinner
+                android:id="@+id/spinner15"
+                android:layout_width="111dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:entries="@array/spinner_hours"
+                tools:layout_editor_absoluteX="140dp"
+                tools:layout_editor_absoluteY="309dp" />
+
+            <CheckBox
+                android:id="@+id/checkBox6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/friday"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18dp"
+                tools:layout_editor_absoluteX="275dp"
+                tools:layout_editor_absoluteY="308dp" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     //monday
-    <CheckBox
-        android:checked="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="18dp"
-        android:text="@string/monday"
-        android:textColor="@color/colorPrimaryDark"
-        tools:layout_editor_absoluteX="151dp"
-        tools:layout_editor_absoluteY="62dp" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/spinner_hours"
-        tools:layout_editor_absoluteY="102dp"
-        tools:layout_editor_absoluteX="54dp" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/spinner_hours"
-        tools:layout_editor_absoluteY="102dp"
-        tools:layout_editor_absoluteX="227dp" />
 
     //Tuesday
-    <CheckBox
-        android:checked="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="18dp"
-        android:text="@string/tuesday"
-        android:textColor="@color/colorPrimaryDark"
-        tools:layout_editor_absoluteX="141dp"
-        tools:layout_editor_absoluteY="134dp" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/spinner_hours"
-        tools:layout_editor_absoluteY="166dp"
-        tools:layout_editor_absoluteX="54dp" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/spinner_hours"
-        tools:layout_editor_absoluteY="166dp"
-        tools:layout_editor_absoluteX="227dp" />
 
     //Wednesday
-    <CheckBox
-        android:checked="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="18dp"
-        android:text="@string/wednesday"
-        android:textColor="@color/colorPrimaryDark"
-        tools:layout_editor_absoluteX="143dp"
-        tools:layout_editor_absoluteY="197dp" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/spinner_hours"
-        tools:layout_editor_absoluteY="229dp"
-        tools:layout_editor_absoluteX="54dp" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/spinner_hours"
-        tools:layout_editor_absoluteY="229dp"
-        tools:layout_editor_absoluteX="227dp" />
 
     //Thursday
-    <CheckBox
-        android:checked="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="18dp"
-        android:text="@string/thursday"
-        android:textColor="@color/colorPrimaryDark"
-        tools:layout_editor_absoluteX="140dp"
-        tools:layout_editor_absoluteY="260dp" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/spinner_hours"
-        tools:layout_editor_absoluteY="292dp"
-        tools:layout_editor_absoluteX="54dp" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/spinner_hours"
-        tools:layout_editor_absoluteY="292dp"
-        tools:layout_editor_absoluteX="227dp" />
 
     //Friday
-    <CheckBox
-        android:checked="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="18dp"
-        android:text="@string/friday"
-        android:textColor="@color/colorPrimaryDark"
-        tools:layout_editor_absoluteX="146dp"
-        tools:layout_editor_absoluteY="326dp" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/spinner_hours"
-        tools:layout_editor_absoluteY="358dp"
-        tools:layout_editor_absoluteX="54dp" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/spinner_hours"
-        tools:layout_editor_absoluteY="358dp"
-        tools:layout_editor_absoluteX="227dp" />
 
 
     //Saturday
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="18dp"
-        android:checked="false"
-        android:text="@string/saturday"
-        android:textColor="@color/colorPrimaryDark"
-        tools:layout_editor_absoluteX="145dp"
-        tools:layout_editor_absoluteY="389dp" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/spinner_hours"
-        tools:layout_editor_absoluteY="421dp"
-        tools:layout_editor_absoluteX="54dp" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/spinner_hours"
-        tools:layout_editor_absoluteY="421dp"
-        tools:layout_editor_absoluteX="227dp" />
 
     <ImageButton
         android:id="@+id/imageButton8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/scut"
+        app:srcCompat="@drawable/barberscissors"
         android:background="@color/background"
-        tools:layout_editor_absoluteX="168dp"
-        tools:layout_editor_absoluteY="447dp" />
+        tools:layout_editor_absoluteX="152dp"
+        tools:layout_editor_absoluteY="415dp" />
 
 
 </android.support.constraint.ConstraintLayout>

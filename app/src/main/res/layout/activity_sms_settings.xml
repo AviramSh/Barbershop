@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:layout_gravity="center"
-    tools:context="com.esh_tech.aviram.barbershop.InitialSettings.smsSettings">
+    tools:context="com.esh_tech.aviram.barbershop.smsSettings">
 
 
     <ImageView

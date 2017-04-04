@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context="com.esh_tech.aviram.barbershop.InitialSettings.UserRegistrationActivity">
+    tools:context="com.esh_tech.aviram.barbershop.UserRegistrationActivity">
 
 
     <LinearLayout
@@ -24,7 +24,7 @@
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/textView7"
+            android:id="@+id/firstNameEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
              />
@@ -38,7 +38,7 @@
             android:textSize="18sp"/>
 
         <EditText
-            android:id="@+id/textView5"
+            android:id="@+id/lastNameEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -51,7 +51,7 @@
             android:textSize="18sp"/>
 
         <EditText
-            android:id="@+id/textView10"
+            android:id="@+id/phoneEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimaryDark"
@@ -66,7 +66,7 @@
             android:textSize="18sp"/>
 
         <EditText
-            android:id="@+id/textView12"
+            android:id="@+id/businessNameEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -79,7 +79,7 @@
             android:textSize="18sp"/>
 
         <EditText
-            android:id="@+id/textView14"
+            android:id="@+id/businessPhoneEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -92,7 +92,7 @@
             android:textSize="18sp"/>
 
         <EditText
-            android:id="@+id/textView16"
+            android:id="@+id/businessAddressEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -103,6 +103,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/background"
+        android:onClick="passwordActivityNext"
         app:srcCompat="@drawable/next"
         tools:layout_editor_absoluteY="395dp"
         tools:layout_editor_absoluteX="272dp" />
@@ -111,6 +112,7 @@
         android:id="@+id/imageButton6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="closeScreen"
         app:srcCompat="@drawable/cancel"
         android:background="@color/background"
         tools:layout_editor_absoluteY="395dp"
