@@ -31,8 +31,9 @@
         android:id="@+id/imageButton9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/next"
+        app:srcCompat="@drawable/barberscissors"
         android:background="@color/background"
+        android:onClick="goMain"
         tools:layout_editor_absoluteY="395dp"
         tools:layout_editor_absoluteX="274dp" />
 

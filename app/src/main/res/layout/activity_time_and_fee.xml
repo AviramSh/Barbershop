@@ -67,7 +67,7 @@
         tools:layout_editor_absoluteY="61dp" />
 
     <EditText
-        android:id="@+id/editText7"
+        android:id="@+id/manTimeEt"
         android:layout_width="48dp"
         android:layout_height="40dp"
         android:inputType="textPersonName"
@@ -78,7 +78,7 @@
         tools:layout_editor_absoluteY="148dp" />
 
     <EditText
-        android:id="@+id/editText8"
+        android:id="@+id/manPriceEt"
         android:layout_width="48dp"
         android:layout_height="40dp"
         android:inputType="textPersonName"
@@ -89,7 +89,7 @@
         tools:layout_editor_absoluteX="42dp" />
 
     <EditText
-        android:id="@+id/editText9"
+        android:id="@+id/womanPriceEt"
         android:layout_width="48dp"
         android:layout_height="45dp"
         android:inputType="textPersonName"
@@ -101,7 +101,7 @@
         tools:layout_editor_absoluteX="42dp" />
 
     <EditText
-        android:id="@+id/editText10"
+        android:id="@+id/womanTimeEt"
         android:layout_width="46dp"
         android:layout_height="46dp"
         android:inputType="textPersonName"
@@ -116,7 +116,8 @@
         android:id="@+id/imageButton17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/next"
+        android:onClick="fillCustomres"
+        app:srcCompat="@drawable/barberscissors"
         android:background="@color/background"
         tools:layout_editor_absoluteY="395dp"
         tools:layout_editor_absoluteX="152dp" />

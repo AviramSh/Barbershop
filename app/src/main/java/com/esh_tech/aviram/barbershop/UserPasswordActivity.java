@@ -1,9 +1,10 @@
 package com.esh_tech.aviram.barbershop;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
-import com.esh_tech.aviram.barbershop.R;
 
 public class UserPasswordActivity extends AppCompatActivity {
 
@@ -11,5 +12,13 @@ public class UserPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_password);
+    }
+
+
+    //back to registration Activity
+    public void goRegisterAc(View v){
+        Intent registrationIntent = new Intent(this ,UserRegistrationActivity.class);
+        startActivity(registrationIntent);
+        this.finish();
     }
 }
