@@ -21,4 +21,11 @@ public class UserPasswordActivity extends AppCompatActivity {
         startActivity(registrationIntent);
         this.finish();
     }
+
+    public void savePassword(View view) {
+        Intent myIntent = new Intent(this , WorkingHoursActivity.class);
+        startActivity(myIntent);
+        this.finish();
+
+    }
 }

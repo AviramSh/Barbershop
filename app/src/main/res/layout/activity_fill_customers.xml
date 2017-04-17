@@ -15,8 +15,12 @@
         android:text="@string/addCustomers"
         android:textSize="30sp"
         android:textColor="@color/colorPrimaryDark"
-        tools:layout_editor_absoluteX="110dp"
-        tools:layout_editor_absoluteY="16dp" />
+        android:layout_marginRight="7dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <ImageButton
         android:id="@+id/imageButton7"
@@ -24,8 +28,12 @@
         android:layout_height="wrap_content"
         android:background="@color/background"
         app:srcCompat="@drawable/plus"
-        tools:layout_editor_absoluteY="395dp"
-        tools:layout_editor_absoluteX="140dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="32dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <ImageButton
         android:id="@+id/imageButton9"
@@ -34,8 +42,10 @@
         app:srcCompat="@drawable/barberscissors"
         android:background="@color/background"
         android:onClick="goMain"
-        tools:layout_editor_absoluteY="395dp"
-        tools:layout_editor_absoluteX="274dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="32dp"
+        android:layout_marginRight="32dp"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <LinearLayout
         android:layout_width="362dp"

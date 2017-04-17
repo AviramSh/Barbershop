@@ -8,7 +8,6 @@ import android.widget.ProgressBar;
 public class SplashScreenActivity extends AppCompatActivity {
 
     ProgressBar loding;
-    int countProgress =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +34,8 @@ public class SplashScreenActivity extends AppCompatActivity {
             }
         };
         myThread.start();
+
+
     }
 
 

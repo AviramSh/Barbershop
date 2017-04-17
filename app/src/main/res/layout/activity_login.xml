@@ -12,8 +12,15 @@
         android:layout_width="298dp"
         android:layout_height="78dp"
         app:srcCompat="?android:attr/actionModeCutDrawable"
-        tools:layout_editor_absoluteX="43dp"
-        tools:layout_editor_absoluteY="35dp" />
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="41dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/usernameET"
@@ -26,8 +33,12 @@
         android:padding="12dp"
         android:singleLine="true"
         android:visibility="visible"
-        tools:layout_editor_absoluteX="67dp"
-        tools:layout_editor_absoluteY="189dp" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/usernameTV"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <EditText
         android:id="@+id/editText4"
@@ -37,8 +48,12 @@
         android:background="@color/textBackground"
         android:ems="10"
         android:inputType="textPassword"
-        tools:layout_editor_absoluteY="280dp"
-        tools:layout_editor_absoluteX="67dp" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/passwordTV"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <CheckBox
         android:id="@+id/editText5"
@@ -46,8 +61,11 @@
         android:layout_height="wrap_content"
         android:text="@string/savePassword"
         android:textSize="12sp"
-        tools:layout_editor_absoluteX="67dp"
-        tools:layout_editor_absoluteY="328dp" />
+        tools:layout_editor_absoluteY="328dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/fPasswordTv"
+        android:layout_marginRight="8dp" />
 
     <Button
         android:id="@+id/loginBt"
@@ -55,8 +73,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login"
-        tools:layout_editor_absoluteX="43dp"
-        tools:layout_editor_absoluteY="420dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="43dp"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <Button
         android:id="@+id/button2"
@@ -64,17 +84,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/exit"
-        tools:layout_editor_absoluteX="280dp"
-        tools:layout_editor_absoluteY="420dp" />
+        android:layout_marginRight="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="43dp" />
 
     <TextView
         android:id="@+id/usernameTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="8dp"
         android:text="@string/user_nameTV"
         android:textSize="24sp"
-        tools:layout_editor_absoluteX="130dp"
-        tools:layout_editor_absoluteY="153dp" />
+        app:layout_constraintLeft_toLeftOf="@+id/appIcon"
+        app:layout_constraintRight_toRightOf="@+id/appIcon"
+        app:layout_constraintTop_toBottomOf="@+id/appIcon" />
 
     <TextView
         android:id="@+id/passwordTV"
@@ -82,8 +108,12 @@
         android:layout_height="wrap_content"
         android:textSize="24sp"
         android:text="@string/password"
-        tools:layout_editor_absoluteY="241dp"
-        tools:layout_editor_absoluteX="158dp" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/usernameET"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/fPasswordTv"
@@ -91,7 +121,9 @@
         android:layout_height="wrap_content"
         android:text="@string/fPassword"
         android:textColor="@android:color/holo_blue_dark"
-        tools:layout_editor_absoluteX="227dp"
-        tools:layout_editor_absoluteY="335dp" />
+        android:layout_marginRight="58dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="47dp"
+        app:layout_constraintTop_toBottomOf="@+id/editText4" />
 
 </android.support.constraint.ConstraintLayout>

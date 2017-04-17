@@ -14,8 +14,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/badge"
-        tools:layout_editor_absoluteY="26dp"
-        tools:layout_editor_absoluteX="288dp"/>
+        android:onClick="openCustomersList"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/imageButton21"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.100000024"
+        app:layout_constraintHorizontal_bias="0.508" />
 
     <ImageButton
         android:id="@+id/imageButton3"
@@ -23,32 +32,69 @@
         android:layout_height="wrap_content"
         android:background="@color/background"
         app:srcCompat="@drawable/product80"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="26dp" />
+        android:onClick="openStock"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/imageButton21"
+        android:layout_marginRight="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.100000024" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/barberchair"
         android:background="@color/background"
-        tools:layout_editor_absoluteY="368dp"
-        tools:layout_editor_absoluteX="288dp" />
+        android:layout_marginRight="34dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/imageButton47"
+        android:layout_marginLeft="8dp"
+        android:onClick="openNewAppointment"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.92" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/work"
         android:background="@color/background"
-        tools:layout_editor_absoluteY="164dp"
-        tools:layout_editor_absoluteX="16dp" />
+        android:id="@+id/imageButton8"
+        android:onClick="openSettings"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/imageButton46"
+        android:layout_marginRight="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="268dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/clipboard80"
         android:background="@color/background"
-        tools:layout_editor_absoluteX="152dp"
-        tools:layout_editor_absoluteY="164dp"/>
+        android:onClick="openAppointmentList"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/imageButton46"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="268dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintVertical_bias="1.0" />
 
 
     <ImageButton
@@ -56,27 +102,51 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/accounting"
         android:background="@color/background"
-        tools:layout_editor_absoluteY="26dp"
-        tools:layout_editor_absoluteX="152dp"
-        android:id="@+id/imageButton21" />
+        android:id="@+id/imageButton21"
+        android:onClick="openBalance"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.100000024"
+        app:layout_constraintHorizontal_bias="0.501" />
 
     <TextView
         android:layout_width="79dp"
         android:layout_height="24dp"
         android:text="@string/stock"
         android:gravity="center"
-        tools:layout_editor_absoluteX="16dp"
-        android:layout_marginTop="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton3" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.00999999"
+        android:id="@+id/textView36"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/imageButton3"
+        android:layout_marginRight="0dp"
+        app:layout_constraintRight_toRightOf="@+id/imageButton3"
+        app:layout_constraintHorizontal_bias="0.571" />
 
     <TextView
         android:layout_width="81dp"
         android:layout_height="26dp"
         android:text="@string/appointment"
         android:gravity="center"
-        tools:layout_editor_absoluteX="152dp"
-        tools:layout_editor_absoluteY="257dp"
-        />
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton46"
+        android:id="@+id/textView14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/imageButton46"
+        android:layout_marginRight="0dp"
+        app:layout_constraintRight_toRightOf="@+id/imageButton46" />
 
 
     <TextView
@@ -84,24 +154,51 @@
         android:layout_height="24dp"
         android:text="@string/customers"
         android:gravity="center"
-        tools:layout_editor_absoluteX="285dp"
-        tools:layout_editor_absoluteY="106dp"/>
+        android:id="@+id/textView16"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="@+id/imageButton5"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/imageButton5"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:layout_width="72dp"
         android:layout_height="22dp"
         android:text="@string/settings"
         android:gravity="center"
-        tools:layout_editor_absoluteX="25dp"
-        tools:layout_editor_absoluteY="257dp"/>
+        android:id="@+id/textView12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/imageButton8"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="@+id/imageButton8"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton8"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:layout_width="74dp"
         android:layout_height="22dp"
         android:gravity="center"
         android:text="@string/balance"
-        tools:layout_editor_absoluteX="155dp"
-        tools:layout_editor_absoluteY="108dp"/>
+        app:layout_constraintLeft_toLeftOf="@+id/imageButton21"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton21"
+        android:id="@+id/textView5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.021"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="@+id/imageButton21"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <ImageButton
         android:id="@+id/imageButton14"
@@ -109,16 +206,32 @@
         android:layout_height="81dp"
         app:srcCompat="@drawable/customersupport80"
         android:background="@color/background"
-        tools:layout_editor_absoluteX="284dp"
-        tools:layout_editor_absoluteY="164dp" />
+        app:layout_constraintLeft_toRightOf="@+id/imageButton46"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="268dp"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView19"
         android:layout_width="wrap_content"
-        android:layout_height="18dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="@string/customerretention"
-        tools:layout_editor_absoluteX="292dp"
-        tools:layout_editor_absoluteY="257dp" />
+        app:layout_constraintTop_toBottomOf="@+id/imageButton14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/imageButton14"
+        android:layout_marginRight="0dp"
+        app:layout_constraintRight_toRightOf="@+id/imageButton14"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <TextView
         android:id="@+id/textView21"
@@ -128,8 +241,9 @@
         android:gravity="start"
         android:textSize="18sp"
         android:background="#61a6a2"
-        tools:layout_editor_absoluteY="327dp"
-        tools:layout_editor_absoluteX="13dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp"
+        tools:layout_editor_absoluteX="31dp" />
 
     <TextView
         android:id="@+id/textView20"
@@ -137,17 +251,32 @@
         android:layout_height="wrap_content"
         android:text="@string/nextturn"
         android:textSize="24sp"
-        tools:layout_editor_absoluteX="69dp"
-        tools:layout_editor_absoluteY="291dp" />
+        android:layout_marginLeft="51dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="186dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintVertical_bias="1.0"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.12" />
 
     <TextView
         android:id="@+id/textView22"
         android:layout_width="77dp"
-        android:layout_height="20dp"
+        android:layout_height="17dp"
         android:text="@string/newturn"
         android:gravity="center"
-        tools:layout_editor_absoluteY="459dp"
-        tools:layout_editor_absoluteX="291dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="9dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton47"
+        app:layout_constraintVertical_bias="0.083"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="@+id/imageButton47"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/imageButton47" />
 
 
 </android.support.constraint.ConstraintLayout>
