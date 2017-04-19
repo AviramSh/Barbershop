@@ -5,8 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.esh_tech.aviram.barbershop.R;
-
 public class TimeAndFee extends AppCompatActivity {
 
     @Override
@@ -16,7 +14,7 @@ public class TimeAndFee extends AppCompatActivity {
     }
 
     public void fillCustomres(View view) {
-        Intent fillCustomresAcivity = new Intent(this,FillCustomers.class);
+        Intent fillCustomresAcivity = new Intent(this,FillCustomersActivity.class);
         startActivity(fillCustomresAcivity);
         this.finish();
     }

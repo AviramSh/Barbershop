@@ -7,7 +7,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/customerIconIv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="20"
@@ -21,7 +21,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView37"
+            android:id="@+id/customerNameET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
@@ -29,7 +29,7 @@
             android:text="TextView" />
 
         <TextView
-            android:id="@+id/textView27"
+            android:id="@+id/customerLastNameEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
@@ -37,7 +37,7 @@
             android:text="TextView" />
 
         <TextView
-            android:id="@+id/textView23"
+            android:id="@+id/customerPhoneEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
