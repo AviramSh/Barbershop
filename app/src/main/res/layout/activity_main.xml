@@ -16,15 +16,15 @@
         app:srcCompat="@drawable/badge"
         android:onClick="openCustomersList"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="16dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/imageButton21"
         android:layout_marginLeft="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.100000024"
-        app:layout_constraintHorizontal_bias="0.508" />
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.51" />
 
     <ImageButton
         android:id="@+id/imageButton3"
@@ -34,14 +34,15 @@
         app:srcCompat="@drawable/product80"
         android:onClick="openStock"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/imageButton21"
         android:layout_marginRight="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.100000024" />
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.51" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -105,15 +106,15 @@
         android:id="@+id/imageButton21"
         android:onClick="openBalance"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.100000024"
-        app:layout_constraintHorizontal_bias="0.501" />
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.503" />
 
     <TextView
         android:layout_width="79dp"
