@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 
 public class UserPasswordActivity extends AppCompatActivity {
@@ -23,9 +24,16 @@ public class UserPasswordActivity extends AppCompatActivity {
     }
 
     public void savePassword(View view) {
-        Intent myIntent = new Intent(this , WorkingHoursActivity.class);
-        startActivity(myIntent);
-        this.finish();
+        EditText pass1 = (EditText)findViewById(R.id.passwordEt);
+        EditText pass2= (EditText)findViewById(R.id.rePasswordEt);
 
+        if(pass1.getText().toString().equals(pass2.getText().toString())) {
+            MyGlobalUser myUser = (MyGlobalUser)getApplication();
+            myUser.setPassword(pass1.getText().toString());
+
+            Intent myIntent = new Intent(this, WorkingHoursActivity.class);
+            startActivity(myIntent);
+            this.finish();
+        }
     }
 }

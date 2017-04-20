@@ -1,6 +1,9 @@
 package com.esh_tech.aviram.barbershop;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,9 +34,6 @@ public class UserRegistrationActivity extends AppCompatActivity {
             this.finish();
         }
 
-
-
-
     }
 
     //Save your on shared preferences.
@@ -59,37 +59,51 @@ public class UserRegistrationActivity extends AppCompatActivity {
         EditText businessPhone = (EditText)findViewById(R.id.businessPhoneEt);
         EditText businessAddress = (EditText)findViewById(R.id.businessAddressEt);
 
+//      My Global User class
+        //MyGlobalUser myUser = (MyGlobalUser)getApplication();
+
+//        SharedPreference
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = settings.edit();
 
 
 //First Name testing
         testString = name.getText().toString();
         if(testString.equals("")){flag = false; errorMassage += "First name is null\n";}
         else if(testString.length()<2){flag = false; errorMassage += "First name is to short\n";}
+        editor.putString("username",testString);
+/*
 //Last Name testing
         testString = lastName.getText().toString();
         if(testString.equals("")){flag = false; errorMassage += "Last name is null\n";}
         else if(testString.length()<2){flag = false; errorMassage += "Last name is to short\n";}
+//        myUser.setLastName(testString);
 //Phone testing
         testString = phone.getText().toString();
         if(testString.equals("")){flag = false; errorMassage += "Phone is null\n";}
         else if(testString.length()<4){flag = false; errorMassage += "Phone is to short\n";}
+//        myUser.setPhone(testString);
 
 //Business Name testing
         testString = businessName.getText().toString();
         if(testString.equals("")){flag = false; errorMassage += "Business Name is null\n";}
         else if(testString.length()<2){flag = false; errorMassage += "Business Name is to short\n";}
+//        myUser.setBusinessName(testString);
 
 //Business Phone testing
         testString = businessPhone.getText().toString();
         if(testString.equals("")){flag = false; errorMassage += "Business phone is null\n";}
         else if(testString.length()<4){flag = false; errorMassage += "Business phone is to short\n";}
+//        myUser.setBusinessPhone(testString);
 
 //Business Address testing
         testString = businessAddress.getText().toString();
         if(testString.equals("")){flag = false; errorMassage += "Business address is null\n";}
         else if(testString.length()<4){flag = false; errorMassage += "Business address is to short\n";}
+        //myUser.setBusinessAddress(testString);
+*/
 
-
+        editor.commit();
 // Data Massages
         if(flag) Toast.makeText(this, "Hi "+ name.getText().toString() +" "+lastName.getText().toString(), Toast.LENGTH_LONG).show();
         else Toast.makeText(this, errorMassage, Toast.LENGTH_LONG).show();
