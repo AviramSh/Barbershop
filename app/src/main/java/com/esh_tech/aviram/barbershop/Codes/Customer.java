@@ -28,6 +28,11 @@ public class Customer {
         CustomerPhoto = customerPhoto;
     }
 
+    public Customer(String name, String phone) {
+
+        this(name,name,phone,true);
+    }
+
     public Customer(String name, String phone, String email, boolean gender) {
         this.name = name;
         this.phone = phone;

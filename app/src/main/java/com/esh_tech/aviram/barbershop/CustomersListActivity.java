@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.esh_tech.aviram.barbershop.Codes.Customer;
+import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
 import org.w3c.dom.Text;
 
@@ -31,11 +32,17 @@ public class CustomersListActivity extends AppCompatActivity {
     ListView customerListView;
     MyCustomersAdapter usersAdaper;
 
+//    Database
+    BarbershopDBHandler dbHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_list);
+
+//        database
+        dbHandler = new BarbershopDBHandler(this);
+
 
 //        Connect list view
         customerListView =(ListView)findViewById(R.id.customersLv);
@@ -55,6 +62,9 @@ public class CustomersListActivity extends AppCompatActivity {
     //Testing customer list
     private void populateCustomers() {
 
+
+        allCustomers = dbHandler.getAllCustomers();
+/*
         allCustomers.add(new Customer("Aviram","Sarabi","0506792353",true));
         allCustomers.add(new Customer("Aviram","Sarabi","0506792353",true));
         allCustomers.add(new Customer("Aviram","Sarabi","0506792353",false));
@@ -65,7 +75,7 @@ public class CustomersListActivity extends AppCompatActivity {
         allCustomers.add(new Customer("Aviram","Sarabi","0506792353",true));
         allCustomers.add(new Customer("Aviram","Sarabi","0506792353",true));
         allCustomers.add(new Customer("Aviram","Sarabi","0506792353",false));
-        allCustomers.add(new Customer("Aviram","Sarabi","0506792353",true));
+        allCustomers.add(new Customer("Aviram","Sarabi","0506792353",true));*/
     }
 
     // *Create new customer
