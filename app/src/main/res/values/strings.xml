@@ -85,6 +85,9 @@
     <string name="savePassword">שמור סיסמה</string>
     <string name="repassword">חזור על הסיסמה</string>
     <string name="free_appointment_in">תורות פנוים ב </string>
+    <string name="male">גבר</string>
+    <string name="female">אישה</string>
+    <string name="email">אייימל</string>
 
 
     <string-array name="spinner_hours">

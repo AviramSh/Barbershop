@@ -12,7 +12,9 @@ public class Customer {
     private String phone;
     private String email;
     private boolean gender;
+    private boolean remainder;
     private Bitmap CustomerPhoto;
+
 
     //pic , date , last time
 
@@ -50,8 +52,24 @@ public class Customer {
         this(name,phone,true);
     }
 
-
+    public Customer(String name, String phone, String email, boolean gender, boolean remainder, Bitmap customerPhoto) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.gender = gender;
+        this.remainder = remainder;
+        CustomerPhoto = customerPhoto;
+    }
     //Getter and Setter
+
+
+    public boolean isRemainder() {
+        return remainder;
+    }
+
+    public void setRemainder(boolean remainder) {
+        this.remainder = remainder;
+    }
 
     public String getName() {
         return name;
