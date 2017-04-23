@@ -20,6 +20,7 @@ public class NewCustomerActivity extends AppCompatActivity {
 
 
 
+    private boolean gender;
     private boolean remainder;
     private Bitmap CustomerPhoto;*/
 
@@ -28,8 +29,10 @@ public class NewCustomerActivity extends AppCompatActivity {
     EditText customerName;
     EditText customerLastName;
     EditText customerEmail;
+    EditText customerCredit;
     CheckBox customerRemainder;
     EditText customerPhone;
+    RadioGroup rg;
 
     boolean gender =true;
 //    RadioGroup rg;
@@ -42,37 +45,47 @@ public class NewCustomerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_customer);
 
-//        Gender
-/*        rg = (RadioGroup)findViewById(R.id.rgGender);*/
-
+        rg = (RadioGroup)findViewById(R.id.rgGender);
+        customerRemainder = (CheckBox)findViewById(R.id.cbReminder);
         customerName = (EditText)findViewById(R.id.etCustomerName);
         customerLastName= (EditText)findViewById(R.id.etCustomerLastName);
-
         customerPhone =(EditText)findViewById(R.id.etCustomerPhone);
+        customerCredit = (EditText)findViewById(R.id.etCustomerCredit);
+        customerEmail = (EditText)findViewById(R.id.etCustomerEmail);
 
         dbHandler = new BarbershopDBHandler(this);
     }
 
     public void addCustomer(View view) {
 
+        Customer c = new Customer();
+        String data ="";
+
+        c.setName(customerName.getText().toString()+" "+customerLastName.getText().toString());
+        c.setPhone(customerPhone.getText().toString());
+        c.setBill(Integer.parseInt(customerCredit.getText().toString()));
+        c.setEmail(customerEmail.getText().toString());
+
+        data = c.getName()+" ,"+c.getPhone()+" ,"+c.getBill()+" ,"+c.getEmail();
+
+
+//        Remainder
+        if(customerRemainder.isChecked()){c.setRemainder(true);data += " Yes for SMS";}
+        else {c.setRemainder(false);data += " No for SMS";}
 //        Gender
-        /*rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                //ZRadioButton rb = (RadioButton)rg.findViewById(checkedId);
+        if(rg.getCheckedRadioButtonId() == R.id.rbWoman){c.setGender(false);data += " Women";}
+        else {c.setGender(true);data+= " men";}
 
-                if(checkedId != R.id.rbMan){gender =false;}
-            }
-        });
-*/
-        Customer c = new Customer(customerName.getText().toString(),customerPhone.getText().toString());
 
-        Toast.makeText(this, c.getName()+ " " + c.getPhone(), Toast.LENGTH_LONG).show();
+
+
+
+        Toast.makeText(this, data, Toast.LENGTH_LONG).show();
         dbHandler.addCustomer(c);
 
 
-        Intent myIntent = new Intent(this,CustomersListActivity.class);
-        startActivity(myIntent);
+        /*Intent myIntent = new Intent(this,CustomersListActivity.class);
+        startActivity(myIntent);*/
     }
 
 }

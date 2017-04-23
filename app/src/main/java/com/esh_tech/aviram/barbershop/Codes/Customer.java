@@ -8,9 +8,12 @@ import android.graphics.Bitmap;
 
 public class Customer {
 
+
     private String name;
     private String phone;
+    private String secondPhone;
     private String email;
+    private int bill;
     private boolean gender;
     private boolean remainder;
     private Bitmap CustomerPhoto;
@@ -21,6 +24,33 @@ public class Customer {
 
     //Constructors
 
+
+    public Customer(String name, String phone, String secondPhone, String email, int bill, boolean gender, boolean remainder) {
+        this.name = name;
+        this.phone = phone;
+        this.secondPhone = secondPhone;
+        this.email = email;
+        this.bill = bill;
+        this.gender = gender;
+        this.remainder = remainder;
+    }
+
+    public Customer(String name, String phone, String secondPhone, String email, int bill, boolean gender, boolean remainder, Bitmap customerPhoto) {
+        this.name = name;
+        this.phone = phone;
+        this.secondPhone = secondPhone;
+        this.email = email;
+        this.bill = bill;
+        this.gender = gender;
+        this.remainder = remainder;
+        CustomerPhoto = customerPhoto;
+    }
+
+    public Customer(String name, String phone, int bill) {
+        this.name = name;
+        this.phone = phone;
+        this.bill = bill;
+    }
 
     public Customer(String name, String phone, String email, boolean gender, Bitmap customerPhoto) {
         this.name = name;
@@ -60,8 +90,21 @@ public class Customer {
         this.remainder = remainder;
         CustomerPhoto = customerPhoto;
     }
+
+    public Customer() {
+
+    }
+
+
     //Getter and Setter
 
+    public int getBill() {
+        return bill;
+    }
+
+    public void setBill(int bill) {
+        this.bill = bill;
+    }
 
     public boolean isRemainder() {
         return remainder;
