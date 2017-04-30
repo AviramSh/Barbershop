@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">מספריים</string>
     <string name="user_nameTV">שם משתמש</string>
@@ -93,7 +94,6 @@
     <string name="price">מחיר</string>
     <string name="quantity">כמות</string>
     <string name="productName">שם מוצר</string>
-    <string name="empty">ריק</string>
 
 
     <string-array name="spinner_hours">

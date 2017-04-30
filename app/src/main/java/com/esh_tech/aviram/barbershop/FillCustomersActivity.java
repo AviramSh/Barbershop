@@ -55,7 +55,6 @@ public class FillCustomersActivity extends AppCompatActivity {
 
         customerListView.setAdapter(usersAdapter);
 
-
     }
     //allCustomers.add(new Customer(retrieveContactName(),"050-342-3242","aaa@mmm.com",true));
     public void goMain(View view) {
@@ -63,8 +62,6 @@ public class FillCustomersActivity extends AppCompatActivity {
         startActivity(mainIntent);
         this.finish();
     }
-
-
 
     //Creating custom Adpter for the list view GUI
     class MyCustomersAdapter extends ArrayAdapter<Customer> {
@@ -103,8 +100,6 @@ public class FillCustomersActivity extends AppCompatActivity {
         }
     }
 
-
-
     public void onClickSelectContact(View btnSelectContact) {
 
         // using native contacts selection
@@ -126,6 +121,7 @@ public class FillCustomersActivity extends AppCompatActivity {
 
         }
     }
+
 
     private void retrieveContactPhoto() {
 
@@ -149,7 +145,6 @@ public class FillCustomersActivity extends AppCompatActivity {
         }
 
     }
-
     private void retrieveContactNumber() {
 
         String contactNumber = null;
@@ -187,7 +182,6 @@ public class FillCustomersActivity extends AppCompatActivity {
 
         Log.d(TAG, "Contact Phone Number: " + contactNumber);
     }
-
     private void retrieveContactName() {
 
         String contactName = null;

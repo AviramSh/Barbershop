@@ -84,9 +84,7 @@ public class CustomersListActivity extends AppCompatActivity {
         startActivity(myIntent);
     }
 
-
     //Listener
-
 
     //Creating custom Adpter for the list view GUI
     class MyCustomersAdapter extends ArrayAdapter<Customer>{

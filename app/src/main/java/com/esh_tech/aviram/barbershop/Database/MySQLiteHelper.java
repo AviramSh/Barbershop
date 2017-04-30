@@ -37,6 +37,14 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 BarbershopConstants.APPOINTMENT_YEAR+" INTEGER, "+
                 BarbershopConstants.CUSTOMER_ID +" INTEGER, "+
                 BarbershopConstants.CUSTOMER_NAME +" TEXT) ");
+
+
+        db.execSQL("CREATE TABLE "+ BarbershopConstants.STOCK_TABLE_NAME +
+                "("+BarbershopConstants.PRODUCT_ID +" INTEGER AUTOINCREMENT, "+
+                BarbershopConstants.PRODUCT_NAME +" TEXT, "+
+                BarbershopConstants.PRODUCT_QUANTITY +" INTEGER ) ");
+
+
     }
 
 
