@@ -59,33 +59,45 @@ public class NewCustomerActivity extends AppCompatActivity {
     public void addCustomer(View view) {
 
         Customer c = new Customer();
-        String data ="";
+        String testString ="Error :";
+
 
         c.setName(customerName.getText().toString()+" "+customerLastName.getText().toString());
         c.setPhone(customerPhone.getText().toString());
         c.setBill(Integer.parseInt(customerCredit.getText().toString()));
         c.setEmail(customerEmail.getText().toString());
 
-        data = c.getName()+" ,"+c.getPhone()+" ,"+c.getBill()+" ,"+c.getEmail();
-
+        //dbHandler.addCustomer(c);
 
 //        Remainder
-        if(customerRemainder.isChecked()){c.setRemainder(true);data += " Yes for SMS";}
-        else {c.setRemainder(false);data += " No for SMS";}
+        if(customerRemainder.isChecked()){c.setRemainder(true);testString += " Yes for SMS";}
+        else {c.setRemainder(false);testString += " No for SMS";}
 //        Gender
-        if(rg.getCheckedRadioButtonId() == R.id.rbWoman){c.setGender(false);data += " Women";}
-        else {c.setGender(true);data+= " men";}
+        if(rg.getCheckedRadioButtonId() == R.id.rbWoman){c.setGender(false);testString += " Women";}
+        else {c.setGender(true);testString+= " men";}
+
+
+        testString = c.getName()+" ,"+c.getPhone()+" ,"+c.getBill()+" ,"+c.getEmail();
+
+        if(customerName.getText().toString().length() < 2)
+            testString +="\nUser name to short.";
+        if(c.getPhone().length() < 4)
+            testString +="\nPhone to short.";
+
+
+        if (!testString.equals("Error :")) {
+            Toast.makeText(this, testString, Toast.LENGTH_LONG).show();
+        }else{
+            Intent myIntent = new Intent(this,CustomersListActivity.class);
+            startActivity(myIntent);
+        }
 
 
 
+        //dbHandler.addCustomer(c);
 
 
-        Toast.makeText(this, data, Toast.LENGTH_LONG).show();
-        dbHandler.addCustomer(c);
 
-
-        /*Intent myIntent = new Intent(this,CustomersListActivity.class);
-        startActivity(myIntent);*/
     }
 
 }

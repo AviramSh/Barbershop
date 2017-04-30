@@ -23,7 +23,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.esh_tech.aviram.barbershop.Codes.Customer;
-import com.esh_tech.aviram.barbershop.R;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,7 +38,7 @@ public class FillCustomersActivity extends AppCompatActivity {
 
     ArrayList<Customer> allCustomers =new ArrayList<Customer>();
     ListView customerListView;
-    FillCustomersActivity.MyCustomersAdapter usersAdaper;
+    FillCustomersActivity.MyCustomersAdapter usersAdapter;
 
 
 
@@ -52,9 +51,9 @@ public class FillCustomersActivity extends AppCompatActivity {
         customerListView =(ListView)findViewById(R.id.fillCustomersLv);
 
         //        Connect adapter with custom view
-        usersAdaper = new FillCustomersActivity.MyCustomersAdapter(this,R.layout.custom_contact_row,allCustomers);
+        usersAdapter = new FillCustomersActivity.MyCustomersAdapter(this,R.layout.custom_contact_row,allCustomers);
 
-        customerListView.setAdapter(usersAdaper);
+        customerListView.setAdapter(usersAdapter);
 
 
     }

@@ -10,6 +10,8 @@ public class BarbershopConstants {
     public static final int BARBERSHOP_VERSION = 1;
 
 
+
+
     /*Customers table*/
     public static final String CUSTOMERS_TABLE_NAME = "CUSTOMERS";
     public static final String CUSTOMER_ID = "CUSTOMERS_ID";
@@ -29,5 +31,7 @@ public class BarbershopConstants {
     public static final String APPOINTMENT_MONTH = "APPOINTMENT_MONTH";
     public static final String APPOINTMENT_DAY= "APPOINTMENT_DAY";
     public static final String APPOINTMENT_HOUR= "APPOINTMENT_HOUR";
+    /*public static final String CUSTOMER_ID = "CUSTOMERS_ID";
+    public static final String CUSTOMER_NAME = "CUSTOMER_NAME";*/
 
 }
