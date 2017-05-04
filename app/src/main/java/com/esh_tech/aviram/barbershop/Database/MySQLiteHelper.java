@@ -19,29 +19,35 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL("CREATE TABLE "+ BarbershopConstants.CUSTOMERS_TABLE_NAME +
-                    "("+BarbershopConstants.CUSTOMER_ID +" INTEGER AUTOINCREMENT, "+
+                    "("+BarbershopConstants.CUSTOMER_ID +" INTEGER, "+
                         BarbershopConstants.CUSTOMER_NAME +" TEXT, "+
                         BarbershopConstants.CUSTOMER_PHONE +" TEXT, "+
                         BarbershopConstants.CUSTOMER_DAY_OF_BIRTH +" TEXT, "+
                         BarbershopConstants.CUSTOMER_MONTH_OF_BIRTH +" TEXT, "+
-                        BarbershopConstants.CUSTOMER_YEAR_OF_BIRTH +" TEXT) ");
+                        BarbershopConstants.CUSTOMER_YEAR_OF_BIRTH +" TEXT"
+                +")");
 
 
         db.execSQL("CREATE TABLE "+ BarbershopConstants.APPOINTMENTS_TABLE_NAME+
-                "("+BarbershopConstants.APPOINTMENT_ID +" INTEGER, "+
+                "("+
+                BarbershopConstants.APPOINTMENT_ID +" INTEGER, "+
+                BarbershopConstants.APPOINTMENT_MINUTE +" INTEGER, "+
                 BarbershopConstants.APPOINTMENT_HOUR +" INTEGER, "+
                 BarbershopConstants.APPOINTMENT_DAY +" INTEGER, "+
                 BarbershopConstants.APPOINTMENT_MONTH +" INTEGER, "+
                 BarbershopConstants.APPOINTMENT_YEAR+" INTEGER, "+
                 BarbershopConstants.CUSTOMER_ID +" INTEGER, "+
-                BarbershopConstants.CUSTOMER_NAME +" TEXT) ");
+                BarbershopConstants.CUSTOMER_NAME +" TEXT"+
+                ")");
 
 
         db.execSQL("CREATE TABLE "+ BarbershopConstants.PRODUCT_TABLE_NAME +
-                "("+BarbershopConstants.PRODUCT_ID +" INTEGER AUTOINCREMENT, "+
+                "("+
+                BarbershopConstants.PRODUCT_ID +" INTEGER, "+
                 BarbershopConstants.PRODUCT_NAME +" TEXT, "+
                 BarbershopConstants.PRODUCT_PRICE +" INTEGER, "+
-                BarbershopConstants.PRODUCT_QUANTITY +" INTEGER ) ");
+                BarbershopConstants.PRODUCT_QUANTITY +" INTEGER"+
+                ")");
 
 
     }

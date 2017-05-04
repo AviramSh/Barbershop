@@ -54,13 +54,17 @@ public class NewAppointmentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_appointment);
+        this.setTitle(R.string.appointmentsScreenTitle);
+
+        //        database
+        dbHandler = new BarbershopDBHandler(this);
 
         theDate = (Button)findViewById(R.id.btDate);
         theTime= (Button)findViewById(R.id.btTime);
         setToday();
 
         //populateAppointment();
-///*
+//
 //        turnsList.add("Aviram - 9:00");
 //        turnsList.add("Eliron - 9:15");
 //        turnsList.add("Erez - 9:30");
@@ -77,7 +81,7 @@ public class NewAppointmentActivity extends AppCompatActivity {
 ////        turnsAdapter = new MyCustomersAdapter(this,R.layout.custom_contact_row,allCustomers);
 //
 //        turnsListView.setAdapter(turnsAdapter);
-//*/
+//
 
     }
 
@@ -186,15 +190,19 @@ public class NewAppointmentActivity extends AppCompatActivity {
         }else{
             Appointment newAppointment = new Appointment(minute_x,hour_x,day_x,month_x,year_x,
                     cName.getText().toString(),Integer.parseInt(cPhone.getText().toString()));
+            if(dbHandler.addApointment(newAppointment)){
+                Toast.makeText(this, R.string.saved, Toast.LENGTH_LONG).show();
+                /*Intent myIntent = new Intent(this,MainActivity.class);
+                startActivity(myIntent);*/
+            }else{
+                Toast.makeText(this, R.string.failedToSave, Toast.LENGTH_LONG).show();
+            }
         }
-
-        Toast.makeText(this, R.string.appointmentSaved, Toast.LENGTH_LONG).show();
-
 
     }
 
 
-//    import customer name and phone number from database.
+//    **Need to import customer name and phone number from database.
     public void importCustomer(View view) {
 
     }

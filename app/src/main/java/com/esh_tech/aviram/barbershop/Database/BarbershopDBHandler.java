@@ -66,9 +66,6 @@ public class BarbershopDBHandler {
 
 
 
-
-
-
 //    /*Appointments Table.*/
 
 //    Add an'Appointment to Database..
@@ -80,10 +77,14 @@ public boolean addApointment(Appointment newAppointment){
     ContentValues columnValues = new ContentValues();
 
     columnValues.put(BarbershopConstants.APPOINTMENT_ID,newAppointment.getAppointmentID());
+    columnValues.put(BarbershopConstants.APPOINTMENT_MINUTE,newAppointment.getMinutes());
     columnValues.put(BarbershopConstants.APPOINTMENT_HOUR,newAppointment.getHour());
     columnValues.put(BarbershopConstants.APPOINTMENT_DAY,newAppointment.getDay());
     columnValues.put(BarbershopConstants.APPOINTMENT_MONTH,newAppointment.getMonth());
     columnValues.put(BarbershopConstants.APPOINTMENT_YEAR,newAppointment.getYear());
+    columnValues.put(BarbershopConstants.APPOINTMENT_ID,1);
+    columnValues.put(BarbershopConstants.CUSTOMER_NAME,"BBHB");
+
 
     long result =db.insert(BarbershopConstants.APPOINTMENTS_TABLE_NAME,null,columnValues);
     db.close();

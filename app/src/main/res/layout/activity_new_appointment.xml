@@ -60,7 +60,9 @@
         app:srcCompat="@drawable/checkmark48"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.18" />
+        app:layout_constraintHorizontal_bias="0.181"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/etNewCustomerPhone" />
 
     <TextView
         android:id="@+id/textView"
@@ -110,9 +112,12 @@
         android:layout_height="wrap_content"
         android:text="@string/customerName"
         android:textSize="24sp"
-        tools:layout_editor_absoluteX="148dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/etNewCustomerName" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/btTime"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/textView37"
@@ -120,8 +125,16 @@
         android:layout_height="wrap_content"
         android:text="@string/phone"
         android:textSize="24sp"
-        tools:layout_editor_absoluteY="320dp"
-        tools:layout_editor_absoluteX="164dp" />
+        android:layout_marginTop="7dp"
+        app:layout_constraintTop_toBottomOf="@+id/etNewCustomerName"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.13999999" />
 
     <EditText
         android:id="@+id/etNewCustomerName"
@@ -133,8 +146,11 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="7dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView27"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView37" />
+        app:layout_constraintVertical_bias="0.13" />
 
     <EditText
         android:id="@+id/etNewCustomerPhone"
@@ -151,7 +167,7 @@
         android:layout_marginBottom="7dp"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/textView37"
-        app:layout_constraintVertical_bias="0.019" />
+        app:layout_constraintVertical_bias="0.07999998" />
 
     <ImageButton
         android:id="@+id/imageButton11"
@@ -160,11 +176,15 @@
         android:onClick="importCustomer"
         app:srcCompat="@drawable/plus48"
         android:background="@color/background"
-        tools:layout_editor_absoluteY="272dp"
         app:layout_constraintRight_toLeftOf="@+id/etNewCustomerName"
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintBottom_toBottomOf="@+id/etNewCustomerName"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintTop_toTopOf="@+id/etNewCustomerName"
+        android:layout_marginTop="0dp" />
 
     <ImageButton
         android:id="@+id/imageButton13"
@@ -179,6 +199,8 @@
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.8" />
+        app:layout_constraintHorizontal_bias="0.8"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/etNewCustomerPhone" />
 
 </android.support.constraint.ConstraintLayout>

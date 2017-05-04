@@ -31,6 +31,7 @@ public class BarbershopConstants {
     public static final String APPOINTMENT_MONTH = "APPOINTMENT_MONTH";
     public static final String APPOINTMENT_DAY= "APPOINTMENT_DAY";
     public static final String APPOINTMENT_HOUR= "APPOINTMENT_HOUR";
+    public static final String APPOINTMENT_MINUTE= "APPOINTMENT_MINUTE";
     /*public static final String CUSTOMER_ID = "CUSTOMERS_ID";
     public static final String CUSTOMER_NAME = "CUSTOMER_NAME";*/
 
@@ -41,8 +42,8 @@ public class BarbershopConstants {
     public static final String PRODUCT_ID= "PRODUCT_ID";
 
     public static final String PRODUCT_NAME = "PRODUCT_NAME";
-    public static final String PRODUCT_QUANTITY ="PRODUCT_QUANTITY";
-    public static final String PRODUCT_PRICE ="PRODUCT_PRICE";
+    public static final String PRODUCT_QUANTITY = "PRODUCT_QUANTITY";
+    public static final String PRODUCT_PRICE = "PRODUCT_PRICE";
 
 
 }

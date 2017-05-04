@@ -95,6 +95,9 @@
     <string name="productName">שם מוצר</string>
     <string name="empty">ריק</string>
     <string name="emptyfield">שדות ריקים</string>
+    <string name="saved">נשמר</string>
+    <string name="failedToSave">שמירה נכשלה</string>
+    <string name="appointmentsScreenTitle">תורים</string>
 
 
     <string-array name="spinner_hours">
