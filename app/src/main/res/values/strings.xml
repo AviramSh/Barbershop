@@ -94,6 +94,7 @@
     <string name="quantity">כמות</string>
     <string name="productName">שם מוצר</string>
     <string name="empty">ריק</string>
+    <string name="emptyfield">שדות ריקים</string>
 
 
     <string-array name="spinner_hours">

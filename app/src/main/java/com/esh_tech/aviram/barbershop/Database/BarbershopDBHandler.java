@@ -4,10 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.media.session.PlaybackState;
 
 import com.esh_tech.aviram.barbershop.Appointment;
 import com.esh_tech.aviram.barbershop.Codes.Customer;
+import com.esh_tech.aviram.barbershop.Codes.Product;
 
 import java.util.ArrayList;
 
@@ -79,14 +79,16 @@ public boolean addApointment(Appointment newAppointment){
 //        Quer
     ContentValues columnValues = new ContentValues();
 
-    /*columnValues.put(BarbershopConstants.CUSTOMER_ID ,"1");
-    columnValues.put(BarbershopConstants.CUSTOMER_NAME ,newAppointment.getName());
-    columnValues.put(BarbershopConstants.CUSTOMER_PHONE ,newAppointment.getPhone());
+    columnValues.put(BarbershopConstants.APPOINTMENT_ID,newAppointment.getAppointmentID());
+    columnValues.put(BarbershopConstants.APPOINTMENT_HOUR,newAppointment.getHour());
+    columnValues.put(BarbershopConstants.APPOINTMENT_DAY,newAppointment.getDay());
+    columnValues.put(BarbershopConstants.APPOINTMENT_MONTH,newAppointment.getMonth());
+    columnValues.put(BarbershopConstants.APPOINTMENT_YEAR,newAppointment.getYear());
 
-    long result =db.insert(BarbershopConstants.CUSTOMERS_TABLE_NAME,null,columnValues);
+    long result =db.insert(BarbershopConstants.APPOINTMENTS_TABLE_NAME,null,columnValues);
     db.close();
 
-    return (result != -1);*/return true;
+    return (result != -1);
 }
 
 //Import all day appointments from Database
@@ -97,5 +99,41 @@ public ArrayList<Appointment> getDayAppointments(int year_x, int month_x, int da
 
     return appointmentsList;
 }
+
+
+
+
+
+
+
+//    /*Products Table.*/
+
+    //    Add an'Appointment to Database..
+    public boolean addProduct(Product newProduct){
+//        Opent the connection to database
+    SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+//        Quer
+    ContentValues columnValues = new ContentValues();
+
+    //columnValues.put(BarbershopConstants.PRODUCT_ID ,"1");
+    columnValues.put(BarbershopConstants.PRODUCT_NAME ,newProduct.getName());
+    columnValues.put(BarbershopConstants.PRODUCT_QUANTITY ,newProduct.getQuantity());
+    columnValues.put(BarbershopConstants.PRODUCT_PRICE ,newProduct.getPrice());
+
+    long result =db.insert(BarbershopConstants.PRODUCT_TABLE_NAME,null,columnValues);
+    db.close();
+
+    return (result != -1);
+    }
+
+    //Import all day appointments from Database
+    public ArrayList<Product> getAllProducts(int year_x, int month_x, int day_x){
+
+        ArrayList<Product> productsList =new ArrayList<Product>();
+
+
+        return productsList;
+    }
 
 }

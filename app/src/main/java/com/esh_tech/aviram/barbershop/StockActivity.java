@@ -86,6 +86,8 @@ public class StockActivity extends AppCompatActivity {
                     Toast.makeText(StockActivity.this, "Fields are not full", Toast.LENGTH_LONG).show();
                 }else{
                     allProducts.add(new Product(1,name , Integer.parseInt(quantity) ,Float.parseFloat(price)));
+                    Toast.makeText(StockActivity.this, name+" are saved", Toast.LENGTH_LONG).show();
+                    productsAdapter.notifyDataSetChanged();
                 }
             }
         });

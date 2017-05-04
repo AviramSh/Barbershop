@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -176,8 +177,22 @@ public class NewAppointmentActivity extends AppCompatActivity {
     public void saveAppointment(View view) {
 
 //        need if
+
+        TextView cName = (TextView)findViewById(R.id.etNewCustomerName);
+        TextView cPhone = (TextView)findViewById(R.id.etNewCustomerPhone);
+
+        if(cName.getText().toString().isEmpty()||cPhone.getText().toString().isEmpty()){
+            Toast.makeText(this, R.string.emptyfield, Toast.LENGTH_SHORT).show();
+        }else{
+            Appointment newAppointment = new Appointment(minute_x,hour_x,day_x,month_x,year_x,
+                    cName.getText().toString(),Integer.parseInt(cPhone.getText().toString()));
+        }
+
         Toast.makeText(this, R.string.appointmentSaved, Toast.LENGTH_LONG).show();
+
+
     }
+
 
 //    import customer name and phone number from database.
     public void importCustomer(View view) {

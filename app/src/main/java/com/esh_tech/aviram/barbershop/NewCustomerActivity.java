@@ -94,7 +94,7 @@ public class NewCustomerActivity extends AppCompatActivity {
 
 
 
-        //dbHandler.addCustomer(c);
+        dbHandler.addCustomer(c);
 
 
 

@@ -7,16 +7,21 @@ package com.esh_tech.aviram.barbershop;
 public class Appointment {
 
     private int appointmentID;
+
     private int year;
     private int month;
     private int  day;
+
     private int  hour;
     private int minutes;
-    private int haircutTime;
-    private String customerName;
-    private String customerID;
 
-    public Appointment(int appointmentID, int year, int month, int day, int hour, int minutes, int haircutTime, String customerName, String customerID) {
+    private int haircutTime;
+
+    private String customerName;
+    private int customerID;
+
+//    Constructor
+    public Appointment(int appointmentID, int year, int month, int day, int hour, int minutes, int haircutTime, String customerName, int customerID) {
         this.appointmentID = appointmentID;
         this.year = year;
         this.month = month;
@@ -28,7 +33,22 @@ public class Appointment {
         this.customerID = customerID;
     }
 
+    public Appointment() {
 
+    }
+
+    public Appointment(int minutes, int hour, int day,int month, int year, String customerName, int customerID) {
+        this.minutes = minutes;
+        this.hour = hour;
+        this.day = day;
+        this.month = month;
+        this.year = year;
+        this.customerName = customerName;
+        this.customerID = customerID;
+    }
+
+
+    //    Getter and Setter
     public int getAppointmentID() {
         return appointmentID;
     }
@@ -93,11 +113,11 @@ public class Appointment {
         this.customerName = customerName;
     }
 
-    public String getCustomerID() {
+    public int getCustomerID() {
         return customerID;
     }
 
-    public void setCustomerID(String customerID) {
+    public void setCustomerID(int customerID) {
         this.customerID = customerID;
     }
 }

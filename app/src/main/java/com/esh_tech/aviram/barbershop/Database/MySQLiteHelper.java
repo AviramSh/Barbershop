@@ -4,8 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.esh_tech.aviram.barbershop.Codes.Barbershop;
-
 /**
  * Created by AVIRAM on 22/04/2017.
  */
@@ -39,9 +37,10 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 BarbershopConstants.CUSTOMER_NAME +" TEXT) ");
 
 
-        db.execSQL("CREATE TABLE "+ BarbershopConstants.STOCK_TABLE_NAME +
+        db.execSQL("CREATE TABLE "+ BarbershopConstants.PRODUCT_TABLE_NAME +
                 "("+BarbershopConstants.PRODUCT_ID +" INTEGER AUTOINCREMENT, "+
                 BarbershopConstants.PRODUCT_NAME +" TEXT, "+
+                BarbershopConstants.PRODUCT_PRICE +" INTEGER, "+
                 BarbershopConstants.PRODUCT_QUANTITY +" INTEGER ) ");
 
 

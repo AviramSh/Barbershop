@@ -37,7 +37,7 @@ public class BarbershopConstants {
 
 
     /*Stock table*/
-    public static final String STOCK_TABLE_NAME = "STOCK";
+    public static final String PRODUCT_TABLE_NAME = "STOCK";
     public static final String PRODUCT_ID= "PRODUCT_ID";
 
     public static final String PRODUCT_NAME = "PRODUCT_NAME";
