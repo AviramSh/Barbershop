@@ -108,7 +108,7 @@ public ArrayList<Appointment> getDayAppointments(int year_x, int month_x, int da
 
 //    /*Products Table.*/
 
-    //    Add an'Appointment to Database..
+    //    Add an'Appointment to Database..+_+
     public boolean addProduct(Product newProduct){
 //        Opent the connection to database
     SQLiteDatabase db = dbHelper.getWritableDatabase();
