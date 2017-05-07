@@ -98,6 +98,8 @@
     <string name="saved">נשמר</string>
     <string name="failedToSave">שמירה נכשלה</string>
     <string name="appointmentsScreenTitle">תורים</string>
+    <string name="emailEx">AAA@MMM.com</string>
+    <string name="send">שלח</string>
 
 
     <string-array name="spinner_hours">

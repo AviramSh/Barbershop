@@ -3,4 +3,5 @@
     <string name="saved">נשמר</string>
     <string name="failedToSave">שמירה נכשלה</string>
     <string name="appointmentsScreenTitle">תורים</string>
+    <string name="send">שלח</string>
 </resources>

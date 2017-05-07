@@ -17,9 +17,6 @@ import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 public class NewCustomerActivity extends AppCompatActivity {
 
     /*
-
-
-
     private boolean gender;
     private boolean remainder;
     private Bitmap CustomerPhoto;*/
@@ -88,13 +85,13 @@ public class NewCustomerActivity extends AppCompatActivity {
         if (!testString.equals("Error :")) {
             Toast.makeText(this, testString, Toast.LENGTH_LONG).show();
         }else{
-            Intent myIntent = new Intent(this,CustomersListActivity.class);
-            startActivity(myIntent);
+            if(dbHandler.addCustomer(c)){
+                Intent myIntent = new Intent(this, CustomersListActivity.class);
+                startActivity(myIntent);
+            }else{
+                Toast.makeText(this, R.string.failedToSave, Toast.LENGTH_LONG).show();
+            }
         }
-
-
-
-        dbHandler.addCustomer(c);
 
 
 
