@@ -1,8 +1,11 @@
 package com.esh_tech.aviram.barbershop;
 
+import android.Manifest;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,8 +14,11 @@ import android.provider.ContactsContract;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Codes.Customer;
 
@@ -31,6 +38,7 @@ import java.util.List;
 
 public class FillCustomersActivity extends AppCompatActivity {
 
+    private int MY_PERMISSIONS_REQUEST_IMPORT_CONTACT = 1;
     private static final String TAG = "Aviram";//FillCustomersActivity.class.getSimpleName();
     private static final int REQUEST_CODE_PICK_CONTACTS = 1;
     private Uri uriContact;
@@ -111,17 +119,59 @@ public class FillCustomersActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_CODE_PICK_CONTACTS && resultCode == RESULT_OK) {
-            Log.d(TAG, "Response: " + data.toString());
-            uriContact = data.getData();
+//        Check Permission
 
-            retrieveContactName();
-            retrieveContactNumber();
-            retrieveContactPhoto();
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this , new String[]{Manifest.permission.READ_CONTACTS},
+                    MY_PERMISSIONS_REQUEST_IMPORT_CONTACT);
+        }else {
 
+
+            if (requestCode == REQUEST_CODE_PICK_CONTACTS && resultCode == RESULT_OK) {
+                Log.d(TAG, "Response: " + data.toString());
+                uriContact = data.getData();
+
+                retrieveContactName();
+//                retrieveContactNumber();
+//                retrieveContactPhoto();
+
+            }
         }
     }
 
+//    Test
+    private void retrieveContactName() {
+
+        String contactID = null;
+        String contactName = null;
+        String contactPhone = null;
+
+        // querying contact data store
+        Cursor cursor = getContentResolver().query(uriContact, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+
+            // DISPLAY_NAME = The display name for the contact.
+            // HAS_PHONE_NUMBER =   An indicator of whether this contact has at least one phone number.
+
+            contactID = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+            contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+
+            Cursor phoneCursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,
+                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "= ?",new String[]{contactID},null);
+
+            contactPhone = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+
+        }
+
+        cursor.close();
+
+        Log.d(TAG, "Contact Name: " + contactName);
+
+        Toast.makeText(this, contactName+" "+contactPhone, Toast.LENGTH_SHORT).show();
+
+    }
 
     private void retrieveContactPhoto() {
 
@@ -182,6 +232,7 @@ public class FillCustomersActivity extends AppCompatActivity {
 
         Log.d(TAG, "Contact Phone Number: " + contactNumber);
     }
+/*
     private void retrieveContactName() {
 
         String contactName = null;
@@ -202,4 +253,5 @@ public class FillCustomersActivity extends AppCompatActivity {
         Log.d(TAG, "Contact Name: " + contactName);
 
     }
+    */
 }

@@ -12,16 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EdgeEffect;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.esh_tech.aviram.barbershop.Codes.Customer;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +26,7 @@ public class CustomersListActivity extends AppCompatActivity {
 
     ArrayList<Customer> allCustomers =new ArrayList<Customer>();
     ListView customerListView;
-    MyCustomersAdapter usersAdaper;
+    MyCustomersAdapter usersAdapter;
 
 //    Database
     BarbershopDBHandler dbHandler;
@@ -39,6 +35,8 @@ public class CustomersListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_list);
+
+        this.setTitle(R.string.customers);
 
 //        database
         dbHandler = new BarbershopDBHandler(this);
@@ -51,9 +49,9 @@ public class CustomersListActivity extends AppCompatActivity {
         populateCustomers();
 
 //        Connect adapter with custom view
-        usersAdaper = new MyCustomersAdapter(this,R.layout.custom_contact_row,allCustomers);
+        usersAdapter = new MyCustomersAdapter(this,R.layout.custom_contact_row,allCustomers);
 
-        customerListView.setAdapter(usersAdaper);
+        customerListView.setAdapter(usersAdapter);
 
 
 
@@ -62,20 +60,21 @@ public class CustomersListActivity extends AppCompatActivity {
     //Testing customer list
     private void populateCustomers() {
 
-
-        allCustomers = dbHandler.getAllCustomers();
 /*
-        allCustomers.add(new Customer("Aviram","Sarabi","0506792353",true));
-        allCustomers.add(new Customer("Aviram","Sarabi","0506792353",true));
-        allCustomers.add(new Customer("Aviram","Sarabi","0506792353",false));
-        allCustomers.add(new Customer("Aviram","Sarabi","0506792353",true));
-        allCustomers.add(new Customer("Aviram","Sarabi","0506792353",true));
-        allCustomers.add(new Customer("Aviram","Sarabi","0506792353",false));
-        allCustomers.add(new Customer("Aviram","Sarabi","0506792353",false));
-        allCustomers.add(new Customer("Aviram","Sarabi","0506792353",true));
-        allCustomers.add(new Customer("Aviram","Sarabi","0506792353",true));
-        allCustomers.add(new Customer("Aviram","Sarabi","0506792353",false));
-        allCustomers.add(new Customer("Aviram","Sarabi","0506792353",true));*/
+        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",true));
+        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",false));
+        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",true));
+        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",false));
+        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",true));
+        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",true));
+        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",false));
+        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",false));
+        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",true));
+        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",true));
+        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",false));
+        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",true));
+*/
+        allCustomers = dbHandler.getAllCustomers();
     }
 
     // *Create new customer

@@ -35,6 +35,8 @@ public class StockActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock);
 
+        this.setTitle(R.string.stock);
+
         //        Connect list view
         customerListView =(ListView)findViewById(R.id.fillProductLv);
 
@@ -48,6 +50,7 @@ public class StockActivity extends AppCompatActivity {
 
 
     }
+
 
     private void populateProducts() {
 

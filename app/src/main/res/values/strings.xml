@@ -84,7 +84,7 @@
     <string name="logout">התנתק</string>
     <string name="savePassword">שמור סיסמה</string>
     <string name="repassword">חזור על הסיסמה</string>
-    <string name="appointments">תורות ב</string>
+    <string name="appointments">תורות</string>
     <string name="male">גבר</string>
     <string name="female">אישה</string>
     <string name="email">אייימל</string>
@@ -100,6 +100,7 @@
     <string name="appointmentsScreenTitle">תורים</string>
     <string name="emailEx">AAA@MMM.com</string>
     <string name="send">שלח</string>
+    <string name="newAppointment">תור חדש</string>
 
 
     <string-array name="spinner_hours">

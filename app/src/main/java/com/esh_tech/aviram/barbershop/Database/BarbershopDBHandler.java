@@ -31,6 +31,7 @@ public class BarbershopDBHandler {
 
     //Add customers to Database.
     public boolean addCustomer(Customer newCustomer){
+
 //        Opent the connection to database
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -69,21 +70,21 @@ public class BarbershopDBHandler {
 //    /*Appointments Table.*/
 
 //    Add an'Appointment to Database..
-public boolean addApointment(Appointment newAppointment){
+    public boolean addAppointment(Appointment newAppointment){
 //        Opent the connection to database
     SQLiteDatabase db = dbHelper.getWritableDatabase();
 
 //        Quer
     ContentValues columnValues = new ContentValues();
 
-    columnValues.put(BarbershopConstants.APPOINTMENT_ID,newAppointment.getAppointmentID());
+//    columnValues.put(BarbershopConstants.APPOINTMENT_ID,newAppointment.getAppointmentID());
     columnValues.put(BarbershopConstants.APPOINTMENT_MINUTE,newAppointment.getMinutes());
     columnValues.put(BarbershopConstants.APPOINTMENT_HOUR,newAppointment.getHour());
     columnValues.put(BarbershopConstants.APPOINTMENT_DAY,newAppointment.getDay());
     columnValues.put(BarbershopConstants.APPOINTMENT_MONTH,newAppointment.getMonth());
     columnValues.put(BarbershopConstants.APPOINTMENT_YEAR,newAppointment.getYear());
-    columnValues.put(BarbershopConstants.APPOINTMENT_ID,1);
-    columnValues.put(BarbershopConstants.CUSTOMER_NAME,"BBHB");
+    columnValues.put(BarbershopConstants.CUSTOMER_ID,1);
+    columnValues.put(BarbershopConstants.CUSTOMER_NAME,newAppointment.getCustomerName());
 
 
     long result =db.insert(BarbershopConstants.APPOINTMENTS_TABLE_NAME,null,columnValues);
@@ -93,13 +94,22 @@ public boolean addApointment(Appointment newAppointment){
 }
 
 //Import all day appointments from Database
-public ArrayList<Appointment> getDayAppointments(int year_x, int month_x, int day_x){
+    public ArrayList<Appointment> getDayAppointments(int year_x, int month_x, int day_x){
 
     ArrayList<Appointment> appointmentsList =new ArrayList<Appointment>();
 
 
     return appointmentsList;
 }
+
+
+    public ArrayList<Appointment> getNextAppointment() {
+
+        ArrayList<Appointment> appointmentsList =new ArrayList<Appointment>();
+
+        return appointmentsList;
+    }
+
 
 
 
@@ -136,5 +146,4 @@ public ArrayList<Appointment> getDayAppointments(int year_x, int month_x, int da
 
         return productsList;
     }
-
 }

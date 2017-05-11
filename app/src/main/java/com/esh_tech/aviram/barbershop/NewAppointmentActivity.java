@@ -54,7 +54,7 @@ public class NewAppointmentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_appointment);
-        this.setTitle(R.string.appointmentsScreenTitle);
+        this.setTitle(R.string.newAppointment);
 
         //        database
         dbHandler = new BarbershopDBHandler(this);
@@ -190,7 +190,7 @@ public class NewAppointmentActivity extends AppCompatActivity {
         }else{
             Appointment newAppointment = new Appointment(minute_x,hour_x,day_x,month_x,year_x,
                     cName.getText().toString(),Integer.parseInt(cPhone.getText().toString()));
-            if(dbHandler.addApointment(newAppointment)){
+            if(dbHandler.addAppointment(newAppointment)){
                 Toast.makeText(this, R.string.saved, Toast.LENGTH_LONG).show();
                 /*Intent myIntent = new Intent(this,MainActivity.class);
                 startActivity(myIntent);*/

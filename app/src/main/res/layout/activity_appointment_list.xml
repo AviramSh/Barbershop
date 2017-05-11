@@ -17,7 +17,8 @@
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp" />
 
     <Button
         android:id="@+id/button5"
@@ -32,11 +33,13 @@
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="278dp"
+        android:layout_width="313dp"
+        android:layout_height="275dp"
         android:background="#ffff"
         android:orientation="vertical"
         android:id="@+id/linearLayout7"
@@ -47,24 +50,26 @@
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.502"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <EditText
+            <TextView
                 android:id="@+id/editText16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
                 android:text="@string/nameTV"
                 android:textSize="24sp" />
 
-            <EditText
+            <TextView
                 android:id="@+id/editText14"
                 android:layout_width="94dp"
                 android:layout_height="wrap_content"
@@ -76,132 +81,13 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <ListView
+            android:id="@+id/lvAppointment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="148dp"
+            tools:layout_editor_absoluteY="160dp" />
 
-            <EditText
-                android:id="@+id/editText19"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="אלון משה" />
-
-            <EditText
-                android:id="@+id/editText18"
-                android:layout_width="96dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="textPersonName"
-                android:text="15:30" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/editText19"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="ללא תור" />
-
-            <EditText
-                android:id="@+id/editText18"
-                android:layout_width="96dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="textPersonName"
-                android:text="15:45" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/editText19"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="אלעד חיו" />
-
-            <EditText
-                android:id="@+id/editText18"
-                android:layout_width="96dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="textPersonName"
-                android:text="16:00" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/editText19"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="צחי " />
-
-            <EditText
-                android:id="@+id/editText18"
-                android:layout_width="96dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="textPersonName"
-                android:text="16:15" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/editText19"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:textColor="#1eff00"
-                android:inputType="textPersonName"
-                android:text="@string/freeturn" />
-
-            <EditText
-                android:id="@+id/editText18"
-                android:layout_width="96dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="textPersonName"
-                android:text="16:30"
-                android:textColor="#1eff00" />
-
-        </LinearLayout>
     </LinearLayout>
 
     <TextView
@@ -212,7 +98,8 @@
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="@+id/radioButton5"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout7" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout7"
+        android:layout_marginEnd="8dp" />
 
     <ImageButton
         android:id="@+id/imageButton27"
@@ -226,7 +113,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="33dp"
-        app:layout_constraintHorizontal_bias="0.39" />
+        app:layout_constraintHorizontal_bias="0.39"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="8dp" />
 
     <RadioButton
         android:id="@+id/radioButton3"
@@ -242,7 +131,9 @@
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.93" />
+        app:layout_constraintHorizontal_bias="0.93"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <RadioButton
         android:id="@+id/radioButton4"
@@ -254,7 +145,8 @@
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout7"
         app:layout_constraintRight_toLeftOf="@+id/radioButton5"
-        android:layout_marginRight="8dp" />
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp" />
 
     <RadioButton
         android:id="@+id/radioButton5"
@@ -267,7 +159,8 @@
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout7"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp" />
 
     <ImageButton
         android:id="@+id/imageButton38"
@@ -282,7 +175,9 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
         app:layout_constraintTop_toTopOf="@+id/button5"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <ImageButton
         android:id="@+id/imageButton39"
@@ -297,6 +192,8 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
         app:layout_constraintTop_toTopOf="@+id/button5"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
 </android.support.constraint.ConstraintLayout>
