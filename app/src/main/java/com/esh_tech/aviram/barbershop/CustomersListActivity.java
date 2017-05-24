@@ -1,20 +1,24 @@
 package com.esh_tech.aviram.barbershop;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Codes.Customer;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
@@ -43,16 +47,57 @@ public class CustomersListActivity extends AppCompatActivity {
 
 
 //        Connect list view
-        customerListView =(ListView)findViewById(R.id.customersLv);
+        customerListView = (ListView) findViewById(R.id.customersLv);
 
 //        fill components
         populateCustomers();
 
 //        Connect adapter with custom view
-        usersAdapter = new MyCustomersAdapter(this,R.layout.custom_contact_row,allCustomers);
+        usersAdapter = new MyCustomersAdapter(this, R.layout.custom_contact_row, allCustomers);
 
         customerListView.setAdapter(usersAdapter);
 
+
+
+        customerListView.setOnItemLongClickListener(
+                new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                        Toast.makeText(CustomersListActivity.this, "Edit customer", Toast.LENGTH_LONG).show();
+                        editCustomer(allCustomers.get(position));
+                        return false;
+                    }
+                }
+        );
+    }
+
+    private void editCustomer(final Customer customer) {
+        //alert box with Edit / delete / new appointment
+
+            final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+
+            mBuilder.setNeutralButton(R.string.edit, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(CustomersListActivity.this, R.string.edit, Toast.LENGTH_LONG).show();
+                    Intent myIntent = new Intent(CustomersListActivity.this,CustomerActivity.class);
+                    myIntent.putExtra("customer",customer.getId());
+                    startActivity(myIntent);
+                }
+            });
+
+
+            mBuilder.setNegativeButton(R.string.newAppointment, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    Toast.makeText(CustomersListActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+                }
+            });
+
+
+            AlertDialog dialog = mBuilder.create();
+            dialog.show();
 
 
     }
@@ -75,6 +120,8 @@ public class CustomersListActivity extends AppCompatActivity {
         dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",true));
 */
         allCustomers = dbHandler.getAllCustomers();
+        customerListView.deferNotifyDataSetChanged();
+
     }
 
     // *Create new customer
@@ -104,14 +151,13 @@ public class CustomersListActivity extends AppCompatActivity {
             }
 
             TextView tvName = (TextView) convertView.findViewById(R.id.customerNameET);
-            TextView tvLastname = (TextView) convertView.findViewById(R.id.customerNameET);
-            TextView tvPhone = (TextView)convertView.findViewById(R.id.customerNameET);
+            TextView tvPhone = (TextView)convertView.findViewById(R.id.customerPhoneEt);
             ImageView customerIcon = (ImageView)convertView.findViewById(R.id.customerIconIv);
 
 
             //Data
             tvName.setText(customer.getName());
-            tvPhone.setText(customer.getPhone());
+            tvPhone.setText(String.valueOf(customer.getPhone()));
 
             if(customer.isGender())customerIcon.setImageResource(R.drawable.usermale48);
             else customerIcon.setImageResource(R.drawable.userfemale48);

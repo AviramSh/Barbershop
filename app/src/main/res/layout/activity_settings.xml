@@ -11,188 +11,206 @@
     <LinearLayout
         android:layout_width="368dp"
         android:layout_height="495dp"
+        android:padding="5dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="32dp"
-        android:layout_marginRight="32dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="32dp"
-        app:layout_constraintLeft_toLeftOf="parent">
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
 
         <LinearLayout
+            android:id="@+id/layProfile"
+            android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="goUserProfile"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView35"
+                android:id="@+id/tvProfile"
                 android:layout_width="wrap_content"
-                android:layout_height="61dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/myProfile"
                 android:textSize="24sp" />
 
-            <ImageButton
-                android:id="@+id/imageButton40"
-                android:layout_width="57dp"
-                android:layout_height="57dp"
+            <ImageView
+                android:id="@+id/ivProfile"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 app:srcCompat="@drawable/usermale48" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layHaircut"
+            android:padding="5dp"
+            android:onClick="openHaircutSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView35"
+                android:id="@+id/tvHaircut"
                 android:layout_width="wrap_content"
-                android:layout_height="61dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/haircuts"
                 android:textSize="24sp" />
 
-            <ImageButton
-                android:id="@+id/imageButton40"
-                android:layout_width="57dp"
-                android:layout_height="57dp"
+            <ImageView
+                android:id="@+id/ibHaircut"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 app:srcCompat="@drawable/barbershop" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layBarbershop"
+            android:padding="5dp"
+            android:onClick="open"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView35"
+                android:id="@+id/tvBarbershop"
                 android:layout_width="wrap_content"
-                android:layout_height="61dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/myBarbershop"
                 android:textSize="24sp" />
 
-            <ImageButton
-                android:id="@+id/imageButton40"
-                android:layout_width="57dp"
-                android:layout_height="57dp"
+            <ImageView
+                android:id="@+id/ivBarbershop"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 app:srcCompat="@drawable/business48" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layWorkingDays"
+            android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView35"
+                android:id="@+id/tvWorkingDays"
                 android:layout_width="wrap_content"
-                android:layout_height="61dp"
+                android:onClick="openWorkingDays"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/workdays"
                 android:textSize="24sp" />
 
-            <ImageButton
-                android:id="@+id/imageButton40"
-                android:layout_width="57dp"
-                android:layout_height="57dp"
+            <ImageView
+                android:id="@+id/ivWorkingDays"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 app:srcCompat="@drawable/calendar" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layPassword"
+            android:padding="5dp"
+            android:onClick="openPasswordSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView35"
+                android:id="@+id/tvPassword"
                 android:layout_width="wrap_content"
-                android:layout_height="61dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/changePassword"
                 android:textSize="24sp" />
 
-            <ImageButton
-                android:id="@+id/imageButton40"
-                android:layout_width="57dp"
-                android:layout_height="57dp"
+            <ImageView
+                android:id="@+id/ivPassword"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 app:srcCompat="@drawable/password50" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layMessages"
+            android:padding="5dp"
+            android:onClick="openMessageSetting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView35"
+                android:id="@+id/tvMessages"
                 android:layout_width="wrap_content"
-                android:layout_height="61dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/messages"
                 android:textSize="24sp" />
 
-            <ImageButton
-                android:id="@+id/imageButton40"
-                android:layout_width="57dp"
-                android:layout_height="57dp"
+            <ImageView
+                android:id="@+id/ivMessages"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 app:srcCompat="@drawable/message50" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layAbout"
+            android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView35"
+                android:id="@+id/tvAbout"
                 android:layout_width="wrap_content"
-                android:layout_height="61dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/about"
                 android:textSize="24sp" />
 
-            <ImageButton
-                android:id="@+id/imageButton40"
-                android:layout_width="57dp"
-                android:layout_height="57dp"
+            <ImageView
+                android:id="@+id/imAbout"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 app:srcCompat="@drawable/about50" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layLogout"
+            android:padding="5dp"
+            android:onClick="logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView35"
+                android:id="@+id/tvLogout"
                 android:layout_width="wrap_content"
-                android:layout_height="61dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/logout"
                 android:textSize="24sp" />
 
-            <ImageButton
-                android:id="@+id/imageButton40"
-                android:layout_width="57dp"
-                android:layout_height="57dp"
+            <ImageView
+                android:id="@+id/ivLogout"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 app:srcCompat="@drawable/exit40" />
 
         </LinearLayout>

@@ -3,16 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:background="#ffff"
+    android:padding="10dp"
     android:weightSum="100"
     android:layout_height="match_parent">
 
 
     <ImageView
         android:id="@+id/customerIconIv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="5dp"
+        android:layout_gravity="center"
         android:layout_weight="20"
-        android:layout_gravity="center_vertical"
         app:srcCompat="@drawable/usermale48" />
 
     <LinearLayout
@@ -27,15 +29,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:gravity="start"
-            android:text="TextView" />
+            android:text="@string/emptyField" />
 
-        <TextView
-            android:id="@+id/customerLastNameEt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="50"
-            android:gravity="start"
-            android:text="TextView" />
 
         <TextView
             android:id="@+id/customerPhoneEt"
@@ -43,6 +38,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:gravity="start"
-            android:text="TextView" />
+            android:text="@string/emptyField" />
     </LinearLayout>
 </LinearLayout>

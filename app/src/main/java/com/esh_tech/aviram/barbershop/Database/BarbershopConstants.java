@@ -46,4 +46,17 @@ public class BarbershopConstants {
     public static final String PRODUCT_PRICE = "PRODUCT_PRICE";
 
 
+    /*Shared Preferences*/
+    public static final String USER_NAME ="USER_NAME";
+    public static final String USER_LAST_NAME ="USER_LAST_NAME";
+    public static final String USER_PHONE = "USER_PHONE";
+    public static final String USER_PASSWORD="USER_PASSWORD";
+    public static final String AUTO_LOGIN="AUTO_LOGIN";
+
+    public static final String USER_BUSINESS_NAME ="USER_BUSINESS_NAME";
+    public static final String USER_BUSINESS_PHONE="USER_BUSINESS_PHONE";
+    public static final String USER_BUSINESS_ADDRESS= "USER_BUSINESS_ADDRESS";
+
+
+
 }

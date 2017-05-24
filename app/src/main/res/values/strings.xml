@@ -94,13 +94,18 @@
     <string name="quantity">כמות</string>
     <string name="productName">שם מוצר</string>
     <string name="empty">ריק</string>
-    <string name="emptyfield">שדות ריקים</string>
+    <string name="emptyField">שדות ריקים</string>
     <string name="saved">נשמר</string>
     <string name="failedToSave">שמירה נכשלה</string>
     <string name="appointmentsScreenTitle">תורים</string>
     <string name="emailEx">AAA@MMM.com</string>
     <string name="send">שלח</string>
     <string name="newAppointment">תור חדש</string>
+    <string name="newCustomer">לקוח חדש</string>
+    <string name="error">שגיאה</string>
+    <string name="edit">ערוך</string>
+    <string name="incorrectPassword">Incorrect Password</string>
+    <string name="enter">היכנס</string>
 
 
     <string-array name="spinner_hours">

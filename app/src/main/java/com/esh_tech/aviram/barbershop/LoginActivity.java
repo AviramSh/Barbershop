@@ -20,20 +20,20 @@ public class LoginActivity extends AppCompatActivity {
         String username = settings.getString("username","");
         boolean savePassword = settings.getBoolean("savePassword",false);
 
-        if(username != null && !username.equals("")){
-            if (savePassword) {
-                //Login with User password
-                finish();
-                Intent myIntent = new Intent(this, MainActivity.class);
-                startActivity(myIntent);
+            if(username != null && !username.equals("")){
+                if (savePassword) {
+                    //Login with User password
+                    finish();
+                    Intent myIntent = new Intent(this, MainActivity.class);
+                    startActivity(myIntent);
+                }else{
+                    EditText usernameEt = (EditText)findViewById(R.id.usernameET);
+                    usernameEt.setText(username);
+                }
             }else{
-                EditText usernameEt = (EditText)findViewById(R.id.usernameET);
-                usernameEt.setText(username);
+                this.finish();
+                Intent myIntent = new Intent(this, UserRegistrationActivity.class);
+                startActivity(myIntent);
             }
-        }else{
-            finish();
-            Intent myIntent = new Intent(this, UserRegistrationActivity.class);
-            startActivity(myIntent);
-        }
     }
 }

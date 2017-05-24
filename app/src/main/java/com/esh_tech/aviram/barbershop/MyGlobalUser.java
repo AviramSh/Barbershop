@@ -16,6 +16,9 @@ public class MyGlobalUser extends Application {
     private String businessPhone;
     private String businessAddress;
 
+    private boolean register;
+
+
 
 
     public String getName() {
@@ -74,15 +77,11 @@ public class MyGlobalUser extends Application {
         this.businessAddress = businessAddress;
     }
 
-    @Override
-    public String toString() {
-        return "MyGlobalUser:\n" +
-                "name" + name +
-                "\nlastName:" +lastName +
-                "\nphone: " + phone +
-                "\npassword:" + password +
-                "\nbusinessName:" + businessName +
-                "\nbusinessPhone:" + businessPhone +
-                "\nbusinessAddress:" + businessAddress ;
+    public boolean isRegister() {
+        return register;
+    }
+
+    public void setRegister(boolean register) {
+        this.register = register;
     }
 }

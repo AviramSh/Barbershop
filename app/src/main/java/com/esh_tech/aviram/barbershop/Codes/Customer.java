@@ -9,9 +9,10 @@ import android.graphics.Bitmap;
 public class Customer {
 
 
+    private int id;
     private String name;
-    private String phone;
-    private String secondPhone;
+    private long phone;
+    private long secondPhone;
     private String email;
     private int bill;
     private boolean gender;
@@ -25,7 +26,7 @@ public class Customer {
     //Constructors
 
 
-    public Customer(String name, String phone, String secondPhone, String email, int bill, boolean gender, boolean remainder) {
+    public Customer(String name, long phone, long secondPhone, String email, int bill, boolean gender, boolean remainder) {
         this.name = name;
         this.phone = phone;
         this.secondPhone = secondPhone;
@@ -35,7 +36,7 @@ public class Customer {
         this.remainder = remainder;
     }
 
-    public Customer(String name, String phone, String secondPhone, String email, int bill, boolean gender, boolean remainder, Bitmap customerPhoto) {
+    public Customer(String name, long phone, long secondPhone, String email, int bill, boolean gender, boolean remainder, Bitmap customerPhoto) {
         this.name = name;
         this.phone = phone;
         this.secondPhone = secondPhone;
@@ -46,13 +47,13 @@ public class Customer {
         CustomerPhoto = customerPhoto;
     }
 
-    public Customer(String name, String phone, int bill) {
+    public Customer(String name, long phone, int bill) {
         this.name = name;
         this.phone = phone;
         this.bill = bill;
     }
 
-    public Customer(String name, String phone, String email, boolean gender, Bitmap customerPhoto) {
+    public Customer(String name, long phone, String email, boolean gender, Bitmap customerPhoto) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -60,29 +61,29 @@ public class Customer {
         CustomerPhoto = customerPhoto;
     }
 
-    public Customer(String name, String phone) {
+    public Customer(String name, long phone) {
 
-        this(name,name,phone,true);
-    }
-
-    public Customer(String name, String phone, String email, boolean gender) {
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.gender = gender;
-    }
-
-    public Customer(String name, String phone, boolean gender) {
-        this.name = name;
-        this.phone = phone;
-        this.gender = gender;
-    }
-
-    public Customer(String name, String lastname, String phone) {
         this(name,phone,true);
     }
 
-    public Customer(String name, String phone, String email, boolean gender, boolean remainder, Bitmap customerPhoto) {
+    public Customer(String name, long phone, String email, boolean gender) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.gender = gender;
+    }
+
+    public Customer(String name, long phone, boolean gender) {
+        this.name = name;
+        this.phone = phone;
+        this.gender = gender;
+    }
+
+    public Customer(String name, String lastname, long phone) {
+        this(name,phone,true);
+    }
+
+    public Customer(String name, long phone, String email, boolean gender, boolean remainder, Bitmap customerPhoto) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -97,6 +98,11 @@ public class Customer {
 
 
     //Getter and Setter
+
+
+    public int getId() {
+        return id;
+    }
 
     public int getBill() {
         return bill;
@@ -138,11 +144,11 @@ public class Customer {
         CustomerPhoto = customerPhoto;
     }
 
-    public String getPhone() {
+    public long getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(long phone) {
         this.phone = phone;
     }
 

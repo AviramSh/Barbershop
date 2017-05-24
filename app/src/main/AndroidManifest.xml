@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,7 +26,7 @@
         <activity android:name=".StockActivity" />
         <activity android:name=".UserRegistrationActivity" />
         <activity android:name=".WorkingHoursActivity" />
-        <activity android:name=".SplashScreenActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".TimeAndFee" />
         <activity android:name=".smsSettings" />
         <activity android:name=".CustomersListActivity" />
@@ -36,7 +36,8 @@
         <activity android:name=".UserPasswordActivity" />
         <activity android:name=".NewCustomerActivity" />
         <activity android:name=".NewAppointmentActivity" />
-        <activity android:name=".SandMessageActivity"></activity>
+        <activity android:name=".SandMessageActivity" />
+        <activity android:name=".UserProfileActivity"></activity>
     </application>
 
 </manifest>

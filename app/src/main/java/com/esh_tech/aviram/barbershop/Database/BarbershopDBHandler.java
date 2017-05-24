@@ -20,7 +20,6 @@ public class BarbershopDBHandler {
     private MySQLiteHelper dbHelper;
 
 
-
     public BarbershopDBHandler(Context context) {
         dbHelper = new MySQLiteHelper(context, BarbershopConstants.BARBERSHOP_DB_NAME,null,BarbershopConstants.BARBERSHOP_VERSION);
     }
@@ -59,11 +58,14 @@ public class BarbershopDBHandler {
 
 //        each rund in the loop is a record in the database.
         while (customersCursor.moveToNext()){
-            customersList.add(new Customer(customersCursor.getString(1),customersCursor.getString(2)));
+            customersList.add(new Customer(customersCursor.getString(1),customersCursor.getLong(2)));
         }
 
         return customersList;
     }
+
+
+
 
 
 
@@ -93,15 +95,35 @@ public class BarbershopDBHandler {
     return (result != -1);
 }
 
-//Import all day appointments from Database
-    public ArrayList<Appointment> getDayAppointments(int year_x, int month_x, int day_x){
+//Import Today appointments from Database
+    public ArrayList<Appointment> getTodayAppointments(int day_x, int month_x, int year_x) {
 
     ArrayList<Appointment> appointmentsList =new ArrayList<Appointment>();
+//        this open tbe connection to the database
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+//        Select * from customers table
+        Cursor appointmentCursor = db.query(BarbershopConstants.APPOINTMENTS_TABLE_NAME,null,null,null,null,null,null);
+
+//        each round in the loop is a record in the database.
+        while (appointmentCursor.moveToNext()){
+            appointmentsList.add(new Appointment(Integer.parseInt(appointmentCursor.getString(1)),
+                    Integer.parseInt(appointmentCursor.getString(1)),
+                    Integer.parseInt(appointmentCursor.getString(2)),
+                    Integer.parseInt(appointmentCursor.getString(3)),
+                    Integer.parseInt(appointmentCursor.getString(4)),
+                    appointmentCursor.getString(6),
+                    Integer.parseInt(appointmentCursor.getString((5)))
+            ));
+//            (int minutes, int hour, int day,int month, int year, String customerName, int customerID)
+        }
+        appointmentsList.add(new Appointment(111,1111,1111,1,1,"dd",23));
+
+//        appointmentsList.get(1).toString();
 
 
-    return appointmentsList;
+        return appointmentsList;
 }
-
 
     public ArrayList<Appointment> getNextAppointment() {
 
@@ -109,6 +131,8 @@ public class BarbershopDBHandler {
 
         return appointmentsList;
     }
+
+
 
 
 
@@ -146,4 +170,5 @@ public class BarbershopDBHandler {
 
         return productsList;
     }
+
 }

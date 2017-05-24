@@ -63,26 +63,6 @@ public class NewAppointmentActivity extends AppCompatActivity {
         theTime= (Button)findViewById(R.id.btTime);
         setToday();
 
-        //populateAppointment();
-//
-//        turnsList.add("Aviram - 9:00");
-//        turnsList.add("Eliron - 9:15");
-//        turnsList.add("Erez - 9:30");
-//        turnsList.add("Itay - 10:00");
-//
-//        //        database
-//        dbHandler = new BarbershopDBHandler(this);
-//
-////        Connect list view
-//        turnsListView =(ListView)findViewById(R.id.lvAppointments);
-//
-//        turnsAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,turnsList);
-////        Connect adapter with custom view
-////        turnsAdapter = new MyCustomersAdapter(this,R.layout.custom_contact_row,allCustomers);
-//
-//        turnsListView.setAdapter(turnsAdapter);
-//
-
     }
 
 
@@ -186,12 +166,13 @@ public class NewAppointmentActivity extends AppCompatActivity {
         TextView cPhone = (TextView)findViewById(R.id.etNewCustomerPhone);
 
         if(cName.getText().toString().isEmpty()||cPhone.getText().toString().isEmpty()){
-            Toast.makeText(this, R.string.emptyfield, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.emptyField, Toast.LENGTH_SHORT).show();
         }else{
             Appointment newAppointment = new Appointment(minute_x,hour_x,day_x,month_x,year_x,
                     cName.getText().toString(),Integer.parseInt(cPhone.getText().toString()));
             if(dbHandler.addAppointment(newAppointment)){
                 Toast.makeText(this, R.string.saved, Toast.LENGTH_LONG).show();
+
                 /*Intent myIntent = new Intent(this,MainActivity.class);
                 startActivity(myIntent);*/
             }else{
@@ -210,7 +191,7 @@ public class NewAppointmentActivity extends AppCompatActivity {
     public void closeNewAppointment(View view) {
         Intent myIntent = new Intent(this,MainActivity.class);
         startActivity(myIntent);
-        finish();
+        this.finish();
     }
 /*
 

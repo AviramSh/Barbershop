@@ -1,5 +1,7 @@
 package com.esh_tech.aviram.barbershop;
 
+import android.widget.Toast;
+
 /**
  * Created by AVIRAM on 25/04/2017.
  */
@@ -120,4 +122,6 @@ public class Appointment {
     public void setCustomerID(int customerID) {
         this.customerID = customerID;
     }
+
+
 }

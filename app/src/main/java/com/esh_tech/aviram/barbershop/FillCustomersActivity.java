@@ -90,15 +90,13 @@ public class FillCustomersActivity extends AppCompatActivity {
             }
 
             TextView tvName = (TextView) convertView.findViewById(R.id.customerNameET);
-            TextView tvLastname = (TextView) convertView.findViewById(R.id.customerLastNameEt);
             TextView tvPhone = (TextView)convertView.findViewById(R.id.customerPhoneEt);
             ImageView customerIcon = (ImageView)convertView.findViewById(R.id.customerIconIv);
 
 
             //Data
             tvName.setText(customer.getName());
-            tvLastname.setText(customer.getName());
-            tvPhone.setText(customer.getPhone());
+            tvPhone.setText(String.valueOf(customer.getPhone()));
             //customerIcon.setImageBitmap();
 
             if(customer.isGender())customerIcon.setImageResource(R.drawable.usermale48);

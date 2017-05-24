@@ -17,7 +17,7 @@
         tools:layout_editor_absoluteY="16dp" />
 
     <ImageView
-        android:id="@+id/imageButton41"
+        android:id="@+id/customerMainPic"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginBottom="8dp"
@@ -65,28 +65,28 @@
         tools:layout_editor_absoluteY="221dp">
 
         <ImageButton
-            android:id="@+id/imageButton23"
+            android:id="@+id/customerPic_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:srcCompat="@drawable/usermale48" />
 
         <ImageButton
-            android:id="@+id/imageButton22"
+            android:id="@+id/customerPic_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:srcCompat="@drawable/usermale48" />
 
         <ImageButton
-            android:id="@+id/imageButton20"
+            android:id="@+id/customerPic_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:srcCompat="@drawable/usermale48" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/customerPic_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
