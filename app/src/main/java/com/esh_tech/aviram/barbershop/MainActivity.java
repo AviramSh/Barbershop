@@ -1,10 +1,12 @@
 package com.esh_tech.aviram.barbershop;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,11 +57,13 @@ public class MainActivity extends AppCompatActivity {
 
         lsNextAppointment.setAdapter(appointmentAdapter);
 
-        lsNextAppointment.setOnItemClickListener(
-                new AdapterView.OnItemClickListener(){
+        lsNextAppointment.setOnItemLongClickListener(
+                new AdapterView.OnItemLongClickListener(){
+
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                         appointmentHandler(position);
+                        return false;
                     }
                 }
         );
@@ -67,9 +72,45 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void appointmentHandler(int position) {
+
+//    Handling the Appointment list view
+    private void appointmentHandler(final int position) {
+
 
         Toast.makeText(this, allAppointments.get(position).getCustomerName()+"", Toast.LENGTH_SHORT).show();
+
+
+        final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+
+        mBuilder.setTitle(R.string.manageAppointment);
+        mBuilder.setMessage(R.string.theCustomerGetAnHaircut);
+
+        mBuilder.setNeutralButton(R.string.getHaircut, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(MainActivity.this, R.string.getHaircut, Toast.LENGTH_LONG).show();
+
+//                Need to update database
+                allAppointments.remove(position);
+                appointmentAdapter.notifyDataSetChanged();
+            }
+        });
+
+
+        mBuilder.setNegativeButton(R.string.DidntGetHaircut, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Toast.makeText(MainActivity.this, R.string.DidntGetHaircut, Toast.LENGTH_LONG).show();
+
+                allAppointments.remove(position);
+                appointmentAdapter.notifyDataSetChanged();
+            }
+        });
+
+
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
 
     }
 

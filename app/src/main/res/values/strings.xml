@@ -106,6 +106,13 @@
     <string name="edit">ערוך</string>
     <string name="incorrectPassword">Incorrect Password</string>
     <string name="enter">היכנס</string>
+    <string name="did">האם</string>
+    <string name="heCutHisHair">הוא הסתפר?</string>
+    <string name="sheCutHisHair">היא הסתפר?</string>
+    <string name="manageAppointment">ניהול תור</string>
+    <string name="getHaircut">הסתפר</string>
+    <string name="DidntGetHaircut">לא הסתפר</string>
+    <string name="theCustomerGetAnHaircut">האם הלקוח הסתפר?</string>
 
 
     <string-array name="spinner_hours">
