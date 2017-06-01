@@ -11,13 +11,13 @@ public class Customer {
 
     private int id;
     private String name;
-    private long phone;
-    private long secondPhone;
+    private String phone;
+    private String secondPhone;
     private String email;
     private int bill;
-    private boolean gender;
+    private boolean gender =true;
     private boolean remainder;
-    private Bitmap CustomerPhoto;
+    private Bitmap customerPhoto;
 
 
     //pic , date , last time
@@ -26,7 +26,8 @@ public class Customer {
     //Constructors
 
 
-    public Customer(String name, long phone, long secondPhone, String email, int bill, boolean gender, boolean remainder) {
+
+    public Customer(String name, String phone, String secondPhone, String email, int bill, boolean gender, boolean remainder, Bitmap customerPhoto) {
         this.name = name;
         this.phone = phone;
         this.secondPhone = secondPhone;
@@ -34,66 +35,23 @@ public class Customer {
         this.bill = bill;
         this.gender = gender;
         this.remainder = remainder;
+        this.customerPhoto = customerPhoto;
     }
 
-    public Customer(String name, long phone, long secondPhone, String email, int bill, boolean gender, boolean remainder, Bitmap customerPhoto) {
-        this.name = name;
-        this.phone = phone;
-        this.secondPhone = secondPhone;
-        this.email = email;
-        this.bill = bill;
-        this.gender = gender;
-        this.remainder = remainder;
-        CustomerPhoto = customerPhoto;
-    }
-
-    public Customer(String name, long phone, int bill) {
-        this.name = name;
-        this.phone = phone;
-        this.bill = bill;
-    }
-
-    public Customer(String name, long phone, String email, boolean gender, Bitmap customerPhoto) {
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.gender = gender;
-        CustomerPhoto = customerPhoto;
-    }
-
-    public Customer(String name, long phone) {
+    public Customer(String name, String phone) {
 
         this(name,phone,true);
     }
 
-    public Customer(String name, long phone, String email, boolean gender) {
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.gender = gender;
-    }
-
-    public Customer(String name, long phone, boolean gender) {
+    public Customer(String name, String phone, boolean gender) {
         this.name = name;
         this.phone = phone;
         this.gender = gender;
     }
 
-    public Customer(String name, String lastname, long phone) {
-        this(name,phone,true);
-    }
-
-    public Customer(String name, long phone, String email, boolean gender, boolean remainder, Bitmap customerPhoto) {
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.gender = gender;
-        this.remainder = remainder;
-        CustomerPhoto = customerPhoto;
-    }
 
     public Customer() {
-
+        this("", "", "", "", 0, true, false, null);
     }
 
 
@@ -137,18 +95,18 @@ public class Customer {
     }
 
     public Bitmap getCustomerPhoto() {
-        return CustomerPhoto;
+        return customerPhoto;
     }
 
     public void setCustomerPhoto(Bitmap customerPhoto) {
-        CustomerPhoto = customerPhoto;
+        this.customerPhoto = customerPhoto;
     }
 
-    public long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(long phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

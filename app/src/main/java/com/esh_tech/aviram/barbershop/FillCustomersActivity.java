@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Codes.Customer;
+import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,12 +49,24 @@ public class FillCustomersActivity extends AppCompatActivity {
     ListView customerListView;
     FillCustomersActivity.MyCustomersAdapter usersAdapter;
 
+    //    Database
+    BarbershopDBHandler dbHandler;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fill_customers);
+
+        init();
+
+    }
+
+    private void init() {
+        this.setTitle(R.string.importCustomers);
+//        Database
+        dbHandler = new BarbershopDBHandler(this);
 
         //        Connect list view
         customerListView =(ListView)findViewById(R.id.fillCustomersLv);
@@ -64,6 +77,7 @@ public class FillCustomersActivity extends AppCompatActivity {
         customerListView.setAdapter(usersAdapter);
 
     }
+
     //allCustomers.add(new Customer(retrieveContactName(),"050-342-3242","aaa@mmm.com",true));
     public void goMain(View view) {
         Intent mainIntent = new Intent(this,MainActivity.class);
@@ -96,11 +110,15 @@ public class FillCustomersActivity extends AppCompatActivity {
 
             //Data
             tvName.setText(customer.getName());
-            tvPhone.setText(String.valueOf(customer.getPhone()));
-            //customerIcon.setImageBitmap();
+            tvPhone.setText(customer.getPhone());
 
-            if(customer.isGender())customerIcon.setImageResource(R.drawable.usermale48);
-            else customerIcon.setImageResource(R.drawable.userfemale48);
+            if(customer.getCustomerPhoto() != null) {
+                customerIcon.setImageBitmap(customer.getCustomerPhoto());
+            }else if(customer.isGender()) {
+                customerIcon.setImageResource(R.drawable.usermale48);
+            }else {
+                customerIcon.setImageResource(R.drawable.userfemale48);
+            }
 
             return convertView;
         }
@@ -116,7 +134,7 @@ public class FillCustomersActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        Customer newCustomer =new Customer();
 //        Check Permission
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
@@ -130,20 +148,34 @@ public class FillCustomersActivity extends AppCompatActivity {
                 Log.d(TAG, "Response: " + data.toString());
                 uriContact = data.getData();
 
-                retrieveContactName();
-//                retrieveContactNumber();
-//                retrieveContactPhoto();
+                newCustomer.setName(retrieveContactName());
+                newCustomer.setPhone(retrieveContactNumber());
+                Bitmap photo =retrieveContactPhoto();
+                if(photo == null){
 
+                }else{
+                    newCustomer.setCustomerPhoto(photo);
+                }
+//                Toast.makeText(this, newCustomer.getName()+" :"+newCustomer.getPhone(), Toast.LENGTH_SHORT).show();
+
+                allCustomers.add(newCustomer);
+                if(dbHandler.addCustomer(newCustomer)){
+                    allCustomers = dbHandler.getAllCustomers();
+                    Toast.makeText(this, newCustomer.getName()+" Saved.", Toast.LENGTH_SHORT).show();
+                }else Toast.makeText(this, newCustomer.getName()+" Didn't Saved.", Toast.LENGTH_SHORT).show();
+
+                usersAdapter.notifyDataSetChanged();
             }
         }
     }
 
-//    Test
-    private void retrieveContactName() {
+//    Customer Data
+    private String retrieveContactName() {
+
 
         String contactID = null;
         String contactName = null;
-        String contactPhone = null;
+//        String contactPhone = null;
 
         // querying contact data store
         Cursor cursor = getContentResolver().query(uriContact, null, null, null, null);
@@ -156,22 +188,59 @@ public class FillCustomersActivity extends AppCompatActivity {
             contactID = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
             contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
 
-            Cursor phoneCursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,
-                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "= ?",new String[]{contactID},null);
+            Toast.makeText(this, "contact name is " + contactName, Toast.LENGTH_SHORT).show();
 
-            contactPhone = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            cursor.close();
 
+/*//            Contact number
+            String contactNumber = null;
+
+            // getting contacts ID
+            Cursor cursorID = getContentResolver().query(uriContact,
+                    new String[]{ContactsContract.Contacts._ID},
+                    null, null, null);
+
+            if (cursorID.moveToFirst()) {
+
+                contactID = cursorID.getString(cursorID.getColumnIndex(ContactsContract.Contacts._ID));
+            }
+
+            cursorID.close();
+
+            Log.d(TAG, "Contact ID: " + contactID);
+
+            // Using the contact ID now we will get contact phone number
+            Cursor cursorPhone = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                    new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER},
+
+                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ? AND " +
+                            ContactsContract.CommonDataKinds.Phone.TYPE + " = " +
+                            ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE,
+
+                    new String[]{contactID},
+                    null);
+
+            if (cursorPhone.moveToFirst()) {
+                contactNumber = cursorPhone.getString(cursorPhone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            }
+
+            cursorPhone.close();
+
+            Log.d(TAG, "Contact Phone Number: " + contactNumber);
+
+            Toast.makeText(this, "Contact Phone Number: " + contactNumber, Toast.LENGTH_LONG).show();*/
+//            Toast.makeText(this, "Contact Name : " + contactName, Toast.LENGTH_LONG).show();
         }
 
-        cursor.close();
+
 
         Log.d(TAG, "Contact Name: " + contactName);
 
-        Toast.makeText(this, contactName+" "+contactPhone, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, contactName+" "+contactPhone, Toast.LENGTH_SHORT).show();
+        return contactName;
 
     }
-
-    private void retrieveContactPhoto() {
+    private Bitmap retrieveContactPhoto() {
 
         Bitmap photo = null;
 
@@ -188,12 +257,13 @@ public class FillCustomersActivity extends AppCompatActivity {
             assert inputStream != null;
             inputStream.close();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
+        return photo;
     }
-    private void retrieveContactNumber() {
+    private String retrieveContactNumber() {
 
         String contactNumber = null;
 
@@ -229,27 +299,8 @@ public class FillCustomersActivity extends AppCompatActivity {
         cursorPhone.close();
 
         Log.d(TAG, "Contact Phone Number: " + contactNumber);
+//        Toast.makeText(this, "Contact Phone Number: " + contactNumber, Toast.LENGTH_LONG).show();
+        return contactNumber;
     }
-/*
-    private void retrieveContactName() {
 
-        String contactName = null;
-
-        // querying contact data store
-        Cursor cursor = getContentResolver().query(uriContact, null, null, null, null);
-
-        if (cursor.moveToFirst()) {
-
-            // DISPLAY_NAME = The display name for the contact.
-            // HAS_PHONE_NUMBER =   An indicator of whether this contact has at least one phone number.
-
-            contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-        }
-
-        cursor.close();
-
-        Log.d(TAG, "Contact Name: " + contactName);
-
-    }
-    */
 }

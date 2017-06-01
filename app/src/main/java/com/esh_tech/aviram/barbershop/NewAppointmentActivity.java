@@ -189,6 +189,7 @@ public class NewAppointmentActivity extends AppCompatActivity {
     }
 
     public void closeNewAppointment(View view) {
+
         Intent myIntent = new Intent(this,MainActivity.class);
         startActivity(myIntent);
         this.finish();

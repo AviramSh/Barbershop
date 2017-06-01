@@ -62,7 +62,7 @@ public class NewCustomerActivity extends AppCompatActivity {
 
 
         c.setName(customerName.getText().toString()+" "+customerLastName.getText().toString());
-        c.setPhone(Long.parseLong(customerPhone.getText().toString()));
+        c.setPhone(customerPhone.getText().toString());
         c.setBill(Integer.parseInt(customerCredit.getText().toString()));
         c.setEmail(customerEmail.getText().toString());
 
@@ -82,7 +82,7 @@ public class NewCustomerActivity extends AppCompatActivity {
 
         if(customerName.getText().toString().length() < 2)
             //testString +="\nUser name to short.";
-        if(c.getPhone() < 4)
+        if(c.getPhone().length() < 4)
             testString +="\nPhone to short.";
 
 

@@ -58,7 +58,7 @@ public class BarbershopDBHandler {
 
 //        each rund in the loop is a record in the database.
         while (customersCursor.moveToNext()){
-            customersList.add(new Customer(customersCursor.getString(1),customersCursor.getLong(2)));
+            customersList.add(new Customer(customersCursor.getString(1),customersCursor.getString(2)));
         }
 
         return customersList;
@@ -107,14 +107,14 @@ public class BarbershopDBHandler {
 
 //        each round in the loop is a record in the database.
         while (appointmentCursor.moveToNext()){
-            appointmentsList.add(new Appointment(Integer.parseInt(appointmentCursor.getString(1)),
-                    Integer.parseInt(appointmentCursor.getString(1)),
-                    Integer.parseInt(appointmentCursor.getString(2)),
-                    Integer.parseInt(appointmentCursor.getString(3)),
-                    Integer.parseInt(appointmentCursor.getString(4)),
-                    appointmentCursor.getString(6),
-                    Integer.parseInt(appointmentCursor.getString((5)))
-            ));
+            appointmentsList.add(new Appointment(appointmentCursor.getInt(appointmentCursor.getColumnIndex(BarbershopConstants.APPOINTMENT_MINUTE)),
+                    appointmentCursor.getInt(appointmentCursor.getColumnIndex(BarbershopConstants.APPOINTMENT_HOUR)),
+                    appointmentCursor.getInt(appointmentCursor.getColumnIndex(BarbershopConstants.APPOINTMENT_DAY)),
+                    appointmentCursor.getInt(appointmentCursor.getColumnIndex(BarbershopConstants.APPOINTMENT_MONTH)),
+                    appointmentCursor.getInt(appointmentCursor.getColumnIndex(BarbershopConstants.APPOINTMENT_YEAR)),
+                    appointmentCursor.getString(appointmentCursor.getColumnIndex(BarbershopConstants.CUSTOMER_NAME)),
+                    appointmentCursor.getInt(appointmentCursor.getColumnIndex(BarbershopConstants.CUSTOMER_ID)
+            )));
 //            (int minutes, int hour, int day,int month, int year, String customerName, int customerID)
         }
         appointmentsList.add(new Appointment(111,1111,1111,1,1,"dd",23));

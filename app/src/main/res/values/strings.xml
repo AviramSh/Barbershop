@@ -113,6 +113,7 @@
     <string name="getHaircut">הסתפר</string>
     <string name="DidntGetHaircut">לא הסתפר</string>
     <string name="theCustomerGetAnHaircut">האם הלקוח הסתפר?</string>
+    <string name="importCustomers">יביא לקוחות</string>
 
 
     <string-array name="spinner_hours">
