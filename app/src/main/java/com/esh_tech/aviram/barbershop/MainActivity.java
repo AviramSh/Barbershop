@@ -3,6 +3,7 @@ package com.esh_tech.aviram.barbershop;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.icu.util.Calendar;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     private void appointmentHandler(final int position) {
 
 
-        Toast.makeText(this, allAppointments.get(position).getCustomerName()+"", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, dbHandler.getCustomerByID(allAppointments.get(position).getCustomerID())+"", Toast.LENGTH_SHORT).show();
 
 
         final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
@@ -116,13 +117,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void populateAppointment() {
 
+
+        allAppointments = dbHandler.getTodayAppointments(Calendar.getInstance().getTime());
+
 //minutes, hour, day,month, year, customerName, customerID
-        allAppointments.add(new Appointment(15,8,4,5,1987,"Avi",3));
-        allAppointments.add(new Appointment(30,8,4,5,1987,"Tal",3));
-        allAppointments.add(new Appointment(50,8,4,5,1987,"Michal",3));
-        allAppointments.add(new Appointment(13,8,4,5,1987,"avi",3));
-        allAppointments.add(new Appointment(13,8,4,5,1987,"avi",3));
-        allAppointments.add(new Appointment(13,8,4,5,1987,"avi",3));
+//        allAppointments.add(new Appointment(15,8,4,5,1987,"Avi",3));
+//        allAppointments.add(new Appointment(30,8,4,5,1987,"Tal",3));
+//        allAppointments.add(new Appointment(50,8,4,5,1987,"Michal",3));
+//        allAppointments.add(new Appointment(13,8,4,5,1987,"avi",3));
+//        allAppointments.add(new Appointment(13,8,4,5,1987,"avi",3));
+//        allAppointments.add(new Appointment(13,8,4,5,1987,"avi",3));
 
     }
 
@@ -185,8 +189,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 //            Data
-            tvName.setText(appointment.getCustomerName());
-            tvTime.setText(String.valueOf(appointment.getHour()) +":"+ String.valueOf(appointment.getMinutes()));
+            tvName.setText(dbHandler.getCustomerByID(appointment.getCustomerID()).getName());
+            tvTime.setText(appointment.getDateAndTimeToDisplay());
+
+//            tvTime.setText(String.valueOf(appointment.getHour()) +":"+ String.valueOf(appointment.getMinutes()));
 
 //            if(appointment.isGender())customerIcon.setImageResource(R.drawable.usermale48);
 //            else customerIcon.setImageResource(R.drawable.userfemale48);

@@ -74,7 +74,7 @@
             tools:layout_editor_absoluteY="132dp">
 
             <EditText
-                android:id="@+id/manTimeEt"
+                android:id="@+id/etManTime"
                 android:layout_width="48dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="8dp"
@@ -86,7 +86,7 @@
                 android:layout_weight="1"
                 android:background="#ffff"
                 android:gravity="center"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:text="25"
                 app:layout_constraintBottom_toTopOf="@+id/womanTimeEt"
                 app:layout_constraintHorizontal_bias="0.461"
@@ -109,7 +109,7 @@
                 app:layout_constraintRight_toRightOf="parent" />
 
             <EditText
-                android:id="@+id/manPriceEt"
+                android:id="@+id/etManPrice"
                 android:layout_width="48dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="8dp"
@@ -121,7 +121,7 @@
                 android:layout_weight="1"
                 android:background="#ffff"
                 android:gravity="center"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:text="35"
                 app:layout_constraintBottom_toTopOf="@+id/womanPriceEt"
                 app:layout_constraintHorizontal_bias="0.439"
@@ -165,13 +165,13 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/womanTimeEt"
+                android:id="@+id/etWomanTime"
                 android:layout_width="46dp"
                 android:layout_height="46dp"
                 android:layout_weight="1"
                 android:background="#ffff"
                 android:gravity="center"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:text="35"
                 android:textColor="@color/colorPrimary"
                 tools:layout_editor_absoluteX="301dp"
@@ -195,13 +195,13 @@
                 tools:layout_editor_absoluteY="330dp" />
 
             <EditText
-                android:id="@+id/womanPriceEt"
+                android:id="@+id/etWomanPrice"
                 android:layout_width="48dp"
                 android:layout_height="45dp"
                 android:layout_weight="1"
                 android:background="#ffff"
                 android:gravity="center"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:text="45"
                 android:textColor="@color/colorPrimary"
                 tools:layout_editor_absoluteX="37dp"
@@ -210,10 +210,10 @@
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/imageButton17"
+        android:id="@+id/btSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="fillCustomres"
+        android:onClick="onClick"
         app:srcCompat="@drawable/barberscissors"
         android:background="@color/background"
         android:layout_marginBottom="16dp"

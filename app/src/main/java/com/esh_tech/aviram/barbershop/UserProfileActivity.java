@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
 
-import static com.esh_tech.aviram.barbershop.Database.BarbershopConstants.*;
+import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.*;
 
 public class UserProfileActivity extends AppCompatActivity {
 
@@ -26,6 +26,11 @@ public class UserProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+
+        init();
+    }
+
+    private void init() {
 
         this.setTitle(R.string.myProfile);
 
@@ -48,7 +53,6 @@ public class UserProfileActivity extends AppCompatActivity {
         etBusinessPhone.setText(settings.getString(USER_BUSINESS_PHONE,""));
         etBusinessAddress.setText(settings.getString(USER_BUSINESS_ADDRESS,""));
     }
-
 
 
 }

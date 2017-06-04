@@ -4,62 +4,62 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.esh_tech.aviram.barbershop.Constants.AppointmentsDBConstants;
+import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
+import com.esh_tech.aviram.barbershop.Constants.ProductsDBConstants;
+
+
 /**
- * Created by AVIRAM on 22/04/2017.
+ * Created by AVIRAM on 20/04/2017.
+ * Create Tables Class.
  */
 
 public class MySQLiteHelper extends SQLiteOpenHelper {
-
 
     public MySQLiteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
+
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("CREATE TABLE "+ BarbershopConstants.CUSTOMERS_TABLE_NAME +
-                    "("+BarbershopConstants.CUSTOMER_ID +" INTEGER PRIMARY KEY AUTOINCREMENT , "+
-                        BarbershopConstants.CUSTOMER_NAME +" TEXT, "+
-                        BarbershopConstants.CUSTOMER_PHONE +" TEXT, "+
-                        BarbershopConstants.CUSTOMER_DAY_OF_BIRTH +" TEXT, "+
-                        BarbershopConstants.CUSTOMER_MONTH_OF_BIRTH +" TEXT, "+
-                        BarbershopConstants.CUSTOMER_YEAR_OF_BIRTH +" TEXT"
+
+//        CREATING USERS TABLE.Customer(String name, String last, String phone, String secondPhone, String email, Double bill, Bitmap photo, boolean gender, boolean remainder)
+        db.execSQL("CREATE TABLE " + CustomersDBConstants.CUSTOMERS_TABLE_NAME + "(" +
+                CustomersDBConstants.CUSTOMER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT  , "+
+                CustomersDBConstants.CUSTOMER_NAME + " TEXT , "+
+                CustomersDBConstants.CUSTOMER_PHONE + " TEXT ,"  +
+                CustomersDBConstants.CUSTOMER_SECOND_PHONE + " TEXT , "+
+                CustomersDBConstants.CUSTOMER_EMAIL + " TEXT , "+
+                CustomersDBConstants.CUSTOMER_BILL + " DOUBLE , "+
+                CustomersDBConstants.CUSTOMER_GENDER + " INTEGER , "+
+                CustomersDBConstants.CUSTOMER_REMAINDER + " INTEGER "
+                +");");
+
+
+//        CREATING APPOINTMENTS TABLE. Appointment(Date theDate, Time theTime, int haircutTime, int customerID)
+        db.execSQL("CREATE TABLE " + AppointmentsDBConstants.APPOINTMENTS_TABLE_NAME +"("+
+                AppointmentsDBConstants.APPOINTMENT_ID        + " INTEGER PRIMARY KEY AUTOINCREMENT  , "+
+                AppointmentsDBConstants.APPOINTMENT_DATE + " TEXT ,"+
+                CustomersDBConstants.CUSTOMER_ID + " INTEGER "
                 +")");
 
-
-        db.execSQL("CREATE TABLE "+ BarbershopConstants.APPOINTMENTS_TABLE_NAME+
-                "("+
-                BarbershopConstants.APPOINTMENT_ID +" INTEGER PRIMARY KEY AUTOINCREMENT , "+
-                BarbershopConstants.APPOINTMENT_MINUTE +" INTEGER, "+
-                BarbershopConstants.APPOINTMENT_HOUR +" INTEGER, "+
-                BarbershopConstants.APPOINTMENT_DAY +" INTEGER, "+
-                BarbershopConstants.APPOINTMENT_MONTH +" INTEGER, "+
-                BarbershopConstants.APPOINTMENT_YEAR+" INTEGER, "+
-                BarbershopConstants.CUSTOMER_ID +" INTEGER, "+
-                BarbershopConstants.CUSTOMER_NAME +" TEXT"+
-                ")");
-
-
-        db.execSQL("CREATE TABLE "+ BarbershopConstants.PRODUCT_TABLE_NAME +
-                "("+
-                BarbershopConstants.PRODUCT_ID +" INTEGER PRIMARY KEY AUTOINCREMENT , "+
-                BarbershopConstants.PRODUCT_NAME +" TEXT, "+
-                BarbershopConstants.PRODUCT_PRICE +" INTEGER, "+
-                BarbershopConstants.PRODUCT_QUANTITY +" INTEGER"+
-                ")");
-
-
+        //        CREATING PRODUCTS TABLE. Products(String name, int quantity, double price)
+        db.execSQL("CREATE TABLE " + ProductsDBConstants.PRODUCTS_TABLE_NAME+"("+
+                ProductsDBConstants.PRODUCT_ID        + " INTEGER PRIMARY KEY AUTOINCREMENT  , "+
+                ProductsDBConstants.PRODUCTS_TABLE_NAME + " TEXT , "+
+                ProductsDBConstants.PRODUCT_QUANTITY + " INTEGER , "+
+                ProductsDBConstants.PRODUCT_PRICE + " DOUBLE "
+                +")");
     }
-
-
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        db.execSQL("DROP TABLE IF EXISTS "+ BarbershopConstants.CUSTOMERS_TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS "+ BarbershopConstants.APPOINTMENTS_TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS "+ BarbershopConstants.PRODUCT_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + CustomersDBConstants.CUSTOMERS_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + AppointmentsDBConstants.APPOINTMENTS_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + ProductsDBConstants.PRODUCTS_TABLE_NAME);
 
         onCreate(db);
     }

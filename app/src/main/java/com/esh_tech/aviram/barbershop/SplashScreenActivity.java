@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 
+import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.*;
+
+
 public class SplashScreenActivity extends AppCompatActivity {
 
     ProgressBar loding;
@@ -29,25 +32,25 @@ public class SplashScreenActivity extends AppCompatActivity {
 
 //                    Checking if user are exist and have checked auto login.
                     SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(SplashScreenActivity.this);
-                    String username = settings.getString("username", "");
-                    boolean savePassword = settings.getBoolean("savePassword", false);
+                    String username = settings.getString(USER_NAME, "");
+                    boolean savePassword = settings.getBoolean(USER_AUTO_LOGIN, false);
 
-                    boolean register = settings.getBoolean("register", true);
+                    boolean register = settings.getBoolean(USER_IS_REGISTER, false);
 
-                    if (username != null && !username.equals("") && savePassword && register) {
+                    if (!username.equals("") && savePassword && register) {
                         //Login with User password
-                        SplashScreenActivity.this.finish();
                         Intent myIntent = new Intent(SplashScreenActivity.this, MainActivity.class);
                         startActivity(myIntent);
-
-                    } else if(register){
                         SplashScreenActivity.this.finish();
+
+                    } else if(!register){
                         Intent myIntent = new Intent(SplashScreenActivity.this, UserRegistrationActivity.class);
                         startActivity(myIntent);
-                    }else {
+                        SplashScreenActivity.this.finish();
+                    }else if(register && !savePassword){
                         Intent myIntent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(myIntent);
-                        finish();
+                        SplashScreenActivity.this.finish();
                     }
 
                 } catch (InterruptedException e) {

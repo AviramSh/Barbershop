@@ -1,17 +1,14 @@
 package com.esh_tech.aviram.barbershop;
 
 import android.content.Intent;
-import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.esh_tech.aviram.barbershop.Codes.Customer;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
 public class NewCustomerActivity extends AppCompatActivity {
@@ -20,8 +17,6 @@ public class NewCustomerActivity extends AppCompatActivity {
     private boolean gender;
     private boolean remainder;
     private Bitmap CustomerPhoto;*/
-
-
 
     EditText customerName;
     EditText customerLastName;
@@ -42,8 +37,12 @@ public class NewCustomerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_customer);
 
-        this.setTitle(R.string.newCustomer);
+        init();
+    }
 
+    private void init() {
+        this.setTitle(R.string.newCustomer);
+        dbHandler = new BarbershopDBHandler(this);
         rg = (RadioGroup)findViewById(R.id.rgGender);
         customerRemainder = (CheckBox)findViewById(R.id.cbReminder);
         customerName = (EditText)findViewById(R.id.etCustomerName);
@@ -51,8 +50,6 @@ public class NewCustomerActivity extends AppCompatActivity {
         customerPhone =(EditText)findViewById(R.id.etCustomerPhone);
         customerCredit = (EditText)findViewById(R.id.etCustomerCredit);
         customerEmail = (EditText)findViewById(R.id.etCustomerEmail);
-
-        dbHandler = new BarbershopDBHandler(this);
     }
 
     public void addCustomer(View view) {
@@ -70,12 +67,12 @@ public class NewCustomerActivity extends AppCompatActivity {
 
 //        Remainder
         if(customerRemainder.isChecked())
-            c.setRemainder(true);//testString += " Yes for SMS";}
-        else c.setRemainder(false);//testString += " No for SMS";}
+            c.setRemainder(1);//testString += " Yes for SMS";}
+        else c.setRemainder(0);//testString += " No for SMS";}
 
 //        Gender
-        if(rg.getCheckedRadioButtonId() == R.id.rbWoman)c.setGender(false);//testString += " Women";}
-        else c.setGender(true);//testString+= " men";}
+        if(rg.getCheckedRadioButtonId() == R.id.rbWoman)c.setGender(0);//testString += " Women";}
+        else c.setGender(1);//testString+= " men";}
 
 
         //testString = c.getName()+" ,"+c.getPhone()+" ,"+c.getBill()+" ,"+c.getEmail();

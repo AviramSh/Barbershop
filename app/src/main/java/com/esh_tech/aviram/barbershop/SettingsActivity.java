@@ -3,7 +3,6 @@ package com.esh_tech.aviram.barbershop;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.audiofx.BassBoost;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import static com.esh_tech.aviram.barbershop.Database.BarbershopConstants.USER_PASSWORD;
+import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 
 
 public class SettingsActivity extends AppCompatActivity {
@@ -26,8 +25,13 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        init();
+    }
+
+    private void init() {
         this.setTitle(R.string.settings);
     }
+
 
     public void openWorkingDays(View view) {
         Intent myIntent = new Intent(this,WorkingHoursActivity.class);
@@ -63,7 +67,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                if(etPassword.getText().toString().equals(settings.getString(USER_PASSWORD,""))) {
+                if(etPassword.getText().toString().equals(settings.getString(UserDBConstants.USER_PASSWORD,""))) {
                     Intent myIntent = new Intent(SettingsActivity.this, UserPasswordActivity.class);
                     startActivity(myIntent);
                 }else{

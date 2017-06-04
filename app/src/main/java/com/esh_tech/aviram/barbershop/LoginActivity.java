@@ -2,11 +2,11 @@ package com.esh_tech.aviram.barbershop;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
+import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.*;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -17,8 +17,8 @@ public class LoginActivity extends AppCompatActivity {
 
 //        Checking if user are exist and have checked auto login.
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-        String username = settings.getString("username","");
-        boolean savePassword = settings.getBoolean("savePassword",false);
+        String username = settings.getString(USER_NAME,"");
+        boolean savePassword = settings.getBoolean(USER_PASSWORD,false);
 
             if(username != null && !username.equals("")){
                 if (savePassword) {

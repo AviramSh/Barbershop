@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import static com.esh_tech.aviram.barbershop.Database.BarbershopConstants.*;
+import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.*;
 
 
 public class UserPasswordActivity extends AppCompatActivity {
@@ -29,11 +29,16 @@ public class UserPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_password);
 
+        init();
+
+    }
+
+    private void init() {
+
         pass1 = (EditText)findViewById(R.id.passwordEt);
         pass2= (EditText)findViewById(R.id.rePasswordEt);
 
         savePassword = (CheckBox)findViewById(R.id.cbSavePassword);
-
     }
 
 
@@ -47,20 +52,31 @@ public class UserPasswordActivity extends AppCompatActivity {
     public void savePassword(View view) {
 
         settings = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean register = settings.getBoolean(USER_IS_REGISTER, false);
         editor = settings.edit();
 
-        if(pass1.getText().toString().equals(pass2.getText().toString())) {
+        if(pass1.getText().toString().equals(pass2.getText().toString())&&pass1.getText().toString().length()>=3) {
 //            MyGlobalUser myUser = (MyGlobalUser)getApplication();
 //            myUser.setPassword(pass1.getText().toString());
             editor.putString(USER_PASSWORD,pass1.getText().toString());
             if(savePassword.isChecked()){
-                editor.putBoolean(AUTO_LOGIN,true);
+                editor.putBoolean(USER_AUTO_LOGIN,true);
             }
-            Intent myIntent = new Intent(this, WorkingHoursActivity.class);
-            startActivity(myIntent);
-            this.finish();
+            editor.commit();
+            if(register){
+                Intent myIntent = new Intent(this, MainActivity.class);
+                startActivity(myIntent);
+                this.finish();
+            }else{
+                Intent myIntent = new Intent(this, WorkingHoursActivity.class);
+                startActivity(myIntent);
+                this.finish();
+            }
+//            Intent myIntent = new Intent(this, WorkingHoursActivity.class);
+//            startActivity(myIntent);
+//            this.finish();
         }
 
-        editor.commit();
+
     }
 }

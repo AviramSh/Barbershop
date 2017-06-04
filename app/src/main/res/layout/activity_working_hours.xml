@@ -292,7 +292,7 @@
         android:id="@+id/nextIb"
         android:layout_width="64dp"
         android:layout_height="60dp"
-        android:onClick="timeAndfee"
+        android:onClick="timeAndFee"
         app:srcCompat="@drawable/barberscissors"
         android:background="@color/background"
         app:layout_constraintBottom_toBottomOf="parent"

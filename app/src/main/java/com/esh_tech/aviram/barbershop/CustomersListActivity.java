@@ -20,7 +20,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.esh_tech.aviram.barbershop.Codes.Customer;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
 import java.util.ArrayList;
@@ -81,7 +80,7 @@ public class CustomersListActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     Toast.makeText(CustomersListActivity.this, R.string.edit, Toast.LENGTH_LONG).show();
                     Intent myIntent = new Intent(CustomersListActivity.this,CustomerActivity.class);
-                    myIntent.putExtra("customer",customer.getId());
+                    myIntent.putExtra("customer",customer.get_id());
                     startActivity(myIntent);
                 }
             });
@@ -159,7 +158,7 @@ public class CustomersListActivity extends AppCompatActivity {
             tvName.setText(customer.getName());
             tvPhone.setText(String.valueOf(customer.getPhone()));
 
-            if(customer.isGender())customerIcon.setImageResource(R.drawable.usermale48);
+            if(customer.getGender()==1)customerIcon.setImageResource(R.drawable.usermale48);
             else customerIcon.setImageResource(R.drawable.userfemale48);
 
             return convertView;

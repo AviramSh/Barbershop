@@ -2,8 +2,6 @@ package com.esh_tech.aviram.barbershop;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.icu.text.PluralRules;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,7 +17,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.esh_tech.aviram.barbershop.Codes.Product;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,8 +56,8 @@ public class StockActivity extends AppCompatActivity {
         allProducts.add(new Product(1, "מסרק", 14, 5));
         allProducts.add(new Product(1, "מסרק", 14, 5));
         allProducts.add(new Product(1, "מסרק", 14, 5));
-        allProducts.add(new Product(1, "מסרק", 14, 5));
-        allProducts.add(new Product(1, "מסרק", 14, 5));
+//        allProducts.add(new Appointment.Product(1, "מסרק", 14, 5));
+//        allProducts.add(new Appointment.Product(1, "מסרק", 14, 5));
 
     }
 

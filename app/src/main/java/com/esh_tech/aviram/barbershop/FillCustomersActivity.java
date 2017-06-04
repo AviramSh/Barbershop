@@ -1,7 +1,6 @@
 package com.esh_tech.aviram.barbershop;
 
 import android.Manifest;
-import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +17,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,10 +27,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.esh_tech.aviram.barbershop.Codes.Customer;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -112,9 +108,9 @@ public class FillCustomersActivity extends AppCompatActivity {
             tvName.setText(customer.getName());
             tvPhone.setText(customer.getPhone());
 
-            if(customer.getCustomerPhoto() != null) {
+            /*if(customer.getCustomerPhoto() != null) {
                 customerIcon.setImageBitmap(customer.getCustomerPhoto());
-            }else if(customer.isGender()) {
+            }else */if(customer.getGender()==1) {
                 customerIcon.setImageResource(R.drawable.usermale48);
             }else {
                 customerIcon.setImageResource(R.drawable.userfemale48);
@@ -154,7 +150,7 @@ public class FillCustomersActivity extends AppCompatActivity {
                 if(photo == null){
 
                 }else{
-                    newCustomer.setCustomerPhoto(photo);
+//                    newCustomer.setCustomerPhoto(photo);
                 }
 //                Toast.makeText(this, newCustomer.getName()+" :"+newCustomer.getPhone(), Toast.LENGTH_SHORT).show();
 

@@ -161,6 +161,8 @@ public class NewAppointmentActivity extends AppCompatActivity {
     public void saveAppointment(View view) {
 
 //        need if
+        Appointment newAppointment =new Appointment();
+        Customer testCustomer;
 
         TextView cName = (TextView)findViewById(R.id.etNewCustomerName);
         TextView cPhone = (TextView)findViewById(R.id.etNewCustomerPhone);
@@ -168,8 +170,17 @@ public class NewAppointmentActivity extends AppCompatActivity {
         if(cName.getText().toString().isEmpty()||cPhone.getText().toString().isEmpty()){
             Toast.makeText(this, R.string.emptyField, Toast.LENGTH_SHORT).show();
         }else{
-            Appointment newAppointment = new Appointment(minute_x,hour_x,day_x,month_x,year_x,
-                    cName.getText().toString(),Integer.parseInt(cPhone.getText().toString()));
+
+
+//            Integer.parseInt(cPhone.getText().toString())
+            testCustomer =dbHandler.getCustomerByPhone(cPhone.getText().toString());
+
+            if(testCustomer != null) {
+                c.set(year_x,month_x,day_x,hour_x,minute_x);
+                newAppointment = new Appointment(c,testCustomer.get_id());
+            }
+
+
             if(dbHandler.addAppointment(newAppointment)){
                 Toast.makeText(this, R.string.saved, Toast.LENGTH_LONG).show();
 
