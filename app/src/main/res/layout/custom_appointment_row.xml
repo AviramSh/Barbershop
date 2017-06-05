@@ -14,7 +14,7 @@
             android:padding="5dp"
             android:maxLines="1"
             android:gravity="center"
-            android:textSize="24sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tvCustomerTime"
@@ -24,6 +24,6 @@
             android:padding="5dp"
             android:maxLines="1"
             android:gravity="center"
-            android:textSize="24sp" />
+            android:textSize="14sp" />
 
 </LinearLayout>

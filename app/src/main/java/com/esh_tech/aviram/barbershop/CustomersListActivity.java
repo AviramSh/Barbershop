@@ -103,23 +103,9 @@ public class CustomersListActivity extends AppCompatActivity {
 
     //Testing customer list
     private void populateCustomers() {
-
-/*
-        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",true));
-        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",false));
-        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",true));
-        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",false));
-        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",true));
-        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",true));
-        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",false));
-        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",false));
-        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",true));
-        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",true));
-        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",false));
-        dbHandler.addCustomer(new Customer("Aviram","Sarabi","0506792353",true));
-*/
         allCustomers = dbHandler.getAllCustomers();
-        customerListView.deferNotifyDataSetChanged();
+//        lvProducts.deferNotifyDataSetChanged();
+
 
     }
 
@@ -132,7 +118,7 @@ public class CustomersListActivity extends AppCompatActivity {
     //Listener
 
     //Creating custom Adpter for the list view GUI
-    class MyCustomersAdapter extends ArrayAdapter<Customer>{
+    class MyCustomersAdapter extends ArrayAdapter<Customer> {
 
         public MyCustomersAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Customer> objects) {
             super(context, resource, objects);
@@ -160,6 +146,8 @@ public class CustomersListActivity extends AppCompatActivity {
 
             if(customer.getGender()==1)customerIcon.setImageResource(R.drawable.usermale48);
             else customerIcon.setImageResource(R.drawable.userfemale48);
+
+            usersAdapter.notifyDataSetChanged();
 
             return convertView;
         }

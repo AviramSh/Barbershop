@@ -18,4 +18,10 @@ public class UserDBConstants {
     public static final String USER_BUSINESS_PHONE ="USER_BUSINESS_PHONE";
     public static final String USER_BUSINESS_ADDRESS ="USER_BUSINESS_ADDRESS";
 
+    public static final String USER_MALE_HAIRCUT_TIME="USER_MALE_HAIRCUT_TIME";
+    public static final String USER_MALE_HAIRCUT_PRICE="USER_MALE_HAIRCUT_PRICE";
+
+    public static final String USER_FEMALE_HAIRCUT_TIME="USER_FEMALE_HAIRCUT_TIME";
+    public static final String USER_FEMALE_HAIRCUT_PRICE="USER_FEMALE_HAIRCUT_PRICE";
+
 }

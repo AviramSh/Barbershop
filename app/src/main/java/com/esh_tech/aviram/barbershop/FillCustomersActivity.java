@@ -68,7 +68,7 @@ public class FillCustomersActivity extends AppCompatActivity {
         customerListView =(ListView)findViewById(R.id.fillCustomersLv);
 
         //        Connect adapter with custom view
-        usersAdapter = new FillCustomersActivity.MyCustomersAdapter(this,R.layout.custom_contact_row,allCustomers);
+        usersAdapter = new MyCustomersAdapter(this,R.layout.custom_contact_row,allCustomers);
 
         customerListView.setAdapter(usersAdapter);
 
@@ -81,7 +81,7 @@ public class FillCustomersActivity extends AppCompatActivity {
         this.finish();
     }
 
-    //Creating custom Adpter for the list view GUI
+    //Creating custom Adapter for the list view GUI
     class MyCustomersAdapter extends ArrayAdapter<Customer> {
 
         public MyCustomersAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Customer> objects) {
@@ -115,7 +115,7 @@ public class FillCustomersActivity extends AppCompatActivity {
             }else {
                 customerIcon.setImageResource(R.drawable.userfemale48);
             }
-
+            usersAdapter.notifyDataSetChanged();
             return convertView;
         }
     }
@@ -154,12 +154,13 @@ public class FillCustomersActivity extends AppCompatActivity {
                 }
 //                Toast.makeText(this, newCustomer.getName()+" :"+newCustomer.getPhone(), Toast.LENGTH_SHORT).show();
 
-                allCustomers.add(newCustomer);
+//                allCustomers.add(newCustomer);
                 if(dbHandler.addCustomer(newCustomer)){
-                    allCustomers = dbHandler.getAllCustomers();
                     Toast.makeText(this, newCustomer.getName()+" Saved.", Toast.LENGTH_SHORT).show();
-                }else Toast.makeText(this, newCustomer.getName()+" Didn't Saved.", Toast.LENGTH_SHORT).show();
-
+                }else{
+                    Toast.makeText(this, newCustomer.getName()+" Didn't Saved.", Toast.LENGTH_SHORT).show();
+                }
+                allCustomers = dbHandler.getAllCustomers();
                 usersAdapter.notifyDataSetChanged();
             }
         }

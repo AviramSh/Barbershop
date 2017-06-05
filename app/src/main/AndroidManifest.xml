@@ -13,7 +13,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".WorkingHoursActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,13 +27,13 @@
         <activity android:name=".StockActivity" />
         <activity android:name=".UserRegistrationActivity" />
         <activity android:name=".SplashScreenActivity" />
-        <activity android:name=".FillCustomersActivity" />
+        <activity android:name=".WorkingHoursActivity" />
         <activity android:name=".TimeAndFee" />
         <activity android:name=".smsSettings" />
         <activity android:name=".CustomersListActivity" />
         <activity android:name=".BalanceActivity" />
         <activity android:name=".AppointmentListActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".FillCustomersActivity" />
         <activity android:name=".UserPasswordActivity" />
         <activity android:name=".NewCustomerActivity" />
         <activity android:name=".NewAppointmentActivity" />

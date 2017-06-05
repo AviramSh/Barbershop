@@ -48,7 +48,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         //        CREATING PRODUCTS TABLE. Products(String name, int quantity, double price)
         db.execSQL("CREATE TABLE " + ProductsDBConstants.PRODUCTS_TABLE_NAME+"("+
                 ProductsDBConstants.PRODUCT_ID        + " INTEGER PRIMARY KEY AUTOINCREMENT  , "+
-                ProductsDBConstants.PRODUCTS_TABLE_NAME + " TEXT , "+
+                ProductsDBConstants.PRODUCT_NAME + " TEXT , "+
                 ProductsDBConstants.PRODUCT_QUANTITY + " INTEGER , "+
                 ProductsDBConstants.PRODUCT_PRICE + " DOUBLE "
                 +")");

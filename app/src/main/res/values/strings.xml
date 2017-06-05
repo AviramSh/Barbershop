@@ -114,6 +114,8 @@
     <string name="DidntGetHaircut">לא הסתפר</string>
     <string name="theCustomerGetAnHaircut">האם הלקוח הסתפר?</string>
     <string name="importCustomers">יביא לקוחות</string>
+    <string name="fields_are_not_full">Fields are not full</string>
+    <string name="editProduct">עריכת מוצר</string>
 
 
     <string-array name="spinner_hours">

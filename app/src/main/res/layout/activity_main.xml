@@ -273,6 +273,7 @@
         android:layout_width="174dp"
         android:layout_height="166dp"
         android:id="@+id/lvNextAppointment"
+        android:background="@color/empty"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

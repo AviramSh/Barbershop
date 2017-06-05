@@ -378,6 +378,11 @@ public class Appointment {
         return dateAndTime;
     }
 
+    public String getTime(){
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+        String newFormat = formatter.format(dateAndTime.getTime());
+        return newFormat;
+    }
     public String getDateAndTimeToDisplay() {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");

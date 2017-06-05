@@ -3,8 +3,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Appointment;
+import com.esh_tech.aviram.barbershop.AppointmentListActivity;
 import com.esh_tech.aviram.barbershop.Constants.AppointmentsDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.MainDBConstants;
@@ -154,7 +157,7 @@ public class BarbershopDBHandler {
     }
 
 //    Get Appointments by a date.
-    public ArrayList<Appointment> getAllAppointments(String myDate) {
+    public ArrayList<Appointment> getAllAppointments(String receivedDate) {
 
         ArrayList<Appointment> myAppointments = getAllAppointments();
         ArrayList<Appointment> myDateAppointments = new ArrayList<Appointment>();
@@ -162,9 +165,12 @@ public class BarbershopDBHandler {
         for (Appointment appointment:
                 myAppointments) {
 
+            Log.d("The Getting Date : ",appointment.getDateAndTimeToDisplay());
 
-            if(myDate.toLowerCase().contains(appointment.getDateAndTimeToDisplay().toLowerCase()))
-                myDateAppointments.add(appointment);
+                if(appointment.getDateAndTimeToDisplay().toLowerCase().contains(receivedDate)) {
+//                    Log.d("found","found");
+                    myDateAppointments.add(appointment);
+                }
             }
 
         return myDateAppointments;
@@ -246,6 +252,43 @@ public class BarbershopDBHandler {
         return productsList;
     }
 
+    public Product getProductByID(int id) {
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor productCursor = db.query(ProductsDBConstants.PRODUCTS_TABLE_NAME,null,null,null,null,null,null);
+
+        while (productCursor.moveToNext())
+
+            if(productCursor.getInt(productCursor.getColumnIndex(ProductsDBConstants.PRODUCT_ID))==id){
+                return new Product(
+                        productCursor.getColumnIndex(ProductsDBConstants.PRODUCT_ID),
+                        productCursor.getString(productCursor.getColumnIndex(ProductsDBConstants.PRODUCT_NAME)),
+                        productCursor.getInt(productCursor.getColumnIndex(ProductsDBConstants.PRODUCT_QUANTITY)),
+                        productCursor.getDouble(productCursor.getColumnIndex(ProductsDBConstants.PRODUCT_PRICE))
+                );
+            }
+        return null;
+
+    }
+
+    public boolean upDateProduct(Product product) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues columnValues = new ContentValues();
+        columnValues.put(ProductsDBConstants.PRODUCT_NAME,product.getName());
+        columnValues.put(ProductsDBConstants.PRODUCT_QUANTITY,product.getQuantity());
+        columnValues.put(ProductsDBConstants.PRODUCT_PRICE,product.getPrice());
+
+
+        long result = db.update(ProductsDBConstants.PRODUCTS_TABLE_NAME,
+                columnValues,
+                ProductsDBConstants.PRODUCT_ID + "= "+product.get_id(),
+                null);
+        db.close();
+
+        return (result != -1);
+    }
 }
 
 //import android.content.ContentValues;

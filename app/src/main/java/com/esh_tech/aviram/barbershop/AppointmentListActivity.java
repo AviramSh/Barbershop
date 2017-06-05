@@ -52,7 +52,7 @@ public class AppointmentListActivity extends AppCompatActivity {
     static final int DIALOG_ID_TIME = 1;
 
     //    View
-    ArrayList<Appointment> allAppointments = new ArrayList<Appointment>();
+    ArrayList<Appointment> allAppointments;
     ListView lvAppointment;
     MyAppointmentsAdapter appointmentAdapter;
 
@@ -87,7 +87,6 @@ public class AppointmentListActivity extends AppCompatActivity {
 
 //        Connect adapter with custom view
         appointmentAdapter = new MyAppointmentsAdapter(this, R.layout.custom_appointment_row, allAppointments);
-
         lvAppointment.setAdapter(appointmentAdapter);
     }
 
@@ -98,21 +97,25 @@ public class AppointmentListActivity extends AppCompatActivity {
         day_x = setCalendar.get(Calendar.DAY_OF_MONTH);
 
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String dateForDisplay = sdf.format(setCalendar.getTime());
-
 //        Calendar newCalendar = Calendar.getInstance();
+        if(Calendar.getInstance().getTime() ==setCalendar.getTime()) {
+            theDate.setText(R.string.today);
+        }else {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String dateForDisplay = sdf.format(setCalendar.getTime());
+            try {
+                Date newDate = sdf.parse(dateForDisplay);
+                newCalendar.setTime(newDate);
 
-        try {
-            Date newDate = sdf.parse(dateForDisplay);
-            newCalendar.setTime(newDate);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 //        Toast.makeText(this, dateForDisplay, Toast.LENGTH_SHORT).show();
+            theDate.setText(dateForDisplay);
 
-        theDate.setText(dateForDisplay);
+            populateAppointment();
+
+        }
     }
 
     private void populateAppointment() {
@@ -120,39 +123,35 @@ public class AppointmentListActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String dateForDisplay = sdf.format(newCalendar.getTime());
 
-        if(newCalendar.getTime() == Calendar.getInstance().getTime())
-            theDate.setText(R.string.today);
-        else {
-//            theDate.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
 
-            theDate.setText(dateForDisplay);
-//            Toast.makeText(this, dateForDisplay, Toast.LENGTH_SHORT).show();
-        }
+        theDate.setText(dateForDisplay);
 
 //          minutes, hour, day,month, year, customerName, customerID
 
-
         allAppointments = dbHandler.getAllAppointments(dateForDisplay);
+        if(allAppointments.isEmpty())Log.d("All customers","Empty");
+        else Log.d("All customers","Is Not Empty");
 
 //        if(!allAppointments.isEmpty())
 //            Toast.makeText(this, allAppointments.get(0).getCustomerName(), Toast.LENGTH_SHORT).show();
 //        else {allAppointments.add(new Appointment());}
 
-        lvAppointment.setAdapter(appointmentAdapter);
-
     }
 
     public void nextDay(View view) {
-//        c.get(Calendar.M)
+
         newCalendar.add(Calendar.DAY_OF_MONTH, 1);
         setTheDate(newCalendar);
-        populateAppointment();
+        appointmentAdapter = new MyAppointmentsAdapter(this, R.layout.custom_appointment_row, allAppointments);
+        lvAppointment.setAdapter(appointmentAdapter);
+
     }
     public void dayBack(View view) {
-//        populateAppointment(--day_x, month_x, year_x);
         newCalendar.add(Calendar.DAY_OF_MONTH, -1);
         setTheDate(newCalendar);
-        populateAppointment();
+        appointmentAdapter.notifyDataSetChanged();
+        appointmentAdapter = new MyAppointmentsAdapter(this, R.layout.custom_appointment_row, allAppointments);
+        lvAppointment.setAdapter(appointmentAdapter);
     }
 
     public void closeAppointmentList(View view) {
@@ -184,15 +183,11 @@ public class AppointmentListActivity extends AppCompatActivity {
 
 
 //            Data
-//            tvName.setText(appointment.getCustomerName());
-//            tvTime.setText(String.valueOf(appointment.getHour()) + ":" + String.valueOf(appointment.getMinutes()));
+
             tvName.setText(dbHandler.getCustomerByID(appointment.getCustomerID()).getName());
             tvTime.setText(appointment.getDateAndTimeToDisplay());
 
-
-//            if(appointment.isGender())customerIcon.setImageResource(R.drawable.usermale48);
-//            else customerIcon.setImageResource(R.drawable.userfemale48);
-
+            appointmentAdapter.notifyDataSetChanged();
             return convertView;
         }
     }

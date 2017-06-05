@@ -178,6 +178,9 @@ public class NewAppointmentActivity extends AppCompatActivity {
             if(testCustomer != null) {
                 c.set(year_x,month_x,day_x,hour_x,minute_x);
                 newAppointment = new Appointment(c,testCustomer.get_id());
+            }else{
+                c.set(year_x,month_x,day_x,hour_x,minute_x);
+                newAppointment.setDateAndTime(c);
             }
 
 

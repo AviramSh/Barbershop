@@ -12,11 +12,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +27,11 @@ import java.util.List;
 
 public class StockActivity extends AppCompatActivity {
 
+    //    Database
+    BarbershopDBHandler dbHandler;
+
     ArrayList<Product> allProducts =new ArrayList<>();
-    ListView customerListView;
+    ListView lvProducts;
     StockActivity.MyProductsAdapter productsAdapter;
 
     @Override
@@ -33,33 +39,109 @@ public class StockActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock);
 
+
+        init();
+
+    }
+
+    private void init() {
         this.setTitle(R.string.stock);
 
         //        Connect list view
-        customerListView =(ListView)findViewById(R.id.fillProductLv);
+        lvProducts =(ListView)findViewById(R.id.fillProductLv);
 
-        //pupolate
-        populateProducts();
+        //        Database
+        dbHandler = new BarbershopDBHandler(this);
 
+//        //pupolate
+//        populateProducts();
+        allProducts = dbHandler.getAllProducts();
         //        Connect adapter with custom view
         productsAdapter = new StockActivity.MyProductsAdapter(this,R.layout.custom_product_row,allProducts);
 
-        customerListView.setAdapter(productsAdapter);
+        lvProducts.setAdapter(productsAdapter);
+
+        lvProducts.setOnItemLongClickListener(
+                new AdapterView.OnItemLongClickListener(){
+
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                        productHandler(position);
+                        return false;
+                    }
+                }
+        );
 
 
     }
 
+    //    Handling the Appointment list view
+    private void productHandler(int position) {
 
-    private void populateProducts() {
+        final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+        final View mView =getLayoutInflater().inflate(R.layout.dialog_addproduct,null);
 
-        allProducts.add(new Product(1, "מסרק", 14, 5));
-        allProducts.add(new Product(1, "מסרק", 14, 5));
-        allProducts.add(new Product(1, "מסרק", 14, 5));
-        allProducts.add(new Product(1, "מסרק", 14, 5));
-//        allProducts.add(new Appointment.Product(1, "מסרק", 14, 5));
-//        allProducts.add(new Appointment.Product(1, "מסרק", 14, 5));
+        final EditText mProduactName = (EditText)mView.findViewById(R.id.etProdactName);
+        final EditText mProduactQuantity = (EditText)mView.findViewById(R.id.etProduactQuantity);
+        final EditText mProduactPrice = (EditText)mView.findViewById(R.id.etProduactPrice);
+        Product p1 = dbHandler.getProductByID(position);
 
+        if(p1 != null) {
+            Product editProduct = dbHandler.getProductByID(position);
+            mProduactName.setText(editProduct.getName());
+            mProduactQuantity.setText(String.valueOf(editProduct.getQuantity()));
+            mProduactPrice.setText(String.valueOf(editProduct.getPrice()));
+        }else{
+            Toast.makeText(this, "Filed to import", Toast.LENGTH_SHORT).show();
+        }
+        mBuilder.setNeutralButton(R.string.saveBt, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                String name = mProduactName.getText().toString();
+                String price = mProduactPrice.getText().toString();
+                String quantity = mProduactQuantity.getText().toString();
+
+                if(name.isEmpty()|| price.isEmpty()|| quantity.isEmpty()){
+                    Toast.makeText(StockActivity.this, R.string.fields_are_not_full, Toast.LENGTH_LONG).show();
+                }else{
+                    if(dbHandler.upDateProduct(new Product(name , Integer.parseInt(quantity) ,Double.parseDouble(price)))){
+                        Toast.makeText(StockActivity.this, name + R.string.saved, Toast.LENGTH_LONG).show();
+                        allProducts = dbHandler.getAllProducts();
+                        productsAdapter.notifyDataSetChanged();
+                    }else Toast.makeText(StockActivity.this,  R.string.failedToSave +" "+name, Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+
+
+        mBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Toast.makeText(StockActivity.this, R.string.cancel, Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        mBuilder.setView(mView);
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
     }
+
+
+
+//    private void populateProducts() {
+//
+//        allProducts.add(new Product(1, "מסרק", 14, 5));
+//        allProducts.add(new Product(1, "מסרק", 14, 5));
+//        allProducts.add(new Product(1, "מסרק", 14, 5));
+//        allProducts.add(new Product(1, "מסרק", 14, 5));
+////        allProducts.add(new Appointment.Product(1, "מסרק", 14, 5));
+////        allProducts.add(new Appointment.Product(1, "מסרק", 14, 5));
+//
+//    }
 
     public void addProduct(View view) {
 
@@ -83,12 +165,15 @@ public class StockActivity extends AppCompatActivity {
                 String price = mProduactPrice.getText().toString();
                 String quantity = mProduactQuantity.getText().toString();
 
-                if(name.isEmpty()|| price.isEmpty()){
-                    Toast.makeText(StockActivity.this, "Fields are not full", Toast.LENGTH_LONG).show();
+                if(name.isEmpty()|| price.isEmpty()|| quantity.isEmpty()){
+                    Toast.makeText(StockActivity.this, R.string.fields_are_not_full, Toast.LENGTH_LONG).show();
                 }else{
-                    allProducts.add(new Product(1,name , Integer.parseInt(quantity) ,Float.parseFloat(price)));
-                    Toast.makeText(StockActivity.this, name+" are saved", Toast.LENGTH_LONG).show();
-                    productsAdapter.notifyDataSetChanged();
+                    if(dbHandler.addProduct(new Product(name , Integer.parseInt(quantity) ,Double.parseDouble(price)))){
+                        Toast.makeText(StockActivity.this, name + R.string.saved, Toast.LENGTH_LONG).show();
+                        allProducts = dbHandler.getAllProducts();
+                        productsAdapter.notifyDataSetChanged();
+                    }else Toast.makeText(StockActivity.this,  R.string.failedToSave +" "+name, Toast.LENGTH_LONG).show();
+
                 }
             }
         });
@@ -98,7 +183,7 @@ public class StockActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        Toast.makeText(StockActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+                        Toast.makeText(StockActivity.this, R.string.cancel, Toast.LENGTH_LONG).show();
                     }
                 });
 
