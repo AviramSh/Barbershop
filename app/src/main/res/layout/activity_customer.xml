@@ -6,20 +6,81 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     tools:context="com.esh_tech.aviram.barbershop.CustomerActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_marginLeft="28dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/linearLayout6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="84dp">
+
+        <TextView
+            android:id="@+id/tvCustomerPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="050500000"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/tvCustomerEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/emailEx"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginRight="8dp"
+        android:padding="10dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/linearLayout6"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="84dp">
+
+        <TextView
+            android:id="@+id/textView40"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/phone"
+            android:textSize="24sp"/>
+
+        <TextView
+            android:id="@+id/textView41"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/email"
+            android:textSize="24sp"/>
+    </LinearLayout>
+
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/editCustomer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/background"
+        android:onClick="onClick"
         app:srcCompat="@drawable/screatenew"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="8dp" />
 
     <ImageView
         android:id="@+id/customerMainPic"
-        android:onClick="addCustomerPic"
+        android:onClick="onClick"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginBottom="8dp"
@@ -37,10 +98,10 @@
         app:srcCompat="@drawable/user96" />
 
     <ImageButton
-        android:id="@+id/imageButton18"
+        android:id="@+id/btMassage"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:onClick="userNewMessage"
+        android:onClick="onClick"
         android:background="@color/background"
         android:gravity="end"
         android:padding="10dp"
@@ -48,12 +109,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="8dp" />
 
     <ImageButton
-        android:id="@+id/imageButton42"
+        android:id="@+id/btCallCustomer"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:onClick="onClick"
         android:background="@color/background"
         android:gravity="start"
         android:padding="10dp"
@@ -61,7 +124,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="8dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -76,12 +140,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
         app:layout_constraintVertical_bias="0.031"
-        android:id="@+id/linearLayout3">
+        android:id="@+id/linearLayout3"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp">
 
         <ImageButton
             android:id="@+id/customerPic_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="onClick"
             android:layout_weight="1"
             app:srcCompat="@drawable/usermale48" />
 
@@ -89,6 +156,7 @@
             android:id="@+id/customerPic_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="onClick"
             android:layout_weight="1"
             app:srcCompat="@drawable/usermale48" />
 
@@ -96,6 +164,7 @@
             android:id="@+id/customerPic_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="onClick"
             android:layout_weight="1"
             app:srcCompat="@drawable/usermale48" />
 
@@ -104,13 +173,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="onClick"
             app:srcCompat="@drawable/usermale48"
             tools:layout_editor_absoluteX="310dp"
             tools:layout_editor_absoluteY="179dp" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView38"
+        android:id="@+id/tvCustomerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/user_nameTV"
@@ -118,58 +188,9 @@
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/customerMainPic"
-        app:layout_constraintLeft_toRightOf="@+id/imageButton"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintHorizontal_bias="0.794"
-        app:layout_constraintVertical_bias="0.727" />
-
-    <TextView
-        android:id="@+id/tvUserPhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="050500000"
-        android:textSize="24sp"
-        android:inputType="phone"
-        android:layout_marginLeft="56dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvUserMail" />
-
-    <TextView
-        android:id="@+id/textView40"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/phone"
-        android:textSize="24sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvUserPhone"
-        android:layout_marginRight="48dp"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <TextView
-        android:id="@+id/tvUserMail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/emailEx"
-        android:textSize="24sp"
-        android:inputType="phone"
-        tools:layout_editor_absoluteX="56dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="124dp" />
-
-    <TextView
-        android:id="@+id/textView41"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/email"
-        android:textSize="24sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvUserMail"
-        android:layout_marginRight="48dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
 
 </android.support.constraint.ConstraintLayout>

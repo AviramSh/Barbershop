@@ -4,11 +4,13 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.*;
 
-public class UserProfileActivity extends AppCompatActivity {
+public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener{
 
     //    SharedPreferences
     SharedPreferences settings;
@@ -55,4 +57,14 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+
+            default:
+                Toast.makeText(this, "Not Initialized", Toast.LENGTH_LONG).show();
+                break;
+        }
+    }
 }

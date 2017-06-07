@@ -116,6 +116,21 @@
     <string name="importCustomers">יביא לקוחות</string>
     <string name="fields_are_not_full">Fields are not full</string>
     <string name="editProduct">עריכת מוצר</string>
+    <string name="customerProfile">פרופיל לקוח</string>
+    <string name="new_massage">הודעה חדשה</string>
+    <string name="noCustonerNotFoundDialog">לא אותרו פרטי הלקוח</string>
+    <string name="ok">הבנתי</string>
+    <string name="phoneToShort">Phone to short.</string>
+    <string name="customerPhone">טלפון לקוח</string>
+    <string name="dialogManageCustomer">ניהול לקוח</string>
+    <string name="בcreateNewCustomer">צור לקוח חדש</string>
+    <string name="dialogCreateNewCustomer">יצירת לקוח חדש</string>
+    <string name="createNewCustomer">צור לקוח חדש</string>
+    <string name="guest">אורח</string>
+    <string name="passwordsDoNotMatch">ססמאות לא תואמות</string>
+    <string name="passwordsTooShort">סיסמאה קצרה מידי</string>
+    <string name="enterPassword">הכנס סיסמה</string>
+    <string name="incorrectUserame">שם משתמש שגוי</string>
 
 
     <string-array name="spinner_hours">

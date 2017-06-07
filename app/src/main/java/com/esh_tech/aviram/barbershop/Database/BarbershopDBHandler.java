@@ -33,7 +33,7 @@ public class BarbershopDBHandler {
 
     //    Add Customer ID(String name, String phone, String secondPhone, String email, Double bill, Bitmap photo, boolean gender, boolean remainder)
     public boolean addCustomer(Customer customer){
-
+        long result = -1;
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues columnValues = new ContentValues();
@@ -46,8 +46,16 @@ public class BarbershopDBHandler {
         columnValues.put(CustomersDBConstants.CUSTOMER_GENDER , customer.getGender());
         columnValues.put(CustomersDBConstants.CUSTOMER_REMAINDER , customer.getRemainder());
 
-
-        long result = db.insertOrThrow(CustomersDBConstants.CUSTOMERS_TABLE_NAME,null,columnValues);
+        if(customer.get_id() == -1) {
+            result = db.insertOrThrow(CustomersDBConstants.CUSTOMERS_TABLE_NAME,
+                    null,
+                    columnValues);
+        }else{
+            result = db.update(CustomersDBConstants.CUSTOMERS_TABLE_NAME,
+                    columnValues,
+                    CustomersDBConstants.CUSTOMER_ID +"= "+customer.get_id(),
+                    null);
+        }
         db.close();
 
         return (result != -1);
@@ -119,6 +127,8 @@ public class BarbershopDBHandler {
             }
         return null;
     }
+
+
 
 
 

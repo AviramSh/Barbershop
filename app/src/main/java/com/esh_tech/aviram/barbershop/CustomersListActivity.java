@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
 import java.util.ArrayList;
@@ -38,7 +39,11 @@ public class CustomersListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_list);
+        init();
 
+    }
+
+    private void init() {
         this.setTitle(R.string.customers);
 
 //        database
@@ -75,13 +80,16 @@ public class CustomersListActivity extends AppCompatActivity {
 
             final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
 
+            mBuilder.setTitle(R.string.dialogManageCustomer);
+
             mBuilder.setNeutralButton(R.string.edit, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Toast.makeText(CustomersListActivity.this, R.string.edit, Toast.LENGTH_LONG).show();
-                    Intent myIntent = new Intent(CustomersListActivity.this,CustomerActivity.class);
-                    myIntent.putExtra("customer",customer.get_id());
+                    Intent myIntent = new Intent(CustomersListActivity.this,NewCustomerActivity.class);
+                    myIntent.putExtra(CustomersDBConstants.CUSTOMER_ID,customer.get_id());
                     startActivity(myIntent);
+                    CustomersListActivity.this.finish();
                 }
             });
 
@@ -89,8 +97,11 @@ public class CustomersListActivity extends AppCompatActivity {
             mBuilder.setNegativeButton(R.string.newAppointment, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    Intent myIntent = new Intent(CustomersListActivity.this,NewAppointmentActivity.class);
+                    myIntent.putExtra(CustomersDBConstants.CUSTOMER_ID,customer.get_id());
+                    startActivity(myIntent);
+                    CustomersListActivity.this.finish();
 
-                    Toast.makeText(CustomersListActivity.this, "Cancel", Toast.LENGTH_LONG).show();
                 }
             });
 

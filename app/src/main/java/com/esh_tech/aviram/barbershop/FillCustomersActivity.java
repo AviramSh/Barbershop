@@ -4,11 +4,13 @@ import android.Manifest;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -33,6 +35,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_AUTO_LOGIN;
+import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_IS_REGISTER;
+
 public class FillCustomersActivity extends AppCompatActivity {
 
     private int MY_PERMISSIONS_REQUEST_IMPORT_CONTACT = 1;
@@ -47,6 +52,10 @@ public class FillCustomersActivity extends AppCompatActivity {
 
     //    Database
     BarbershopDBHandler dbHandler;
+
+    //    SharedPreferences
+    SharedPreferences settings;
+    SharedPreferences.Editor editor;
 
 
 
@@ -76,6 +85,14 @@ public class FillCustomersActivity extends AppCompatActivity {
 
     //allCustomers.add(new Customer(retrieveContactName(),"050-342-3242","aaa@mmm.com",true));
     public void goMain(View view) {
+        settings = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean register = settings.getBoolean(USER_IS_REGISTER, false);
+        if(!register) {
+            editor = settings.edit();
+            editor.putBoolean(USER_IS_REGISTER,true);
+            editor.commit();
+        }
+
         Intent mainIntent = new Intent(this,MainActivity.class);
         startActivity(mainIntent);
         this.finish();

@@ -143,32 +143,38 @@ public class MainActivity extends AppCompatActivity {
     public void openCustomersList(View view) {
         Intent myIntent = new Intent(this ,CustomersListActivity.class);
         startActivity(myIntent);
+        this.finish();
 
     }
 
     public void openBalance(View view) {
         Intent myIntent = new Intent(this ,BalanceActivity.class);
         startActivity(myIntent);
+        this.finish();
     }
 
     public void openStock(View view) {
         Intent myIntent = new Intent(this ,StockActivity.class);
         startActivity(myIntent);
+        this.finish();
     }
 
     public void openAppointmentList(View view) {
         Intent myIntent = new Intent(this ,AppointmentListActivity.class);
         startActivity(myIntent);
+        this.finish();
     }
 
     public void openSettings(View view) {
         Intent myIntent = new Intent(this ,SettingsActivity.class);
         startActivity(myIntent);
+        this.finish();
     }
 
     public void openNewAppointment(View view) {
         Intent myIntent = new Intent(this ,NewAppointmentActivity.class);
         startActivity(myIntent);
+        this.finish();
     }
 
     class MyAppointmentsAdapter extends ArrayAdapter<Appointment> {

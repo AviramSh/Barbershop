@@ -340,8 +340,14 @@ public class Appointment {
     }
 
     public Appointment() {
-        this(0,"",1);
+        this(-1,"",-1);
     }
+
+
+
+
+
+//    Getters and Setters
 
     public int get_id() {
         return _id;

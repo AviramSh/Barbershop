@@ -21,7 +21,7 @@ public class Customer {
 
 
     public Customer() {
-        this("Guest","050500000","050500001","AAA@MMM.COM",0.0,null,1,0);
+        this(-1,"Guest","050000000","050000000","AAA@MMM.COM",0.0,1,0);
     }
 
     public Customer(String name, String phone, String secondPhone, String email, Double bill, Bitmap photo, int gender, int remainder) {

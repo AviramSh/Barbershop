@@ -3,10 +3,12 @@ package com.esh_tech.aviram.barbershop;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,16 +20,18 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
 import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
-public class NewAppointmentActivity extends AppCompatActivity {
+public class NewAppointmentActivity extends AppCompatActivity implements View.OnClickListener{
 
+    Customer customerProfile;
 
     //Calendar
-    final Calendar c = Calendar.getInstance();
+    Calendar appointmentCalendar;
     Button theDate;
     Button theTime;
     int year_x;
@@ -47,6 +51,9 @@ public class NewAppointmentActivity extends AppCompatActivity {
     //    Database
     BarbershopDBHandler dbHandler;
 
+    TextView cPhone;
+    Appointment newAppointment;
+    String testPhone;
 
 
 
@@ -56,17 +63,40 @@ public class NewAppointmentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_appointment);
         this.setTitle(R.string.newAppointment);
 
+        init();
+    }
+
+    private void init() {
         //        database
         dbHandler = new BarbershopDBHandler(this);
-
+        cPhone = (TextView)findViewById(R.id.etCustomerPhone);
         theDate = (Button)findViewById(R.id.btDate);
         theTime= (Button)findViewById(R.id.btTime);
+        appointmentCalendar = Calendar.getInstance();
+        customerProfile = new Customer();
+        newAppointment =new Appointment();
+
         setToday();
+        testPhone="";
+
+
+
+
+        try{
+            Bundle bundle = getIntent().getExtras();
+            customerProfile= dbHandler.getCustomerByID(bundle.getInt(CustomersDBConstants.CUSTOMER_ID));
+            if(customerProfile.get_id() !=-1 ) {
+                customerProfile = dbHandler.getCustomerByID(getIntent().getExtras().getInt(CustomersDBConstants.CUSTOMER_ID));
+                cPhone.setText(customerProfile.getName());
+            }
+        }catch (NullPointerException e){
+            e.getMessage();
+        }
 
     }
 
 
-//    Update Appointment List - Database.
+    //    Update Appointment List - Database.
     private void populateAppointment() {
 
 //        turnsList = dbHandler.getDayAppointments(year_x,month_x,day_x);
@@ -77,8 +107,8 @@ public class NewAppointmentActivity extends AppCompatActivity {
 
 
 //        Test
-        /*c.set(year_x,month_x,day_x);
-        Toast.makeText(this, "day "+c.get(Calendar.DAY_OF_WEEK), Toast.LENGTH_SHORT).show();*/
+        /*appointmentCalendar.set(year_x,month_x,day_x);
+        Toast.makeText(this, "day "+appointmentCalendar.get(Calendar.DAY_OF_WEEK), Toast.LENGTH_SHORT).show();*/
 
 
         //turnsListView.setAdapter(turnsAdapter);
@@ -86,14 +116,14 @@ public class NewAppointmentActivity extends AppCompatActivity {
 
     private void setToday() {
 
-        year_x = c.get(Calendar.YEAR );
-        month_x = c.get(Calendar.MONTH);
-        day_x = c.get(Calendar.DAY_OF_MONTH);
+        year_x = appointmentCalendar.get(Calendar.YEAR );
+        month_x = appointmentCalendar.get(Calendar.MONTH);
+        day_x = appointmentCalendar.get(Calendar.DAY_OF_MONTH);
 
         theDate.setText(day_x+"/"+(month_x+1)+"/"+year_x);
 
-        hour_x = c.get(Calendar.HOUR);
-        minute_x= c.get(Calendar.MINUTE);
+        hour_x = appointmentCalendar.get(Calendar.HOUR);
+        minute_x= appointmentCalendar.get(Calendar.MINUTE);
 
         theTime.setText(hour_x+":"+minute_x);
 
@@ -120,8 +150,6 @@ public class NewAppointmentActivity extends AppCompatActivity {
             return new TimePickerDialog(this, tpickerListener,hour_x,minute_x,true);
         return null;
     }
-
-
 
     private DatePickerDialog.OnDateSetListener dpickerListener
             = new DatePickerDialog.OnDateSetListener() {
@@ -155,59 +183,104 @@ public class NewAppointmentActivity extends AppCompatActivity {
 
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ibSave:
+                saveAppointment();
+                break;
+            case R.id.ibAddCustomer:
+                importCustomer();
+                break;
+            case R.id.ibCancel:
+                Intent myIntent = new Intent(this,MainActivity.class);
+                startActivity(myIntent);
+                this.finish();
+            break;
 
+            default:
+                Toast.makeText(this, "Not Initialized", Toast.LENGTH_LONG).show();
+                break;
+        }
+    }
 
+    public void saveAppointment() {
 
-    public void saveAppointment(View view) {
-
-//        need if
-        Appointment newAppointment =new Appointment();
-        Customer testCustomer;
-
-        TextView cName = (TextView)findViewById(R.id.etNewCustomerName);
-        TextView cPhone = (TextView)findViewById(R.id.etNewCustomerPhone);
-
-        if(cName.getText().toString().isEmpty()||cPhone.getText().toString().isEmpty()){
+        appointmentCalendar.set(year_x,month_x,day_x,hour_x,minute_x);
+        testPhone+=cPhone.getText().toString();
+        customerProfile.setPhone(testPhone);
+//        Testing filed and create new ,old of guest customer for the creation of an appointment
+        if(customerProfile.getPhone().equals("")){
             Toast.makeText(this, R.string.emptyField, Toast.LENGTH_SHORT).show();
         }else{
 
+            if(dbHandler.getCustomerByPhone(customerProfile.getPhone())!=null)
+                customerProfile = dbHandler.getCustomerByPhone(customerProfile.getPhone());
 
-//            Integer.parseInt(cPhone.getText().toString())
-            testCustomer =dbHandler.getCustomerByPhone(cPhone.getText().toString());
-
-            if(testCustomer != null) {
-                c.set(year_x,month_x,day_x,hour_x,minute_x);
-                newAppointment = new Appointment(c,testCustomer.get_id());
+            if(customerProfile.get_id() != -1) {
+                newAppointment = new Appointment(appointmentCalendar,customerProfile.get_id());
+                if(dbHandler.addAppointment(newAppointment)){
+                    Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this, R.string.failedToSave, Toast.LENGTH_SHORT).show();
+                }
+//                cPhone.setText(customerProfile.getName());
             }else{
-                c.set(year_x,month_x,day_x,hour_x,minute_x);
-                newAppointment.setDateAndTime(c);
-            }
+                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+                customerProfile.setPhone(customerProfile.getPhone());
+                mBuilder.setTitle(R.string.dialogCreateNewCustomer);
+
+                mBuilder.setNeutralButton(R.string.createNewCustomer, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent myIntent = new Intent(NewAppointmentActivity.this,NewCustomerActivity.class);
+                        myIntent.putExtra(CustomersDBConstants.CUSTOMER_PHONE,customerProfile.getPhone());
+                        startActivity(myIntent);
+                        NewAppointmentActivity.this.finish();
+                    }
+                });
 
 
-            if(dbHandler.addAppointment(newAppointment)){
-                Toast.makeText(this, R.string.saved, Toast.LENGTH_LONG).show();
+                mBuilder.setNegativeButton(R.string.guest, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        customerProfile.setName(getResources().getString(R.string.guest));
+                        customerProfile.setPhone(customerProfile.getPhone());
+                        if(dbHandler.addCustomer(customerProfile)) {
+                            customerProfile = dbHandler.getCustomerByPhone(customerProfile.getPhone());
+                            newAppointment = new Appointment(appointmentCalendar, customerProfile.get_id());
 
-                /*Intent myIntent = new Intent(this,MainActivity.class);
-                startActivity(myIntent);*/
-            }else{
-                Toast.makeText(this, R.string.failedToSave, Toast.LENGTH_LONG).show();
+                            if (dbHandler.addAppointment(newAppointment)) {
+                                Toast.makeText(NewAppointmentActivity.this, R.string.saved, Toast.LENGTH_LONG).show();
+                                NewAppointmentActivity.this.finish();
+                                if(dbHandler.addAppointment(newAppointment)){
+                                    Toast.makeText(NewAppointmentActivity.this, R.string.saved, Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(NewAppointmentActivity.this, R.string.failedToSave, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }else{
+                            Toast.makeText(NewAppointmentActivity.this, R.string.failedToSave, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+
+                AlertDialog dialog = mBuilder.create();
+                dialog.show();
+
             }
         }
 
     }
 
+    //    **Need to import customer name and phone number from database.
+    public void importCustomer() {
 
-//    **Need to import customer name and phone number from database.
-    public void importCustomer(View view) {
+
 
     }
 
-    public void closeNewAppointment(View view) {
-
-        Intent myIntent = new Intent(this,MainActivity.class);
-        startActivity(myIntent);
-        this.finish();
-    }
 /*
 
     class MyCustomersAdapter extends ArrayAdapter<Customer>{

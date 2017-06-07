@@ -37,7 +37,7 @@ import java.util.List;
 public class AppointmentListActivity extends AppCompatActivity {
 
     //Calendar
-//    final Calendar c = Calendar.getInstance();
+//    final Calendar appointmentCalendar = Calendar.getInstance();
 
     Calendar newCalendar;
     Button theDate;

@@ -6,4 +6,5 @@
     <color name="background">#e2fc9a</color>//bcc0da
     <color name="textBackground">#797b7b</color>
     <color name="empty">#fff</color>
+    <color name="productListColor">#9ae5fc</color>
 </resources>

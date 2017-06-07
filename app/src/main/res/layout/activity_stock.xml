@@ -77,6 +77,7 @@
 
     <ListView
         android:id="@+id/fillProductLv"
+        android:background="@color/productListColor"
         android:padding="10dp"
         android:layout_width="0dp"
         android:layout_height="349dp"
