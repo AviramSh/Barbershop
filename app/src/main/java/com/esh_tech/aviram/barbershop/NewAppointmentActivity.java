@@ -1,16 +1,23 @@
 package com.esh_tech.aviram.barbershop;
 
+import android.Manifest;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -55,6 +62,10 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
     Appointment newAppointment;
     String testPhone;
 
+
+    int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
+    private AlarmManager aManager;
+    private PendingIntent pIntent;
 
 
     @Override
@@ -193,9 +204,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                 importCustomer();
                 break;
             case R.id.ibCancel:
-                Intent myIntent = new Intent(this,MainActivity.class);
-                startActivity(myIntent);
-                this.finish();
+                goMain();
             break;
 
             default:
@@ -204,21 +213,72 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         }
     }
 
+    private void goMain() {
+        Intent myIntent = new Intent(this,MainActivity.class);
+        startActivity(myIntent);
+        this.finish();
+    }
+
     public void saveAppointment() {
 
         appointmentCalendar.set(year_x,month_x,day_x,hour_x,minute_x);
         testPhone+=cPhone.getText().toString();
         customerProfile.setPhone(testPhone);
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS},
+                    MY_PERMISSIONS_REQUEST_SEND_SMS);
+        }
+//        }else {
+//            SmsManager sms  =SmsManager.getDefault();
+//            sms.sendTextMessage(etPhone.getText().toString(),null,message,sentPI,deliveredPI);
+//        }
+
+        //                Remainder Sms Handler
+
+        Intent m = new Intent(NewAppointmentActivity.this,AlarmService.class);
+        m.putExtra("exPhone", customerProfile.getPhone());
+        m.putExtra("exSmS", "Auto Sms Sand");
+
+
+        pIntent = PendingIntent.getService(getApplicationContext(), 0, m, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        aManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+
+        aManager.set(AlarmManager.RTC_WAKEUP, appointmentCalendar.getTimeInMillis(), pIntent);
+//        Toast.makeText(getApplicationContext(), "Sms scheduled! " ,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Sms scheduled! " ,Toast.LENGTH_SHORT).show();
+
+
+
 //        Testing filed and create new ,old of guest customer for the creation of an appointment
         if(customerProfile.getPhone().equals("")){
             Toast.makeText(this, R.string.emptyField, Toast.LENGTH_SHORT).show();
         }else{
+
 
             if(dbHandler.getCustomerByPhone(customerProfile.getPhone())!=null)
                 customerProfile = dbHandler.getCustomerByPhone(customerProfile.getPhone());
 
             if(customerProfile.get_id() != -1) {
                 newAppointment = new Appointment(appointmentCalendar,customerProfile.get_id());
+
+//                Remainder Sms Handler
+                if(customerProfile.getRemainder() ==1){
+                    Intent i = new Intent(NewAppointmentActivity.this,AlarmService.class);
+                    i.putExtra("exPhone", customerProfile.getPhone());
+                    i.putExtra("exSmS", "Auto Sms Sand");
+
+
+                    pIntent = PendingIntent.getService(getApplicationContext(), 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                    aManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+
+                    aManager.set(AlarmManager.RTC_WAKEUP, appointmentCalendar.getTimeInMillis(), pIntent);
+                    Toast.makeText(getApplicationContext(), "Sms scheduled! " ,Toast.LENGTH_SHORT).show();
+
+                }
                 if(dbHandler.addAppointment(newAppointment)){
                     Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
                 }else{
@@ -252,7 +312,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
                             if (dbHandler.addAppointment(newAppointment)) {
                                 Toast.makeText(NewAppointmentActivity.this, R.string.saved, Toast.LENGTH_LONG).show();
-                                NewAppointmentActivity.this.finish();
+                                goMain();
                                 if(dbHandler.addAppointment(newAppointment)){
                                     Toast.makeText(NewAppointmentActivity.this, R.string.saved, Toast.LENGTH_SHORT).show();
                                 }else{

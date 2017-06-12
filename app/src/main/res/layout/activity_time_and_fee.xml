@@ -90,12 +90,12 @@
                 android:text="25"
                 app:layout_constraintBottom_toTopOf="@+id/womanTimeEt"
                 app:layout_constraintHorizontal_bias="0.461"
-                app:layout_constraintLeft_toRightOf="@+id/textView4"
+                app:layout_constraintLeft_toRightOf="@+id/etUserMessage"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/etUserMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="25dp"
@@ -126,7 +126,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/womanPriceEt"
                 app:layout_constraintHorizontal_bias="0.439"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/textView4"
+                app:layout_constraintRight_toLeftOf="@+id/etUserMessage"
                 app:layout_constraintTop_toBottomOf="@+id/textView26" />
         </LinearLayout>
 

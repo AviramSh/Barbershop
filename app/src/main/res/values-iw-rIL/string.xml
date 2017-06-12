@@ -14,10 +14,10 @@
     <string name="balance">מאזן</string>
     <string name="nameTV">שם</string>
     <string name="familyname">משפחה</string>
-    <string name="businessname">שם העסק</string>
+    <string name="businessName">שם העסק</string>
     <string name="phone">טלפון</string>
     <string name="phonebusines">טלפון העסק</string>
-    <string name="businesAddress">כתובת העסק</string>
+    <string name="businessAddress">כתובת העסק</string>
 
     <string name="sunday">יום ראשון</string>
     <string name="monday">יום שני</string>

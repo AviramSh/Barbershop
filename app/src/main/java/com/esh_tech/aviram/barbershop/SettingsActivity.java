@@ -19,6 +19,7 @@ import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_NAME
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener{
 
+    Intent intent;
 
     SharedPreferences settings;
     SharedPreferences.Editor editor;
@@ -49,11 +50,15 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
             case R.id.layBarbershop:
-
+                intent = new Intent(this,BarbershopActivity.class);
+                startActivity(intent);
+                this.finish();
                 break;
 
             case R.id.layWorkingDays:
-
+                intent = new Intent(this,WorkingHoursActivity.class);
+                startActivity(intent);
+                this.finish();
                 break;
 
             case R.id.layPassword:
@@ -61,10 +66,14 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
             case R.id.layMessages:
-                openMessageSetting();
+                intent = new Intent(this,smsSettings.class);
+                startActivity(intent);
+                this.finish();
                 break;
             case R.id.layAbout:
-
+                intent = new Intent(this,AboutActivity.class);
+                startActivity(intent);
+                this.finish();
                 break;
             case R.id.layLogout:
                 logout();
@@ -114,6 +123,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 if(etPassword.getText().toString().equals(settings.getString(UserDBConstants.USER_PASSWORD,""))) {
                     Intent myIntent = new Intent(SettingsActivity.this, UserPasswordActivity.class);
                     startActivity(myIntent);
+                    SettingsActivity.this.finish();
                 }else{
                     Toast.makeText(SettingsActivity.this, R.string.incorrectPassword, Toast.LENGTH_LONG).show();
                 }
@@ -138,11 +148,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-    public void openMessageSetting() {
-        Intent myIntent = new Intent(this,smsSettings.class);
-        startActivity(myIntent);
-        this.finish();
-    }
 
     public void logout() {
         settings = PreferenceManager.getDefaultSharedPreferences(this);

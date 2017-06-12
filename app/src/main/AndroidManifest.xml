@@ -2,9 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.esh_tech.aviram.barbershop">
 
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="22" />
+
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-feature android:name="android.hardware.camera" android:required="true"/>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
 
     <application
         android:name=".MyGlobalUser"
@@ -38,7 +49,14 @@
         <activity android:name=".NewCustomerActivity" />
         <activity android:name=".NewAppointmentActivity" />
         <activity android:name=".SandMessageActivity" />
-        <activity android:name=".UserProfileActivity"></activity>
+        <activity android:name=".UserProfileActivity" />
+        <activity android:name=".AboutActivity" />
+        <activity android:name=".BarbershopActivity" />
+
+        <service
+            android:name=".AlarmService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
