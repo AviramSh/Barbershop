@@ -9,15 +9,18 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.icu.util.Calendar;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.ContactsContract;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.SmsManager;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -66,6 +69,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
     int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
     private AlarmManager aManager;
     private PendingIntent pIntent;
+    private static final int REQUEST_CODE = 2;
 
 
     @Override
@@ -264,23 +268,25 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             if(customerProfile.get_id() != -1) {
                 newAppointment = new Appointment(appointmentCalendar,customerProfile.get_id());
 
-//                Remainder Sms Handler
-                if(customerProfile.getRemainder() ==1){
-                    Intent i = new Intent(NewAppointmentActivity.this,AlarmService.class);
-                    i.putExtra("exPhone", customerProfile.getPhone());
-                    i.putExtra("exSmS", "Auto Sms Sand");
 
-
-                    pIntent = PendingIntent.getService(getApplicationContext(), 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                    aManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-
-                    aManager.set(AlarmManager.RTC_WAKEUP, appointmentCalendar.getTimeInMillis(), pIntent);
-                    Toast.makeText(getApplicationContext(), "Sms scheduled! " ,Toast.LENGTH_SHORT).show();
-
-                }
                 if(dbHandler.addAppointment(newAppointment)){
+                    //                Remainder Sms Handler
+                    if(customerProfile.getRemainder() ==1){
+                        Intent i = new Intent(NewAppointmentActivity.this,AlarmService.class);
+                        i.putExtra("exPhone", customerProfile.getPhone());
+                        i.putExtra("exSmS", "Auto Sms Sand");
+
+
+                        pIntent = PendingIntent.getService(getApplicationContext(), 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                        aManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+
+                        aManager.set(AlarmManager.RTC_WAKEUP, appointmentCalendar.getTimeInMillis(), pIntent);
+                        Toast.makeText(getApplicationContext(), "Sms scheduled! " ,Toast.LENGTH_SHORT).show();
+
+                    }
                     Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
+                    goMain();
                 }else{
                     Toast.makeText(this, R.string.failedToSave, Toast.LENGTH_SHORT).show();
                 }
@@ -336,9 +342,34 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
     //    **Need to import customer name and phone number from database.
     public void importCustomer() {
+        // TODO Auto-generated method stub
+        Uri uri = Uri.parse("content://contacts");
+        Intent intent = new Intent(Intent.ACTION_PICK, uri);
+        intent.setType(Phone.CONTENT_TYPE);
+        startActivityForResult(intent, REQUEST_CODE);
+    }
 
+    //Choose phone in contact and set edit text
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent i) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, i);
 
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Uri uri = i.getData();
+                String[] projection = { Phone.NUMBER, Phone.DISPLAY_NAME };
 
+                Cursor cursor = getContentResolver().query(uri, projection,
+                        null, null, null);
+                cursor.moveToFirst();
+
+                int numberColumnIndex = cursor.getColumnIndex(Phone.NUMBER);
+                String number = cursor.getString(numberColumnIndex);
+
+                cPhone.setText(number);
+            }
+        }
     }
 
 /*

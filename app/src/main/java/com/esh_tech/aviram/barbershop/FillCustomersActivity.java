@@ -121,6 +121,7 @@ public class FillCustomersActivity extends AppCompatActivity {
             ImageView customerIcon = (ImageView)convertView.findViewById(R.id.customerIconIv);
 
 
+
             //Data
             tvName.setText(customer.getName());
             tvPhone.setText(customer.getPhone());
@@ -132,7 +133,6 @@ public class FillCustomersActivity extends AppCompatActivity {
             }else {
                 customerIcon.setImageResource(R.drawable.userfemale48);
             }
-            usersAdapter.notifyDataSetChanged();
             return convertView;
         }
     }
@@ -316,5 +316,7 @@ public class FillCustomersActivity extends AppCompatActivity {
 //        Toast.makeText(this, "Contact Phone Number: " + contactNumber, Toast.LENGTH_LONG).show();
         return contactNumber;
     }
+
+    
 
 }
