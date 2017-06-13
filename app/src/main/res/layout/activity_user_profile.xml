@@ -77,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:text="@string/businessname"
+            android:text="@string/businessName"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp" />
 
@@ -107,7 +107,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:text="@string/businesAddress"
+            android:text="@string/businessAddress"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp" />
 

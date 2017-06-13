@@ -8,7 +8,7 @@
     tools:context="com.esh_tech.aviram.barbershop.CustomersListActivity">
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/editCustomer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/background"
@@ -47,7 +47,7 @@
         tools:layout_editor_absoluteX="318dp" />
 
     <ImageButton
-        android:id="@+id/imageButton42"
+        android:id="@+id/btCallCustomer"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@color/background"
@@ -96,7 +96,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView38"
+        android:id="@+id/tvCustomerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/user_nameTV"

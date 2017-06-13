@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import static com.esh_tech.aviram.barbershop.Database.BarbershopConstants.*;
+import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.*;
 
 
 public class UserRegistrationActivity extends AppCompatActivity {
@@ -34,6 +34,10 @@ public class UserRegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_registration);
 
+        init();
+    }
+
+    private void init() {
         name = (EditText)findViewById(R.id.etUserName);
         lastName = (EditText)findViewById(R.id.etUserLastName);
         phone = (EditText)findViewById(R.id.etUserTelephone);
@@ -48,11 +52,17 @@ public class UserRegistrationActivity extends AppCompatActivity {
     }
 
     public void passwordActivityNext(View view) {
+//                    Checking if user are exist and have checked auto login.
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(UserRegistrationActivity.this);
+        boolean register = settings.getBoolean(USER_IS_REGISTER, false);
 
-        if(saveUserdata()){
+        if(saveUserdata() && !register){
             Intent passwordIntent = new Intent(this, UserPasswordActivity.class);
             startActivity(passwordIntent);
             this.finish();
+        }else{
+            Intent passwordIntent = new Intent(this, MainActivity.class);
+            startActivity(passwordIntent);
         }
 
     }

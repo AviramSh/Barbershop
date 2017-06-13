@@ -18,7 +18,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class SandMessageActivity extends AppCompatActivity {
+public class SandMessageActivity extends AppCompatActivity implements View.OnClickListener{
 
     EditText etPhone;
     EditText etMessage;
@@ -35,7 +35,10 @@ public class SandMessageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sand_message);
+        init();
+    }
 
+    private void init() {
         Intent myIntent =getIntent();
 //        Toast.makeText(this, myIntent.getStringExtra("userPhone"), Toast.LENGTH_SHORT).show();
 
@@ -48,10 +51,9 @@ public class SandMessageActivity extends AppCompatActivity {
         sentPI = PendingIntent.getBroadcast(this,0,new Intent(sent),0);
         deliveredPI = PendingIntent.getBroadcast(this,0,new Intent(delivered),0);
 
-
     }
 
-    public void sendTheMessage(View view) {
+    public void sendTheMessage() {
 
         String message = etMessage.getText().toString();
 //        Toast.makeText(this, "Message:"+message +" was sanded", Toast.LENGTH_SHORT).show();
@@ -69,12 +71,6 @@ public class SandMessageActivity extends AppCompatActivity {
         myIntent.putExtra("SMS_content","Hello its working.");
         startActivity(myIntent);*/
 
-    }
-
-
-    public void backToCustomer(View view) {
-        Intent myIntent = new Intent(this,CustomerActivity.class);
-        startActivity(myIntent);
     }
 
     @Override
@@ -136,5 +132,24 @@ public class SandMessageActivity extends AppCompatActivity {
 
         unregisterReceiver(smsDeliveredReceiver);
         unregisterReceiver(smsSentReceiver);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btSandTheMassage:
+                sendTheMessage();
+                break;
+            case R.id.btBack:
+                Intent myIntent = new Intent(this,CustomerActivity.class);
+                startActivity(myIntent);
+                this.finish();
+                break;
+            default:
+                Toast.makeText(this, "Not Initialized yet.", Toast.LENGTH_SHORT).show();
+                break;
+
+        }
+
     }
 }

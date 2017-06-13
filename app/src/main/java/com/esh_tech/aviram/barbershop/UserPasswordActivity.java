@@ -8,11 +8,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import static com.esh_tech.aviram.barbershop.Database.BarbershopConstants.*;
+import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.*;
 
 
-public class UserPasswordActivity extends AppCompatActivity {
+public class UserPasswordActivity extends AppCompatActivity implements View.OnClickListener{
 
 
     //    SharedPreferences
@@ -29,38 +30,62 @@ public class UserPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_password);
 
+        init();
+    }
+
+    private void init() {
+
+        this.setTitle(R.string.password);
+
         pass1 = (EditText)findViewById(R.id.passwordEt);
         pass2= (EditText)findViewById(R.id.rePasswordEt);
 
         savePassword = (CheckBox)findViewById(R.id.cbSavePassword);
+    }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btSavePassword:
+                savePassword();
+                break;
+            default:
+                Toast.makeText(this, "Not Initialized yet", Toast.LENGTH_SHORT).show();
+                break;
+
+        }
     }
 
 
-    //back to registration Activity
-    public void goRegisterAc(View v){
-        Intent registrationIntent = new Intent(this ,UserRegistrationActivity.class);
-        startActivity(registrationIntent);
-        this.finish();
-    }
 
-    public void savePassword(View view) {
+    public void savePassword() {
 
         settings = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean register = settings.getBoolean(USER_IS_REGISTER, false);
         editor = settings.edit();
 
         if(pass1.getText().toString().equals(pass2.getText().toString())) {
-//            MyGlobalUser myUser = (MyGlobalUser)getApplication();
-//            myUser.setPassword(pass1.getText().toString());
-            editor.putString(USER_PASSWORD,pass1.getText().toString());
-            if(savePassword.isChecked()){
-                editor.putBoolean(AUTO_LOGIN,true);
-            }
-            Intent myIntent = new Intent(this, WorkingHoursActivity.class);
-            startActivity(myIntent);
-            this.finish();
+            if(pass1.getText().toString().length()>3 ) {
+                editor.putString(USER_PASSWORD, pass1.getText().toString());
+                if (savePassword.isChecked()) {
+                    editor.putBoolean(USER_AUTO_LOGIN, true);
+                    editor.apply();
+                }
+                if (register) {
+                    Intent myIntent = new Intent(this, MainActivity.class);
+                    startActivity(myIntent);
+                    this.finish();
+                } else {
+                    Intent myIntent = new Intent(this, WorkingHoursActivity.class);
+                    startActivity(myIntent);
+                    this.finish();
+                }
+            }else Toast.makeText(this, R.string.passwordsTooShort, Toast.LENGTH_SHORT).show();
+        }else {
+
+            Toast.makeText(this, R.string.passwordsDoNotMatch, Toast.LENGTH_SHORT).show();
         }
 
-        editor.commit();
+
     }
 }

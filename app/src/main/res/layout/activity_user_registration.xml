@@ -40,6 +40,8 @@
             android:id="@+id/etUserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLength="15"
+            android:maxLines="1"
             android:gravity="start" />
 
         <TextView
@@ -53,6 +55,8 @@
 
         <EditText
             android:id="@+id/etUserLastName"
+            android:maxLines="1"
+            android:maxLength="15"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start" />
@@ -72,6 +76,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
+            android:maxLines="1"
+            android:maxLength="15"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp" />
 
@@ -80,7 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:text="@string/businessname"
+            android:text="@string/businessName"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp" />
 
@@ -88,6 +94,8 @@
             android:id="@+id/etBusinessName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLength="15"
+            android:maxLines="1"
             android:gravity="start" />
 
         <TextView
@@ -104,6 +112,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"
+            android:maxLength="15"
+            android:maxLines="1"
             android:gravity="start" />
 
         <TextView
@@ -111,7 +121,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:text="@string/businesAddress"
+            android:text="@string/businessAddress"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp" />
 
@@ -119,6 +129,8 @@
             android:id="@+id/etBusinessAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLength="15"
+            android:maxLines="1"
             android:gravity="start" />
 
         <LinearLayout

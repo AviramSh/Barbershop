@@ -3,7 +3,6 @@ package com.esh_tech.aviram.barbershop;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.audiofx.BassBoost;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,13 +11,18 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import static com.esh_tech.aviram.barbershop.Database.BarbershopConstants.USER_PASSWORD;
+import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
+
+import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_AUTO_LOGIN;
+import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_NAME;
 
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements View.OnClickListener{
 
+    Intent intent;
 
     SharedPreferences settings;
+    SharedPreferences.Editor editor;
 
 
     @Override
@@ -26,7 +30,59 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        init();
+    }
+
+    private void init() {
         this.setTitle(R.string.settings);
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.layProfile:
+                goUserProfile();
+                break;
+
+            case R.id.layHaircut:
+                openHaircutSettings();
+                break;
+
+            case R.id.layBarbershop:
+                intent = new Intent(this,BarbershopActivity.class);
+                startActivity(intent);
+                this.finish();
+                break;
+
+            case R.id.layWorkingDays:
+                intent = new Intent(this,WorkingHoursActivity.class);
+                startActivity(intent);
+                this.finish();
+                break;
+
+            case R.id.layPassword:
+                openPasswordSettings();
+                break;
+
+            case R.id.layMessages:
+                intent = new Intent(this,smsSettings.class);
+                startActivity(intent);
+                this.finish();
+                break;
+            case R.id.layAbout:
+                intent = new Intent(this,AboutActivity.class);
+                startActivity(intent);
+                this.finish();
+                break;
+            case R.id.layLogout:
+                logout();
+                break;
+            default:
+                Toast.makeText(this, "Not Initialized yet", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
     }
 
     public void openWorkingDays(View view) {
@@ -35,37 +91,39 @@ public class SettingsActivity extends AppCompatActivity {
         this.finish();
     }
 
-    public void goUserProfile(View view) {
+    public void goUserProfile() {
         Intent myIntent = new Intent(this,UserProfileActivity.class);
         startActivity(myIntent);
         this.finish();
 
     }
 
-    public void openHaircutSettings(View view) {
+    public void openHaircutSettings() {
         Intent myIntent = new Intent(this,TimeAndFee.class);
         startActivity(myIntent);
         this.finish();
 
     }
 
-    public void openPasswordSettings(View view) {
+    public void openPasswordSettings() {
 
         final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+
         final View mView =getLayoutInflater().inflate(R.layout.dialog_edit_password,null);
 
         final EditText etPassword = (EditText)mView.findViewById(R.id.d_etPassword);
 
         //        SharedPreference
         settings = PreferenceManager.getDefaultSharedPreferences(this);
-
+        mBuilder.setTitle(R.string.enterPassword);
         mBuilder.setNeutralButton(R.string.enter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                if(etPassword.getText().toString().equals(settings.getString(USER_PASSWORD,""))) {
+                if(etPassword.getText().toString().equals(settings.getString(UserDBConstants.USER_PASSWORD,""))) {
                     Intent myIntent = new Intent(SettingsActivity.this, UserPasswordActivity.class);
                     startActivity(myIntent);
+                    SettingsActivity.this.finish();
                 }else{
                     Toast.makeText(SettingsActivity.this, R.string.incorrectPassword, Toast.LENGTH_LONG).show();
                 }
@@ -90,15 +148,16 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
-    public void openMessageSetting(View view) {
-        Intent myIntent = new Intent(this,smsSettings.class);
-        startActivity(myIntent);
-        this.finish();
-    }
 
-    public void logout(View view) {
+    public void logout() {
+        settings = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = settings.edit();
+        editor.putBoolean(USER_AUTO_LOGIN,false);
+        editor.apply();
+
         Intent myIntent = new Intent(this,LoginActivity.class);
         startActivity(myIntent);
         this.finish();
     }
+
 }

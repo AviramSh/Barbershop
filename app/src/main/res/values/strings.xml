@@ -13,10 +13,10 @@
     <string name="balance">מאזן</string>
     <string name="nameTV">שם</string>
     <string name="familyname">משפחה</string>
-    <string name="businessname">שם העסק</string>
+    <string name="businessName">שם העסק</string>
     <string name="phone">טלפון</string>
     <string name="phonebusines">טלפון העסק</string>
-    <string name="businesAddress">כתובת העסק</string>
+    <string name="businessAddress">כתובת העסק</string>
 
     <string name="sunday">יום ראשון</string>
     <string name="monday">יום שני</string>
@@ -114,6 +114,28 @@
     <string name="DidntGetHaircut">לא הסתפר</string>
     <string name="theCustomerGetAnHaircut">האם הלקוח הסתפר?</string>
     <string name="importCustomers">יביא לקוחות</string>
+    <string name="fields_are_not_full">Fields are not full</string>
+    <string name="editProduct">עריכת מוצר</string>
+    <string name="customerProfile">פרופיל לקוח</string>
+    <string name="new_massage">הודעה חדשה</string>
+    <string name="noCustonerNotFoundDialog">לא אותרו פרטי הלקוח</string>
+    <string name="ok">הבנתי</string>
+    <string name="phoneToShort">Phone to short.</string>
+    <string name="customerPhone">טלפון לקוח</string>
+    <string name="dialogManageCustomer">ניהול לקוח</string>
+    <string name="בcreateNewCustomer">צור לקוח חדש</string>
+    <string name="dialogCreateNewCustomer">יצירת לקוח חדש</string>
+    <string name="createNewCustomer">צור לקוח חדש</string>
+    <string name="guest">אורח</string>
+    <string name="passwordsDoNotMatch">ססמאות לא תואמות</string>
+    <string name="passwordsTooShort">סיסמאה קצרה מידי</string>
+    <string name="enterPassword">הכנס סיסמה</string>
+    <string name="incorrectUserame">שם משתמש שגוי</string>
+    <string name="notSaved">לא נשמר</string>
+    <string name="messageToShort">הודעה קצרה מדי</string>
+    <string name="aboutContent">אודות</string>
+    <string name="close">סגור</string>
+    <string name="businessPhone">טלפון עסק</string>
 
 
     <string-array name="spinner_hours">
