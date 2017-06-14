@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.icu.util.Calendar;
@@ -31,6 +32,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
+import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
 import java.util.ArrayList;
@@ -39,6 +41,10 @@ import java.util.ArrayList;
 public class NewAppointmentActivity extends AppCompatActivity implements View.OnClickListener{
 
     Customer customerProfile;
+
+    //    SharedPreferences
+    SharedPreferences settings;
+
 
     //Calendar
     Calendar appointmentCalendar;
@@ -115,10 +121,10 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
     private void populateAppointment() {
 
 //        turnsList = dbHandler.getDayAppointments(year_x,month_x,day_x);
-        turnsList.add("Ohad - 9:00");
-        turnsList.add("Almog - 9:15");
-        turnsList.add("nir - 9:30");
-        turnsList.add("Ode - 10:00");
+//        turnsList.add("Ohad - 9:00");
+//        turnsList.add("Almog - 9:15");
+//        turnsList.add("nir - 9:30");
+//        turnsList.add("Ode - 10:00");
 
 
 //        Test
@@ -274,7 +280,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                     if(customerProfile.getRemainder() ==1){
                         Intent i = new Intent(NewAppointmentActivity.this,AlarmService.class);
                         i.putExtra("exPhone", customerProfile.getPhone());
-                        i.putExtra("exSmS", "Auto Sms Sand");
+                        i.putExtra("exSmS", settings.getString(UserDBConstants.USER_DEFAULT_SMS,getResources().getString(R.string.defaultSms)));
 
 
                         pIntent = PendingIntent.getService(getApplicationContext(), 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -282,7 +288,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                         aManager = (AlarmManager)getSystemService(ALARM_SERVICE);
 
                         aManager.set(AlarmManager.RTC_WAKEUP, appointmentCalendar.getTimeInMillis(), pIntent);
-                        Toast.makeText(getApplicationContext(), "Sms scheduled! " ,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.SmsScheduled ,Toast.LENGTH_SHORT).show();
 
                     }
                     Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();

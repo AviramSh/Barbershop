@@ -53,7 +53,6 @@ public class StockActivity extends AppCompatActivity {
         //        Database
         dbHandler = new BarbershopDBHandler(this);
 
-//        //pupolate
 //        populateProducts();
         allProducts = dbHandler.getAllProducts();
         //        Connect adapter with custom view
@@ -78,15 +77,18 @@ public class StockActivity extends AppCompatActivity {
     //    Handling the Appointment list view
     private void productHandler(int position) {
 
+
         final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
         final View mView =getLayoutInflater().inflate(R.layout.dialog_addproduct,null);
 
-        final EditText mProductName = (EditText)mView.findViewById(R.id.etProdactName);
-        final EditText mProductQuantity = (EditText)mView.findViewById(R.id.etProduactQuantity);
-        final EditText mProductPrice = (EditText)mView.findViewById(R.id.etProduactPrice);
+        final EditText mProductName = (EditText)mView.findViewById(R.id.etProductName);
+        final EditText mProductQuantity = (EditText)mView.findViewById(R.id.etProductQuantity);
+        final EditText mProductPrice = (EditText)mView.findViewById(R.id.etProductPrice);
+
         Product p1 = dbHandler.getProductByID(position);
 
         if(p1 != null) {
+            Toast.makeText(this, "My pos :"+position, Toast.LENGTH_SHORT).show();
             Product editProduct = dbHandler.getProductByID(position);
             mProductName.setText(editProduct.getName());
             mProductQuantity.setText(String.valueOf(editProduct.getQuantity()));
@@ -148,9 +150,9 @@ public class StockActivity extends AppCompatActivity {
         final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
         final View mView =getLayoutInflater().inflate(R.layout.dialog_addproduct,null);
 
-        final EditText mProduactName = (EditText)mView.findViewById(R.id.etProdactName);
-        final EditText mProduactQuantity = (EditText)mView.findViewById(R.id.etProduactQuantity);
-        final EditText mProduactPrice = (EditText)mView.findViewById(R.id.etProduactPrice);
+        final EditText mProductName = (EditText)mView.findViewById(R.id.etProductName);
+        final EditText mProductQuantity = (EditText)mView.findViewById(R.id.etProductQuantity);
+        final EditText mProductPrice = (EditText)mView.findViewById(R.id.etProductPrice);
 
         /*Button mSave = (Button)mView.findViewById(R.id.bSave);
         Button mCancel = (Button)mView.findViewById(R.id.bCancel);*/
@@ -161,9 +163,9 @@ public class StockActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                String name = mProduactName.getText().toString();
-                String price = mProduactPrice.getText().toString();
-                String quantity = mProduactQuantity.getText().toString();
+                String name = mProductName.getText().toString();
+                String price = mProductPrice.getText().toString();
+                String quantity = mProductQuantity.getText().toString();
 
                 if(name.isEmpty()|| price.isEmpty()|| quantity.isEmpty()){
                     Toast.makeText(StockActivity.this, R.string.fields_are_not_full, Toast.LENGTH_LONG).show();
