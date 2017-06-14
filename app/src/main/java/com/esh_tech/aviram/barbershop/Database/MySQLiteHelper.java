@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.esh_tech.aviram.barbershop.Constants.AppointmentsDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.ProductsDBConstants;
+import com.esh_tech.aviram.barbershop.Constants.PurchaseDBConstants;
 
 
 /**
@@ -42,7 +43,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + AppointmentsDBConstants.APPOINTMENTS_TABLE_NAME +"("+
                 AppointmentsDBConstants.APPOINTMENT_ID        + " INTEGER PRIMARY KEY AUTOINCREMENT  , "+
                 AppointmentsDBConstants.APPOINTMENT_DATE + " TEXT ,"+
-                CustomersDBConstants.CUSTOMER_ID + " INTEGER "
+                CustomersDBConstants.CUSTOMER_ID + " INTEGER , "+
+                AppointmentsDBConstants.APPOINTMENT_EXECUTED + " INTEGER "
                 +")");
 
         //        CREATING PRODUCTS TABLE. Products(String name, int quantity, double price)
@@ -52,6 +54,20 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 ProductsDBConstants.PRODUCT_QUANTITY + " INTEGER , "+
                 ProductsDBConstants.PRODUCT_PRICE + " DOUBLE "
                 +")");
+
+
+
+
+
+        //        CREATING PURCHASE TABLE. Products(String name, int quantity, double price)
+        db.execSQL("CREATE TABLE " + PurchaseDBConstants.PURCHASES_TABLE_NAME+"("+
+                PurchaseDBConstants.PURCHASE_ID        + " INTEGER PRIMARY KEY AUTOINCREMENT  , "+
+                PurchaseDBConstants.APPOINTMENT_ID + " INTEGER , "+
+                PurchaseDBConstants.PRODUCT_ID + " INTEGER , "+
+                PurchaseDBConstants.CUSTOMER_ID + " INTEGER , "+
+                PurchaseDBConstants.PURCHASE_DATE + " TEXT ,"+
+                PurchaseDBConstants.PURCHASE_PRICE + " DOUBLE "
+                +")");
     }
 
     @Override
@@ -60,6 +76,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + CustomersDBConstants.CUSTOMERS_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + AppointmentsDBConstants.APPOINTMENTS_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + ProductsDBConstants.PRODUCTS_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + PurchaseDBConstants.PURCHASES_TABLE_NAME);
 
         onCreate(db);
     }

@@ -2,6 +2,7 @@ package com.esh_tech.aviram.barbershop;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class StockActivity extends AppCompatActivity {
+public class StockActivity extends AppCompatActivity implements View.OnClickListener{
 
     //    Database
     BarbershopDBHandler dbHandler;
@@ -79,7 +80,7 @@ public class StockActivity extends AppCompatActivity {
 
 
         final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
-        final View mView =getLayoutInflater().inflate(R.layout.dialog_addproduct,null);
+        final View mView = getLayoutInflater().inflate(R.layout.dialog_addproduct,null);
 
         final EditText mProductName = (EditText)mView.findViewById(R.id.etProductName);
         final EditText mProductQuantity = (EditText)mView.findViewById(R.id.etProductQuantity);
@@ -194,6 +195,16 @@ public class StockActivity extends AppCompatActivity {
         AlertDialog dialog = mBuilder.create();
         dialog.show();
     }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.ibSave){
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+            this.finish();
+        }
+    }
+
 
     //Creating custom Adpter for the list view GUI
     class MyProductsAdapter extends ArrayAdapter<Product> {

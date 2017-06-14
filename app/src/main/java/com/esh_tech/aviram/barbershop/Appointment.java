@@ -304,9 +304,9 @@ package com.esh_tech.aviram.barbershop;
 import android.icu.util.Calendar;
 
 import java.sql.Time;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by AVIRAM on 27/05/2017.
@@ -321,6 +321,8 @@ public class Appointment {
     private Time theTime;
     private int haircutTime;
     private int customerID;
+    private int tackAnHaircut;
+
 
     //      Constructors.
 
@@ -333,14 +335,15 @@ public class Appointment {
         this.customerID = customerID;
     }
 
-    public Appointment(int _id, String dateAndTime, int customerID) {
+    public Appointment(int _id, String dateAndTime, int customerID,int tackAnHaircut) {
         this._id = _id;
         setDateAndTime(dateAndTime);
         this.customerID = customerID;
+        this.tackAnHaircut =tackAnHaircut;
     }
 
     public Appointment() {
-        this(-1,"",-1);
+        this(-1,"",-1,0);
     }
 
 
@@ -348,6 +351,14 @@ public class Appointment {
 
 
 //    Getters and Setters
+
+    public int getTackAnHaircut() {
+        return tackAnHaircut;
+    }
+
+    public void setTackAnHaircut(int tackAnHaircut) {
+        this.tackAnHaircut = tackAnHaircut;
+    }
 
     public int get_id() {
         return _id;
@@ -368,7 +379,8 @@ public class Appointment {
 
     public void setDateAndTime(String setDate){
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat(
+                "dd/MM/yyyy HH:mm", Locale.getDefault());
         Date testDate = null;
         try {
             testDate = sdf.parse(setDate);
@@ -391,7 +403,7 @@ public class Appointment {
     }
     public String getDateAndTimeToDisplay() {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
         String newFormat = formatter.format(dateAndTime.getTime());
         return newFormat;
     }

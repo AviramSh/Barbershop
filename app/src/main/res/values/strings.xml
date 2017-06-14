@@ -136,7 +136,9 @@
     <string name="aboutContent">אודות</string>
     <string name="close">סגור</string>
     <string name="businessPhone">טלפון עסק</string>
-    <string name="SmsScheduled">נקבע תזכרות</string>
+    <string name="smsScheduled">נקבע תזכרות</string>
+    <string name="wrongDate">תאריך שגוי</string>
+    <string name="startToEnd">התחלה  - סוף</string>
 
 
     <string-array name="spinner_hours">

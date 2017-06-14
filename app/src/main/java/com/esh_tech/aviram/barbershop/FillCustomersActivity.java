@@ -141,21 +141,19 @@ public class FillCustomersActivity extends AppCompatActivity {
 
         // using native contacts selection
         // Intent.ACTION_PICK = Pick an item from the data, returning what was selected.
-        startActivityForResult(new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI), REQUEST_CODE_PICK_CONTACTS);
+
+        //        Check Permission
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS},
+                    MY_PERMISSIONS_REQUEST_IMPORT_CONTACT);
+        }else startActivityForResult(new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI), REQUEST_CODE_PICK_CONTACTS);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Customer newCustomer =new Customer();
-//        Check Permission
-
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this , new String[]{Manifest.permission.READ_CONTACTS},
-                    MY_PERMISSIONS_REQUEST_IMPORT_CONTACT);
-        }else {
-
 
             if (requestCode == REQUEST_CODE_PICK_CONTACTS && resultCode == RESULT_OK) {
                 Log.d(TAG, "Response: " + data.toString());
@@ -177,9 +175,9 @@ public class FillCustomersActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(this, newCustomer.getName()+" Didn't Saved.", Toast.LENGTH_SHORT).show();
                 }
-                allCustomers = dbHandler.getAllCustomers();
+                allCustomers.add(newCustomer);
                 usersAdapter.notifyDataSetChanged();
-            }
+
         }
     }
 

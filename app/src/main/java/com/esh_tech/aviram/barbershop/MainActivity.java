@@ -3,8 +3,10 @@ package com.esh_tech.aviram.barbershop;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
+import android.preference.PreferenceManager;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,12 +24,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    //    SharedPreferences
+    SharedPreferences settings;
 
     ArrayList<Appointment> allAppointments =new ArrayList<Appointment>();
     ListView lsNextAppointment;
@@ -42,16 +48,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         init();
-
-
     }
 
     private void init() {
-
-
         //        Database
         dbHandler = new BarbershopDBHandler(this);
 
@@ -98,7 +98,27 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(MainActivity.this, R.string.getHaircut, Toast.LENGTH_LONG).show();
 
-//                Need to update database
+                Purchase purchase = new Purchase();
+                Appointment appointment = allAppointments.get(position);
+
+                if(appointment != null) {
+                    purchase.setAppointmentID(appointment.get_id());
+                    purchase.setCustomerID(appointment.getCustomerID());
+                    Customer customer = dbHandler.getCustomerByID(appointment.getCustomerID());
+                    if (customer != null) {
+                        settings = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                        if(customer.getGender()==1){
+                            purchase.setPrice(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_PRICE,0));
+                        }else{
+                            purchase.setPrice(settings.getInt(UserDBConstants.USER_FEMALE_HAIRCUT_PRICE,0));
+                        }
+                    }
+                }
+                //                Need to update database
+                dbHandler.addPurchase(purchase);
+
+                allAppointments.get(position).setTackAnHaircut(1);
+
                 allAppointments.remove(position);
                 appointmentAdapter.notifyDataSetChanged();
             }
@@ -201,8 +221,18 @@ public class MainActivity extends AppCompatActivity {
 
 
 //            Data
-            tvName.setText(dbHandler.getCustomerByID(appointment.getCustomerID()).getName());
-            tvTime.setText(appointment.getTime());
+            if (appointment != null) {
+                if(appointment.getTackAnHaircut()==1){
+                    tvTime.setText(appointment.getTime());
+                    tvName.setTextColor(getColor(R.color.colorPrimary));
+                    tvName.setText(dbHandler.getCustomerByID(appointment.getCustomerID()).getName());
+                    tvName.setTextColor(getResources().getColor(R.color.green));
+                }else{
+                    tvTime.setText(appointment.getTime());
+                    tvName.setText(dbHandler.getCustomerByID(appointment.getCustomerID()).getName());
+                }
+            }
+
 
 //            tvTime.setText(String.valueOf(appointment.getHour()) +":"+ String.valueOf(appointment.getMinutes()));
 

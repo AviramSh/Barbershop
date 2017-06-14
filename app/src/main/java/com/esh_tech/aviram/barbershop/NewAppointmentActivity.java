@@ -96,6 +96,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         appointmentCalendar = Calendar.getInstance();
         customerProfile = new Customer();
         newAppointment =new Appointment();
+//        newAppointment.setDateAndTime(appointmentCalendar);
 
         setToday();
         testPhone="";
@@ -235,34 +236,6 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         testPhone+=cPhone.getText().toString();
         customerProfile.setPhone(testPhone);
 
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS},
-                    MY_PERMISSIONS_REQUEST_SEND_SMS);
-        }
-//        }else {
-//            SmsManager sms  =SmsManager.getDefault();
-//            sms.sendTextMessage(etPhone.getText().toString(),null,message,sentPI,deliveredPI);
-//        }
-
-        //                Remainder Sms Handler
-
-        Intent m = new Intent(NewAppointmentActivity.this,AlarmService.class);
-        m.putExtra("exPhone", customerProfile.getPhone());
-        m.putExtra("exSmS", "Auto Sms Sand");
-
-
-        pIntent = PendingIntent.getService(getApplicationContext(), 0, m, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        aManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-
-        aManager.set(AlarmManager.RTC_WAKEUP, appointmentCalendar.getTimeInMillis(), pIntent);
-//        Toast.makeText(getApplicationContext(), "Sms scheduled! " ,Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "Sms scheduled! " ,Toast.LENGTH_SHORT).show();
-
-
-
-//        Testing filed and create new ,old of guest customer for the creation of an appointment
         if(customerProfile.getPhone().equals("")){
             Toast.makeText(this, R.string.emptyField, Toast.LENGTH_SHORT).show();
         }else{
@@ -272,27 +245,19 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                 customerProfile = dbHandler.getCustomerByPhone(customerProfile.getPhone());
 
             if(customerProfile.get_id() != -1) {
-                newAppointment = new Appointment(appointmentCalendar,customerProfile.get_id());
+//                newAppointment = new Appointment(appointmentCalendar,customerProfile.get_id());
+                newAppointment.setDateAndTime(appointmentCalendar);
+                newAppointment.setCustomerID(customerProfile.get_id());
 
 
                 if(dbHandler.addAppointment(newAppointment)){
                     //                Remainder Sms Handler
                     if(customerProfile.getRemainder() ==1){
-                        Intent i = new Intent(NewAppointmentActivity.this,AlarmService.class);
-                        i.putExtra("exPhone", customerProfile.getPhone());
-                        i.putExtra("exSmS", settings.getString(UserDBConstants.USER_DEFAULT_SMS,getResources().getString(R.string.defaultSms)));
-
-
-                        pIntent = PendingIntent.getService(getApplicationContext(), 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                        aManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-
-                        aManager.set(AlarmManager.RTC_WAKEUP, appointmentCalendar.getTimeInMillis(), pIntent);
-                        Toast.makeText(getApplicationContext(), R.string.SmsScheduled ,Toast.LENGTH_SHORT).show();
-
+                        setRemainder();
                     }
                     Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
                     goMain();
+
                 }else{
                     Toast.makeText(this, R.string.failedToSave, Toast.LENGTH_SHORT).show();
                 }
@@ -347,6 +312,32 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
     }
 
     //    **Need to import customer name and phone number from database.
+
+    private void setRemainder() {
+
+            if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS},
+                        MY_PERMISSIONS_REQUEST_SEND_SMS);
+            }else {
+                Intent m = new Intent(NewAppointmentActivity.this, AlarmService.class);
+                m.putExtra("exPhone", customerProfile.getPhone());
+                m.putExtra("exSmS", settings.getString(UserDBConstants.USER_DEFAULT_SMS, getResources().getString(R.string.defaultSms)));
+
+                pIntent = PendingIntent.getService(getApplicationContext(), 0, m, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                aManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+                aManager.set(AlarmManager.RTC_WAKEUP, appointmentCalendar.getTimeInMillis(), pIntent);
+//        Toast.makeText(getApplicationContext(), "Sms scheduled! " ,Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Sms scheduled! ", Toast.LENGTH_SHORT).show();
+            }
+//Intent i = new Intent(NewAppointmentActivity.this,AlarmService.class);
+//i.putExtra("exPhone", customerProfile.getPhone());
+//i.putExtra("exSmS", settings.getString(UserDBConstants.USER_DEFAULT_SMS,getResources().getString(R.string.defaultSms)));
+    }
+
+
     public void importCustomer() {
         // TODO Auto-generated method stub
         Uri uri = Uri.parse("content://contacts");

@@ -7,4 +7,5 @@
     <color name="textBackground">#797b7b</color>
     <color name="empty">#fff</color>
     <color name="productListColor">#9ae5fc</color>
+    <color name="green">#1bbf0f</color>
 </resources>
