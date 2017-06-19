@@ -9,8 +9,6 @@
     <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.CAMERA"/>
-    <!--<uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />-->
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -32,27 +30,69 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".CustomerActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".StockActivity" />
-        <activity android:name=".UserRegistrationActivity" />
-        <activity android:name=".WorkingHoursActivity" />
-        <activity android:name=".FillCustomersActivity" />
-        <activity android:name=".TimeAndFee" />
-        <activity android:name=".smsSettings" />
-        <activity android:name=".CustomersListActivity" />
-        <activity android:name=".BalanceActivity" />
-        <activity android:name=".AppointmentListActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".UserPasswordActivity" />
-        <activity android:name=".NewCustomerActivity" />
-        <activity android:name=".NewAppointmentActivity" />
-        <activity android:name=".SandMessageActivity" />
-        <activity android:name=".UserProfileActivity" />
-        <activity android:name=".AboutActivity" />
-        <activity android:name=".BarbershopActivity" />
+
+        <activity android:name=".RegisterActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".LoginActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".CustomerActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".SettingsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".StockActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".UserRegistrationActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".WorkingHoursActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".FillCustomersActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".TimeAndFee"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".smsSettings"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".CustomersListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".BalanceActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".AppointmentListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".UserPasswordActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".NewCustomerActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".NewAppointmentActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".SandMessageActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".UserProfileActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".AboutActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".BarbershopActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".AlarmService"

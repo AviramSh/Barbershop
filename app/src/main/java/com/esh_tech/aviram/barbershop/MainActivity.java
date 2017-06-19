@@ -4,8 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.icu.text.SimpleDateFormat;
-import android.icu.util.Calendar;
+import android.nfc.Tag;
 import android.preference.PreferenceManager;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -28,10 +27,15 @@ import android.widget.Toast;
 import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     //    SharedPreferences
     SharedPreferences settings;
@@ -102,14 +106,19 @@ public class MainActivity extends AppCompatActivity {
                 Purchase purchase = new Purchase();
                 Appointment appointment = allAppointments.get(position);
 
+
                 if(appointment != null) {
                     purchase.setAppointmentID(appointment.get_id());
                     purchase.setCustomerID(appointment.getCustomerID());
+
                     Customer customer = dbHandler.getCustomerByID(appointment.getCustomerID());
+
+
                     if (customer != null) {
                         settings = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
                         if(customer.getGender()==1){
                             purchase.setPrice(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_PRICE,0));
+
                         }else{
                             purchase.setPrice(settings.getInt(UserDBConstants.USER_FEMALE_HAIRCUT_PRICE,0));
                         }
@@ -117,10 +126,13 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //                Need to update database
                 if(dbHandler.addPurchase(purchase)){
-                    Toast.makeText(MainActivity.this, "Purchase Saved", Toast.LENGTH_SHORT).show();
-                }else Toast.makeText(MainActivity.this, "Purchase Unsaved", Toast.LENGTH_SHORT).show();
+                    Log.d("Aviram","Purchase saved:");
+                }else Log.d("Aviram","Purchase Unsaved:");
 
                 allAppointments.get(position).setTackAnHaircut(1);
+                if(dbHandler.updateAppointment(allAppointments.get(position))){
+                    Toast.makeText(MainActivity.this, "Record updated", Toast.LENGTH_SHORT).show();
+                }
 
                 allAppointments.remove(position);
                 appointmentAdapter.notifyDataSetChanged();
@@ -146,10 +158,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateAppointment() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat(
+                "dd/MM/yyyy", Locale.getDefault());
         String dateForDisplay = sdf.format(Calendar.getInstance().getTime());
 
-        allAppointments = dbHandler.getAllAppointments(dateForDisplay);
+        allAppointments = dbHandler.getWaitingListAppointments(dateForDisplay);
+
 //minutes, hour, day,month, year, customerName, customerID
 //        allAppointments.add(new Appointment(15,8,4,5,1987,"Avi",3));
 //        allAppointments.add(new Appointment(30,8,4,5,1987,"Tal",3));
@@ -163,41 +177,42 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void openCustomersList(View view) {
-        Intent myIntent = new Intent(this ,CustomersListActivity.class);
-        startActivity(myIntent);
-        this.finish();
 
-    }
+    @Override
+    public void onClick(View v) {
+        Intent myIntent =null;
 
-    public void openBalance(View view) {
-        Intent myIntent = new Intent(this ,BalanceActivity.class);
-        startActivity(myIntent);
-        this.finish();
-    }
+        switch (v.getId()){
+            case R.id.btCustomersList:
+                myIntent = new Intent(this ,CustomersListActivity.class);
+                startActivity(myIntent);
+                break;
+            case R.id.btBalance:
+                myIntent = new Intent(this ,BalanceActivity.class);
+                startActivity(myIntent);
+                break;
+            case R.id.btStock:
+                myIntent = new Intent(this ,StockActivity.class);
+                startActivity(myIntent);
+                break;
 
-    public void openStock(View view) {
-        Intent myIntent = new Intent(this ,StockActivity.class);
-        startActivity(myIntent);
-        this.finish();
-    }
+            case R.id.btAppointmentsList:
+                myIntent = new Intent(this ,AppointmentListActivity.class);
+                startActivity(myIntent);
+                break;
+            case R.id.btSettings:
+                myIntent = new Intent(this ,SettingsActivity.class);
+                startActivity(myIntent);
+                break;
+            case R.id.btNewAppointment:
+                myIntent = new Intent(this ,NewAppointmentActivity.class);
+                startActivity(myIntent);
+                break;
 
-    public void openAppointmentList(View view) {
-        Intent myIntent = new Intent(this ,AppointmentListActivity.class);
-        startActivity(myIntent);
-        this.finish();
-    }
-
-    public void openSettings(View view) {
-        Intent myIntent = new Intent(this ,SettingsActivity.class);
-        startActivity(myIntent);
-        this.finish();
-    }
-
-    public void openNewAppointment(View view) {
-        Intent myIntent = new Intent(this ,NewAppointmentActivity.class);
-        startActivity(myIntent);
-        this.finish();
+            default:
+                Toast.makeText(this, "Not Initialized yet", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     class MyAppointmentsAdapter extends ArrayAdapter<Appointment> {

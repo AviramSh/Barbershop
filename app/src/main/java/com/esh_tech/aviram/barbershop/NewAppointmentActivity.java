@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
@@ -38,6 +37,7 @@ import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Locale;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
@@ -124,24 +124,6 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
     }
 
 
-    //    Update Appointment List - Database.
-    private void populateAppointment() {
-
-//        turnsList = dbHandler.getDayAppointments(year_x,month_x,day_x);
-//        turnsList.add("Ohad - 9:00");
-//        turnsList.add("Almog - 9:15");
-//        turnsList.add("nir - 9:30");
-//        turnsList.add("Ode - 10:00");
-
-
-//        Test
-        /*appointmentCalendar.set(year_x,month_x,day_x);
-        Toast.makeText(this, "day "+appointmentCalendar.get(Calendar.DAY_OF_WEEK), Toast.LENGTH_SHORT).show();*/
-
-
-        //turnsListView.setAdapter(turnsAdapter);
-    }
-
     private void setToday() {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy \n EEEE", Locale.getDefault());
@@ -157,8 +139,8 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         newFormat = formatter.format(appointmentCalendar.getTime());
 
 
-//        hour_x = appointmentCalendar.get(Calendar.HOUR);
-//        minute_x= appointmentCalendar.get(Calendar.MINUTE);
+        hour_x = appointmentCalendar.get(Calendar.HOUR_OF_DAY);
+        minute_x= appointmentCalendar.get(Calendar.MINUTE);
 
         theTime.setText(newFormat);
 //        theTime.setText(hour_x+":"+minute_x);
@@ -181,9 +163,14 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
     protected Dialog onCreateDialog(int id){
 
         if(id == DIALOG_ID)
-            return new DatePickerDialog(this, dpickerListener,year_x,month_x,day_x);
+            return new DatePickerDialog(this, dpickerListener,
+                    appointmentCalendar.get(Calendar.YEAR),
+                    appointmentCalendar.get(Calendar.MONTH),
+                    appointmentCalendar.get(Calendar.DAY_OF_MONTH));
         else if(id == DIALOG_ID_TIME)
-            return new TimePickerDialog(this, tpickerListener,hour_x,minute_x,true);
+            return new TimePickerDialog(this, tpickerListener,
+                    appointmentCalendar.get(Calendar.HOUR_OF_DAY),
+                    appointmentCalendar.get(Calendar.MINUTE),true);
         return null;
     }
 
@@ -201,9 +188,6 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
             setToday();
 //            theDate.setText(dayOfMonth+"/"+(month+1)+"/"+year);
-
-            Toast.makeText(NewAppointmentActivity.this, ""+year+"/"+(month+1)+"/"+dayOfMonth, Toast.LENGTH_SHORT).show();
-            populateAppointment();
         }
     };
 
@@ -213,10 +197,9 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 //            hour_x=hourOfDay;
 //            minute_x=minute;
-            appointmentCalendar.set(Calendar.HOUR,hourOfDay);
+            appointmentCalendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
             appointmentCalendar.set(Calendar.MINUTE,minute);
             setToday();
-            Toast.makeText(NewAppointmentActivity.this, hour_x+":"+minute_x, Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -268,19 +251,29 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                 newAppointment.setCustomerID(customerProfile.get_id());
 
 
-                if(dbHandler.addAppointment(newAppointment)){
-                    //                Remainder Sms Handler
-                    if(customerProfile.getRemainder() ==1){
-                        setRemainder();
-                        Toast.makeText(this, "Remainder saved", Toast.LENGTH_SHORT).show();
-                    }
-                    Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
-                    goMain();
 
-                }else{
-                    Toast.makeText(this, R.string.failedToSave, Toast.LENGTH_SHORT).show();
-                }
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                String newFormat = formatter.format(appointmentCalendar.getTime());
+
+                if(!dbHandler.isCustomerSchedule(newAppointment,newFormat)){
+
+                    if (dbHandler.addAppointment(newAppointment)) {
+                        //                Remainder Sms Handler
+                        if (customerProfile.getRemainder() == 1) {
+                            setRemainder();
+                            Toast.makeText(this, "Remainder saved", Toast.LENGTH_SHORT).show();
+                        }
+                        Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
+                        goMain();
+
+                    } else {
+                        Toast.makeText(this, R.string.failedToSave, Toast.LENGTH_SHORT).show();
+                    }
 //                cPhone.setText(customerProfile.getName());
+                }else{
+                    Toast.makeText(this, ""+getResources().getString(R.string.alreadyHaveAppointment), Toast.LENGTH_SHORT).show();
+                }
+
             }else{
                 final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
                 customerProfile.setPhone(customerProfile.getPhone());
@@ -309,18 +302,12 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                             if (dbHandler.addAppointment(newAppointment)) {
                                 Toast.makeText(NewAppointmentActivity.this, R.string.saved, Toast.LENGTH_LONG).show();
                                 goMain();
-                                if(dbHandler.addAppointment(newAppointment)){
-                                    Toast.makeText(NewAppointmentActivity.this, R.string.saved, Toast.LENGTH_SHORT).show();
-                                }else{
-                                    Toast.makeText(NewAppointmentActivity.this, R.string.failedToSave, Toast.LENGTH_SHORT).show();
-                                }
                             }
                         }else{
                             Toast.makeText(NewAppointmentActivity.this, R.string.failedToSave, Toast.LENGTH_LONG).show();
                         }
                     }
                 });
-
 
                 AlertDialog dialog = mBuilder.create();
                 dialog.show();

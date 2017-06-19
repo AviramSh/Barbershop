@@ -19,6 +19,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String username;
     String userPassword;
 
+
     EditText etUsername;
     EditText etUserPassword;
     CheckBox cbAutoRegister;
@@ -46,6 +47,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         boolean savePassword = settings.getBoolean(USER_AUTO_LOGIN,false);
 
+        cbAutoRegister.setChecked(savePassword);
+
         if(!username.equals("")){
             if (savePassword) {
                 //Login with User password
@@ -70,6 +73,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()){
             case R.id.btLogin:
                 login();
+                break;
+            case R.id.exitApp:
+                this.finish();
                 break;
 
             default:
@@ -102,4 +108,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     }
+
 }

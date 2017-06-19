@@ -2,9 +2,6 @@ package com.esh_tech.aviram.barbershop;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.TimePickerDialog;
-import android.icu.text.PluralRules;
-import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,8 +15,8 @@ import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Locale;
-import java.util.StringTokenizer;
 
 public class BalanceActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -29,7 +26,7 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
     private double bill;
     private int haircutCounter;
 
-    ArrayList<Purchase> myPurchases;
+    ArrayList<Purchase> allPurchases;
 
     //Calendar
     Calendar startCalendar;
@@ -65,7 +62,7 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
         bill = 0;
         haircutCounter =0;
 
-        myPurchases = new ArrayList<Purchase>();
+        allPurchases = new ArrayList<Purchase>();
 
         etBill.setText(String.valueOf(bill));
         etCounter.setText(String.valueOf(haircutCounter));
@@ -172,28 +169,40 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
 
     private void calculateBill() {
 
+        bill = 0;
+        haircutCounter = 0;
+
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
+        String startFormat = formatter.format(startCalendar.getTime());
+        String endFormat = formatter.format(endCalendar.getTime());
+
+
 
 
         if (startCalendar.getTimeInMillis() > endCalendar.getTimeInMillis()) {
             Toast.makeText(this, R.string.wrongDate, Toast.LENGTH_SHORT).show();
         }else{
+            Calendar tempStart = startCalendar;
+            while (startCalendar.getTimeInMillis() <= endCalendar.getTimeInMillis()) {
 
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                allPurchases = dbHandler.getPurchaseByDate(startCalendar);
+                for (Purchase indexPurchase :
+                        allPurchases) {
+                    bill +=indexPurchase.getPrice();
+                    haircutCounter++;
+                }
 
-            String startFormat = formatter.format(startCalendar.getTime());
-            String endFormat = formatter.format(endCalendar.getTime());
-
-
-//            myPurchases = dbHandler.getPurchaseByDate(startCalendar,endCalendar);
-            Toast.makeText(this, startFormat + " - "+endFormat , Toast.LENGTH_SHORT).show();
-//            haircutCounter = dbHandler.getBillByDate(startFormat,endFormat);
-
-            ArrayList<Purchase> allPurchase = dbHandler.getAllPurchase();
-
-            for (Purchase indexPurchase :
-                 allPurchase) {
-                Toast.makeText(this, indexPurchase.getId()+")"+indexPurchase.getDate(), Toast.LENGTH_SHORT).show();
+                startCalendar.add(Calendar.DATE,1);
             }
+            Calendar startCalendar= tempStart ;
+
+            startFormat = formatter.format(startCalendar.getTime());
+            Toast.makeText(this, "startFormat:"+startFormat, Toast.LENGTH_SHORT).show();
+
+            etBill.setText(String.valueOf(bill));
+            etCounter.setText(String.valueOf(haircutCounter));
         }
     }
 //    private TimePickerDialog.OnTimeSetListener tpickerListener

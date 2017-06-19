@@ -5,8 +5,6 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.icu.text.SimpleDateFormat;
-import android.icu.util.Calendar;
 import android.os.Build;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -29,9 +27,12 @@ import android.widget.Toast;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class AppointmentListActivity extends AppCompatActivity {
@@ -41,12 +42,6 @@ public class AppointmentListActivity extends AppCompatActivity {
 
     Calendar newCalendar;
     Button theDate;
-    Button theTime;
-    int year_x;
-    int month_x;
-    int day_x;
-    int hour_x;
-    int minute_x;
 
     static final int DIALOG_ID = 0;
     static final int DIALOG_ID_TIME = 1;
@@ -76,7 +71,7 @@ public class AppointmentListActivity extends AppCompatActivity {
 //        Set Date
         theDate = (Button)findViewById(R.id.btDate);
         newCalendar = Calendar.getInstance();
-        setTheDate(newCalendar);
+//        setTheDate();
 
 
 //        Connect list view
@@ -90,65 +85,33 @@ public class AppointmentListActivity extends AppCompatActivity {
         lvAppointment.setAdapter(appointmentAdapter);
     }
 
-    private void setTheDate(Calendar setCalendar) {
-
-        year_x = setCalendar.get(Calendar.YEAR);
-        month_x = setCalendar.get(Calendar.MONTH);
-        day_x = setCalendar.get(Calendar.DAY_OF_MONTH);
-
-
-//        Calendar newCalendar = Calendar.getInstance();
-        if(Calendar.getInstance().getTime() ==setCalendar.getTime()) {
-            theDate.setText(R.string.today);
-        }else {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            String dateForDisplay = sdf.format(setCalendar.getTime());
-            try {
-                Date newDate = sdf.parse(dateForDisplay);
-                newCalendar.setTime(newDate);
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-//        Toast.makeText(this, dateForDisplay, Toast.LENGTH_SHORT).show();
-            theDate.setText(dateForDisplay);
-
-            populateAppointment();
-
-        }
-    }
-
     private void populateAppointment() {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy \n EEEE", Locale.getDefault());
         String dateForDisplay = sdf.format(newCalendar.getTime());
-
-
         theDate.setText(dateForDisplay);
 
-//          minutes, hour, day,month, year, customerName, customerID
+        sdf = new SimpleDateFormat("dd/MM/yyyy",Locale.getDefault());
+        dateForDisplay = sdf.format(newCalendar.getTime());
 
         allAppointments = dbHandler.getAllAppointments(dateForDisplay);
-        if(allAppointments.isEmpty())Log.d("All customers","Empty");
-        else Log.d("All customers","Is Not Empty");
 
-//        if(!allAppointments.isEmpty())
-//            Toast.makeText(this, allAppointments.get(0).getCustomerName(), Toast.LENGTH_SHORT).show();
-//        else {allAppointments.add(new Appointment());}
 
     }
 
     public void nextDay(View view) {
 
         newCalendar.add(Calendar.DAY_OF_MONTH, 1);
-        setTheDate(newCalendar);
+//        setTheDate();
+        populateAppointment();
         appointmentAdapter = new MyAppointmentsAdapter(this, R.layout.custom_appointment_row, allAppointments);
         lvAppointment.setAdapter(appointmentAdapter);
 
     }
     public void dayBack(View view) {
         newCalendar.add(Calendar.DAY_OF_MONTH, -1);
-        setTheDate(newCalendar);
+//        setTheDate(newCalendar);
+        populateAppointment();
         appointmentAdapter.notifyDataSetChanged();
         appointmentAdapter = new MyAppointmentsAdapter(this, R.layout.custom_appointment_row, allAppointments);
         lvAppointment.setAdapter(appointmentAdapter);
@@ -210,9 +173,10 @@ public class AppointmentListActivity extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
 
         if (id == DIALOG_ID)
-            return new DatePickerDialog(this, dpickerListener, year_x, month_x, day_x);
-        else if (id == DIALOG_ID_TIME)
-            return new TimePickerDialog(this, tpickerListener, hour_x, minute_x, true);
+            return new DatePickerDialog(this,
+                    dpickerListener,
+                    newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
         return null;
     }
 
@@ -223,28 +187,10 @@ public class AppointmentListActivity extends AppCompatActivity {
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
             newCalendar.set(year,month,dayOfMonth);
-            setTheDate(newCalendar);
-//            Toast.makeText(AppointmentListActivity.this, "" + year + "/" + (month + 1) + "/" + dayOfMonth, Toast.LENGTH_SHORT).show();
-//            setTheDate();
-//            populateAppointment(day_x, month_x, year_x);
+            populateAppointment();
         }
     };
 
-    private TimePickerDialog.OnTimeSetListener tpickerListener
-            = new TimePickerDialog.OnTimeSetListener() {
-        @Override
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            hour_x=hourOfDay;
-            minute_x=minute;
-
-            theTime.setText(hour_x+":"+minute_x);
-
-            newCalendar.set(year_x,month_x,day_x,hourOfDay, minute);
-            setTheDate(newCalendar);
-
-            Toast.makeText(AppointmentListActivity.this, hour_x+":"+minute_x, Toast.LENGTH_SHORT).show();
-        }
-    };
 
 
 

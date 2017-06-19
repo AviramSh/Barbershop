@@ -3,12 +3,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.icu.util.Calendar;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Appointment;
 import com.esh_tech.aviram.barbershop.AppointmentListActivity;
+import com.esh_tech.aviram.barbershop.BalanceActivity;
 import com.esh_tech.aviram.barbershop.Constants.AppointmentsDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.MainDBConstants;
@@ -20,6 +20,7 @@ import com.esh_tech.aviram.barbershop.Purchase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -69,7 +70,8 @@ public class BarbershopDBHandler {
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor customersCursor = db.query(CustomersDBConstants.CUSTOMERS_TABLE_NAME,null,null,null,null,null,null);
+        Cursor customersCursor = db.query(CustomersDBConstants.CUSTOMERS_TABLE_NAME,
+                null,null,null,null,null,CustomersDBConstants.CUSTOMER_NAME+" ASC");
 
         while (customersCursor.moveToNext())
             customersList.add(new Customer(
@@ -137,6 +139,7 @@ public class BarbershopDBHandler {
 
 
     //    Add Appointment ID(Date theDate, Time theTime, int haircutTime, int customerID)
+
     public boolean addAppointment(Appointment appointment){
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -159,7 +162,8 @@ public class BarbershopDBHandler {
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor AppointmentsCursor = db.query(AppointmentsDBConstants.APPOINTMENTS_TABLE_NAME, null, null, null, null, null, null);
+        Cursor AppointmentsCursor = db.query(AppointmentsDBConstants.APPOINTMENTS_TABLE_NAME,
+                null, null, null, null, null, AppointmentsDBConstants.APPOINTMENT_DATE+" ASC");
 
         while (AppointmentsCursor.moveToNext())
             AppointmentsList.add(new Appointment(
@@ -171,8 +175,6 @@ public class BarbershopDBHandler {
 
         return AppointmentsList;
     }
-
-//    Get Appointments by a date.
     public ArrayList<Appointment> getAllAppointments(String receivedDate) {
 
         ArrayList<Appointment> myAppointments = getAllAppointments();
@@ -191,7 +193,61 @@ public class BarbershopDBHandler {
 
         return myDateAppointments;
     }
-//    Today appointments
+    public ArrayList<Appointment> getWaitingListAppointments(String receivedDate) {
+
+        ArrayList<Appointment> myAppointments = getAllAppointments();
+        ArrayList<Appointment> myDateAppointments = new ArrayList<Appointment>();
+
+        for (Appointment appointment:
+                myAppointments) {
+
+            if(appointment.getTackAnHaircut() == 0) {
+                myDateAppointments.add(appointment);
+            }
+        }
+
+        return myDateAppointments;
+
+    }
+    public boolean updateAppointment(Appointment appointment) {
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues columnValues = new ContentValues();
+
+//        Set the date
+        columnValues.put(AppointmentsDBConstants.APPOINTMENT_DATE,appointment.getDateAndTimeToDisplay());
+        columnValues.put(AppointmentsDBConstants.CUSTOMER_ID,appointment.getCustomerID());
+        columnValues.put(AppointmentsDBConstants.APPOINTMENT_EXECUTED,appointment.getTackAnHaircut());
+
+
+        long result = db.update(AppointmentsDBConstants.APPOINTMENTS_TABLE_NAME,
+                columnValues,
+                AppointmentsDBConstants.APPOINTMENT_ID + "= "+appointment.get_id(),
+                null);
+        db.close();
+
+        return (result != -1);
+    }
+
+    public boolean isCustomerSchedule(Appointment newAppointment ,String testDate) {
+        ArrayList<Appointment> myAppointments = getAllAppointments();
+
+        for (Appointment testAppointment:
+                myAppointments) {
+
+
+            if(testAppointment.getDateAndTimeToDisplay().toLowerCase().contains(testDate)
+            && testAppointment.getCustomerID() == newAppointment.getCustomerID()) {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
+
     public ArrayList<Appointment> getTodayAppointments(Date myDate) {
 
         ArrayList<Appointment> myDateAppointments = new ArrayList<Appointment>();
@@ -203,7 +259,6 @@ public class BarbershopDBHandler {
 
         return myDateAppointments;
 }
-
     public ArrayList<String> getScheduledAppointments() {
 
         ArrayList<Appointment> myAppointments = getAllAppointments();
@@ -255,7 +310,8 @@ public class BarbershopDBHandler {
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor ProductsCursor = db.query(ProductsDBConstants.PRODUCTS_TABLE_NAME, null, null, null, null, null, null);
+        Cursor ProductsCursor = db.query(ProductsDBConstants.PRODUCTS_TABLE_NAME,
+                null, null, null, null, null, ProductsDBConstants.PRODUCT_NAME +" ASC");
 
         while (ProductsCursor.moveToNext())
             productsList.add(new Product(
@@ -304,8 +360,6 @@ public class BarbershopDBHandler {
         return (result != -1);
     }
 
-
-
 //    PURCHASE
 
     //    Add Purchase ID((int id, int appointmentID, int productID, double price)
@@ -321,15 +375,13 @@ public class BarbershopDBHandler {
         columnValues.put(PurchaseDBConstants.PURCHASE_PRICE, purchase.getPrice());
 
         SimpleDateFormat dateFormat = new SimpleDateFormat(
-        "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        "dd/MM/yyyy HH:mm:ss", Locale.getDefault());
         Date date = new Date();
         dateFormat.format(date);
 
         columnValues.put(PurchaseDBConstants.PURCHASE_DATE,dateFormat.format(date));
 
-
-
-        long result = db.insertOrThrow(ProductsDBConstants.PRODUCTS_TABLE_NAME,null,columnValues);
+        long result = db.insertOrThrow(PurchaseDBConstants.PURCHASES_TABLE_NAME,null,columnValues);
         db.close();
 
         return (result != -1);
@@ -339,7 +391,8 @@ public class BarbershopDBHandler {
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor ProductsCursor = db.query(PurchaseDBConstants.PURCHASES_TABLE_NAME, null, null, null, null, null, null);
+        Cursor ProductsCursor = db.query(PurchaseDBConstants.PURCHASES_TABLE_NAME,
+                null, null, null, null, null, PurchaseDBConstants.PURCHASE_DATE+" ASC");
 
         while (ProductsCursor.moveToNext())
             PurchasesList.add(new Purchase(
@@ -353,7 +406,6 @@ public class BarbershopDBHandler {
 
         return PurchasesList;
     }
-
     public Product getPurchaseByAppointmentID(int id) {
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -394,7 +446,7 @@ public class BarbershopDBHandler {
     }
 
 //    Need to sort the dates
-    public ArrayList<Purchase> getPurchaseByDate(Calendar startDate , Calendar endDate) {
+    public ArrayList<Purchase> getPurchaseByDate(Calendar startDate) {
 
         ArrayList<Purchase> myPurchase = new ArrayList<Purchase>();
 
@@ -406,23 +458,24 @@ public class BarbershopDBHandler {
 
 
 //        Purchase(int id, int appointmentID, int productID,int customerID,String date, double price)
-        while (startDate.getTimeInMillis() <= endDate.getTimeInMillis()) {
-            purchaseCursor.moveToFirst();
-            String testFormat = formatter.format(startDate.getTime());
-            while (purchaseCursor.moveToNext())
 
-                if (purchaseCursor.getString(purchaseCursor.getColumnIndex(PurchaseDBConstants.PURCHASE_DATE)).contains(testFormat)) {
-                    myPurchase.add(new Purchase(
-                            purchaseCursor.getInt(purchaseCursor.getColumnIndex(PurchaseDBConstants.PURCHASE_ID)) ,
-                            purchaseCursor.getInt(purchaseCursor.getColumnIndex(PurchaseDBConstants.APPOINTMENT_ID)) ,
-                            purchaseCursor.getInt(purchaseCursor.getColumnIndex(PurchaseDBConstants.PRODUCT_ID)) ,
-                            purchaseCursor.getInt(purchaseCursor.getColumnIndex(PurchaseDBConstants.CUSTOMER_ID)) ,
-                            purchaseCursor.getString(purchaseCursor.getColumnIndex(PurchaseDBConstants.PURCHASE_DATE)),
-                            purchaseCursor.getDouble(purchaseCursor.getColumnIndex(PurchaseDBConstants.PURCHASE_PRICE))
-                    ));
-                }
-            startDate.add(Calendar.DAY_OF_MONTH,1);
+        purchaseCursor.moveToFirst();
+        String testFormat = formatter.format(startDate.getTime());
+        while (purchaseCursor.moveToNext()){
+            testFormat = formatter.format(startDate.getTime());
+            if (purchaseCursor.getString(purchaseCursor.getColumnIndex(PurchaseDBConstants.PURCHASE_DATE)).contains(testFormat)) {
+                myPurchase.add(new Purchase(
+                        purchaseCursor.getInt(purchaseCursor.getColumnIndex(PurchaseDBConstants.PURCHASE_ID)),
+                        purchaseCursor.getInt(purchaseCursor.getColumnIndex(PurchaseDBConstants.APPOINTMENT_ID)),
+                        purchaseCursor.getInt(purchaseCursor.getColumnIndex(PurchaseDBConstants.PRODUCT_ID)),
+                        purchaseCursor.getInt(purchaseCursor.getColumnIndex(PurchaseDBConstants.CUSTOMER_ID)),
+                        purchaseCursor.getString(purchaseCursor.getColumnIndex(PurchaseDBConstants.PURCHASE_DATE)),
+                        purchaseCursor.getDouble(purchaseCursor.getColumnIndex(PurchaseDBConstants.PURCHASE_PRICE))
+                ));
+            }
         }
         return myPurchase;
     }
+
+
 }

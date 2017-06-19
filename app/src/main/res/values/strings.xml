@@ -140,6 +140,7 @@
     <string name="wrongDate">תאריך שגוי</string>
     <string name="startToEnd">התחלה  - סוף</string>
     <string name="smsNotScheduled">Sms not scheduled!</string>
+    <string name="alreadyHaveAppointment">יש כבר תור במועד זה</string>
 
 
     <string-array name="spinner_hours">

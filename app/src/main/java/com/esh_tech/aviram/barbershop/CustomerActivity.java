@@ -110,25 +110,29 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
                 callCustomer();
                 break;
             case R.id.customerMainPic:
-                userPhotoSet(R.id.customerMainPic);
                 customerPic = (ImageButton)findViewById(R.id.customerMainPic);
-                Toast.makeText(this,"Profile pic", Toast.LENGTH_SHORT).show();
+                userPhotoSet(R.id.customerMainPic);
+//                Toast.makeText(this,"Profile pic", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.customerPic_1:
                 customerPic = (ImageButton)findViewById(R.id.customerPic_1);
-                Toast.makeText(this, "Pic 1", Toast.LENGTH_SHORT).show();
+                userPhotoSet(R.id.customerMainPic);
+//                Toast.makeText(this, "Pic 1", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.customerPic_2:
                 customerPic = (ImageButton)findViewById(R.id.customerPic_2);
-                Toast.makeText(this, "Pic 2", Toast.LENGTH_SHORT).show();
+                userPhotoSet(R.id.customerMainPic);
+//                Toast.makeText(this, "Pic 2", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.customerPic_3:
                 customerPic = (ImageButton)findViewById(R.id.customerPic_3);
-                Toast.makeText(this, "Pic 3", Toast.LENGTH_SHORT).show();
+                userPhotoSet(R.id.customerMainPic);
+//                Toast.makeText(this, "Pic 3", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.customerPic_4:
                 customerPic = (ImageButton)findViewById(R.id.customerPic_4);
-                Toast.makeText(this, "Pic 4", Toast.LENGTH_SHORT).show();
+                userPhotoSet(R.id.customerMainPic);
+//                Toast.makeText(this, "Pic 4", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 customerPic = (ImageButton)findViewById(R.id.customerMainPic);
