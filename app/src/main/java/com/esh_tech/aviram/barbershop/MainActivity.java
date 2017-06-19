@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -115,7 +116,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 //                Need to update database
-                dbHandler.addPurchase(purchase);
+                if(dbHandler.addPurchase(purchase)){
+                    Toast.makeText(MainActivity.this, "Purchase Saved", Toast.LENGTH_SHORT).show();
+                }else Toast.makeText(MainActivity.this, "Purchase Unsaved", Toast.LENGTH_SHORT).show();
 
                 allAppointments.get(position).setTackAnHaircut(1);
 

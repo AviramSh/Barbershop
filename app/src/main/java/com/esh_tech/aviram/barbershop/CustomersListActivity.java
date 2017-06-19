@@ -63,6 +63,14 @@ public class CustomersListActivity extends AppCompatActivity {
 
 
 
+        customerListView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        viewCustomer(allCustomers.get(position));
+                    }
+                }
+        );
         customerListView.setOnItemLongClickListener(
                 new AdapterView.OnItemLongClickListener() {
                     @Override
@@ -73,6 +81,12 @@ public class CustomersListActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    private void viewCustomer(Customer customer) {
+        Intent customerProfile = new Intent(this,CustomerActivity.class);
+        customerProfile.putExtra("customerId",customer.get_id());
+        startActivity(customerProfile);
     }
 
     private void editCustomer(final Customer customer) {

@@ -329,8 +329,6 @@ public class BarbershopDBHandler {
 
 
 
-
-
         long result = db.insertOrThrow(ProductsDBConstants.PRODUCTS_TABLE_NAME,null,columnValues);
         db.close();
 
@@ -404,13 +402,12 @@ public class BarbershopDBHandler {
 
         Cursor purchaseCursor = db.query(PurchaseDBConstants.PURCHASES_TABLE_NAME,null,null,null,null,null,null);
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
 
 //        Purchase(int id, int appointmentID, int productID,int customerID,String date, double price)
         while (startDate.getTimeInMillis() <= endDate.getTimeInMillis()) {
             purchaseCursor.moveToFirst();
-            startDate.add(Calendar.DAY_OF_MONTH,1);
             String testFormat = formatter.format(startDate.getTime());
             while (purchaseCursor.moveToNext())
 
@@ -424,6 +421,7 @@ public class BarbershopDBHandler {
                             purchaseCursor.getDouble(purchaseCursor.getColumnIndex(PurchaseDBConstants.PURCHASE_PRICE))
                     ));
                 }
+            startDate.add(Calendar.DAY_OF_MONTH,1);
         }
         return myPurchase;
     }

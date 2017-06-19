@@ -187,6 +187,13 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
 //            myPurchases = dbHandler.getPurchaseByDate(startCalendar,endCalendar);
             Toast.makeText(this, startFormat + " - "+endFormat , Toast.LENGTH_SHORT).show();
 //            haircutCounter = dbHandler.getBillByDate(startFormat,endFormat);
+
+            ArrayList<Purchase> allPurchase = dbHandler.getAllPurchase();
+
+            for (Purchase indexPurchase :
+                 allPurchase) {
+                Toast.makeText(this, indexPurchase.getId()+")"+indexPurchase.getDate(), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 //    private TimePickerDialog.OnTimeSetListener tpickerListener

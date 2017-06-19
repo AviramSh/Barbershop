@@ -31,7 +31,7 @@
     <string name="time">זמן</string>
     <string name="cost">מחיר</string>
     <string name="messages">הודעות</string>
-    <string name="defaultSms">ברירת מחדל</string>
+    <string name="defaultSms">סמס ברירת מחדל</string>
     <string name="customSms">משתמש</string>
     <string name="systemSms">שלום \"שם הלקוח\" להזכירך תורך ב\"שעה ותאריך\" תודה</string>
     <string name="smstime">זמן לשליחת הודעה</string>
@@ -139,6 +139,7 @@
     <string name="smsScheduled">נקבע תזכרות</string>
     <string name="wrongDate">תאריך שגוי</string>
     <string name="startToEnd">התחלה  - סוף</string>
+    <string name="smsNotScheduled">Sms not scheduled!</string>
 
 
     <string-array name="spinner_hours">

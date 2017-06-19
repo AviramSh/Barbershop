@@ -78,7 +78,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="8dp" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/customerMainPic"
         android:onClick="onClick"
         android:layout_width="150dp"

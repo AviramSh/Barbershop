@@ -14,7 +14,7 @@ import android.database.Cursor;
 import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Build;
-import android.provider.ContactsContract;
+import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -32,10 +32,13 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
+import com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants;
 import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class NewAppointmentActivity extends AppCompatActivity implements View.OnClickListener{
@@ -98,6 +101,9 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         newAppointment =new Appointment();
 //        newAppointment.setDateAndTime(appointmentCalendar);
 
+        settings = PreferenceManager.getDefaultSharedPreferences(NewAppointmentActivity.this);
+
+
         setToday();
         testPhone="";
 
@@ -138,16 +144,24 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
     private void setToday() {
 
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy \n EEEE", Locale.getDefault());
+        String newFormat = formatter.format(appointmentCalendar.getTime());
+
         year_x = appointmentCalendar.get(Calendar.YEAR );
         month_x = appointmentCalendar.get(Calendar.MONTH);
         day_x = appointmentCalendar.get(Calendar.DAY_OF_MONTH);
 
-        theDate.setText(day_x+"/"+(month_x+1)+"/"+year_x);
+        theDate.setText(newFormat);
 
-        hour_x = appointmentCalendar.get(Calendar.HOUR);
-        minute_x= appointmentCalendar.get(Calendar.MINUTE);
+        formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        newFormat = formatter.format(appointmentCalendar.getTime());
 
-        theTime.setText(hour_x+":"+minute_x);
+
+//        hour_x = appointmentCalendar.get(Calendar.HOUR);
+//        minute_x= appointmentCalendar.get(Calendar.MINUTE);
+
+        theTime.setText(newFormat);
+//        theTime.setText(hour_x+":"+minute_x);
 
     }
 
@@ -177,11 +191,16 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            year_x =year;
-            month_x =month;
-            day_x = dayOfMonth;
+//            year_x =year;
+//            month_x =month;
+//            day_x = dayOfMonth;
 
-            theDate.setText(dayOfMonth+"/"+(month+1)+"/"+year);
+            appointmentCalendar.set(Calendar.YEAR,year);
+            appointmentCalendar.set(Calendar.MONTH,month);
+            appointmentCalendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+
+            setToday();
+//            theDate.setText(dayOfMonth+"/"+(month+1)+"/"+year);
 
             Toast.makeText(NewAppointmentActivity.this, ""+year+"/"+(month+1)+"/"+dayOfMonth, Toast.LENGTH_SHORT).show();
             populateAppointment();
@@ -192,13 +211,12 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            hour_x=hourOfDay;
-            minute_x=minute;
-
-            theTime.setText(hour_x+":"+minute_x);
-
+//            hour_x=hourOfDay;
+//            minute_x=minute;
+            appointmentCalendar.set(Calendar.HOUR,hourOfDay);
+            appointmentCalendar.set(Calendar.MINUTE,minute);
+            setToday();
             Toast.makeText(NewAppointmentActivity.this, hour_x+":"+minute_x, Toast.LENGTH_SHORT).show();
-            populateAppointment();
         }
     };
 
@@ -232,7 +250,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
     public void saveAppointment() {
 
-        appointmentCalendar.set(year_x,month_x,day_x,hour_x,minute_x);
+//        appointmentCalendar.set(year_x,month_x,day_x,hour_x,minute_x);
         testPhone+=cPhone.getText().toString();
         customerProfile.setPhone(testPhone);
 
@@ -254,6 +272,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                     //                Remainder Sms Handler
                     if(customerProfile.getRemainder() ==1){
                         setRemainder();
+                        Toast.makeText(this, "Remainder saved", Toast.LENGTH_SHORT).show();
                     }
                     Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
                     goMain();
@@ -321,20 +340,20 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                         MY_PERMISSIONS_REQUEST_SEND_SMS);
             }else {
                 Intent m = new Intent(NewAppointmentActivity.this, AlarmService.class);
-                m.putExtra("exPhone", customerProfile.getPhone());
-                m.putExtra("exSmS", settings.getString(UserDBConstants.USER_DEFAULT_SMS, getResources().getString(R.string.defaultSms)));
+                m.putExtra(SharedPreferencesConstants.USER_PHONE_SMS, customerProfile.getPhone());
+                try {
+                    m.putExtra(SharedPreferencesConstants.USER_SMS_CONTENT, settings.getString(UserDBConstants.USER_DEFAULT_SMS, getResources().getString(R.string.defaultSms)));
+                    pIntent = PendingIntent.getService(getApplicationContext(), 0, m, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                pIntent = PendingIntent.getService(getApplicationContext(), 0, m, PendingIntent.FLAG_UPDATE_CURRENT);
+                    aManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-                aManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-                aManager.set(AlarmManager.RTC_WAKEUP, appointmentCalendar.getTimeInMillis(), pIntent);
-//        Toast.makeText(getApplicationContext(), "Sms scheduled! " ,Toast.LENGTH_SHORT).show();
-                Toast.makeText(this, "Sms scheduled! ", Toast.LENGTH_SHORT).show();
+                    aManager.set(AlarmManager.RTC_WAKEUP, appointmentCalendar.getTimeInMillis(), pIntent);
+                    Toast.makeText(this, R.string.smsScheduled, Toast.LENGTH_SHORT).show();
+                } catch (NullPointerException e) {
+                    e.getMessage();
+                    Toast.makeText(this, R.string.smsNotScheduled, Toast.LENGTH_SHORT).show();
+                }
             }
-//Intent i = new Intent(NewAppointmentActivity.this,AlarmService.class);
-//i.putExtra("exPhone", customerProfile.getPhone());
-//i.putExtra("exSmS", settings.getString(UserDBConstants.USER_DEFAULT_SMS,getResources().getString(R.string.defaultSms)));
     }
 
 

@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.esh_tech.aviram.barbershop.Constants.AppointmentsDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
+import com.esh_tech.aviram.barbershop.Constants.PicturesDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.ProductsDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.PurchaseDBConstants;
 
@@ -45,7 +46,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 AppointmentsDBConstants.APPOINTMENT_DATE + " TEXT ,"+
                 CustomersDBConstants.CUSTOMER_ID + " INTEGER , "+
                 AppointmentsDBConstants.APPOINTMENT_EXECUTED + " INTEGER "
-                +")");
+                +");");
 
         //        CREATING PRODUCTS TABLE. Products(String name, int quantity, double price)
         db.execSQL("CREATE TABLE " + ProductsDBConstants.PRODUCTS_TABLE_NAME+"("+
@@ -53,7 +54,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 ProductsDBConstants.PRODUCT_NAME + " TEXT , "+
                 ProductsDBConstants.PRODUCT_QUANTITY + " INTEGER , "+
                 ProductsDBConstants.PRODUCT_PRICE + " DOUBLE "
-                +")");
+                +");");
 
 
 
@@ -67,7 +68,16 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 PurchaseDBConstants.CUSTOMER_ID + " INTEGER , "+
                 PurchaseDBConstants.PURCHASE_DATE + " TEXT ,"+
                 PurchaseDBConstants.PURCHASE_PRICE + " DOUBLE "
-                +")");
+                +");");
+
+        //        CREATING PICTURE TABLE.
+        db.execSQL("CREATE TABLE " + PicturesDBConstants.PICTURES_TABLE_NAME+"("+
+                PicturesDBConstants.PICTURE_ID        + " INTEGER PRIMARY KEY AUTOINCREMENT  , "+
+                PicturesDBConstants.PICTURE_NAME + " TEXT ,"+
+                PicturesDBConstants.PICTURE_DATA + " BLOB , "+
+                PicturesDBConstants.CUSTOMER_ID + " INTEGER "
+                +");");
+
     }
 
     @Override
@@ -77,6 +87,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + AppointmentsDBConstants.APPOINTMENTS_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + ProductsDBConstants.PRODUCTS_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + PurchaseDBConstants.PURCHASES_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + PicturesDBConstants.PICTURES_TABLE_NAME);
 
         onCreate(db);
     }

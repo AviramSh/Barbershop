@@ -6,4 +6,6 @@ package com.esh_tech.aviram.barbershop.Constants;
 
 public class SharedPreferencesConstants {
 
+    public static final String USER_PHONE_SMS = "exPhone";
+    public static final String USER_SMS_CONTENT = "exSmS";
 }
