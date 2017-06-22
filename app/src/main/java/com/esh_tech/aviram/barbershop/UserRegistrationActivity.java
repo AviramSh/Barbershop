@@ -14,10 +14,7 @@ import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.*;
 
 public class UserRegistrationActivity extends AppCompatActivity {
 
-    //      My Global User class
-//    MyGlobalUser myUser = (MyGlobalUser)getApplication();
 
-//    SharedPreferences
     SharedPreferences settings;
     SharedPreferences.Editor editor;
 

@@ -141,6 +141,17 @@
     <string name="startToEnd">התחלה  - סוף</string>
     <string name="smsNotScheduled">Sms not scheduled!</string>
     <string name="alreadyHaveAppointment">יש כבר תור במועד זה</string>
+    <string name="message">הודעה</string>
+    <string name="Subject">נושא</string>
+    <string name="haircutAppointment">תור לספר</string>
+    <string name="genericFailure">Generic failure!</string>
+    <string name="noService">No service!</string>
+    <string name="nullPDU">Null PDU!</string>
+    <string name="radioOff">Radio off!</string>
+    <string name="smsDelivered">SMS delivered!</string>
+    <string name="smsNotDelivered">SMS not delivered!</string>
+    <string name="dbFailedToSave">שמירה בבסיס הנתונים נכשלה</string>
+    <string name="savedToDB">נשמר בבסיס הנתונים</string>
 
 
     <string-array name="spinner_hours">

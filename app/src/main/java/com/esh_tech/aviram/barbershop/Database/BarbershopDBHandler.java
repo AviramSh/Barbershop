@@ -3,6 +3,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -12,6 +14,7 @@ import com.esh_tech.aviram.barbershop.BalanceActivity;
 import com.esh_tech.aviram.barbershop.Constants.AppointmentsDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.MainDBConstants;
+import com.esh_tech.aviram.barbershop.Constants.PicturesDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.ProductsDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.PurchaseDBConstants;
 import com.esh_tech.aviram.barbershop.Customer;
@@ -229,7 +232,6 @@ public class BarbershopDBHandler {
 
         return (result != -1);
     }
-
     public boolean isCustomerSchedule(Appointment newAppointment ,String testDate) {
         ArrayList<Appointment> myAppointments = getAllAppointments();
 
@@ -444,8 +446,6 @@ public class BarbershopDBHandler {
         return null;
 
     }
-
-//    Need to sort the dates
     public ArrayList<Purchase> getPurchaseByDate(Calendar startDate) {
 
         ArrayList<Purchase> myPurchase = new ArrayList<Purchase>();
@@ -477,5 +477,56 @@ public class BarbershopDBHandler {
         return myPurchase;
     }
 
+
+//    PICTURE TABLE.
+
+//    PicturesDBConstants.PICTURE_ID        + " INTEGER PRIMARY KEY AUTOINCREMENT  , "+
+//    PicturesDBConstants.PICTURE_NAME + " TEXT ,"+
+//    PicturesDBConstants.PICTURE_DATA + " BLOB , "+
+//    PicturesDBConstants.CUSTOMER_ID + " INTEGER "
+
+    public boolean addPicture(int customerId , Bitmap bitmapImageData) throws SQLiteException {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues columnValues = new ContentValues();
+
+        byte[] imageData =BitmapDBUtility.getBytes(bitmapImageData);
+
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        dateFormat.format(date);
+
+        columnValues.put(PicturesDBConstants.PICTURE_NAME,dateFormat.format(date));
+
+        columnValues.put(PicturesDBConstants.PICTURE_DATA,imageData);
+        columnValues.put(PicturesDBConstants.CUSTOMER_ID,customerId );
+
+
+        long result = db.insertOrThrow(PicturesDBConstants.PICTURES_TABLE_NAME,null,columnValues);
+        db.close();
+
+        return (result != -1);
+    }
+    public ArrayList<Bitmap> getPictureUserByID(int id) {
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        ArrayList<Bitmap> myPhotos = new ArrayList<Bitmap>();
+        BitmapDBUtility picsHandler = new BitmapDBUtility();
+
+        Cursor picturesCursor = db.query(PicturesDBConstants.PICTURES_TABLE_NAME,null,null,null,null,null,null);
+
+        while (picturesCursor.moveToNext())
+
+            if(picturesCursor.getInt(picturesCursor.getColumnIndex(PicturesDBConstants.CUSTOMER_ID))==id){
+
+                myPhotos.add(
+                        BitmapDBUtility.getImage(
+                                picturesCursor.getBlob(
+                                        picturesCursor.getColumnIndex(PicturesDBConstants.PICTURE_DATA))));
+            }
+        return myPhotos;
+
+    }
 
 }

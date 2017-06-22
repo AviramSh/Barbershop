@@ -77,6 +77,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.exitApp:
                 this.finish();
                 break;
+            case R.id.tvForgetPassword:
+
+                break;
 
             default:
                 Toast.makeText(this, "Not Initialed yet", Toast.LENGTH_SHORT).show();

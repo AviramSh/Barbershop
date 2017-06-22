@@ -98,6 +98,7 @@ public class CustomersListActivity extends AppCompatActivity {
         Intent customerProfile = new Intent(this,CustomerActivity.class);
         customerProfile.putExtra("customerId",customer.get_id());
         startActivity(customerProfile);
+        this.finish();
     }
 
     private void editCustomer(final Customer customer) {

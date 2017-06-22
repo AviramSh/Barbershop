@@ -8,21 +8,34 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants;
+import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
+
 public class SandMessageActivity extends AppCompatActivity implements View.OnClickListener{
 
+    BarbershopDBHandler dbHandler;
+    Customer customerProfile;
+
     EditText etPhone;
+    EditText etEmail;
     EditText etMessage;
 
+    CheckBox cbPhone;
+    CheckBox cbEmail;
+
+    String emailTo;
+    String message;
 
 //    SMS
     int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
@@ -41,11 +54,26 @@ public class SandMessageActivity extends AppCompatActivity implements View.OnCli
     private void init() {
         Intent myIntent =getIntent();
 //        Toast.makeText(this, myIntent.getStringExtra("userPhone"), Toast.LENGTH_SHORT).show();
+        dbHandler = new BarbershopDBHandler(this);
+        customerProfile = new Customer();
 
-        etMessage = (EditText)findViewById(R.id.etMessageContent);
-        etPhone = (EditText) findViewById(R.id.etMessageToPhone);
+        emailTo = "";
+        message = "";
 
-        etPhone.setText(myIntent.getStringExtra("userPhone"));
+        etMessage = (EditText) findViewById(R.id.etMessage);
+        etPhone = (EditText) findViewById(R.id.etPhone);
+        etEmail = (EditText) findViewById(R.id.etEmail);
+
+        cbPhone = (CheckBox) findViewById(R.id.cbPhone);
+        cbEmail = (CheckBox) findViewById(R.id.cbEmail);
+
+//        get user data
+
+        customerProfile = dbHandler.getCustomerByID(myIntent.getIntExtra(SharedPreferencesConstants.CUSTOMER_ID_SMS,-1));
+//        etPhone.setText(myIntent.getStringExtra("userPhone"));
+        if(customerProfile.get_id() == -1)
+            etPhone.setText(customerProfile.getPhone());
+        else etPhone.setText(customerProfile.getName());
 
 //        SMS
         sentPI = PendingIntent.getBroadcast(this,0,new Intent(sent),0);
@@ -55,22 +83,50 @@ public class SandMessageActivity extends AppCompatActivity implements View.OnCli
 
     public void sendTheMessage() {
 
-        String message = etMessage.getText().toString();
-//        Toast.makeText(this, "Message:"+message +" was sanded", Toast.LENGTH_SHORT).show();
+        message = etMessage.getText().toString();
 
+        if(cbEmail.isChecked())sandEmail();
+        if(cbPhone.isChecked())sandSms();
+
+//        /*Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms","050500000",null));
+//        myIntent.putExtra("SMS_content","Hello its working.");
+//        startActivity(myIntent);*/
+
+    }
+
+    private void sandSms() {
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
                 != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this , new String[]{Manifest.permission.SEND_SMS},
                     MY_PERMISSIONS_REQUEST_SEND_SMS);
         }else {
-            SmsManager sms  =SmsManager.getDefault();
-            sms.sendTextMessage(etPhone.getText().toString(),null,message,sentPI,deliveredPI);
+            SmsManager sms  = SmsManager.getDefault();
+            sms.sendTextMessage(customerProfile.getPhone(),null,message,sentPI,deliveredPI);
+//            sms.sendTextMessage(etPhone.getText().toString(),null,message,sentPI,deliveredPI);
         }
+    }
 
-        /*Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms","050500000",null));
-        myIntent.putExtra("SMS_content","Hello its working.");
-        startActivity(myIntent);*/
+    private void sandEmail() {
+//        TODO send email with JavaMail API
+//        emailTo = etEmail.getText().toString();
+        emailTo = customerProfile.getEmail();
 
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+
+        emailIntent.putExtra(Intent.EXTRA_EMAIL,new String[]{emailTo});
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT,getResources().getText(R.string.haircutAppointment));
+        emailIntent.putExtra(Intent.EXTRA_TEXT,message);
+
+
+        emailIntent.setType("message/rfc822");
+
+        try {
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            finish();
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(SandMessageActivity.this,
+                    "There is no email client installed.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -82,26 +138,26 @@ public class SandMessageActivity extends AppCompatActivity implements View.OnCli
             public void onReceive(Context context, Intent intent) {
                 switch (getResultCode()){
                     case Activity.RESULT_OK:
-                        Toast.makeText(SandMessageActivity.this, "SMS sent", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SandMessageActivity.this, R.string.smsDelivered, Toast.LENGTH_LONG).show();
                         Intent myIntent1 = new Intent(SandMessageActivity.this,MainActivity.class);
                         startActivity(myIntent1);
 
                         break;
 
                     case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-                        Toast.makeText(SandMessageActivity.this, "Generic failure!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SandMessageActivity.this, R.string.genericFailure, Toast.LENGTH_LONG).show();
                         break;
 
                     case SmsManager.RESULT_ERROR_NO_SERVICE:
-                        Toast.makeText(SandMessageActivity.this, "No service!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SandMessageActivity.this, R.string.noService, Toast.LENGTH_LONG).show();
                         break;
 
                     case SmsManager.RESULT_ERROR_NULL_PDU:
-                        Toast.makeText(SandMessageActivity.this, "Null PDU!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SandMessageActivity.this, R.string.nullPDU, Toast.LENGTH_LONG).show();
                         break;
 
                     case SmsManager.RESULT_ERROR_RADIO_OFF:
-                        Toast.makeText(SandMessageActivity.this, "Radio off!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SandMessageActivity.this, R.string.radioOff, Toast.LENGTH_LONG).show();
                         break;
                 }
             }
@@ -111,11 +167,11 @@ public class SandMessageActivity extends AppCompatActivity implements View.OnCli
             public void onReceive(Context context, Intent intent) {
                 switch (getResultCode()) {
                     case Activity.RESULT_OK:
-                        Toast.makeText(SandMessageActivity.this, "SMS delivered!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SandMessageActivity.this, R.string.smsDelivered, Toast.LENGTH_LONG).show();
                         break;
 
                     case Activity.RESULT_CANCELED:
-                        Toast.makeText(SandMessageActivity.this, "SMS not delivered!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SandMessageActivity.this, R.string.smsNotDelivered, Toast.LENGTH_LONG).show();
                         break;
 
                 }
@@ -137,10 +193,10 @@ public class SandMessageActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btSandTheMassage:
+            case R.id.btSendMassage:
                 sendTheMessage();
                 break;
-            case R.id.btBack:
+            case R.id.btCancel:
                 Intent myIntent = new Intent(this,CustomerActivity.class);
                 startActivity(myIntent);
                 this.finish();

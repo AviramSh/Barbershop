@@ -345,7 +345,6 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
 
     public void importCustomer() {
-        // TODO Auto-generated method stub
         Uri uri = Uri.parse("content://contacts");
         Intent intent = new Intent(Intent.ACTION_PICK, uri);
         intent.setType(Phone.CONTENT_TYPE);
@@ -355,7 +354,6 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
     //Choose phone in contact and set edit text
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent i) {
-        // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, i);
 
         if (requestCode == REQUEST_CODE) {

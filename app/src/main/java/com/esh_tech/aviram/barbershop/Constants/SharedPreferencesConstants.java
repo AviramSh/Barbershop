@@ -8,4 +8,7 @@ public class SharedPreferencesConstants {
 
     public static final String USER_PHONE_SMS = "exPhone";
     public static final String USER_SMS_CONTENT = "exSmS";
+
+//    SMS Handler
+    public static final String CUSTOMER_ID_SMS = "userId";
 }

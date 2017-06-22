@@ -19,7 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
+import com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
+
+import java.util.ArrayList;
 
 public class CustomerActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -78,7 +81,56 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
             tvCustomerName.setText(customerProfile.getName());
             tvCustomerPhone.setText(customerProfile.getPhone());
             tvCustomerEmail.setText(customerProfile.getEmail());
+
+            if(dbHandler.getPictureUserByID(customerProfile.get_id())!=null) {
+                setCustomerPics();
+            }
         }
+    }
+
+    private void setCustomerPics() {
+
+        ArrayList<Bitmap> allCustomerPics =dbHandler.getPictureUserByID(customerProfile.get_id());
+
+        if (!allCustomerPics.isEmpty()) {
+
+            for (int i=0 ;i<allCustomerPics.size()&&i<5;i++){
+                switch (i){
+                    case 0:
+                        customerPic = (ImageButton) findViewById(R.id.customerMainPic);
+                        customerPic.setImageBitmap(allCustomerPics.get(0));
+                        break;
+                    case 1:
+                        customerPic = (ImageButton) findViewById(R.id.customerPic_1);
+                        customerPic.setImageBitmap(allCustomerPics.get(1));
+                        break;
+                    case 2:
+                        customerPic = (ImageButton) findViewById(R.id.customerPic_2);
+                        customerPic.setImageBitmap(allCustomerPics.get(2));
+                        break;
+                    case 3:
+                        customerPic = (ImageButton) findViewById(R.id.customerPic_3);
+                        customerPic.setImageBitmap(allCustomerPics.get(3));
+                        break;
+                    case 4:
+                        customerPic = (ImageButton) findViewById(R.id.customerPic_4);
+                        customerPic.setImageBitmap(allCustomerPics.get(4));
+                        break;
+
+                    default:
+                        Toast.makeText(this, "No Pics", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+
+
+
+
+
+        }else{
+            Toast.makeText(this, "List is Empty", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void noCustomer() {
@@ -102,12 +154,20 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
 
+//        TODO Initiate all the controls in the camera functions.
+
+        Intent myIntent;
         switch (v.getId()){
             case R.id.btMassage:
-                userNewMessage();
+                myIntent = new Intent(this ,SandMessageActivity.class);
+                myIntent.putExtra(SharedPreferencesConstants.CUSTOMER_ID_SMS,customerProfile.get_id());
+                startActivity(myIntent);
+
                 break;
             case R.id.btCallCustomer:
-                callCustomer();
+                myIntent = new Intent(Intent.ACTION_DIAL);
+                myIntent.setData(Uri.parse("tel:" + customerProfile.getPhone()));
+                startActivity(myIntent);
                 break;
             case R.id.customerMainPic:
                 customerPic = (ImageButton)findViewById(R.id.customerMainPic);
@@ -134,6 +194,18 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
                 userPhotoSet(R.id.customerMainPic);
 //                Toast.makeText(this, "Pic 4", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.ibEditCustomer:
+                myIntent = new Intent(this,NewCustomerActivity.class);
+                myIntent.putExtra(CustomersDBConstants.CUSTOMER_ID,customerProfile.get_id());
+                startActivity(myIntent);
+                this.finish();
+
+                break;
+            case R.id.btClose:
+                myIntent = new Intent(this,MainActivity.class);
+                startActivity(myIntent);
+                this.finish();
+                break;
             default:
                 customerPic = (ImageButton)findViewById(R.id.customerMainPic);
                 Toast.makeText(this, "Not Initialized", Toast.LENGTH_LONG).show();
@@ -156,7 +228,6 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode){
@@ -165,24 +236,22 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
             case CAMERA_REQUEST_CODE:
+//                TODO Need To Save Customer Photos
                 if (resultCode == RESULT_OK){
                     selectedProfilePicture = (Bitmap)data.getExtras().get("data");
                     customerPic.setImageBitmap(selectedProfilePicture);
+                    if(dbHandler.addPicture(customerProfile.get_id(),selectedProfilePicture)){
+                        Toast.makeText(this, R.string.savedToDB, Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(this, R.string.dbFailedToSave, Toast.LENGTH_SHORT).show();
+                    }
+
                 }
                 break;
 
             default:
 
                 break;
-        }
-    }
-
-    private void callCustomer() {
-        String userPhone =etTel.getText().toString();
-        if(userPhone.length()>8) {
-            Intent callIntent = new Intent(Intent.ACTION_DIAL);
-            callIntent.setData(Uri.parse("tel:" + userPhone));
-            startActivity(callIntent);
         }
     }
 
@@ -198,13 +267,5 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
         return getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
     }
 
-    public void userNewMessage() {
-
-        Intent myIntent = new Intent(this ,SandMessageActivity.class);
-        myIntent.putExtra("userPhone",etTel.getText().toString());
-        startActivity(myIntent);
-
-
-    }
 
 }

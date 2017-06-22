@@ -40,6 +40,7 @@
             android:id="@+id/etUserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:maxLength="15"
             android:maxLines="1"
             android:gravity="start" />
@@ -55,6 +56,7 @@
 
         <EditText
             android:id="@+id/etUserLastName"
+            android:singleLine="true"
             android:maxLines="1"
             android:maxLength="15"
             android:layout_width="match_parent"
@@ -76,9 +78,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
+            android:singleLine="true"
             android:maxLines="1"
             android:maxLength="15"
-            android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp" />
 
         <TextView
@@ -95,6 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLength="15"
+            android:singleLine="true"
             android:maxLines="1"
             android:gravity="start" />
 
@@ -113,6 +116,7 @@
             android:layout_height="wrap_content"
             android:inputType="phone"
             android:maxLength="15"
+            android:singleLine="true"
             android:maxLines="1"
             android:gravity="start" />
 
@@ -130,6 +134,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLength="15"
+            android:singleLine="true"
             android:maxLines="1"
             android:gravity="start" />
 
