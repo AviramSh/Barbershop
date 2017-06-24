@@ -274,34 +274,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             TextView tvName = (TextView) convertView.findViewById(R.id.tvCustomerName);
-
             TextView tvTime = (TextView)convertView.findViewById(R.id.tvCustomerTime);
 
 
 
 //            Data
             if (appointment != null) {
-                if(appointment.getTackAnHaircut()==1){
-                    tvTime.setText(appointment.getTime());
-                    tvName.setTextColor(getColor(R.color.colorPrimary));
-                    tvName.setText(dbHandler.getCustomerByID(appointment.getCustomerID()).getName());
-                    tvName.setTextColor(getResources().getColor(android.R.color.holo_green_light));
-                }else{
+                tvTime.setText(appointment.getTime());
+                tvName.setText(dbHandler.getCustomerByID(appointment.getCustomerID()).getName());
+                tvName.setTextColor(getResources().getColor(android.R.color.holo_green_light));
 
-                    if(new DateHandler().compareDates(
-                            appointment.getDateAndTimeToDisplay(),
-                            new DateHandler().getFullSDF(Calendar.getInstance()))==1) {
 
-                        tvTime.setText(appointment.getTime());
-                        tvName.setText(dbHandler.getCustomerByID(appointment.getCustomerID()).getName());
-                        tvName.setTextColor(getResources().getColor(android.R.color.holo_red_light));
-
-                    }else{
-                        tvTime.setText(appointment.getTime());
-                        tvName.setText(dbHandler.getCustomerByID(appointment.getCustomerID()).getName());
-                    }
+                if(new DateHandler().compareDates(
+                        appointment.getDateAndTimeToDisplay(),
+                        new DateHandler().getFullSDF(Calendar.getInstance()))==1) {
+                    tvName.setTextColor(getResources().getColor(android.R.color.holo_red_light));
                 }
             }
+
 
 
 //            tvTime.setText(String.valueOf(appointment.getHour()) +":"+ String.valueOf(appointment.getMinutes()));

@@ -73,18 +73,25 @@ public class smsSettings extends AppCompatActivity implements View.OnClickListen
     }
 
     private boolean saveMessageSettings() {
+        editor = settings.edit();
 
         if(rbDefault.isChecked()){
+//            TODO Setup system default message.
             editor.putString(UserDBConstants.USER_DEFAULT_SMS,getResources().getString(R.string.systemSms));
+            editor.apply();
+            return true;
         }else{
             if(etEtMessageContent.getText().toString().length()>2){
                 editor.putString(UserDBConstants.USER_DEFAULT_SMS,etEtMessageContent.getText().toString());
+                editor.apply();
+                Toast.makeText(this, settings.getString(UserDBConstants.USER_DEFAULT_SMS,""), Toast.LENGTH_SHORT).show();
+                return true;
             }else{
                 Toast.makeText(this, R.string.messageToShort, Toast.LENGTH_SHORT).show();
             }
 
         }
-
+        editor.apply();
 
         return false;
     }

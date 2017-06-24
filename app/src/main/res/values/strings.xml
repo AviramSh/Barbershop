@@ -138,7 +138,7 @@
     <string name="businessPhone">טלפון עסק</string>
     <string name="smsScheduled">נקבע תזכרות</string>
     <string name="wrongDate">תאריך שגוי</string>
-    <string name="startToEnd">התחלה  - סוף</string>
+    <string name="startToEnd">בחר טווח תאריכים</string>
     <string name="smsNotScheduled">Sms not scheduled!</string>
     <string name="alreadyHaveAppointment">יש כבר תור במועד זה</string>
     <string name="message">הודעה</string>
@@ -174,6 +174,7 @@
     <string name="title_about_activity">אודות</string>
     <string name="title_barbershop_activity">העסק שלי</string>
     <string name="title_main_activity">ראשי</string>
+    <string name="calc">חשב</string>
 
 
     <string-array name="spinner_hours">

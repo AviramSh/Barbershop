@@ -206,7 +206,8 @@ public class BarbershopDBHandler {
 
             Log.d("The Getting Date : ",appointment.getDateAndTimeToDisplay());
 
-            if(appointment.getDateAndTimeToDisplay().toLowerCase().contains(receivedDate)) {
+            if(appointment.getDateAndTimeToDisplay().toLowerCase().contains(receivedDate)&&
+                    appointment.getTackAnHaircut()!=1) {
 //                    Log.d("found","found");
                 myDateAppointments.add(appointment);
             }

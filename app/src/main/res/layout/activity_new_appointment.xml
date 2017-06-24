@@ -42,10 +42,10 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.321"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/ibSave"
-        app:layout_constraintVertical_bias="0.17000002" />
+        app:layout_constraintVertical_bias="0.169" />
 
     <ImageButton
         android:id="@+id/ibSave"

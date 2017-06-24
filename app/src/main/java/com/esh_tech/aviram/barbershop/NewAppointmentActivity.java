@@ -345,10 +345,15 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
     public void importCustomer() {
 //        TODO  need to add import from app and user phone book ,customer need to choose with alert dialog.
-        Uri uri = Uri.parse("content://contacts");
-        Intent intent = new Intent(Intent.ACTION_PICK, uri);
-        intent.setType(Phone.CONTENT_TYPE);
-        startActivityForResult(intent, REQUEST_CODE);
+        if(cPhone.getText().toString()!="" || cPhone.getText().toString().length()>10) {
+            customerProfile = dbHandler.getCustomerByPhone(cPhone.getText().toString());
+            cPhone.setText(customerProfile.getName());
+        }else{
+            Uri uri = Uri.parse("content://contacts");
+            Intent intent = new Intent(Intent.ACTION_PICK, uri);
+            intent.setType(Phone.CONTENT_TYPE);
+            startActivityForResult(intent, REQUEST_CODE);
+        }
     }
 
     //Choose phone in contact and set edit text

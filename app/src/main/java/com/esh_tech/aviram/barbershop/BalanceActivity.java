@@ -177,32 +177,30 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
         String startFormat = formatter.format(startCalendar.getTime());
         String endFormat = formatter.format(endCalendar.getTime());
 
-
+        Calendar tempStart = startCalendar;
 
 
         if (startCalendar.getTimeInMillis() > endCalendar.getTimeInMillis()) {
-            Toast.makeText(this, R.string.wrongDate, Toast.LENGTH_SHORT).show();
-        }else{
-            Calendar tempStart = startCalendar;
-            while (startCalendar.getTimeInMillis() <= endCalendar.getTimeInMillis()) {
-
-                allPurchases = dbHandler.getPurchaseByDate(startCalendar);
-                for (Purchase indexPurchase :
-                        allPurchases) {
-                    bill +=indexPurchase.getPrice();
-                    haircutCounter++;
-                }
-
-                startCalendar.add(Calendar.DATE,1);
-            }
-            Calendar startCalendar= tempStart ;
-
-            startFormat = formatter.format(startCalendar.getTime());
-            Toast.makeText(this, "startFormat:"+startFormat, Toast.LENGTH_SHORT).show();
-
-            etBill.setText(String.valueOf(bill));
-            etCounter.setText(String.valueOf(haircutCounter));
+            tempStart=startCalendar;
+            startCalendar = endCalendar;
+            endCalendar = tempStart;
         }
+        tempStart = startCalendar;
+        while (startCalendar.getTimeInMillis() <= endCalendar.getTimeInMillis()) {
+
+            allPurchases = dbHandler.getPurchaseByDate(startCalendar);
+            for (Purchase indexPurchase :
+                    allPurchases) {
+                bill +=indexPurchase.getPrice();
+                haircutCounter++;
+            }
+
+            startCalendar.add(Calendar.DATE,1);
+        }
+
+        etBill.setText(String.valueOf(bill));
+        etCounter.setText(String.valueOf(haircutCounter));
+
     }
 //    private TimePickerDialog.OnTimeSetListener tpickerListener
 //            = new TimePickerDialog.OnTimeSetListener() {
