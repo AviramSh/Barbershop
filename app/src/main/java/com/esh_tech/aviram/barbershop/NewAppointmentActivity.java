@@ -99,14 +99,13 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         appointmentCalendar = Calendar.getInstance();
         customerProfile = new Customer();
         newAppointment =new Appointment();
-//        newAppointment.setDateAndTime(appointmentCalendar);
+//        newAppointment.getDateObjectByString(appointmentCalendar);
 
         settings = PreferenceManager.getDefaultSharedPreferences(NewAppointmentActivity.this);
 
 
         setToday();
         testPhone="";
-
 
 
 
@@ -345,6 +344,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
 
     public void importCustomer() {
+//        TODO  need to add import from app and user phone book ,customer need to choose with alert dialog.
         Uri uri = Uri.parse("content://contacts");
         Intent intent = new Intent(Intent.ACTION_PICK, uri);
         intent.setType(Phone.CONTENT_TYPE);
@@ -368,7 +368,14 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                 int numberColumnIndex = cursor.getColumnIndex(Phone.NUMBER);
                 String number = cursor.getString(numberColumnIndex);
 
-                cPhone.setText(number);
+                if(dbHandler.getCustomerByPhone(number)!=null)
+                {
+                    customerProfile = dbHandler.getCustomerByPhone(number);
+                    cPhone.setText(customerProfile.getName());
+                }else{
+                    cPhone.setText(number);
+                }
+
             }
         }
     }

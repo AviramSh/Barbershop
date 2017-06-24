@@ -13,7 +13,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -22,7 +21,7 @@ import android.widget.Toast;
 import com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
-public class SandMessageActivity extends AppCompatActivity implements View.OnClickListener{
+public class SendMessageActivity extends AppCompatActivity implements View.OnClickListener{
 
     BarbershopDBHandler dbHandler;
     Customer customerProfile;
@@ -124,7 +123,7 @@ public class SandMessageActivity extends AppCompatActivity implements View.OnCli
             startActivity(Intent.createChooser(emailIntent, "Send mail..."));
             finish();
         } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(SandMessageActivity.this,
+            Toast.makeText(SendMessageActivity.this,
                     "There is no email client installed.", Toast.LENGTH_SHORT).show();
         }
     }
@@ -138,26 +137,26 @@ public class SandMessageActivity extends AppCompatActivity implements View.OnCli
             public void onReceive(Context context, Intent intent) {
                 switch (getResultCode()){
                     case Activity.RESULT_OK:
-                        Toast.makeText(SandMessageActivity.this, R.string.smsDelivered, Toast.LENGTH_LONG).show();
-                        Intent myIntent1 = new Intent(SandMessageActivity.this,MainActivity.class);
+                        Toast.makeText(SendMessageActivity.this, R.string.smsDelivered, Toast.LENGTH_LONG).show();
+                        Intent myIntent1 = new Intent(SendMessageActivity.this,MainActivity.class);
                         startActivity(myIntent1);
 
                         break;
 
                     case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-                        Toast.makeText(SandMessageActivity.this, R.string.genericFailure, Toast.LENGTH_LONG).show();
+                        Toast.makeText(SendMessageActivity.this, R.string.genericFailure, Toast.LENGTH_LONG).show();
                         break;
 
                     case SmsManager.RESULT_ERROR_NO_SERVICE:
-                        Toast.makeText(SandMessageActivity.this, R.string.noService, Toast.LENGTH_LONG).show();
+                        Toast.makeText(SendMessageActivity.this, R.string.noService, Toast.LENGTH_LONG).show();
                         break;
 
                     case SmsManager.RESULT_ERROR_NULL_PDU:
-                        Toast.makeText(SandMessageActivity.this, R.string.nullPDU, Toast.LENGTH_LONG).show();
+                        Toast.makeText(SendMessageActivity.this, R.string.nullPDU, Toast.LENGTH_LONG).show();
                         break;
 
                     case SmsManager.RESULT_ERROR_RADIO_OFF:
-                        Toast.makeText(SandMessageActivity.this, R.string.radioOff, Toast.LENGTH_LONG).show();
+                        Toast.makeText(SendMessageActivity.this, R.string.radioOff, Toast.LENGTH_LONG).show();
                         break;
                 }
             }
@@ -167,11 +166,11 @@ public class SandMessageActivity extends AppCompatActivity implements View.OnCli
             public void onReceive(Context context, Intent intent) {
                 switch (getResultCode()) {
                     case Activity.RESULT_OK:
-                        Toast.makeText(SandMessageActivity.this, R.string.smsDelivered, Toast.LENGTH_LONG).show();
+                        Toast.makeText(SendMessageActivity.this, R.string.smsDelivered, Toast.LENGTH_LONG).show();
                         break;
 
                     case Activity.RESULT_CANCELED:
-                        Toast.makeText(SandMessageActivity.this, R.string.smsNotDelivered, Toast.LENGTH_LONG).show();
+                        Toast.makeText(SendMessageActivity.this, R.string.smsNotDelivered, Toast.LENGTH_LONG).show();
                         break;
 
                 }

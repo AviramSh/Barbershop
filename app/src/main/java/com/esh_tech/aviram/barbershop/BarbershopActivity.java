@@ -16,8 +16,7 @@ public class BarbershopActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void init() {
-        this.setTitle(R.string.myBarbershop);
-
+//        TODO add change settings with Shared preferences
 
     }
 

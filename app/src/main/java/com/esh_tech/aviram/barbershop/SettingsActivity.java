@@ -34,7 +34,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void init() {
-        this.setTitle(R.string.settings);
+
     }
 
 

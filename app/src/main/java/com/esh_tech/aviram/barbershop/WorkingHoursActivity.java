@@ -35,7 +35,7 @@ public class WorkingHoursActivity extends AppCompatActivity {
     }
 
     private void init() {
-
+//        TODO set all settings for user working days and time.
     }
 
     public void timeAndFee(View view) {

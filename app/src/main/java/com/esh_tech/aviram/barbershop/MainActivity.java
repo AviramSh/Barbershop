@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.nfc.Tag;
 import android.preference.PreferenceManager;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -12,14 +11,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,15 +29,16 @@ import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+
+import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_AUTO_LOGIN;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     //    SharedPreferences
     SharedPreferences settings;
+    SharedPreferences.Editor editor;
 
     ArrayList<Appointment> allAppointments =new ArrayList<Appointment>();
     ListView lsNextAppointment;
@@ -55,6 +55,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         init();
     }
+
+//    Menu bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main,menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent myIntent;
+        switch (item.getItemId()){
+            case R.id.action_settings:
+                myIntent = new Intent(this,SettingsActivity.class);
+                startActivity(myIntent);
+                break;
+            case R.id.action_about:
+                myIntent = new Intent(this,AboutActivity.class);
+                startActivity(myIntent);
+                break;
+            case R.id.action_logout:
+                logout();
+                break;
+            default:
+                Toast.makeText(this, "Not Initialized yet", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return true;
+    }
+
 
     private void init() {
         //        Database
@@ -85,6 +114,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    public void logout() {
+        settings = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = settings.edit();
+        editor.putBoolean(USER_AUTO_LOGIN,false);
+        editor.apply();
+
+        Intent myIntent = new Intent(this,LoginActivity.class);
+        startActivity(myIntent);
+        this.finish();
+    }
 
     //    Handling the Appointment list view
     private void appointmentHandler(final int position) {
@@ -158,11 +197,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void populateAppointment() {
-        SimpleDateFormat sdf = new SimpleDateFormat(
-                "dd/MM/yyyy", Locale.getDefault());
-        String dateForDisplay = sdf.format(Calendar.getInstance().getTime());
+        allAppointments = new ArrayList<Appointment>();
 
-        allAppointments = dbHandler.getWaitingListAppointments(dateForDisplay);
+//        SimpleDateFormat sdf = new SimpleDateFormat(
+//                "dd/MM/yyyy", Locale.getDefault());
+//        String dateForDisplay = sdf.format(Calendar.getInstance().getTime());
+
+        allAppointments = dbHandler.getWaitingListAppointments(new DateHandler().getOnlyDateSDF(Calendar.getInstance()));
 
 //minutes, hour, day,month, year, customerName, customerID
 //        allAppointments.add(new Appointment(15,8,4,5,1987,"Avi",3));
@@ -244,10 +285,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     tvTime.setText(appointment.getTime());
                     tvName.setTextColor(getColor(R.color.colorPrimary));
                     tvName.setText(dbHandler.getCustomerByID(appointment.getCustomerID()).getName());
-                    tvName.setTextColor(getResources().getColor(R.color.green));
+                    tvName.setTextColor(getResources().getColor(android.R.color.holo_green_light));
                 }else{
-                    tvTime.setText(appointment.getTime());
-                    tvName.setText(dbHandler.getCustomerByID(appointment.getCustomerID()).getName());
+
+                    if(new DateHandler().compareDates(
+                            appointment.getDateAndTimeToDisplay(),
+                            new DateHandler().getFullSDF(Calendar.getInstance()))==1) {
+
+                        tvTime.setText(appointment.getTime());
+                        tvName.setText(dbHandler.getCustomerByID(appointment.getCustomerID()).getName());
+                        tvName.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+
+                    }else{
+                        tvTime.setText(appointment.getTime());
+                        tvName.setText(dbHandler.getCustomerByID(appointment.getCustomerID()).getName());
+                    }
                 }
             }
 

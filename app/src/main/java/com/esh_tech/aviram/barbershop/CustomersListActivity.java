@@ -46,7 +46,6 @@ public class CustomersListActivity extends AppCompatActivity {
     }
 
     private void init() {
-        this.setTitle(R.string.customers);
 
 //        database
         dbHandler = new BarbershopDBHandler(this);

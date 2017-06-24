@@ -52,7 +52,6 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void init() {
-        this.setTitle(R.string.balance);
 
         dbHandler = new BarbershopDBHandler(this);
 

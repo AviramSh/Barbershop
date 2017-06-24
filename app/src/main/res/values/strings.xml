@@ -152,6 +152,28 @@
     <string name="smsNotDelivered">SMS not delivered!</string>
     <string name="dbFailedToSave">שמירה בבסיס הנתונים נכשלה</string>
     <string name="savedToDB">נשמר בבסיס הנתונים</string>
+    <string name="title_register_activity">Register</string>
+    <string name="title_login_activity">התחברות</string>
+    <string name="title_customer_activity">פרופיל לקוח</string>
+    <string name="title_settings_activity">הגדרות</string>
+    <string name="title_stock_activity">מלאי</string>
+    <string name="title_user_registration_activity">הרשמה</string>
+    <string name="title_working_hours_activity">שעות פעילות</string>
+    <string name="title_fill_customers_activity">הוסף לקוחות</string>
+    <string name="time_and_fee_activity">הגדרת תספורת</string>
+    <string name="title_sms_settings_activity">הגדרת הודעה</string>
+    <string name="title_customers_list_activity">רשימת לקוחות</string>
+    <string name="title_balance_activity">מאזן</string>
+    <string name="title_appointment_list_activity">רשימת תורות</string>
+    <string name="title_splash_activity">ברוך הבא</string>
+    <string name="title_user_password_activity">הגדרת ססמאה</string>
+    <string name="title_new_customer_activity">לקוח חדש</string>
+    <string name="title_new_appointment_activity">תור חדש</string>
+    <string name="title_send_sms_activity">שליחת הודעה</string>
+    <string name="title_user_profile_activity">פרופיל משתמש</string>
+    <string name="title_about_activity">אודות</string>
+    <string name="title_barbershop_activity">העסק שלי</string>
+    <string name="title_main_activity">ראשי</string>
 
 
     <string-array name="spinner_hours">

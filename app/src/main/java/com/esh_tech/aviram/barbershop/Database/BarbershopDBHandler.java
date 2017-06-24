@@ -204,13 +204,15 @@ public class BarbershopDBHandler {
         for (Appointment appointment:
                 myAppointments) {
 
-            if(appointment.getTackAnHaircut() == 0) {
+            Log.d("The Getting Date : ",appointment.getDateAndTimeToDisplay());
+
+            if(appointment.getDateAndTimeToDisplay().toLowerCase().contains(receivedDate)) {
+//                    Log.d("found","found");
                 myDateAppointments.add(appointment);
             }
         }
 
         return myDateAppointments;
-
     }
     public boolean updateAppointment(Appointment appointment) {
 

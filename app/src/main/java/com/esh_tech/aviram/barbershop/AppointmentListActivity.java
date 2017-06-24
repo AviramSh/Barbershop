@@ -2,7 +2,6 @@ package com.esh_tech.aviram.barbershop;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -18,24 +17,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
-public class AppointmentListActivity extends AppCompatActivity {
+public class AppointmentListActivity extends AppCompatActivity implements View.OnClickListener{
 
     //Calendar
 //    final Calendar appointmentCalendar = Calendar.getInstance();
@@ -43,8 +41,14 @@ public class AppointmentListActivity extends AppCompatActivity {
     Calendar newCalendar;
     Button theDate;
 
+
+    CheckBox rbGetAllHaircut;
+    CheckBox rbGetHaircut;
+    CheckBox rbDidntgetHaircut;
+
     static final int DIALOG_ID = 0;
     static final int DIALOG_ID_TIME = 1;
+
 
     //    View
     ArrayList<Appointment> allAppointments;
@@ -71,6 +75,15 @@ public class AppointmentListActivity extends AppCompatActivity {
 //        Set Date
         theDate = (Button)findViewById(R.id.btDate);
         newCalendar = Calendar.getInstance();
+
+        rbGetAllHaircut =(CheckBox)findViewById(R.id.rbGetAllHaircut);
+        rbGetHaircut =(CheckBox)findViewById(R.id.rbGetHaircut);
+        rbDidntgetHaircut =(CheckBox)findViewById(R.id.rbDidntGetHaircut);
+
+        rbGetAllHaircut.setChecked(true);
+        rbGetHaircut.setChecked(false);
+        rbDidntgetHaircut.setChecked(false);
+
 //        setTheDate();
 
 
@@ -96,21 +109,10 @@ public class AppointmentListActivity extends AppCompatActivity {
 
         allAppointments = dbHandler.getAllAppointments(dateForDisplay);
 
-
     }
 
-    public void nextDay(View view) {
-
-        newCalendar.add(Calendar.DAY_OF_MONTH, 1);
-//        setTheDate();
-        populateAppointment();
-        appointmentAdapter = new MyAppointmentsAdapter(this, R.layout.custom_appointment_row, allAppointments);
-        lvAppointment.setAdapter(appointmentAdapter);
-
-    }
-    public void dayBack(View view) {
-        newCalendar.add(Calendar.DAY_OF_MONTH, -1);
-//        setTheDate(newCalendar);
+    public void restDate(int day) {
+        newCalendar.add(Calendar.DAY_OF_MONTH, day);
         populateAppointment();
         appointmentAdapter.notifyDataSetChanged();
         appointmentAdapter = new MyAppointmentsAdapter(this, R.layout.custom_appointment_row, allAppointments);
@@ -121,6 +123,36 @@ public class AppointmentListActivity extends AppCompatActivity {
         Intent myIntent = new Intent(this,MainActivity.class);
         startActivity(myIntent);
         this.finish();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btNextDay:
+                restDate(1);
+                break;
+            case R.id.btDayBack:
+                restDate(-1);
+                break;
+            case R.id.btDate:
+                showDialog(v);
+                break;
+            case R.id.rbGetAllHaircut:
+//                rbGetAllHaircut.setChecked(!rbGetAllHaircut.isChecked());
+                rbGetHaircut.setChecked(false);
+                rbDidntgetHaircut.setChecked(false);
+                restDate(0);
+                break;
+            case R.id.rbGetHaircut:
+                restDate(0);
+                break;
+            case R.id.rbDidntGetHaircut:
+                restDate(0);
+                break;
+            default:
+                Toast.makeText(this, "Not Initialized yet", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     class MyAppointmentsAdapter extends ArrayAdapter<Appointment> {
@@ -149,6 +181,19 @@ public class AppointmentListActivity extends AppCompatActivity {
 
             tvName.setText(dbHandler.getCustomerByID(appointment.getCustomerID()).getName());
             tvTime.setText(appointment.getDateAndTimeToDisplay());
+
+            if(rbGetHaircut.isChecked()&&appointment.getTackAnHaircut()==1){
+                tvName.setTextColor(getResources().getColor(android.R.color.holo_green_light));
+                tvTime.setTextColor(getResources().getColor(android.R.color.holo_green_light));
+                rbGetAllHaircut.setChecked(false);
+            }else if(rbDidntgetHaircut.isChecked()&&appointment.getTackAnHaircut()==0 &&
+                    new DateHandler().compareDates(
+                            appointment.getDateAndTimeToDisplay(),
+                            new DateHandler().getFullSDF(Calendar.getInstance()))==1){
+                tvName.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+                tvTime.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+                rbGetAllHaircut.setChecked(false);
+            }
 
             appointmentAdapter.notifyDataSetChanged();
             return convertView;
@@ -188,6 +233,7 @@ public class AppointmentListActivity extends AppCompatActivity {
 
             newCalendar.set(year,month,dayOfMonth);
             populateAppointment();
+            restDate(0);
         }
     };
 

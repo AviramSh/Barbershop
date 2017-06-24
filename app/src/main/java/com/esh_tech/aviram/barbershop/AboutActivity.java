@@ -18,7 +18,6 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void init() {
-        this.setTitle(R.string.about);
 
         btClose =(Button)findViewById(R.id.btClose);
 

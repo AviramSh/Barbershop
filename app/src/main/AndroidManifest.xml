@@ -18,13 +18,15 @@
 
     <application
         android:name=".MyGlobalUser"
+
         android:allowBackup="true"
         android:icon="@drawable/scissors1"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:label="@string/title_main_activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,67 +35,88 @@
         </activity>
 
         <activity android:name=".RegisterActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:label="@string/title_register_activity"/>
 
         <activity android:name=".LoginActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:label="@string/title_login_activity"/>
 
         <activity android:name=".CustomerActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="@string/title_customer_activity"/>
 
         <activity android:name=".SettingsActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="@string/title_settings_activity"/>
 
         <activity android:name=".StockActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="@string/title_stock_activity"/>
 
         <activity android:name=".UserRegistrationActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="@string/title_user_registration_activity"/>
 
         <activity android:name=".WorkingHoursActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="@string/title_working_hours_activity"/>
 
         <activity android:name=".FillCustomersActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="@string/title_fill_customers_activity"/>
 
         <activity android:name=".TimeAndFee"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="@string/time_and_fee_activity"/>
 
         <activity android:name=".smsSettings"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="@string/title_sms_settings_activity"/>
 
         <activity android:name=".CustomersListActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="@string/title_customers_list_activity"/>
 
         <activity android:name=".BalanceActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="@string/title_balance_activity"/>
 
         <activity android:name=".AppointmentListActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="@string/title_appointment_list_activity"/>
 
         <activity android:name=".SplashScreenActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:label="@string/title_splash_activity"/>
 
         <activity android:name=".UserPasswordActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="@string/title_user_password_activity"/>
 
         <activity android:name=".NewCustomerActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="@string/title_new_customer_activity"/>
 
         <activity android:name=".NewAppointmentActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="@string/title_new_appointment_activity"/>
 
-        <activity android:name=".SandMessageActivity"
-            android:screenOrientation="portrait" />
+        <activity android:name=".SendMessageActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_send_sms_activity"/>
 
         <activity android:name=".UserProfileActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="@string/title_user_profile_activity"/>
 
         <activity android:name=".AboutActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="@string/title_about_activity"/>
 
         <activity android:name=".BarbershopActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="@string/title_barbershop_activity"/>
 
         <service
             android:name=".AlarmService"

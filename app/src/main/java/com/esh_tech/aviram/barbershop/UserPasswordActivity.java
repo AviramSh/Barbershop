@@ -35,8 +35,6 @@ public class UserPasswordActivity extends AppCompatActivity implements View.OnCl
 
     private void init() {
 
-        this.setTitle(R.string.password);
-
         pass1 = (EditText)findViewById(R.id.passwordEt);
         pass2= (EditText)findViewById(R.id.rePasswordEt);
 

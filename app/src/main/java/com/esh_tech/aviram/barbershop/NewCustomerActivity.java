@@ -46,7 +46,6 @@ public class NewCustomerActivity extends AppCompatActivity {
     }
 
     private void init() {
-        this.setTitle(R.string.newCustomer);
         dbHandler = new BarbershopDBHandler(this);
         rg = (RadioGroup)findViewById(R.id.rgGender);
         customerRemainder = (CheckBox)findViewById(R.id.cbReminder);

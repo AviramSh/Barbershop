@@ -54,7 +54,6 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void init() {
-        this.setTitle(R.string.customerProfile);
         //        database
         dbHandler = new BarbershopDBHandler(this);
         customerProfile = new Customer();
@@ -159,7 +158,7 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
         Intent myIntent;
         switch (v.getId()){
             case R.id.btMassage:
-                myIntent = new Intent(this ,SandMessageActivity.class);
+                myIntent = new Intent(this ,SendMessageActivity.class);
                 myIntent.putExtra(SharedPreferencesConstants.CUSTOMER_ID_SMS,customerProfile.get_id());
                 startActivity(myIntent);
 
@@ -170,28 +169,24 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(myIntent);
                 break;
             case R.id.customerMainPic:
-                customerPic = (ImageButton)findViewById(R.id.customerMainPic);
+//                customerPic = (ImageButton)findViewById(R.id.customerMainPic);
                 userPhotoSet(R.id.customerMainPic);
-//                Toast.makeText(this,"Profile pic", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.customerPic_1:
-                customerPic = (ImageButton)findViewById(R.id.customerPic_1);
-                userPhotoSet(R.id.customerMainPic);
-//                Toast.makeText(this, "Pic 1", Toast.LENGTH_SHORT).show();
+//                customerPic = (ImageButton)findViewById(R.id.customerPic_1);
+                userPhotoSet(R.id.customerPic_1);
                 break;
             case R.id.customerPic_2:
-                customerPic = (ImageButton)findViewById(R.id.customerPic_2);
-                userPhotoSet(R.id.customerMainPic);
-//                Toast.makeText(this, "Pic 2", Toast.LENGTH_SHORT).show();
+//                customerPic = (ImageButton)findViewById(R.id.customerPic_2);
+                userPhotoSet(R.id.customerPic_2);
                 break;
             case R.id.customerPic_3:
-                customerPic = (ImageButton)findViewById(R.id.customerPic_3);
-                userPhotoSet(R.id.customerMainPic);
-//                Toast.makeText(this, "Pic 3", Toast.LENGTH_SHORT).show();
+//                customerPic = (ImageButton)findViewById(R.id.customerPic_3);
+                userPhotoSet(R.id.customerPic_3);
                 break;
             case R.id.customerPic_4:
-                customerPic = (ImageButton)findViewById(R.id.customerPic_4);
-                userPhotoSet(R.id.customerMainPic);
+//                customerPic = (ImageButton)findViewById(R.id.customerPic_4);
+                userPhotoSet(R.id.customerPic_4);
 //                Toast.makeText(this, "Pic 4", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.ibEditCustomer:
@@ -213,7 +208,8 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private void userPhotoSet(int customerPic) {
+    private void userPhotoSet(int customerPicId) {
+        customerPic = (ImageButton)findViewById(customerPicId);
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED){
@@ -236,7 +232,7 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
             case CAMERA_REQUEST_CODE:
-//                TODO Need To Save Customer Photos
+//                TODO Need To Save Customer Photos in a file for full pic
                 if (resultCode == RESULT_OK){
                     selectedProfilePicture = (Bitmap)data.getExtras().get("data");
                     customerPic.setImageBitmap(selectedProfilePicture);

@@ -304,10 +304,8 @@ package com.esh_tech.aviram.barbershop;
 
 
 import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  * Created by AVIRAM on 27/05/2017.
@@ -378,19 +376,21 @@ public class Appointment {
         this.dateAndTime = dateAndTime.getTime();
     }
 
+//    new handler in DateHandler
     public void setDateAndTime(String setDate){
+//
+//        SimpleDateFormat sdf = new SimpleDateFormat(
+//                "dd/MM/yyyy HH:mm", Locale.getDefault());
+//        Date testDate = null;
+//        try {
+//            testDate = sdf.parse(setDate);
+//        }catch(Exception ex){
+//            ex.printStackTrace();
+//        }
+////        SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy HH:mm:");
+////        String newFormat = formatter.format(testDate);
 
-        SimpleDateFormat sdf = new SimpleDateFormat(
-                "dd/MM/yyyy HH:mm", Locale.getDefault());
-        Date testDate = null;
-        try {
-            testDate = sdf.parse(setDate);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-//        SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy HH:mm:");
-//        String newFormat = formatter.format(testDate);
-        this.dateAndTime = testDate;
+        this.dateAndTime = new DateHandler().getDateObjectByString(setDate);
     }
 
     public Date getDateAndTime() {
@@ -398,19 +398,20 @@ public class Appointment {
     }
 
     public String getTime(){
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-        String newFormat = formatter.format(dateAndTime.getTime());
-        return newFormat;
+//        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+//        String newFormat = formatter.format(dateAndTime.getTimeSDF());
+//        return newFormat;
+        return new DateHandler().getTimeSDF(dateAndTime);
     }
     public String getDateAndTimeToDisplay() {
-
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
-        String newFormat = formatter.format(dateAndTime.getTime());
-        return newFormat;
+        return new DateHandler().getFullSDF(dateAndTime);
+//        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
+//        String newFormat = formatter.format(dateAndTime.getTimeSDF());
+//        return newFormat;
     }
 
     //    public void setTheDate(Calendar c1) {
-//        Date date = c1.getTime();
+//        Date date = c1.getTimeSDF();
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 //
 //        String myDate= null;

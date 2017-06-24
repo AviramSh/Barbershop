@@ -46,7 +46,6 @@ public class StockActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void init() {
-        this.setTitle(R.string.stock);
 
         //        Connect list view
         lvProducts =(ListView)findViewById(R.id.fillProductLv);

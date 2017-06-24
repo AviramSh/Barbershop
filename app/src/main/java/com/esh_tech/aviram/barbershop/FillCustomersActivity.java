@@ -69,7 +69,6 @@ public class FillCustomersActivity extends AppCompatActivity {
     }
 
     private void init() {
-        this.setTitle(R.string.importCustomers);
 //        Database
         dbHandler = new BarbershopDBHandler(this);
 
