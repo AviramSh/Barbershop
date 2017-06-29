@@ -11,9 +11,10 @@ public class Customer {
     private int _id;
     private String name;
     private String phone;
-    private String secondPhone;
+    private String birthday;
     private String email;
     private double bill;
+
 
     private int gender;
     private int remainder;
@@ -21,13 +22,14 @@ public class Customer {
 
 
     public Customer() {
-        this(-1,"Guest","050000000","050000000","AAA@MMM.COM",0.0,1,0);
+
+        this(-1,"Guest","050000000","1/1/1900","AAA@MMM.COM",0.0,1,0);
     }
 
-    public Customer(String name, String phone, String secondPhone, String email, Double bill, Bitmap photo, int gender, int remainder) {
+    public Customer(String name, String phone, String birthday, String email, Double bill, Bitmap photo, int gender, int remainder) {
         this.name = name;
         this.phone = phone;
-        this.secondPhone = secondPhone;
+        this.birthday = birthday;
         this.email = email;
         this.bill = bill;
         this.photo = photo;
@@ -35,21 +37,21 @@ public class Customer {
         this.remainder = remainder;
     }
 
-    public Customer(int _id, String name, String phone, String secondPhone, String email, double bill, int gender, int remainder) {
+    public Customer(int _id, String name, String phone, String birthday, String email, double bill, int gender, int remainder) {
         this._id = _id;
         this.name = name;
         this.phone = phone;
-        this.secondPhone = secondPhone;
+        this.birthday = birthday;
         this.email = email;
         this.bill = bill;
         this.gender = gender;
         this.remainder = remainder;
     }
 
-    public Customer(String name, String phone, String secondPhone, String email, double bill, int gender, int remainder) {
+    public Customer(String name, String phone, String birthday, String email, double bill, int gender, int remainder) {
         this.name = name;
         this.phone = phone;
-        this.secondPhone = secondPhone;
+        this.birthday = birthday;
         this.email = email;
         this.bill = bill;
         this.gender = gender;
@@ -70,7 +72,7 @@ public class Customer {
     }
 
     public void setName(String name) {
-        if(name==null || name == "")
+        if(name==null || name.equals(""))
             this.name = "Guest";
         else this.name = name;
     }
@@ -81,19 +83,19 @@ public class Customer {
 
     public void setPhone(String phone) {
 
-        if(phone == null || phone == "")
+        if(phone == null || phone.equals(""))
             this.phone = "0505000000";
         else this.phone = phone;
     }
 
-    public String getSecondPhone() {
-        return secondPhone;
+    public String getBirthday() {
+        return birthday;
     }
 
-    public void setSecondPhone(String secondPhone) {
-        if(secondPhone == null || secondPhone == "")
-            this.secondPhone = "0505000000";
-        else this.secondPhone = secondPhone;
+    public void setBirthday(String birthday) {
+        if(birthday == null || birthday == "")
+            this.birthday = "0505000000";
+        else this.birthday = birthday;
     }
 
     public String getEmail() {

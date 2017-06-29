@@ -21,27 +21,9 @@
         android:orientation="horizontal">
 
 
-        <ImageButton
-            android:id="@+id/btMinus"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="@color/empty"
-            android:padding="10dp"
-            app:srcCompat="@drawable/minus48" />
-
-        <ImageButton
-            android:id="@+id/ibPlus"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="@color/empty"
-            android:padding="10dp"
-            app:srcCompat="@android:drawable/ic_input_add" />
-
         <EditText
             android:id="@+id/etProductQuantity"
-            android:layout_width="100dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"

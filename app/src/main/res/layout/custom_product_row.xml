@@ -9,6 +9,8 @@
 
     <TextView
         android:id="@+id/tvProductName"
+        android:textStyle="bold|normal|italic"
+        android:paddingTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="70"
@@ -20,6 +22,8 @@
         android:id="@+id/tvProductPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textStyle="bold|normal|italic"
+        android:paddingTop="10dp"
         android:gravity="start"
         android:layout_weight="15"
         android:padding="10dp"
@@ -29,6 +33,8 @@
         android:id="@+id/tvProductQuantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textStyle="bold|normal|italic"
+        android:paddingTop="10dp"
         android:gravity="start"
         android:layout_weight="15"
         android:padding="10dp"

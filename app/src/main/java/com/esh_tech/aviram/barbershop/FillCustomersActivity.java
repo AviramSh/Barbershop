@@ -161,23 +161,26 @@ public class FillCustomersActivity extends AppCompatActivity {
                 newCustomer.setName(retrieveContactName());
                 newCustomer.setPhone(retrieveContactNumber());
                 Bitmap photo =retrieveContactPhoto();
-                if(photo == null){
 
-                }else{
-//                    newCustomer.setCustomerPhoto(photo);
-                }
 //                Toast.makeText(this, newCustomer.getName()+" :"+newCustomer.getPhone(), Toast.LENGTH_SHORT).show();
 
 //                allCustomers.add(newCustomer);
-                if(dbHandler.addCustomer(newCustomer)){
-                    Toast.makeText(this, newCustomer.getName()+" Saved.", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(this, newCustomer.getName()+" Didn't Saved.", Toast.LENGTH_SHORT).show();
-                }
-                allCustomers.add(newCustomer);
-                usersAdapter.notifyDataSetChanged();
 
-        }
+                if(dbHandler.getCustomerByPhone(newCustomer.getPhone())== null) {
+                    if (dbHandler.addCustomer(newCustomer)) {
+                        allCustomers.add(newCustomer);
+                        usersAdapter.notifyDataSetChanged();
+                        allCustomers.add(newCustomer);
+                        usersAdapter.notifyDataSetChanged();
+                        Toast.makeText(this, newCustomer.getName() + R.string.saved, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, newCustomer.getName() + R.string.failedToSave, Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(this, R.string.customerExist, Toast.LENGTH_SHORT).show();
+                }
+
+            }
     }
 
 //    Customer Data

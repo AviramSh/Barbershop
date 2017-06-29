@@ -13,6 +13,17 @@ import java.util.Locale;
 public class DateHandler {
 
 
+
+
+    public String getImageName(){
+
+
+        return getFullSDF(new Date())+".jpg";
+    }
+//        0 = start == end
+//        1 = start < end
+//        2 = start > end
+
 //   Compare Dates
     public int compareDates(String d1, String d2) {
         try {

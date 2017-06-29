@@ -32,7 +32,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 CustomersDBConstants.CUSTOMER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT  , "+
                 CustomersDBConstants.CUSTOMER_NAME + " TEXT , "+
                 CustomersDBConstants.CUSTOMER_PHONE + " TEXT ,"  +
-                CustomersDBConstants.CUSTOMER_SECOND_PHONE + " TEXT , "+
+                CustomersDBConstants.CUSTOMER_BIRTHDAY + " TEXT , "+
                 CustomersDBConstants.CUSTOMER_EMAIL + " TEXT , "+
                 CustomersDBConstants.CUSTOMER_BILL + " DOUBLE , "+
                 CustomersDBConstants.CUSTOMER_GENDER + " INTEGER , "+

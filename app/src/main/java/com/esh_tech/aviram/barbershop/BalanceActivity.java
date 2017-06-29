@@ -197,6 +197,7 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
 
             startCalendar.add(Calendar.DATE,1);
         }
+        startCalendar= tempStart;
 
         etBill.setText(String.valueOf(bill));
         etCounter.setText(String.valueOf(haircutCounter));

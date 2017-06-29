@@ -1,10 +1,14 @@
 package com.esh_tech.aviram.barbershop;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -13,16 +17,20 @@ import android.widget.Toast;
 import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
-public class NewCustomerActivity extends AppCompatActivity {
+import java.util.Calendar;
+
+public class NewCustomerActivity extends AppCompatActivity implements View.OnClickListener{
 
     /*
     private boolean gender;
     private boolean remainder;
     private Bitmap CustomerPhoto;*/
+
     Customer customerProfile;
+    Calendar newCalendar;
+    Button theDate;
 
     EditText customerName;
-    EditText customerLastName;
     EditText customerEmail;
     EditText customerCredit;
     CheckBox customerRemainder;
@@ -32,13 +40,15 @@ public class NewCustomerActivity extends AppCompatActivity {
     RadioGroup rg;
 
     boolean gender =true;
+    static final int DIALOG_ID = 0;
+    static final int DIALOG_ID_TIME = 1;
 //    RadioGroup rg;
 
 //    DB
     BarbershopDBHandler dbHandler;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_customer);
 
@@ -50,13 +60,17 @@ public class NewCustomerActivity extends AppCompatActivity {
         rg = (RadioGroup)findViewById(R.id.rgGender);
         customerRemainder = (CheckBox)findViewById(R.id.cbReminder);
         customerName = (EditText)findViewById(R.id.etCustomerName);
-        customerLastName= (EditText)findViewById(R.id.etCustomerLastName);
+
         customerPhone =(EditText)findViewById(R.id.etCustomerPhone);
         customerCredit = (EditText)findViewById(R.id.etCustomerCredit);
         customerEmail = (EditText)findViewById(R.id.etCustomerEmail);
         rbMale = (RadioButton)findViewById(R.id.rbMan);
         rbFemale = (RadioButton)findViewById(R.id.rbWoman);
 
+        newCalendar = Calendar.getInstance();
+        theDate = (Button)findViewById(R.id.btTheDate);
+        theDate.setText(new DateHandler().getOnlyDateSDF(newCalendar));
+//        newCalendar.set(1900,1,1);
 
         customerProfile = new Customer();
 
@@ -88,12 +102,41 @@ public class NewCustomerActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+            case R.id.btTheDate:
+                showDialog(v);
+                break;
+            case R.id.btSave:
+                addCustomer();
+                break;
+            case R.id.btClose:
+                Intent myIntent = new Intent(this,MainActivity.class);
+                startActivity(myIntent);
+                this.finish();
+                break;
+
+
+            default:
+                Toast.makeText(this, "Not Initialized yet", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+
     private void setEditCustomer(Customer customerProfile) {
 
+        this.setTitle(R.string.customerEditActivity);
         customerName.setText(customerProfile.getName());
         customerPhone.setText(customerProfile.getPhone());
         customerCredit.setText(String.valueOf(customerProfile.getBill()));
         customerEmail.setText(customerProfile.getEmail());
+        theDate.setText(customerProfile.getBirthday());
+
+        Toast.makeText(this, theDate.getText().toString() +"", Toast.LENGTH_SHORT).show();
 
         if(customerProfile.getRemainder()==1)
             customerRemainder.setChecked(true);
@@ -109,13 +152,13 @@ public class NewCustomerActivity extends AppCompatActivity {
     }
 
 
-    public void addCustomer(View view) {
+    public void addCustomer() {
 
 
         String testString ="Error :";
 
 
-        customerProfile.setName(customerName.getText().toString()+" "+customerLastName.getText().toString());
+        customerProfile.setName(customerName.getText().toString());
         customerProfile.setPhone(customerPhone.getText().toString());
         customerProfile.setBill(Double.parseDouble(customerCredit.getText().toString()));
         customerProfile.setEmail(customerEmail.getText().toString());
@@ -131,7 +174,10 @@ public class NewCustomerActivity extends AppCompatActivity {
         else customerProfile.setGender(1);//testString+= " men";}
 
 
-        //testString = appointmentCalendar.getName()+" ,"+appointmentCalendar.getPhone()+" ,"+appointmentCalendar.getBill()+" ,"+appointmentCalendar.getEmail();
+        if(newCalendar.get(Calendar.YEAR) <= (Calendar.getInstance().get(Calendar.YEAR)-18)){
+            customerProfile.setBirthday(new DateHandler().getOnlyDateSDF(newCalendar));
+//            Toast.makeText(this, "Birth day saved"+ new DateHandler().getOnlyDateSDF(newCalendar), Toast.LENGTH_SHORT).show();
+        }
 
         if(customerName.getText().toString().length() < 2)
             //testString +="\nUser name to short.";
@@ -156,10 +202,42 @@ public class NewCustomerActivity extends AppCompatActivity {
 
     }
 
-    public void closeNewCustomer(View view) {
-        Intent myIntent = new Intent(this,MainActivity.class);
-        startActivity(myIntent);
-        this.finish();
 
+    public void showDialog(View v) {
+
+        switch (v.getId()) {
+            case R.id.btTheDate:
+                showDialog(DIALOG_ID);
+                break;
+            case R.id.btTime:
+                showDialog(DIALOG_ID_TIME);
+                break;
+        }
     }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+
+        if (id == DIALOG_ID)
+            return new DatePickerDialog(this,
+                    dpickerListener,
+                    newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+        return null;
+    }
+
+
+    private DatePickerDialog.OnDateSetListener dpickerListener
+            = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+            newCalendar.set(year,month,dayOfMonth);
+            theDate.setText(new DateHandler().getOnlyDateSDF(newCalendar));
+//            populateAppointment();
+//            restDate(0);
+        }
+    };
+
 }
+

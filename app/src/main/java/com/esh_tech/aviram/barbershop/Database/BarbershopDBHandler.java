@@ -6,11 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Appointment;
-import com.esh_tech.aviram.barbershop.AppointmentListActivity;
-import com.esh_tech.aviram.barbershop.BalanceActivity;
 import com.esh_tech.aviram.barbershop.Constants.AppointmentsDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.MainDBConstants;
@@ -48,7 +45,7 @@ public class BarbershopDBHandler {
 
         columnValues.put(CustomersDBConstants.CUSTOMER_NAME,customer.getName());
         columnValues.put(CustomersDBConstants.CUSTOMER_PHONE,customer.getPhone());
-        columnValues.put(CustomersDBConstants.CUSTOMER_SECOND_PHONE,customer.getSecondPhone());
+        columnValues.put(CustomersDBConstants.CUSTOMER_BIRTHDAY,customer.getBirthday());
         columnValues.put(CustomersDBConstants.CUSTOMER_EMAIL , customer.getEmail());
         columnValues.put(CustomersDBConstants.CUSTOMER_BILL , customer.getBill());
         columnValues.put(CustomersDBConstants.CUSTOMER_GENDER , customer.getGender());
@@ -81,7 +78,7 @@ public class BarbershopDBHandler {
                     customersCursor.getInt(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_ID)),
                     customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_NAME)),
                     customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_PHONE)),
-                    customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_SECOND_PHONE)),
+                    customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_BIRTHDAY)),
                     customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_EMAIL)),
                     customersCursor.getDouble(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_BILL)),
                     customersCursor.getInt(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_GENDER)),
@@ -104,7 +101,7 @@ public class BarbershopDBHandler {
                     customersCursor.getInt(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_ID)),
                     customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_NAME)),
                     customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_PHONE)),
-                    customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_SECOND_PHONE)),
+                    customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_BIRTHDAY)),
                     customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_EMAIL)),
                     customersCursor.getDouble(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_BILL)),
                     customersCursor.getInt(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_GENDER)),
@@ -121,13 +118,12 @@ public class BarbershopDBHandler {
 
         while (customersCursor.moveToNext())
 
-            if(phone.equals(customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_PHONE)))
-                    || phone.equals(customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_SECOND_PHONE)))){
+            if(phone.equals(customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_PHONE)))){
                 return new Customer(
                         customersCursor.getInt(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_ID)),
                         customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_NAME)),
                         customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_PHONE)),
-                        customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_SECOND_PHONE)),
+                        customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_BIRTHDAY)),
                         customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_EMAIL)),
                         customersCursor.getDouble(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_BILL)),
                         customersCursor.getInt(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_GENDER)),
@@ -135,6 +131,13 @@ public class BarbershopDBHandler {
                 );
             }
         return null;
+    }
+
+    public boolean deleteCustomerById(int id) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        return db.delete(CustomersDBConstants.CUSTOMERS_TABLE_NAME,
+                CustomersDBConstants.CUSTOMER_ID +" = "+id,null)>0;
     }
 
 
@@ -169,13 +172,17 @@ public class BarbershopDBHandler {
                 null, null, null, null, null, AppointmentsDBConstants.APPOINTMENT_DATE+" ASC");
 
         while (AppointmentsCursor.moveToNext())
-            AppointmentsList.add(new Appointment(
-                    AppointmentsCursor.getInt(AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.APPOINTMENT_ID)),
-                    AppointmentsCursor.getString(AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.APPOINTMENT_DATE)),
-                    AppointmentsCursor.getInt(AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.CUSTOMER_ID)),
-                    AppointmentsCursor.getInt(AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.APPOINTMENT_EXECUTED))
-            ));
-
+            if(getCustomerByID(
+                    AppointmentsCursor.getInt(
+                            AppointmentsCursor.getColumnIndex(
+                                    AppointmentsDBConstants.CUSTOMER_ID)))!=null) {
+                AppointmentsList.add(new Appointment(
+                        AppointmentsCursor.getInt(AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.APPOINTMENT_ID)),
+                        AppointmentsCursor.getString(AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.APPOINTMENT_DATE)),
+                        AppointmentsCursor.getInt(AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.CUSTOMER_ID)),
+                        AppointmentsCursor.getInt(AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.APPOINTMENT_EXECUTED))
+                ));
+            }
         return AppointmentsList;
     }
     public ArrayList<Appointment> getAllAppointments(String receivedDate) {
@@ -462,7 +469,7 @@ public class BarbershopDBHandler {
 
 //        Purchase(int id, int appointmentID, int productID,int customerID,String date, double price)
 
-        purchaseCursor.moveToFirst();
+//        purchaseCursor.moveToFirst();
         String testFormat = formatter.format(startDate.getTime());
         while (purchaseCursor.moveToNext()){
             testFormat = formatter.format(startDate.getTime());
@@ -511,7 +518,7 @@ public class BarbershopDBHandler {
 
         return (result != -1);
     }
-    public ArrayList<Bitmap> getPictureUserByID(int id) {
+    public ArrayList<Bitmap> getAllPicturesByUserID(int id) {
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         ArrayList<Bitmap> myPhotos = new ArrayList<Bitmap>();
@@ -529,6 +536,23 @@ public class BarbershopDBHandler {
                                         picturesCursor.getColumnIndex(PicturesDBConstants.PICTURE_DATA))));
             }
         return myPhotos;
+
+    }
+    public Bitmap getUserPictureByID(int id) {
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        BitmapDBUtility picsHandler = new BitmapDBUtility();
+
+        Cursor picturesCursor = db.query(PicturesDBConstants.PICTURES_TABLE_NAME,null,null,null,null,null,null);
+
+        while (picturesCursor.moveToNext())
+            if(picturesCursor.getInt(picturesCursor.getColumnIndex(PicturesDBConstants.CUSTOMER_ID))==id){
+                        return BitmapDBUtility.getImage(
+                                picturesCursor.getBlob(
+                                        picturesCursor.getColumnIndex(PicturesDBConstants.PICTURE_DATA)));
+            }
+        return null;
 
     }
 

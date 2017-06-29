@@ -11,8 +11,7 @@ public class CustomersDBConstants {
 
     public static final String CUSTOMER_NAME = "CUSTOMER_NAME";
     public static final String CUSTOMER_PHONE = "CUSTOMER_PHONE";
-//    public static final String CUSTOMER_PICTURE = "CUSTOMER_PICTURE";
-    public static final String CUSTOMER_SECOND_PHONE = "CUSTOMER_SECOND_PHONE";
+    public static final String CUSTOMER_BIRTHDAY = "CUSTOMER_BIRTHDAY";
     public static final String CUSTOMER_EMAIL = "CUSTOMER_EMAIL";
     public static final String CUSTOMER_BILL = "CUSTOMER_BILL";
     public static final String CUSTOMER_GENDER = "CUSTOMER_GENDER";

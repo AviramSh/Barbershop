@@ -175,6 +175,15 @@
     <string name="title_barbershop_activity">העסק שלי</string>
     <string name="title_main_activity">ראשי</string>
     <string name="calc">חשב</string>
+    <string name="customerDoesntExist">לקוח לא קיים</string>
+    <string name="dateOfBirth">תאריך לידה</string>
+    <string name="customerEditActivity">עריכה</string>
+    <string name="customerExist">לקוח קיים</string>
+    <string name="deleteCustomer">מחק</string>
+    <string name="birthdaySms">הודעת ימי הולדת</string>
+    <string name="longTimeNoSee">שלח הודעה ללקוחות שלא הגיעו מעל חצי שנה</string>
+    <string name="generalMessageToAllCustomers">הודעה כללית לכל הלקוחות</string>
+    <string name="messageToAll">הודעה לכלל הלקוחות</string>
 
 
     <string-array name="spinner_hours">

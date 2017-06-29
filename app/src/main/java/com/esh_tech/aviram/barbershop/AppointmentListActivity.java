@@ -67,8 +67,7 @@ public class AppointmentListActivity extends AppCompatActivity implements View.O
     }
 
     private void init() {
-        this.setTitle(R.string.appointments);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        Database
         dbHandler = new BarbershopDBHandler(this);
 
@@ -98,35 +97,9 @@ public class AppointmentListActivity extends AppCompatActivity implements View.O
         lvAppointment.setAdapter(appointmentAdapter);
     }
 
-    private void populateAppointment() {
-
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy \n EEEE", Locale.getDefault());
-        String dateForDisplay = sdf.format(newCalendar.getTime());
-        theDate.setText(dateForDisplay);
-
-        sdf = new SimpleDateFormat("dd/MM/yyyy",Locale.getDefault());
-        dateForDisplay = sdf.format(newCalendar.getTime());
-
-        allAppointments = dbHandler.getAllAppointments(dateForDisplay);
-
-    }
-
-    public void restDate(int day) {
-        newCalendar.add(Calendar.DAY_OF_MONTH, day);
-        populateAppointment();
-        appointmentAdapter.notifyDataSetChanged();
-        appointmentAdapter = new MyAppointmentsAdapter(this, R.layout.custom_appointment_row, allAppointments);
-        lvAppointment.setAdapter(appointmentAdapter);
-    }
-
-    public void closeAppointmentList(View view) {
-        Intent myIntent = new Intent(this,MainActivity.class);
-        startActivity(myIntent);
-        this.finish();
-    }
-
     @Override
     public void onClick(View v) {
+        Intent myIntent;
         switch (v.getId()){
             case R.id.btNextDay:
                 restDate(1);
@@ -149,10 +122,44 @@ public class AppointmentListActivity extends AppCompatActivity implements View.O
             case R.id.rbDidntGetHaircut:
                 restDate(0);
                 break;
+            case R.id.btBack:
+                myIntent = new Intent(this,MainActivity.class);
+                startActivity(myIntent);
+                this.finish();
+                break;
             default:
+                myIntent = new Intent(this,MainActivity.class);
+                startActivity(myIntent);
+                this.finish();
                 Toast.makeText(this, "Not Initialized yet", Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+
+    private void populateAppointment() {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy \n EEEE", Locale.getDefault());
+        String dateForDisplay = sdf.format(newCalendar.getTime());
+        if(dateForDisplay.contains(new DateHandler().getOnlyDateSDF(Calendar.getInstance()))) {
+            theDate.setText(new DateHandler().getOnlyDateSDF(Calendar.getInstance())+" \n"+
+            getResources().getString(R.string.today));
+        }else{
+            theDate.setText(dateForDisplay);
+        }
+
+        sdf = new SimpleDateFormat("dd/MM/yyyy",Locale.getDefault());
+        dateForDisplay = sdf.format(newCalendar.getTime());
+
+        allAppointments = dbHandler.getAllAppointments(dateForDisplay);
+
+    }
+
+    public void restDate(int day) {
+        newCalendar.add(Calendar.DAY_OF_MONTH, day);
+        populateAppointment();
+        appointmentAdapter.notifyDataSetChanged();
+        appointmentAdapter = new MyAppointmentsAdapter(this, R.layout.custom_appointment_row, allAppointments);
+        lvAppointment.setAdapter(appointmentAdapter);
     }
 
     class MyAppointmentsAdapter extends ArrayAdapter<Appointment> {

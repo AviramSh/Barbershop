@@ -72,7 +72,6 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
     TextView cPhone;
     Appointment newAppointment;
-    String testPhone;
 
 
     int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
@@ -99,13 +98,11 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         appointmentCalendar = Calendar.getInstance();
         customerProfile = new Customer();
         newAppointment =new Appointment();
-//        newAppointment.getDateObjectByString(appointmentCalendar);
 
         settings = PreferenceManager.getDefaultSharedPreferences(NewAppointmentActivity.this);
 
 
         setToday();
-        testPhone="";
 
 
 
@@ -121,7 +118,24 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         }
 
     }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ibSave:
+                saveAppointment();
+                break;
+            case R.id.ibAddCustomer:
+                importCustomer();
+                break;
+            case R.id.ibCancel:
+                goMain();
+                break;
 
+            default:
+                Toast.makeText(this, "Not Initialized", Toast.LENGTH_LONG).show();
+                break;
+        }
+    }
 
     private void setToday() {
 
@@ -190,6 +204,9 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         }
     };
 
+
+
+
     private TimePickerDialog.OnTimeSetListener tpickerListener
             = new TimePickerDialog.OnTimeSetListener() {
         @Override
@@ -202,28 +219,6 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         }
     };
 
-
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.ibSave:
-                saveAppointment();
-                break;
-            case R.id.ibAddCustomer:
-                importCustomer();
-                break;
-            case R.id.ibCancel:
-                goMain();
-            break;
-
-            default:
-                Toast.makeText(this, "Not Initialized", Toast.LENGTH_LONG).show();
-                break;
-        }
-    }
-
     private void goMain() {
         Intent myIntent = new Intent(this,MainActivity.class);
         startActivity(myIntent);
@@ -232,9 +227,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
     public void saveAppointment() {
 
-//        appointmentCalendar.set(year_x,month_x,day_x,hour_x,minute_x);
-        testPhone+=cPhone.getText().toString();
-        customerProfile.setPhone(testPhone);
+        customerProfile.setPhone(cPhone.getText().toString());
 
         if(customerProfile.getPhone().equals("")){
             Toast.makeText(this, R.string.emptyField, Toast.LENGTH_SHORT).show();
@@ -345,9 +338,15 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
     public void importCustomer() {
 //        TODO  need to add import from app and user phone book ,customer need to choose with alert dialog.
-        if(cPhone.getText().toString()!="" || cPhone.getText().toString().length()>10) {
+        if(!cPhone.getText().toString().equals("") || cPhone.getText().toString().length()>8) {
             customerProfile = dbHandler.getCustomerByPhone(cPhone.getText().toString());
-            cPhone.setText(customerProfile.getName());
+            if(customerProfile != null) {
+                cPhone.setText(customerProfile.getName());
+            }
+            else{
+                Toast.makeText(this, R.string.customerDoesntExist, Toast.LENGTH_SHORT).show();
+            }
+
         }else{
             Uri uri = Uri.parse("content://contacts");
             Intent intent = new Intent(Intent.ACTION_PICK, uri);
@@ -385,41 +384,5 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         }
     }
 
-/*
-
-    class MyCustomersAdapter extends ArrayAdapter<Customer>{
-
-        public MyCustomersAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Customer> objects) {
-            super(context, resource, objects);
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
-            Customer customer = getItem(position);
-
-            if (convertView == null){
-                Log.e("Test get view","inside if with position"+position);
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_contact_row,parent,false);
-            }
-
-            TextView tvName = (TextView) convertView.findViewById(R.id.customerNameET);
-            TextView tvLastname = (TextView) convertView.findViewById(R.id.customerNameET);
-            TextView tvPhone = (TextView)convertView.findViewById(R.id.customerNameET);
-            ImageView customerIcon = (ImageView)convertView.findViewById(R.id.customerIconIv);
-
-
-            //Data
-            tvName.setText(customer.getName());
-            tvPhone.setText(customer.getPhone());
-
-            if(customer.isGender())customerIcon.setImageResource(R.drawable.usermale48);
-            else customerIcon.setImageResource(R.drawable.userfemale48);
-
-            return convertView;
-        }
-    }
-*/
 
 }

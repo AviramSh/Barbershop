@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //        Database
         dbHandler = new BarbershopDBHandler(this);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 //        Connect list view
         lsNextAppointment = (ListView) findViewById(R.id.lvNextAppointment);
 
@@ -112,6 +114,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         );
 
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent myIntent =null;
+
+        switch (v.getId()){
+            case R.id.btCustomersList:
+                myIntent = new Intent(this ,CustomersListActivity.class);
+                startActivity(myIntent);
+                break;
+            case R.id.btBalance:
+                myIntent = new Intent(this ,BalanceActivity.class);
+                startActivity(myIntent);
+                break;
+            case R.id.btStock:
+                myIntent = new Intent(this ,StockActivity.class);
+                startActivity(myIntent);
+                break;
+
+            case R.id.btAppointmentsList:
+                myIntent = new Intent(this ,AppointmentListActivity.class);
+                startActivity(myIntent);
+                break;
+            case R.id.btSettings:
+                myIntent = new Intent(this ,SettingsActivity.class);
+                startActivity(myIntent);
+                break;
+            case R.id.btNewAppointment:
+                myIntent = new Intent(this ,NewAppointmentActivity.class);
+                startActivity(myIntent);
+                break;
+            case R.id.btCustomersService:
+                myIntent = new Intent(this ,CustomersServiceActivity.class);
+                startActivity(myIntent);
+                break;
+
+            default:
+                Toast.makeText(this, "Not Initialized yet", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     public void logout() {
@@ -214,46 +257,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        allAppointments.add(new Appointment(13,8,4,5,1987,"avi",3));
     }
 
+
     private void settime() {
 
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        Intent myIntent =null;
-
-        switch (v.getId()){
-            case R.id.btCustomersList:
-                myIntent = new Intent(this ,CustomersListActivity.class);
-                startActivity(myIntent);
-                break;
-            case R.id.btBalance:
-                myIntent = new Intent(this ,BalanceActivity.class);
-                startActivity(myIntent);
-                break;
-            case R.id.btStock:
-                myIntent = new Intent(this ,StockActivity.class);
-                startActivity(myIntent);
-                break;
-
-            case R.id.btAppointmentsList:
-                myIntent = new Intent(this ,AppointmentListActivity.class);
-                startActivity(myIntent);
-                break;
-            case R.id.btSettings:
-                myIntent = new Intent(this ,SettingsActivity.class);
-                startActivity(myIntent);
-                break;
-            case R.id.btNewAppointment:
-                myIntent = new Intent(this ,NewAppointmentActivity.class);
-                startActivity(myIntent);
-                break;
-
-            default:
-                Toast.makeText(this, "Not Initialized yet", Toast.LENGTH_SHORT).show();
-                break;
-        }
     }
 
     class MyAppointmentsAdapter extends ArrayAdapter<Appointment> {

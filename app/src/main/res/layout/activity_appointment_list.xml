@@ -103,13 +103,13 @@
         android:layout_marginEnd="8dp" />
 
     <ImageButton
-        android:id="@+id/imageButton27"
+        android:id="@+id/btBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/background"
         app:srcCompat="@drawable/restart48"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:onClick="closeAppointmentList"
+        android:onClick="onClick"
         android:layout_marginBottom="33dp"
         tools:layout_editor_absoluteX="32dp" />
 

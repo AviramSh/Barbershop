@@ -12,8 +12,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +24,7 @@ import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
 import java.util.ArrayList;
 
-public class CustomerActivity extends AppCompatActivity implements View.OnClickListener{
+public class CustomerActivity extends AppCompatActivity implements View.OnLongClickListener ,View.OnClickListener{
 
     private static final int GALLERY_REQUEST_CODE = 3;
     private static final int CAMERA_REQUEST_CODE = 4;
@@ -32,7 +32,7 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
     BarbershopDBHandler dbHandler;
 
     Customer customerProfile;
-    ImageButton customerPic;
+    ImageView customerPic;
     Bitmap selectedProfilePicture;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -60,11 +60,8 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
 
         int id = getIntent().getIntExtra("customerId",-1);
         customerProfile = dbHandler.getCustomerByID(id);
-
         etTel =(TextView)findViewById(R.id.tvCustomerPhone);
-
-        ivCustomerProfile = (ImageView)findViewById(R.id.customerMainPic);
-
+        setOnClickPictures();
 
 //        Disable the camera if the user has no camera.
         if(!hasCamera()){
@@ -81,38 +78,57 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
             tvCustomerPhone.setText(customerProfile.getPhone());
             tvCustomerEmail.setText(customerProfile.getEmail());
 
-            if(dbHandler.getPictureUserByID(customerProfile.get_id())!=null) {
+            if(!dbHandler.getAllPicturesByUserID(customerProfile.get_id()).isEmpty()) {
                 setCustomerPics();
             }
         }
+
+    }
+
+    private void setOnClickPictures() {
+        ivCustomerProfile = (ImageView)findViewById(R.id.customerPic_1);
+        ivCustomerProfile.setOnClickListener(this);
+        ivCustomerProfile.setOnLongClickListener(this);
+        ivCustomerProfile = (ImageView)findViewById(R.id.customerPic_2);
+        ivCustomerProfile.setOnClickListener(this);
+        ivCustomerProfile.setOnLongClickListener(this);
+        ivCustomerProfile = (ImageView)findViewById(R.id.customerPic_3);
+        ivCustomerProfile.setOnClickListener(this);
+        ivCustomerProfile.setOnLongClickListener(this);
+        ivCustomerProfile = (ImageView)findViewById(R.id.customerPic_4);
+        ivCustomerProfile.setOnClickListener(this);
+        ivCustomerProfile.setOnLongClickListener(this);
+        ivCustomerProfile = (ImageView)findViewById(R.id.customerMainPic);
+        ivCustomerProfile.setOnClickListener(this);
+        ivCustomerProfile.setOnLongClickListener(this);
     }
 
     private void setCustomerPics() {
 
-        ArrayList<Bitmap> allCustomerPics =dbHandler.getPictureUserByID(customerProfile.get_id());
+        ArrayList<Bitmap> allCustomerPics =dbHandler.getAllPicturesByUserID(customerProfile.get_id());
 
         if (!allCustomerPics.isEmpty()) {
 
             for (int i=0 ;i<allCustomerPics.size()&&i<5;i++){
                 switch (i){
                     case 0:
-                        customerPic = (ImageButton) findViewById(R.id.customerMainPic);
+                        customerPic = (ImageView) findViewById(R.id.customerMainPic);
                         customerPic.setImageBitmap(allCustomerPics.get(0));
                         break;
                     case 1:
-                        customerPic = (ImageButton) findViewById(R.id.customerPic_1);
+                        customerPic = (ImageView) findViewById(R.id.customerPic_1);
                         customerPic.setImageBitmap(allCustomerPics.get(1));
                         break;
                     case 2:
-                        customerPic = (ImageButton) findViewById(R.id.customerPic_2);
+                        customerPic = (ImageView) findViewById(R.id.customerPic_2);
                         customerPic.setImageBitmap(allCustomerPics.get(2));
                         break;
                     case 3:
-                        customerPic = (ImageButton) findViewById(R.id.customerPic_3);
+                        customerPic = (ImageView) findViewById(R.id.customerPic_3);
                         customerPic.setImageBitmap(allCustomerPics.get(3));
                         break;
                     case 4:
-                        customerPic = (ImageButton) findViewById(R.id.customerPic_4);
+                        customerPic = (ImageView) findViewById(R.id.customerPic_4);
                         customerPic.setImageBitmap(allCustomerPics.get(4));
                         break;
 
@@ -149,6 +165,7 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
                 });
         alertDialog.show();
     }
+
 
     @Override
     public void onClick(View v) {
@@ -202,14 +219,81 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
                 this.finish();
                 break;
             default:
-                customerPic = (ImageButton)findViewById(R.id.customerMainPic);
+                customerPic = (ImageView) findViewById(R.id.customerMainPic);
                 Toast.makeText(this, "Not Initialized", Toast.LENGTH_LONG).show();
                 break;
         }
     }
+    @Override
+    public boolean onLongClick(View v) {
+        Toast.makeText(this, "LongClick", Toast.LENGTH_SHORT).show();
+        switch (v.getId()) {
+
+            case R.id.customerMainPic:
+//                customerPic = (ImageButton)findViewById(R.id.customerMainPic);
+                showUserPhoto(R.id.customerMainPic,0);
+                break;
+            case R.id.customerPic_1:
+//                customerPic = (ImageButton)findViewById(R.id.customerPic_1);
+                showUserPhoto(R.id.customerPic_1,1);
+                break;
+            case R.id.customerPic_2:
+//                customerPic = (ImageButton)findViewById(R.id.customerPic_2);
+                showUserPhoto(R.id.customerPic_2,2);
+                break;
+            case R.id.customerPic_3:
+//                customerPic = (ImageButton)findViewById(R.id.customerPic_3);
+                showUserPhoto(R.id.customerPic_3,3);
+                break;
+            case R.id.customerPic_4:
+//                customerPic = (ImageButton)findViewById(R.id.customerPic_4);
+                showUserPhoto(R.id.customerPic_4,4);
+//                Toast.makeText(this, "Pic 4", Toast.LENGTH_SHORT).show();
+                break;
+
+            default:
+                customerPic = (ImageView) findViewById(R.id.customerMainPic);
+                Toast.makeText(this, "Not Initialized", Toast.LENGTH_LONG).show();
+                break;
+        }
+        return true;
+    }
+
+    private void showUserPhoto(int customerPicId ,int position) {
+
+        customerPic = (ImageView) findViewById(customerPicId);
+//
+//        Dialog settingsDialog = new Dialog(this);
+//        settingsDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+//
+//
+//        settingsDialog.setContentView(getLayoutInflater().inflate(R.layout.custom_image_layout,null));
+//        settingsDialog.show();
+
+        AlertDialog.Builder alertadd = new AlertDialog.Builder(this);
+        LayoutInflater factory = LayoutInflater.from(this);
+        final View view =factory.inflate(R.layout.custom_image_layout,null);
+
+        ArrayList<Bitmap> allCustomerPics =dbHandler.getAllPicturesByUserID(customerProfile.get_id());
+        if (!allCustomerPics.isEmpty()) {
+            customerPic = (ImageView) view.findViewById(R.id.dialogImageView);
+            customerPic.setImageBitmap(allCustomerPics.get(position));
+        }
+
+        alertadd.setView(view);
+        alertadd.setNeutralButton(R.string.close, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        alertadd.show();
+
+    }
 
     private void userPhotoSet(int customerPicId) {
-        customerPic = (ImageButton)findViewById(customerPicId);
+        customerPic = (ImageView) findViewById(customerPicId);
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED){
@@ -259,9 +343,8 @@ public class CustomerActivity extends AppCompatActivity implements View.OnClickL
         findViewById(R.id.customerPic_4).setEnabled(false);
     }
 
+
     private boolean hasCamera() {
         return getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
     }
-
-
 }

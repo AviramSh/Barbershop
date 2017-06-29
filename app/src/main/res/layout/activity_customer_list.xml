@@ -31,17 +31,6 @@
         app:layout_constraintHorizontal_bias="1.0">
 
         <ImageButton
-            android:id="@+id/addCustomerBt"
-            android:layout_width="50dp"
-            android:layout_height="46dp"
-            android:layout_weight="1"
-            android:onClick="openNewCustomer"
-            android:background="@color/background"
-            app:srcCompat="@drawable/plus48"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="16dp" />
-
-        <ImageButton
             android:id="@+id/imageButton19"
             android:layout_width="55dp"
             android:layout_height="46dp"
@@ -63,6 +52,17 @@
             android:inputType="textPersonName"
             android:textSize="24sp"
             tools:layout_editor_absoluteX="153dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <ImageButton
+            android:id="@+id/addCustomerBt"
+            android:layout_width="50dp"
+            android:layout_height="46dp"
+            android:layout_weight="1"
+            android:background="@color/background"
+            android:onClick="onClickSelectContact"
+            app:srcCompat="@drawable/plus48"
+            tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="16dp" />
 
     </LinearLayout>

@@ -9,29 +9,24 @@
     tools:context="com.esh_tech.aviram.barbershop.CustomerActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="8dp"
+        android:gravity="center"
+        android:padding="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/btClose"
+        android:layout_marginEnd="8dp">
 
         <LinearLayout
+            android:id="@+id/linearLayout12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="84dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintLeft_toRightOf="@+id/linearLayout6"
-            app:layout_constraintRight_toRightOf="parent">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView40"
@@ -55,12 +50,8 @@
             android:id="@+id/linearLayout6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="84dp"
-            android:layout_marginLeft="28dp"
-            android:layout_marginStart="28dp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent">
+            app:layout_constraintBottom_toTopOf="@+id/btClose">
 
             <TextView
                 android:id="@+id/tvCustomerPhone"
@@ -94,9 +85,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="8dp" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/customerMainPic"
-        android:onClick="onClick"
+
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginBottom="8dp"
@@ -156,12 +147,12 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.031"
+        app:layout_constraintVertical_bias="0.056"
         android:id="@+id/linearLayout3"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/customerPic_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -169,7 +160,7 @@
             android:layout_weight="1"
             app:srcCompat="@drawable/usermale48" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/customerPic_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -177,7 +168,7 @@
             android:layout_weight="1"
             app:srcCompat="@drawable/usermale48" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/customerPic_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -185,7 +176,7 @@
             android:layout_weight="1"
             app:srcCompat="@drawable/usermale48" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/customerPic_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
