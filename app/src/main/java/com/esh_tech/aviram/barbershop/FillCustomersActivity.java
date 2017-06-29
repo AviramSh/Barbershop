@@ -89,7 +89,7 @@ public class FillCustomersActivity extends AppCompatActivity {
         if(!register) {
             editor = settings.edit();
             editor.putBoolean(USER_IS_REGISTER,true);
-            editor.commit();
+            editor.apply();
         }
 
         Intent mainIntent = new Intent(this,MainActivity.class);

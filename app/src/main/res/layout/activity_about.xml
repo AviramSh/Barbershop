@@ -46,6 +46,8 @@
         android:id="@+id/btClose"
         android:layout_width="133dp"
         android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:onClick="onClick"
         android:text="@string/close"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"

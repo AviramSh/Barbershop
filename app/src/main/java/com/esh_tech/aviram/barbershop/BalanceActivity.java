@@ -83,13 +83,29 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
         btUntilDate.setText(getDateToDisplay(endCalendar));
     }
 
-    private String getDateToDisplay(Calendar startCalendar) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");
-        String newFormat = formatter.format(startCalendar.getTime());
-        return newFormat;
+    @Override
+    public void onClick(View v) {
+
+
+        switch (v.getId()){
+            case R.id.ibCalc:
+                calculateBill();
+                break;
+
+            default:
+
+                break;
+        }
+
     }
 
 
+
+    private String getDateToDisplay(Calendar startCalendar) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy", Locale.getDefault());
+        return  formatter.format(startCalendar.getTime());
+
+    }
 
     public void closeBalance(View view) {
         this.finish();
@@ -105,6 +121,8 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
+
+
     @Override
     protected Dialog onCreateDialog(int id){
 
@@ -114,8 +132,6 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
             return new DatePickerDialog(this, dpickerListener2,year_x,month_x,day_x);
         return null;
     }
-
-
 
     private DatePickerDialog.OnDateSetListener dpickerListener
             = new DatePickerDialog.OnDateSetListener() {
@@ -139,31 +155,15 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
             month_x = month;
             day_x = dayOfMonth;
 
-            if(startCalendar.getTimeInMillis() > endCalendar.getTimeInMillis()) {
+//            if(startCalendar.getTimeInMillis() > endCalendar.getTimeInMillis()) {
                 endCalendar.set(year_x, month_x, day_x);
-            }else{
-                endCalendar.setTime(startCalendar.getTime());
-            }
+//            }else{
+//                endCalendar.setTime(startCalendar.getTime());
+//            }
 
             btUntilDate.setText(getDateToDisplay(endCalendar));
         }
     };
-
-    @Override
-    public void onClick(View v) {
-
-
-        switch (v.getId()){
-            case R.id.ibCalc:
-                calculateBill();
-                break;
-
-            default:
-
-                break;
-        }
-
-    }
 
 
     private void calculateBill() {
@@ -177,27 +177,30 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
         String startFormat = formatter.format(startCalendar.getTime());
         String endFormat = formatter.format(endCalendar.getTime());
 
-        Calendar tempStart = startCalendar;
+        Calendar tempStart = Calendar.getInstance();
 
 
         if (startCalendar.getTimeInMillis() > endCalendar.getTimeInMillis()) {
-            tempStart=startCalendar;
-            startCalendar = endCalendar;
-            endCalendar = tempStart;
+            tempStart.setTime(startCalendar.getTime());
+            startCalendar.setTime(endCalendar.getTime());
+            endCalendar.setTime(tempStart.getTime());
         }
-        tempStart = startCalendar;
-        while (startCalendar.getTimeInMillis() <= endCalendar.getTimeInMillis()) {
+        tempStart.setTime(startCalendar.getTime());
+        Toast.makeText(this, getDateToDisplay(startCalendar)+ " - "+getDateToDisplay(endCalendar)
+                , Toast.LENGTH_SHORT).show();
 
-            allPurchases = dbHandler.getPurchaseByDate(startCalendar);
+        tempStart.setTime(startCalendar.getTime());
+        while (tempStart.getTimeInMillis() <= endCalendar.getTimeInMillis()) {
+
+            allPurchases = dbHandler.getPurchaseByDate(tempStart);
             for (Purchase indexPurchase :
                     allPurchases) {
                 bill +=indexPurchase.getPrice();
                 haircutCounter++;
             }
 
-            startCalendar.add(Calendar.DATE,1);
+            tempStart.add(Calendar.DATE,1);
         }
-        startCalendar= tempStart;
 
         etBill.setText(String.valueOf(bill));
         etCounter.setText(String.valueOf(haircutCounter));

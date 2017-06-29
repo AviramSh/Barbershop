@@ -58,8 +58,8 @@ public class CustomersServiceActivity extends AppCompatActivity implements View.
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
 
+        switch (v.getId()){
             case R.id.btSend:
                 sandMessageToAllCustomers();
                 break;
