@@ -184,6 +184,8 @@
     <string name="longTimeNoSee">שלח הודעה ללקוחות שלא הגיעו מעל חצי שנה</string>
     <string name="generalMessageToAllCustomers">הודעה כללית לכל הלקוחות</string>
     <string name="messageToAll">הודעה לכלל הלקוחות</string>
+    <string name="wrongData">מידע שגוי</string>
+    <string name="invalidMessage">הודעה לא תקינה</string>
 
 
     <string-array name="spinner_hours">

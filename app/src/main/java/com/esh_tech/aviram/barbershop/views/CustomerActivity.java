@@ -181,7 +181,6 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
                 myIntent = new Intent(this ,SendMessageActivity.class);
                 myIntent.putExtra(SharedPreferencesConstants.CUSTOMER_ID_SMS,customerProfile.get_id());
                 startActivity(myIntent);
-
                 break;
             case R.id.btCallCustomer:
                 myIntent = new Intent(Intent.ACTION_DIAL);

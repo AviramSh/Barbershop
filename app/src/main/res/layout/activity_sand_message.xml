@@ -78,6 +78,7 @@
             android:id="@+id/etMessage"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:gravity="start"
             android:layout_margin="10dp"
             android:layout_marginTop="10dp"
             android:background="@color/empty"
@@ -86,17 +87,16 @@
             android:inputType="textMultiLine" />
 
         <Button
-            android:id="@+id/btSendMassage"
+            android:id="@+id/sendMassage"
             android:layout_marginTop="10dp"
             android:layout_margin="10dp"
-            android:onClick="onClick"
             android:background="@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/send" />
 
         <Button
-            android:id="@+id/btCancel"
+            android:id="@+id/cancel"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

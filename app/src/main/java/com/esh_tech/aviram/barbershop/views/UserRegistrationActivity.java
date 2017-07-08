@@ -35,6 +35,11 @@ public class UserRegistrationActivity extends AppCompatActivity {
     }
 
     private void init() {
+
+        //        SharedPreference
+        settings = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = settings.edit();
+
         name = (EditText)findViewById(R.id.etUserName);
         lastName = (EditText)findViewById(R.id.etUserLastName);
         phone = (EditText)findViewById(R.id.etUserTelephone);
@@ -42,6 +47,16 @@ public class UserRegistrationActivity extends AppCompatActivity {
         businessName = (EditText)findViewById(R.id.etBusinessName);
         businessPhone = (EditText)findViewById(R.id.etBusinessPhone);
         businessAddress = (EditText)findViewById(R.id.etBusinessAddress);
+
+
+        name.setText(settings.getString(USER_NAME,""));
+        lastName.setText(settings.getString(USER_LAST_NAME,""));
+        phone.setText(settings.getString(USER_PHONE,""));
+
+        businessName.setText(settings.getString(USER_BUSINESS_NAME,""));
+        businessPhone.setText(settings.getString(USER_BUSINESS_PHONE,""));
+        businessAddress.setText(settings.getString(USER_BUSINESS_ADDRESS,""));
+
     }
 
     public void closeScreen(View view) {
@@ -58,36 +73,24 @@ public class UserRegistrationActivity extends AppCompatActivity {
             startActivity(passwordIntent);
             this.finish();
         }else{
-            Intent passwordIntent = new Intent(this, MainActivity.class);
-            startActivity(passwordIntent);
+            if(register)
+            this.finish();
         }
 
     }
 
-    //Save your on shared preferences.
+
     private boolean saveUserdata() {
-
-        //test all user data
-        if(!testData())
-            return false;
-
-        return true;
-    }
-
-    private boolean testData() {
         String testString;
         String errorMassage="Error : \n";
 
         boolean flag = true;
 
-        //        SharedPreference
-        settings = PreferenceManager.getDefaultSharedPreferences(this);
-        editor = settings.edit();
-
 
 //First Name testing
 
         testString = name.getText().toString();
+
         if(testString.equals("")){
             flag = false; errorMassage += "First name is null\n";
         }
@@ -107,7 +110,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
 //Phone testing
         testString = phone.getText().toString();
         if(testString.equals("")){flag = false; errorMassage += "Phone is null\n";}
-        else if(testString.length()<4){flag = false; errorMassage += "Phone is to short\n";}else {
+        else if(testString.length()<8){flag = false; errorMassage += "Phone is to short\n";}else {
             editor.putString(USER_PHONE,testString);
         }
 
@@ -121,7 +124,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
 //Business Phone testing
         testString = businessPhone.getText().toString();
         if(testString.equals("")){flag = false; errorMassage += "Business phone is null\n";}
-        else if(testString.length()<4){flag = false; errorMassage += "Business phone is to short\n";}else {
+        else if(testString.length()<8){flag = false; errorMassage += "Business phone is to short\n";}else {
             editor.putString(USER_BUSINESS_PHONE,testString);
         }
 
@@ -133,9 +136,10 @@ public class UserRegistrationActivity extends AppCompatActivity {
         }
 
         editor.apply();
-// Data Massages
-        if(flag) Toast.makeText(this, "Hi "+ name.getText().toString() +" "+lastName.getText().toString(), Toast.LENGTH_LONG).show();
-        else Toast.makeText(this, errorMassage, Toast.LENGTH_LONG).show();
+
+        if(!flag){
+            Toast.makeText(this, errorMassage+"", Toast.LENGTH_SHORT).show();
+        }
 
         return flag;
     }

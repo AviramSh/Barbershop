@@ -72,8 +72,6 @@ public class UserPasswordActivity extends AppCompatActivity implements View.OnCl
                     editor.apply();
                 }
                 if (register) {
-                    Intent myIntent = new Intent(this, MainActivity.class);
-                    startActivity(myIntent);
                     this.finish();
                 } else {
                     Intent myIntent = new Intent(this, WorkingHoursActivity.class);

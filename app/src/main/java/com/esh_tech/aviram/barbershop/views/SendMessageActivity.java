@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -27,6 +28,10 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
 
     BarbershopDBHandler dbHandler;
     Customer customerProfile;
+
+    Button btSendMessage;
+    Button btCancel;
+
 
     EditText etPhone;
     EditText etEmail;
@@ -61,6 +66,12 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
         emailTo = "";
         message = "";
 
+        btSendMessage = (Button) findViewById(R.id.sendMassage);
+        btCancel = (Button) findViewById(R.id.cancel);
+
+        btSendMessage.setOnClickListener(this);
+        btCancel.setOnClickListener(this);
+
         etMessage = (EditText) findViewById(R.id.etMessage);
         etPhone = (EditText) findViewById(R.id.etPhone);
         etEmail = (EditText) findViewById(R.id.etEmail);
@@ -86,8 +97,12 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
 
         message = etMessage.getText().toString();
 
-        if(cbEmail.isChecked())sandEmail();
-        if(cbPhone.isChecked())sandSms();
+        if(message.isEmpty() || message.equals("")) {
+            Toast.makeText(this, R.string.invalidMessage, Toast.LENGTH_SHORT).show();
+        }else{
+            if (cbEmail.isChecked()) sandEmail();
+            if (cbPhone.isChecked()) sandSms();
+        }
 
 //        /*Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms","050500000",null));
 //        myIntent.putExtra("SMS_content","Hello its working.");
@@ -194,12 +209,10 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btSendMassage:
+            case R.id.sendMassage:
                 sendTheMessage();
                 break;
-            case R.id.btCancel:
-                Intent myIntent = new Intent(this,CustomerActivity.class);
-                startActivity(myIntent);
+            case R.id.cancel:
                 this.finish();
                 break;
             default:

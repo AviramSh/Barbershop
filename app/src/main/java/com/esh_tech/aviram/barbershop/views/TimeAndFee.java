@@ -51,31 +51,55 @@ public class TimeAndFee extends AppCompatActivity implements View.OnClickListene
     }
 
     public void fillCustomers() {
+        boolean flag = true;
+        int haircutTime=0;
+        int haircutPrice=0;
 
+        try {
+            haircutPrice=Integer.parseInt(etManPrice.getText().toString());
+            haircutTime=Integer.parseInt(etManTime.getText().toString());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            flag = false;
+        }
 
-        if(Integer.parseInt(etManPrice.getText().toString()) > 0 &&
-                Integer.parseInt(etManTime.getText().toString()) > 0 &&
-                        Integer.parseInt(etWomanTime.getText().toString())>0 &&
-                                Integer.parseInt(etWomanPrice.getText().toString()) > 0){
+        if( haircutTime > 0 &&
+                 haircutPrice > 0){
 
             editor.putInt(USER_MALE_HAIRCUT_PRICE,Integer.parseInt(etManPrice.getText().toString()));
             editor.putString(USER_MALE_HAIRCUT_TIME,etManTime.getText().toString());
+
+            editor.apply();
+        }else flag = false;
+
+        try {
+            haircutTime = Integer.parseInt(etWomanTime.getText().toString());
+            haircutPrice = Integer.parseInt(etWomanPrice.getText().toString());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            flag = false;
+        }
+
+        if( haircutTime > 0 &&
+                haircutPrice > 0){
+
             editor.putInt(USER_FEMALE_HAIRCUT_PRICE, Integer.parseInt(etWomanPrice.getText().toString()));
             editor.putString(USER_FEMALE_HAIRCUT_TIME,etWomanTime.getText().toString());
 
+            editor.apply();
+        }else flag = false;
 
-            editor.commit();
+        if(flag) {
+            if (register) {
+                this.finish();
+            } else {
+                Intent fillCustomersActivity = new Intent(this, FillCustomersActivity.class);
+                startActivity(fillCustomersActivity);
+                this.finish();
+            }
+        }else {
+            Toast.makeText(this, R.string.wrongData, Toast.LENGTH_SHORT).show();
         }
-        if(register){
-            Intent myIntent = new Intent(this,MainActivity.class);
-            startActivity(myIntent);
-            this.finish();
-        }else{
-            Intent fillCustomersActivity = new Intent(this,FillCustomersActivity.class);
-            startActivity(fillCustomersActivity);
-            this.finish();
-        }
-
     }
 
     @Override
