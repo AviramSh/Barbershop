@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@color/background"
-    tools:context="com.esh_tech.aviram.barbershop.TimeAndFee">
+    tools:context="com.esh_tech.aviram.barbershop.views.TimeAndFee">
 
     <TextView
         android:id="@+id/textView26"

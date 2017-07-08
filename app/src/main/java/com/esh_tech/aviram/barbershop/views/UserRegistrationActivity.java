@@ -1,4 +1,4 @@
-package com.esh_tech.aviram.barbershop;
+package com.esh_tech.aviram.barbershop.views;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.*;
-
+import com.esh_tech.aviram.barbershop.R;
 
 public class UserRegistrationActivity extends AppCompatActivity {
 
@@ -132,7 +132,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
             editor.putString(USER_BUSINESS_ADDRESS,testString);
         }
 
-        editor.commit();
+        editor.apply();
 // Data Massages
         if(flag) Toast.makeText(this, "Hi "+ name.getText().toString() +" "+lastName.getText().toString(), Toast.LENGTH_LONG).show();
         else Toast.makeText(this, errorMassage, Toast.LENGTH_LONG).show();

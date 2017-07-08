@@ -1,4 +1,4 @@
-package com.esh_tech.aviram.barbershop;
+package com.esh_tech.aviram.barbershop.views;
 
 import android.content.Intent;
 import android.content.SharedPreferences;

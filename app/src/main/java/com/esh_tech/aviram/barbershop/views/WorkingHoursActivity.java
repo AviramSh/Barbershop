@@ -1,4 +1,4 @@
-package com.esh_tech.aviram.barbershop;
+package com.esh_tech.aviram.barbershop.views;
 //import com.esh_tech.aviram.barbershop.Codes.Barbershop;
 
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 
 import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_IS_REGISTER;
+import com.esh_tech.aviram.barbershop.R;
 
 public class WorkingHoursActivity extends AppCompatActivity {
 

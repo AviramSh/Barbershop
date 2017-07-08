@@ -1,4 +1,4 @@
-package com.esh_tech.aviram.barbershop;
+package com.esh_tech.aviram.barbershop.views;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
-
+import com.esh_tech.aviram.barbershop.R;
 import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_AUTO_LOGIN;
 import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_NAME;
 

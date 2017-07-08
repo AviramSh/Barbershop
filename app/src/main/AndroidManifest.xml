@@ -19,19 +19,24 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".MyGlobalUser"
+        android:name=".data.MyGlobalUser"
         android:allowBackup="true"
         android:icon="@drawable/scissors1"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
         <activity
-            android:name=".MainActivity"
+            android:name=".views.MainActivity"
             android:label="@string/title_main_activity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
+
+
         <activity
-            android:name=".SplashScreenActivity"
-            android:label="@string/title_splash_activity"
+            android:name=".views.SplashScreenActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,93 +44,100 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
         <activity
-            android:name=".RegisterActivity"
+            android:name=".views.RegisterActivity"
             android:label="@string/title_register_activity"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".LoginActivity"
+            android:name=".views.LoginActivity"
             android:label="@string/title_login_activity"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".CustomerActivity"
+            android:name=".views.CustomerActivity"
             android:label="@string/title_customer_activity"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".SettingsActivity"
+            android:name=".views.SettingsActivity"
             android:label="@string/title_settings_activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".StockActivity"
+            android:name=".views.StockActivity"
             android:label="@string/title_stock_activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UserRegistrationActivity"
+            android:name=".views.UserRegistrationActivity"
             android:label="@string/title_user_registration_activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".WorkingHoursActivity"
+            android:name=".views.WorkingHoursActivity"
             android:label="@string/title_working_hours_activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".FillCustomersActivity"
+            android:name=".views.FillCustomersActivity"
             android:label="@string/title_fill_customers_activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TimeAndFee"
+            android:name=".views.TimeAndFee"
             android:label="@string/time_and_fee_activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".smsSettings"
+            android:name=".views.smsSettings"
             android:label="@string/title_sms_settings_activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CustomersListActivity"
+            android:name=".views.CustomersListActivity"
             android:label="@string/title_customers_list_activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".BalanceActivity"
+            android:name=".views.BalanceActivity"
             android:label="@string/title_balance_activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AppointmentListActivity"
+            android:name=".views.AppointmentListActivity"
             android:label="@string/title_appointment_list_activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UserPasswordActivity"
+            android:name=".views.UserPasswordActivity"
             android:label="@string/title_user_password_activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".NewCustomerActivity"
+            android:name=".views.NewCustomerActivity"
             android:label="@string/title_new_customer_activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".NewAppointmentActivity"
+            android:name=".views.NewAppointmentActivity"
             android:label="@string/title_new_appointment_activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SendMessageActivity"
+            android:name=".views.SendMessageActivity"
             android:label="@string/title_send_sms_activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UserProfileActivity"
+            android:name=".views.UserProfileActivity"
             android:label="@string/title_user_profile_activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AboutActivity"
+            android:name=".views.AboutActivity"
             android:label="@string/title_about_activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".BarbershopActivity"
+            android:name=".views.BarbershopActivity"
             android:label="@string/title_barbershop_activity"
             android:screenOrientation="portrait" />
 
         <service
-            android:name=".AlarmService"
+            android:name=".data.AlarmService"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".CustomersServiceActivity"></activity>
+        <activity android:name=".views.CustomersServiceActivity">
+
+        </activity>
     </application>
 
 </manifest>

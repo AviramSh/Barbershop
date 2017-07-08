@@ -1,4 +1,4 @@
-package com.esh_tech.aviram.barbershop;
+package com.esh_tech.aviram.barbershop.views;
 
 import android.Manifest;
 import android.app.Activity;
@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
+import com.esh_tech.aviram.barbershop.data.*;
+import com.esh_tech.aviram.barbershop.R;
 
 public class SendMessageActivity extends AppCompatActivity implements View.OnClickListener{
 

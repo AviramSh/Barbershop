@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="10dp"
     android:background="@color/background"
-    tools:context="com.esh_tech.aviram.barbershop.CustomerActivity">
+    tools:context="com.esh_tech.aviram.barbershop.views.CustomerActivity">
 
     <LinearLayout
         android:layout_width="0dp"

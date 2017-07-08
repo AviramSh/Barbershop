@@ -1,4 +1,4 @@
-package com.esh_tech.aviram.barbershop;
+package com.esh_tech.aviram.barbershop.views;
 
 import android.Manifest;
 import android.app.AlarmManager;
@@ -34,7 +34,10 @@ import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants;
 import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
-
+import com.esh_tech.aviram.barbershop.data.AlarmService;
+import com.esh_tech.aviram.barbershop.data.Appointment;
+import com.esh_tech.aviram.barbershop.data.Customer;
+import com.esh_tech.aviram.barbershop.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;

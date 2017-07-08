@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="start"
     android:background="@color/background"
-    tools:context="com.esh_tech.aviram.barbershop.UserRegistrationActivity">
+    tools:context="com.esh_tech.aviram.barbershop.views.UserRegistrationActivity">
 
 
     <LinearLayout

@@ -1,6 +1,8 @@
-package com.esh_tech.aviram.barbershop;
+package com.esh_tech.aviram.barbershop.views;
+
 
 import android.support.v7.app.AppCompatActivity;
+import com.esh_tech.aviram.barbershop.R;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;

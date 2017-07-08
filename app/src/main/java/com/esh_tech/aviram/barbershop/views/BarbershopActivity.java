@@ -1,4 +1,4 @@
-package com.esh_tech.aviram.barbershop;
+package com.esh_tech.aviram.barbershop.views;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +10,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants;
+import com.esh_tech.aviram.barbershop.R;
+
+
 
 public class BarbershopActivity extends AppCompatActivity implements View.OnClickListener{
 

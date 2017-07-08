@@ -1,4 +1,4 @@
-package com.esh_tech.aviram.barbershop;
+package com.esh_tech.aviram.barbershop.views;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,6 +25,9 @@ import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
+import com.esh_tech.aviram.barbershop.data.*;
+import com.esh_tech.aviram.barbershop.R;
+import com.esh_tech.aviram.barbershop.views.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

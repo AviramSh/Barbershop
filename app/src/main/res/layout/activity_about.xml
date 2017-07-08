@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/productListColor"
-    tools:context="com.esh_tech.aviram.barbershop.AboutActivity">
+    tools:context="com.esh_tech.aviram.barbershop.views.AboutActivity">
 
 
     <TextView

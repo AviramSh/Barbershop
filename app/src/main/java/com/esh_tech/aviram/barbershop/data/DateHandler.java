@@ -1,4 +1,4 @@
-package com.esh_tech.aviram.barbershop;
+package com.esh_tech.aviram.barbershop.data;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

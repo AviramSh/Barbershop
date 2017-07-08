@@ -1,4 +1,4 @@
-package com.esh_tech.aviram.barbershop;
+package com.esh_tech.aviram.barbershop.data;
 /**
  * Created by AVIRAM on 01/06/2017.
  */

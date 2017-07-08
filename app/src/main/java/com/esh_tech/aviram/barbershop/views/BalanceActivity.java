@@ -1,4 +1,4 @@
-package com.esh_tech.aviram.barbershop;
+package com.esh_tech.aviram.barbershop.views;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -13,10 +13,12 @@ import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
+import com.esh_tech.aviram.barbershop.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+import com.esh_tech.aviram.barbershop.data.*;
 
 public class BalanceActivity extends AppCompatActivity implements View.OnClickListener{
 

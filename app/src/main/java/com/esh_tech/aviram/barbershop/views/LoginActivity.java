@@ -1,4 +1,4 @@
-package com.esh_tech.aviram.barbershop;
+package com.esh_tech.aviram.barbershop.views;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +10,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
 import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.*;
+import com.esh_tech.aviram.barbershop.R;
+
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 

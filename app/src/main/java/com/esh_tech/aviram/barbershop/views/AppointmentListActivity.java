@@ -1,4 +1,4 @@
-package com.esh_tech.aviram.barbershop;
+package com.esh_tech.aviram.barbershop.views;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -20,10 +20,14 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ListView;
-import android.widget.RadioButton;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.esh_tech.aviram.barbershop.data.DateHandler;
+import com.esh_tech.aviram.barbershop.data.*;
+import com.esh_tech.aviram.barbershop.R;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
 import java.text.SimpleDateFormat;

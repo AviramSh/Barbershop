@@ -1,4 +1,4 @@
-package com.esh_tech.aviram.barbershop;
+package com.esh_tech.aviram.barbershop.views;
 
 import android.Manifest;
 import android.app.Activity;
@@ -18,7 +18,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
-
+import com.esh_tech.aviram.barbershop.R;
+import com.esh_tech.aviram.barbershop.data.*;
 import java.util.ArrayList;
 
 public class CustomersServiceActivity extends AppCompatActivity implements View.OnClickListener{

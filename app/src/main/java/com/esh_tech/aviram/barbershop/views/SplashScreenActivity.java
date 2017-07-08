@@ -1,4 +1,4 @@
-package com.esh_tech.aviram.barbershop;
+package com.esh_tech.aviram.barbershop.views;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -6,6 +6,8 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ProgressBar;
+
+import com.esh_tech.aviram.barbershop.R;
 
 import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.*;
 
@@ -18,10 +20,12 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        this.setTitle(R.string.title_splash_activity);
         lodData();
     }
 
     private void lodData() {
+
         loding = (ProgressBar) findViewById(R.id.progressBar);
         loding.computeScroll();
         Thread myThread = new Thread() {

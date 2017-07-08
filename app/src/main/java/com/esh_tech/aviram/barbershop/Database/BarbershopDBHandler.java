@@ -7,16 +7,14 @@ import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.util.Log;
 
-import com.esh_tech.aviram.barbershop.Appointment;
+import com.esh_tech.aviram.barbershop.data.*;
 import com.esh_tech.aviram.barbershop.Constants.AppointmentsDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.MainDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.PicturesDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.ProductsDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.PurchaseDBConstants;
-import com.esh_tech.aviram.barbershop.Customer;
-import com.esh_tech.aviram.barbershop.Product;
-import com.esh_tech.aviram.barbershop.Purchase;
+
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

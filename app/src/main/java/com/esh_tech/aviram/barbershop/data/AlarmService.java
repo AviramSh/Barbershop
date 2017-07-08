@@ -1,4 +1,4 @@
-package com.esh_tech.aviram.barbershop;
+package com.esh_tech.aviram.barbershop.data;
 
 import android.app.Service;
 import android.content.Intent;
