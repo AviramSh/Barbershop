@@ -186,6 +186,8 @@
     <string name="messageToAll">הודעה לכלל הלקוחות</string>
     <string name="wrongData">מידע שגוי</string>
     <string name="invalidMessage">הודעה לא תקינה</string>
+    <string name="emailSubject">תור לספר</string>
+    <string name="messageSent">ההודעה נשלחה</string>
 
 
     <string-array name="spinner_hours">

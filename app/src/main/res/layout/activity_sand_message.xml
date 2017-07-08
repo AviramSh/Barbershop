@@ -27,6 +27,7 @@
             <CheckBox
                 android:id="@+id/cbPhone"
                 android:checked="true"
+                android:text="@string/message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -54,6 +55,7 @@
             <CheckBox
                 android:id="@+id/cbEmail"
                 android:checked="false"
+                android:text="@string/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -101,6 +103,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorAccent"
-            android:text="@string/cancel" />
+            android:text="@string/close" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

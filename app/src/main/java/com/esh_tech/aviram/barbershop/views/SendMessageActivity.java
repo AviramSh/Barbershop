@@ -58,6 +58,8 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void init() {
+
+//        TODO Design GUI delete email or convert to TextView
         Intent myIntent =getIntent();
 //        Toast.makeText(this, myIntent.getStringExtra("userPhone"), Toast.LENGTH_SHORT).show();
         dbHandler = new BarbershopDBHandler(this);
@@ -123,26 +125,31 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void sandEmail() {
-//        TODO send email with JavaMail API
-//        emailTo = etEmail.getText().toString();
         emailTo = customerProfile.getEmail();
+//
+//        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+//
+//        emailIntent.putExtra(Intent.EXTRA_EMAIL,new String[]{emailTo});
+//        emailIntent.putExtra(Intent.EXTRA_SUBJECT,getResources().getText(R.string.haircutAppointment));
+//        emailIntent.putExtra(Intent.EXTRA_TEXT,message);
+//
+//
+//        emailIntent.setType("message/rfc822");
+//
+//        try {
+//            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+//            finish();
+//        } catch (android.content.ActivityNotFoundException ex) {
+//            Toast.makeText(SendMessageActivity.this,
+//                    "There is no email client installed.", Toast.LENGTH_SHORT).show();
+//        }
+        //Getting content for email
 
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        //Creating SendMail object
+        SendMail sm = new SendMail(this, emailTo, getResources().getString(R.string.emailSubject), message);
 
-        emailIntent.putExtra(Intent.EXTRA_EMAIL,new String[]{emailTo});
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT,getResources().getText(R.string.haircutAppointment));
-        emailIntent.putExtra(Intent.EXTRA_TEXT,message);
-
-
-        emailIntent.setType("message/rfc822");
-
-        try {
-            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-            finish();
-        } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(SendMessageActivity.this,
-                    "There is no email client installed.", Toast.LENGTH_SHORT).show();
-        }
+        //Executing sendmail to send email
+        sm.execute();
     }
 
     @Override
