@@ -101,10 +101,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     editor = settings.edit();
                     editor.putBoolean(USER_AUTO_LOGIN,true);
                     editor.apply();
-                    Intent myIntent=new Intent(this,MainActivity.class);
-                    startActivity(myIntent);
-                    this.finish();
                 }
+                Intent myIntent=new Intent(this,MainActivity.class);
+                startActivity(myIntent);
+                this.finish();
             }else {
                 Toast.makeText(this, R.string.incorrectPassword, Toast.LENGTH_SHORT).show();
             }

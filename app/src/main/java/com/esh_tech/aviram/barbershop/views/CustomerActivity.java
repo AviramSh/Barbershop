@@ -173,14 +173,13 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
     @Override
     public void onClick(View v) {
 
-//        TODO Initiate all the controls in the camera functions.
-
         Intent myIntent;
         switch (v.getId()){
             case R.id.btMassage:
                 myIntent = new Intent(this ,SendMessageActivity.class);
                 myIntent.putExtra(SharedPreferencesConstants.CUSTOMER_ID_SMS,customerProfile.get_id());
                 startActivity(myIntent);
+
                 break;
             case R.id.btCallCustomer:
                 myIntent = new Intent(Intent.ACTION_DIAL);
@@ -189,23 +188,23 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
                 break;
             case R.id.customerMainPic:
 //                customerPic = (ImageButton)findViewById(R.id.customerMainPic);
-                userPhotoSet(R.id.customerMainPic);
+                showUserPhoto(R.id.customerMainPic,0);
                 break;
             case R.id.customerPic_1:
 //                customerPic = (ImageButton)findViewById(R.id.customerPic_1);
-                userPhotoSet(R.id.customerPic_1);
+                showUserPhoto(R.id.customerPic_1,1);
                 break;
             case R.id.customerPic_2:
 //                customerPic = (ImageButton)findViewById(R.id.customerPic_2);
-                userPhotoSet(R.id.customerPic_2);
+                showUserPhoto(R.id.customerPic_2,2);
                 break;
             case R.id.customerPic_3:
 //                customerPic = (ImageButton)findViewById(R.id.customerPic_3);
-                userPhotoSet(R.id.customerPic_3);
+                showUserPhoto(R.id.customerPic_3,3);
                 break;
             case R.id.customerPic_4:
 //                customerPic = (ImageButton)findViewById(R.id.customerPic_4);
-                userPhotoSet(R.id.customerPic_4);
+                showUserPhoto(R.id.customerPic_4,4);
 //                Toast.makeText(this, "Pic 4", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.ibEditCustomer:
@@ -233,23 +232,23 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
 
             case R.id.customerMainPic:
 //                customerPic = (ImageButton)findViewById(R.id.customerMainPic);
-                showUserPhoto(R.id.customerMainPic,0);
+                userPhotoSet(R.id.customerMainPic);
                 break;
             case R.id.customerPic_1:
 //                customerPic = (ImageButton)findViewById(R.id.customerPic_1);
-                showUserPhoto(R.id.customerPic_1,1);
+                userPhotoSet(R.id.customerPic_1);
                 break;
             case R.id.customerPic_2:
 //                customerPic = (ImageButton)findViewById(R.id.customerPic_2);
-                showUserPhoto(R.id.customerPic_2,2);
+                userPhotoSet(R.id.customerPic_2);
                 break;
             case R.id.customerPic_3:
 //                customerPic = (ImageButton)findViewById(R.id.customerPic_3);
-                showUserPhoto(R.id.customerPic_3,3);
+                userPhotoSet(R.id.customerPic_3);
                 break;
             case R.id.customerPic_4:
 //                customerPic = (ImageButton)findViewById(R.id.customerPic_4);
-                showUserPhoto(R.id.customerPic_4,4);
+                userPhotoSet(R.id.customerPic_4);
 //                Toast.makeText(this, "Pic 4", Toast.LENGTH_SHORT).show();
                 break;
 
@@ -279,7 +278,13 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
         ArrayList<Bitmap> allCustomerPics =dbHandler.getAllPicturesByUserID(customerProfile.get_id());
         if (!allCustomerPics.isEmpty()) {
             customerPic = (ImageView) view.findViewById(R.id.dialogImageView);
-            customerPic.setImageBitmap(allCustomerPics.get(position));
+            try {
+                customerPic.setImageBitmap(allCustomerPics.get(position));
+            } catch (Exception e) {
+                Toast.makeText(this, R.string.picture_not_exist, Toast.LENGTH_SHORT).show();
+            }
+
+
         }
 
         alertadd.setView(view);
@@ -318,14 +323,13 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
                 break;
 
             case CAMERA_REQUEST_CODE:
-//                TODO Need To Save Customer Photos in a file for full pic
                 if (resultCode == RESULT_OK){
                     selectedProfilePicture = (Bitmap)data.getExtras().get("data");
                     customerPic.setImageBitmap(selectedProfilePicture);
                     if(dbHandler.addPicture(customerProfile.get_id(),selectedProfilePicture)){
-                        Toast.makeText(this, R.string.savedToDB, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.picture_saved, Toast.LENGTH_SHORT).show();
                     }else{
-                        Toast.makeText(this, R.string.dbFailedToSave, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.picture_didnt_saved, Toast.LENGTH_SHORT).show();
                     }
 
                 }

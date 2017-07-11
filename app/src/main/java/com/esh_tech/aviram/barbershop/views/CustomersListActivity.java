@@ -1,5 +1,6 @@
 package com.esh_tech.aviram.barbershop.views;
 
+import com.esh_tech.aviram.barbershop.Constants.BundleConstants;
 import com.esh_tech.aviram.barbershop.data.*;
 import com.esh_tech.aviram.barbershop.R;
 import android.Manifest;
@@ -101,6 +102,33 @@ public class CustomersListActivity extends AppCompatActivity {
                     }
                 }
         );
+
+//        test result
+        Intent userIdIntent = getIntent();
+        Bundle bundle = userIdIntent.getExtras();
+
+        if(bundle.getInt(BundleConstants.GET_CUSTOMER)==0){
+
+            customerListView.setOnItemClickListener(
+                    new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            retunUser(position);
+                        }
+                    }
+            );
+        }
+    }
+
+    private void retunUser(int position) {
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+
+        bundle.putInt(BundleConstants.GET_CUSTOMER,allCustomers.get(position).get_id());
+        intent.putExtras(bundle);
+        setResult(RESULT_OK,intent);
+
+        finish();
     }
 
     @Override
@@ -131,8 +159,10 @@ public class CustomersListActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if(dbHandler.deleteCustomerById(customer.get_id())){
                     Toast.makeText(CustomersListActivity.this, "Customer Deleted", Toast.LENGTH_SHORT).show();
-                    allCustomers = dbHandler.getAllCustomers();
+//                    allCustomers = dbHandler.getAllCustomers();
+                    populateCustomers();
                     usersAdapter.notifyDataSetChanged();
+
                 }
 
             }
@@ -252,17 +282,20 @@ public class CustomersListActivity extends AppCompatActivity {
 
             newCustomer.setName(retrieveContactName());
             newCustomer.setPhone(retrieveContactNumber());
-            Bitmap photo =retrieveContactPhoto();
-            if(photo == null){
-
-            }else{
-//                    newCustomer.setCustomerPhoto(photo);
-            }
+            newCustomer.setPhoto(retrieveContactPhoto());
+//            Bitmap photo =retrieveContactPhoto();
 //                Toast.makeText(this, newCustomer.getName()+" :"+newCustomer.getPhone(), Toast.LENGTH_SHORT).show();
 
 //                allCustomers.add(newCustomer);
             if(dbHandler.getCustomerByPhone(newCustomer.getPhone())== null) {
                 if (dbHandler.addCustomer(newCustomer)) {
+
+                    if(newCustomer.getPhoto() != null){
+                        dbHandler.addPicture(
+                                dbHandler.getCustomerByPhone(newCustomer.getPhone()).get_id(),
+                                newCustomer.getPhoto());
+                    }
+
                     allCustomers.add(newCustomer);
                     usersAdapter.notifyDataSetChanged();
                     Toast.makeText(this, newCustomer.getName() + " Saved.", Toast.LENGTH_SHORT).show();

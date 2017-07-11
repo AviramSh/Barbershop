@@ -188,6 +188,10 @@
     <string name="invalidMessage">הודעה לא תקינה</string>
     <string name="emailSubject">תור לספר</string>
     <string name="messageSent">ההודעה נשלחה</string>
+    <string name="aboutActivityContent">פירוט על האפליקציה...</string>
+    <string name="picture_not_exist">תמונה לא קימת</string>
+    <string name="picture_saved">התמונה נשמרה</string>
+    <string name="picture_didnt_saved">התמונה לא נשמרה</string>
 
 
     <string-array name="spinner_hours">

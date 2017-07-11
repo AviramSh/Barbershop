@@ -33,7 +33,7 @@
         tools:layout_editor_absoluteY="54dp">
 
         <TextView
-            android:id="@+id/textView29"
+            android:id="@+id/tvAboutContent"
             android:gravity="start"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -47,7 +47,6 @@
         android:layout_width="133dp"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
-        android:onClick="onClick"
         android:text="@string/close"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"

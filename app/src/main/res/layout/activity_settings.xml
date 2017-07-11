@@ -192,7 +192,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <!--<LinearLayout
             android:id="@+id/layLogout"
             android:padding="5dp"
             android:onClick="onClick"
@@ -215,7 +215,7 @@
                 android:layout_height="50dp"
                 app:srcCompat="@drawable/exit40" />
 
-        </LinearLayout>
+        </LinearLayout>-->
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -493,6 +493,7 @@ public class BarbershopDBHandler {
 //    PicturesDBConstants.PICTURE_DATA + " BLOB , "+
 //    PicturesDBConstants.CUSTOMER_ID + " INTEGER "
 
+
     public boolean addPicture(int customerId , Bitmap bitmapImageData) throws SQLiteException {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues columnValues = new ContentValues();

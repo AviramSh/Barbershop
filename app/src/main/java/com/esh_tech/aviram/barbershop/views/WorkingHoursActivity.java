@@ -47,8 +47,6 @@ public class WorkingHoursActivity extends AppCompatActivity {
 
         if(setWorkingHours(view)) {
             if (register) {
-                Intent myIntent = new Intent(this, MainActivity.class);
-                startActivity(myIntent);
                 this.finish();
             } else {
                 Intent timeFeeActivity = new Intent(this, TimeAndFee.class);

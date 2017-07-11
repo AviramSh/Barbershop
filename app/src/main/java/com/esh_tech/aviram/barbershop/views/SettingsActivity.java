@@ -75,9 +75,10 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(intent);
                 this.finish();
                 break;
-            case R.id.layLogout:
+//            TODO When user logout back navigation button  tack him to the MainActivity
+            /*case R.id.layLogout:
                 logout();
-                break;
+                break;*/
             default:
                 Toast.makeText(this, "Not Initialized yet", Toast.LENGTH_SHORT).show();
                 break;

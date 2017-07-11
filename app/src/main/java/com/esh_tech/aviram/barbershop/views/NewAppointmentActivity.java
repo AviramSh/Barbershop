@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.esh_tech.aviram.barbershop.Constants.BundleConstants;
 import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants;
 import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
@@ -77,10 +78,11 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
     Appointment newAppointment;
 
 
-    int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
     private AlarmManager aManager;
     private PendingIntent pIntent;
+    int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
     private static final int REQUEST_CODE = 2;
+    private static final int REQUEST_CODE_GET_USER = 3;
 
 
     @Override
@@ -341,31 +343,42 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
     public void importCustomer() {
 //        TODO  need to add import from app and user phone book ,customer need to choose with alert dialog.
-        if(!cPhone.getText().toString().equals("") || cPhone.getText().toString().length()>8) {
-            customerProfile = dbHandler.getCustomerByPhone(cPhone.getText().toString());
-            if(customerProfile != null) {
-                cPhone.setText(customerProfile.getName());
+
+        if(!cPhone.getText().toString().equals("") &&
+                cPhone.getText().toString().length()>8) {
+
+            if(customerProfile.get_id()!= -1) {
+                customerProfile = dbHandler.getCustomerByPhone(cPhone.getText().toString());
+                if (customerProfile != null) {
+                    cPhone.setText(customerProfile.getName());
+                }
             }
-            else{
-                Toast.makeText(this, R.string.customerDoesntExist, Toast.LENGTH_SHORT).show();
-            }
+//            else{
+//                Toast.makeText(this, R.string.customerDoesntExist, Toast.LENGTH_SHORT).show();
+//            }
 
         }else{
-            Uri uri = Uri.parse("content://contacts");
-            Intent intent = new Intent(Intent.ACTION_PICK, uri);
-            intent.setType(Phone.CONTENT_TYPE);
-            startActivityForResult(intent, REQUEST_CODE);
+            Intent getCustomerIntent = new Intent(this , CustomersListActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt(BundleConstants.GET_CUSTOMER,0);
+            getCustomerIntent.putExtras(bundle);
+
+            startActivityForResult(getCustomerIntent, REQUEST_CODE_GET_USER);
+//            Uri uri = Uri.parse("content://contacts");
+//            Intent intent = new Intent(Intent.ACTION_PICK, uri);
+//            intent.setType(Phone.CONTENT_TYPE);
+//            startActivityForResult(intent, REQUEST_CODE);
         }
     }
 
     //Choose phone in contact and set edit text
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent i) {
-        super.onActivityResult(requestCode, resultCode, i);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                Uri uri = i.getData();
+                Uri uri = data.getData();
                 String[] projection = { Phone.NUMBER, Phone.DISPLAY_NAME };
 
                 Cursor cursor = getContentResolver().query(uri, projection,
@@ -385,6 +398,14 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
             }
         }
+        if(requestCode == REQUEST_CODE_GET_USER)
+            if (resultCode == RESULT_OK ){
+                Bundle bundle = data.getExtras();
+                bundle.getInt(BundleConstants.GET_CUSTOMER);
+                customerProfile = dbHandler.getCustomerByID(bundle.getInt(BundleConstants.GET_CUSTOMER));
+                cPhone.setText(customerProfile.getName());
+
+            }
     }
 
 
