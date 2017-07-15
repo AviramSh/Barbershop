@@ -23,6 +23,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -30,6 +32,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -49,6 +52,9 @@ public class CustomersListActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_PICK_CONTACTS = 1;
     private Uri uriContact;
     private String contactID;     // contacts unique ID
+
+    EditText customerFilterText;
+    MyCustomerAdapter customersAdapter;
 
     ArrayList<Customer> allCustomers =new ArrayList<Customer>();
     ListView customerListView;
@@ -104,20 +110,51 @@ public class CustomersListActivity extends AppCompatActivity {
         );
 
 //        test result
+
         Intent userIdIntent = getIntent();
+
         Bundle bundle = userIdIntent.getExtras();
 
-        if(bundle.getInt(BundleConstants.GET_CUSTOMER)==0){
+        try {
 
-            customerListView.setOnItemClickListener(
-                    new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            retunUser(position);
+            if(bundle.getInt(BundleConstants.GET_CUSTOMER)==0){
+
+                customerListView.setOnItemClickListener(
+                        new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                retunUser(position);
+                            }
                         }
-                    }
-            );
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+
+        customerListView = (ListView)findViewById(R.id.customersLv);
+        customerFilterText = (EditText)findViewById(R.id.customerFilterText);
+
+        customersAdapter = new MyCustomerAdapter(this,
+                android.R.layout.simple_list_item_1,
+                allCustomers);
+        customerListView.setAdapter(customersAdapter);
+
+        customerFilterText.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                customersAdapter.getFilter().filter(s.toString());
+            }
+        });
+
+
     }
 
     private void retunUser(int position) {
