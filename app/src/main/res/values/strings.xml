@@ -67,7 +67,6 @@
     <string name="stocklist">רשימת מלאי</string>
     <string name="product">מוצר</string>
     <string name="amount">כמות</string>
-    <string name="appointmentList">רשימת תורים</string>
     <string name="today">היום</string>
     <string name="hour">שעה</string>
     <string name="free">פנוי</string>
@@ -84,7 +83,7 @@
     <string name="logout">התנתק</string>
     <string name="savePassword">שמור סיסמה</string>
     <string name="repassword">חזור על הסיסמה</string>
-    <string name="appointments">תורות</string>
+    <string name="appointmentList">תורות</string>
     <string name="male">גבר</string>
     <string name="female">אישה</string>
     <string name="email">אייימל</string>
@@ -192,6 +191,12 @@
     <string name="picture_not_exist">תמונה לא קימת</string>
     <string name="picture_saved">התמונה נשמרה</string>
     <string name="picture_didnt_saved">התמונה לא נשמרה</string>
+    <string name="MailCN_MailSubject">דו\\\"ח מערכת</string>
+    <string name="allAppointments">כל התורים</string>
+    <string name="action_issueReport">צור דו\"ח</string>
+    <string name="endDate">תאריך סיום</string>
+    <string name="end">סיום</string>
+    <string name="targetMail">שלח אל</string>
 
 
     <string-array name="spinner_hours">

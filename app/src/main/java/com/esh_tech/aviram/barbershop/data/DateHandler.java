@@ -12,7 +12,9 @@ import java.util.Locale;
 
 public class DateHandler {
 
-
+//    public static final String dateFormat = "dd/MM/yyyy HH:mm";
+    public static final String dateFormat = "dd/MM/yyyy";
+    public static final String reportDateFormat = "HH:mm dd/MM/yyyy";
 
 
     public String getImageName(){
@@ -142,5 +144,34 @@ public class DateHandler {
     }
     public String getTimeSDF(Calendar myDate){
         return getTimeSDF(myDate.getTime());
+    }
+
+
+
+
+    public static Date getDateFromString(String stringDate)
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        try {
+            return sdf.parse(stringDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String getStringFromDate(Date date)
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        return sdf.format(date);
+    }
+
+    public static String convertDateForReport(String stringDate)
+    {
+        Date date = getDateFromString(stringDate);
+        if(date == null)
+            return "";
+        SimpleDateFormat sdf = new SimpleDateFormat(reportDateFormat);
+        return sdf.format(date);
     }
 }

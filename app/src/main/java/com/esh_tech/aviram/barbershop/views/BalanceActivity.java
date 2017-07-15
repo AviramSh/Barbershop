@@ -2,12 +2,13 @@ package com.esh_tech.aviram.barbershop.views;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,8 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
     private int haircutCounter;
 
     ArrayList<Purchase> allPurchases;
+    ImageButton ibCalc;
+    ImageButton ibReport;
 
     //Calendar
     Calendar startCalendar;
@@ -60,6 +63,12 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
         etBill = (TextView)findViewById(R.id.etPayment);
         etCounter= (TextView)findViewById(R.id.etCounter);
 
+        ibCalc = (ImageButton)findViewById(R.id.ibCalcHaircut);
+        ibReport  = (ImageButton)findViewById(R.id.ibCreateReport);
+
+        ibCalc.setOnClickListener(this);
+        ibReport.setOnClickListener(this);
+
         bill = 0;
         haircutCounter =0;
 
@@ -90,8 +99,13 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
 
 
         switch (v.getId()){
-            case R.id.ibCalc:
+            case R.id.ibCalcHaircut:
                 calculateBill();
+                break;
+            case R.id.ibCreateReport:
+                Intent intent = new Intent(this,GenerateReportActivity.class);
+                startActivity(intent);
+                this.finish();
                 break;
 
             default:

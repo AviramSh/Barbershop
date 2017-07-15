@@ -9,4 +9,8 @@
     <color name="empty">#fff</color>
     <color name="productListColor">#9ae5fc</color>
     <color name="green">#1bbf0f</color>
+
+
+    <color name="black_overlay">#66000000</color>
+    <color name="basic">#368aae</color>
 </resources>

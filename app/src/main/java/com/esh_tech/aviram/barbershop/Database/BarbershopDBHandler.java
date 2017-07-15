@@ -256,6 +256,25 @@ public class BarbershopDBHandler {
         return false;
 
     }
+    public ArrayList<Appointment> getAllAppointmentsFromTo(Calendar fromDate, Calendar toDate) {
+
+        ArrayList<Appointment> returnAppointments =new ArrayList<Appointment>();
+
+        while (fromDate.before(toDate)||fromDate.equals(toDate) ){
+            ArrayList<Appointment> appointments = getAllAppointments(DateHandler.getStringFromDate(fromDate.getTime()));
+
+            for (Appointment index :
+                    appointments) {
+                returnAppointments.add(index);
+            }
+
+
+            fromDate.add(Calendar.DAY_OF_MONTH,1);
+        }
+
+
+        return returnAppointments;
+    }
 
 
     public ArrayList<Appointment> getTodayAppointments(Date myDate) {
