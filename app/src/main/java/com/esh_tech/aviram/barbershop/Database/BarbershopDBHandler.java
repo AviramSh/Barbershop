@@ -6,7 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.esh_tech.aviram.barbershop.R;
+import com.esh_tech.aviram.barbershop.Utils.DateUtils;
 import com.esh_tech.aviram.barbershop.data.*;
 import com.esh_tech.aviram.barbershop.Constants.AppointmentsDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
@@ -16,6 +19,7 @@ import com.esh_tech.aviram.barbershop.Constants.ProductsDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.PurchaseDBConstants;
 
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -84,6 +88,7 @@ public class BarbershopDBHandler {
 
             ));
 
+        customersCursor.close();
         return customersList;
     }
     public Customer getCustomerByID(int id) {
@@ -95,29 +100,31 @@ public class BarbershopDBHandler {
         while (customersCursor.moveToNext())
 
             if(customersCursor.getInt(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_ID))==id){
-            return new Customer(
-                    customersCursor.getInt(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_ID)),
-                    customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_NAME)),
-                    customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_PHONE)),
-                    customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_BIRTHDAY)),
-                    customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_EMAIL)),
-                    customersCursor.getDouble(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_BILL)),
-                    customersCursor.getInt(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_GENDER)),
-                    customersCursor.getInt(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_REMAINDER))
-                );
+                Customer customer =new Customer(
+                        customersCursor.getInt(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_ID)),
+                        customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_NAME)),
+                        customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_PHONE)),
+                        customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_BIRTHDAY)),
+                        customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_EMAIL)),
+                        customersCursor.getDouble(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_BILL)),
+                        customersCursor.getInt(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_GENDER)),
+                        customersCursor.getInt(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_REMAINDER)));
+                customersCursor.close();
+            return customer;
             }
+            customersCursor.close();
         return null;
     }
     public Customer getCustomerByPhone(String phone) {
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-
+        Customer customer = null;
         Cursor customersCursor = db.query(CustomersDBConstants.CUSTOMERS_TABLE_NAME,null,null,null,null,null,null);
 
         while (customersCursor.moveToNext())
 
             if(phone.equals(customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_PHONE)))){
-                return new Customer(
+                customer = new Customer(
                         customersCursor.getInt(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_ID)),
                         customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_NAME)),
                         customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_PHONE)),
@@ -127,10 +134,42 @@ public class BarbershopDBHandler {
                         customersCursor.getInt(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_GENDER)),
                         customersCursor.getInt(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_REMAINDER))
                 );
+                break;
             }
+        customersCursor.close();
+        return customer;
+    }
+    public Customer getCustomerByName(String name) {
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor customersCursor = db.query(CustomersDBConstants.CUSTOMERS_TABLE_NAME,null,null,null,null,null,null);
+
+
+        while (customersCursor.moveToNext()){
+
+        if(name.toLowerCase().equals(
+                customersCursor.getString(
+                        customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_NAME)).toLowerCase())) {
+
+                Customer customer =  new Customer(
+                        customersCursor.getInt(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_ID)),
+                        customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_NAME)),
+                        customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_PHONE)),
+                        customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_BIRTHDAY)),
+                        customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_EMAIL)),
+                        customersCursor.getDouble(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_BILL)),
+                        customersCursor.getInt(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_GENDER)),
+                        customersCursor.getInt(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_REMAINDER))
+                );
+            customersCursor.close();
+            return customer;
+            }
+
+        }
+        customersCursor.close();
         return null;
     }
-
     public boolean deleteCustomerById(int id) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -181,6 +220,7 @@ public class BarbershopDBHandler {
                         AppointmentsCursor.getInt(AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.APPOINTMENT_EXECUTED))
                 ));
             }
+        AppointmentsCursor.close();
         return AppointmentsList;
     }
     public ArrayList<Appointment> getAllAppointments(String receivedDate) {
@@ -261,7 +301,7 @@ public class BarbershopDBHandler {
         ArrayList<Appointment> returnAppointments =new ArrayList<Appointment>();
 
         while (fromDate.before(toDate)||fromDate.equals(toDate) ){
-            ArrayList<Appointment> appointments = getAllAppointments(DateHandler.getStringFromDate(fromDate.getTime()));
+            ArrayList<Appointment> appointments = getAllAppointments(DateUtils.getStringFromDate(fromDate.getTime()));
 
             for (Appointment index :
                     appointments) {
@@ -274,6 +314,71 @@ public class BarbershopDBHandler {
 
 
         return returnAppointments;
+    }
+
+    public boolean testIfAppointmentAvailable(Context context,Date receivedDate) {
+
+        ArrayList<Appointment> myAppointments = getAllAppointments(DateUtils.getStringFromDate(receivedDate));
+        Calendar date1;
+        Calendar date2;
+
+        date1 = Calendar.getInstance();
+        date1.setTime(receivedDate);
+        date1.set(Calendar.SECOND,0);
+
+
+//        Toast.makeText(context, "Date1 : "+ DateUtils.getFullSDF(receivedDate)
+//                + "  Date2 : "+ DateUtils.getFullSDF(myAppointments.get(0).getDateAndTime()), Toast.LENGTH_LONG).show();
+        for (Appointment appointment:
+                myAppointments) {
+
+            date2 = Calendar.getInstance();
+            date2.setTime(appointment.getDateAndTime());
+            date2.set(Calendar.SECOND,0);
+
+//            Toast.makeText(context, "Date1 : "+ DateUtils.getFullSDF(receivedDate)
+//            + "  Date2 : "+ DateUtils.getFullSDF(appointment.getDateAndTime()), Toast.LENGTH_SHORT).show();
+
+            //equals() returns true if both the dates are equal
+            if (date1.equals(date2)) {
+                Toast.makeText(context, R.string.There_is_a_scheduled_appointment + " \n" +
+                        getCustomerByID(appointment.get_id()).getName() + " " + appointment.getDateAndTimeToDisplay(), Toast.LENGTH_SHORT).show();
+                return false;
+//            System.out.println("Date1 is equal Date2");
+            } else if (date1.after(date2)) {
+
+                try {
+                    date2.add(Calendar.MINUTE, -appointment.getHaircutTime());
+                } catch (Exception e) {
+                    date2.add(Calendar.MINUTE, -35);
+                }
+
+                if (!date1.after(date2)) {
+                    Toast.makeText(context, R.string.There_is_a_scheduled_appointment + " \n" +
+                            getCustomerByID(appointment.get_id()).getName() + " " + appointment.getDateAndTimeToDisplay(), Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+//                Toast.makeText(context, "Date1 : "+ DateUtils.getFullSDF(receivedDate)
+//                        + "  Date2 : "+ DateUtils.getFullSDF(myAppointments.get(0).getDateAndTime()), Toast.LENGTH_LONG).show();
+//            System.out.println("Date1 is after Date2");
+            } else if (date1.before(date2)) {
+                try {
+                    date2.add(Calendar.MINUTE, appointment.getHaircutTime());
+                } catch (Exception e) {
+                    date2.add(Calendar.MINUTE, 35);
+                }
+
+                if (!date1.before(date2) || date1.equals(date2)) {
+                    Toast.makeText(context, R.string.There_is_a_scheduled_appointment + " \n" +
+                            getCustomerByID(appointment.get_id()).getName() + " " + appointment.getDateAndTimeToDisplay(), Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+//            System.out.println("Date1 is before Date2");
+            }
+
+        }
+
+        return true;
     }
 
 

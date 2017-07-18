@@ -25,7 +25,6 @@ import com.esh_tech.aviram.barbershop.Utils.MailUtils;
 import com.esh_tech.aviram.barbershop.data.Appointment;
 import com.esh_tech.aviram.barbershop.data.Config;
 import com.esh_tech.aviram.barbershop.data.Customer;
-import com.esh_tech.aviram.barbershop.data.DateHandler;
 import com.esh_tech.aviram.barbershop.data.MyGlobalUser;
 //import com.google.firebase.database.DataSnapshot;
 //import com.google.firebase.database.DatabaseError;
@@ -185,7 +184,7 @@ public class GenerateReportActivity extends AppCompatActivity {
     public void generateReport(View view) {
 
 //        Calendar rideStartDate = Calendar.getInstance();
-//        rideStartDate.setTime(DateHandler.getDateFromString(ride.getStartDate()));
+//        rideStartDate.setTime(DateUtils.getDateFromString(ride.getStartDate()));
 
         fromDateEdit.getText().toString();
         toDateEdit.getText().toString();

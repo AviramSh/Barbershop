@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 import com.esh_tech.aviram.barbershop.R;
+import com.esh_tech.aviram.barbershop.Utils.DateUtils;
 import com.esh_tech.aviram.barbershop.data.*;
 
 import java.util.Calendar;
@@ -64,7 +65,7 @@ public class NewCustomerActivity extends AppCompatActivity implements View.OnCli
         customerRemainder = (CheckBox)findViewById(R.id.cbReminder);
         customerName = (EditText)findViewById(R.id.etCustomerName);
 
-        customerPhone =(EditText)findViewById(R.id.etCustomerPhone);
+        customerPhone =(EditText)findViewById(R.id.acetCustomerName);
         customerCredit = (EditText)findViewById(R.id.etCustomerCredit);
         customerEmail = (EditText)findViewById(R.id.etCustomerEmail);
         rbMale = (RadioButton)findViewById(R.id.rbMan);
@@ -72,7 +73,7 @@ public class NewCustomerActivity extends AppCompatActivity implements View.OnCli
 
         newCalendar = Calendar.getInstance();
         theDate = (Button)findViewById(R.id.btTheDate);
-        theDate.setText(new DateHandler().getOnlyDateSDF(newCalendar));
+        theDate.setText(new DateUtils().getOnlyDateSDF(newCalendar));
 //        newCalendar.set(1900,1,1);
 
         customerProfile = new Customer();
@@ -178,8 +179,8 @@ public class NewCustomerActivity extends AppCompatActivity implements View.OnCli
 
 
         if(newCalendar.get(Calendar.YEAR) <= (Calendar.getInstance().get(Calendar.YEAR)-18)){
-            customerProfile.setBirthday(new DateHandler().getOnlyDateSDF(newCalendar));
-//            Toast.makeText(this, "Birth day saved"+ new DateHandler().getOnlyDateSDF(newCalendar), Toast.LENGTH_SHORT).show();
+            customerProfile.setBirthday(new DateUtils().getOnlyDateSDF(newCalendar));
+//            Toast.makeText(this, "Birth day saved"+ new DateUtils().getOnlyDateSDF(newCalendar), Toast.LENGTH_SHORT).show();
         }
 
         if(customerName.getText().toString().length() < 2)
@@ -236,7 +237,7 @@ public class NewCustomerActivity extends AppCompatActivity implements View.OnCli
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
             newCalendar.set(year,month,dayOfMonth);
-            theDate.setText(new DateHandler().getOnlyDateSDF(newCalendar));
+            theDate.setText(new DateUtils().getOnlyDateSDF(newCalendar));
 //            populateAppointment();
 //            restDate(0);
         }

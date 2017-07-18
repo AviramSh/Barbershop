@@ -1,4 +1,4 @@
-package com.esh_tech.aviram.barbershop.data;
+package com.esh_tech.aviram.barbershop.Utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,10 +10,13 @@ import java.util.Locale;
  * Created by AVIRAM on 24/06/2017.
  */
 
-public class DateHandler {
+public class DateUtils {
 
 //    public static final String dateFormat = "dd/MM/yyyy HH:mm";
+    public static final String dateDayFormat ="dd/MM/yyyy \n EEEE";
     public static final String dateFormat = "dd/MM/yyyy";
+    public static final String timeFormat = "HH:mm";
+    public static final String timeDateFormat = "HH:mm dd/MM/yyyy";
     public static final String reportDateFormat = "HH:mm dd/MM/yyyy";
 
 
@@ -66,7 +69,7 @@ public class DateHandler {
         }
         return -1;
     }
-    public int compareDates(Date date1, Date date2) {
+    public static int compareDates(Date date1, Date date2) {
         // if you already have date objects then skip 1
         //1
 
@@ -119,19 +122,18 @@ public class DateHandler {
     }
 
 
-    public String getFullSDF(Date dateAndTime) {
+    public static String getFullSDF(Date dateAndTime) {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
         return formatter.format(dateAndTime.getTime());
     }
-    public String getFullSDF(Calendar dateAndTime) {
+    public static String getFullSDF(Calendar dateAndTime) {
         return  getFullSDF(dateAndTime.getTime());
     }
 
     public String getOnlyDateSDF(Date dateAndTime) {
 
-        SimpleDateFormat sdf = new SimpleDateFormat(
-                "dd/MM/yyyy", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         return sdf.format(dateAndTime.getTime());
     }
     public String getOnlyDateSDF(Calendar dateAndTime) {
@@ -139,7 +141,7 @@ public class DateHandler {
     }
 
     public String getTimeSDF(Date myDate){
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm" ,Locale.getDefault());
+        SimpleDateFormat formatter = new SimpleDateFormat(timeFormat ,Locale.getDefault());
         return formatter.format(myDate);
     }
     public String getTimeSDF(Calendar myDate){
@@ -151,7 +153,7 @@ public class DateHandler {
 
     public static Date getDateFromString(String stringDate)
     {
-        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.getDefault());
         try {
             return sdf.parse(stringDate);
         } catch (ParseException e) {
@@ -162,7 +164,7 @@ public class DateHandler {
 
     public static String getStringFromDate(Date date)
     {
-        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat,Locale.getDefault());
         return sdf.format(date);
     }
 
@@ -171,7 +173,9 @@ public class DateHandler {
         Date date = getDateFromString(stringDate);
         if(date == null)
             return "";
-        SimpleDateFormat sdf = new SimpleDateFormat(reportDateFormat);
+        SimpleDateFormat sdf = new SimpleDateFormat(reportDateFormat , Locale.getDefault());
         return sdf.format(date);
     }
+
+
 }

@@ -22,11 +22,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants;
 import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
+import com.esh_tech.aviram.barbershop.Utils.DateUtils;
 import com.esh_tech.aviram.barbershop.data.AlarmService;
 import com.esh_tech.aviram.barbershop.data.Appointment;
 import com.esh_tech.aviram.barbershop.data.Customer;
@@ -44,10 +46,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
+import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_FEMALE_HAIRCUT_PRICE;
+import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_FEMALE_HAIRCUT_TIME;
+import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_MALE_HAIRCUT_PRICE;
+import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_MALE_HAIRCUT_TIME;
+
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class NewAppointmentActivity extends AppCompatActivity implements View.OnClickListener{
 
     Customer customerProfile;
+    ArrayList<Customer> customersList;
+    ArrayList<String> customersNames;
 
     //    SharedPreferences
     SharedPreferences settings;
@@ -74,7 +83,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
     //    Database
     BarbershopDBHandler dbHandler;
 
-    TextView cPhone;
+    AutoCompleteTextView customerNameSearch;
     Appointment newAppointment;
 
 
@@ -97,10 +106,11 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
     private void init() {
         //        database
         dbHandler = new BarbershopDBHandler(this);
-        cPhone = (TextView)findViewById(R.id.etCustomerPhone);
+        setAutoComplete();
         theDate = (Button)findViewById(R.id.btDate);
         theTime= (Button)findViewById(R.id.btTime);
         appointmentCalendar = Calendar.getInstance();
+        appointmentCalendar.add(Calendar.DAY_OF_MONTH,1);
         customerProfile = new Customer();
         newAppointment =new Appointment();
 
@@ -116,13 +126,14 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             customerProfile= dbHandler.getCustomerByID(bundle.getInt(CustomersDBConstants.CUSTOMER_ID));
             if(customerProfile.get_id() !=-1 ) {
                 customerProfile = dbHandler.getCustomerByID(getIntent().getExtras().getInt(CustomersDBConstants.CUSTOMER_ID));
-                cPhone.setText(customerProfile.getName());
+                customerNameSearch.setText(customerProfile.getName());
             }
         }catch (NullPointerException e){
             e.getMessage();
         }
 
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -142,26 +153,55 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         }
     }
 
+    private void setAutoComplete() {
+        customerNameSearch = (AutoCompleteTextView)findViewById(R.id.acetCustomerName);
+        customerNameSearch.setText("");
+        customersList = dbHandler.getAllCustomers();
+        customersNames = new ArrayList<String>();
+        String[] myNames= {null};
+        int i = 0;
+
+        for (Customer index :
+                customersList) {
+            if (index.get_id() != -1){
+                customersNames.add(index.getName());
+            }
+        }
+
+        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.select_dialog_item,customersNames);
+        customerNameSearch.setThreshold(1);
+        customerNameSearch.setAdapter(adapter);
+        customerNameSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                customerProfile = dbHandler.getCustomerByName(customerNameSearch.getText().toString());
+
+            }
+        });
+    }
+
     private void setToday() {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy \n EEEE", Locale.getDefault());
-        String newFormat = formatter.format(appointmentCalendar.getTime());
 
-        year_x = appointmentCalendar.get(Calendar.YEAR );
-        month_x = appointmentCalendar.get(Calendar.MONTH);
-        day_x = appointmentCalendar.get(Calendar.DAY_OF_MONTH);
+        if(appointmentCalendar.before(Calendar.getInstance())){
+            appointmentCalendar.setTime(Calendar.getInstance().getTime());
+            appointmentCalendar.add(Calendar.MINUTE,5);
+            setTime(appointmentCalendar);
+        }else{
+            setTime(appointmentCalendar);
+        }
+
+        SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.dateDayFormat, Locale.getDefault());
+        String newFormat = formatter.format(appointmentCalendar.getTime());
 
         theDate.setText(newFormat);
 
-        formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        formatter = new SimpleDateFormat(DateUtils.timeFormat, Locale.getDefault());
         newFormat = formatter.format(appointmentCalendar.getTime());
 
-
-        hour_x = appointmentCalendar.get(Calendar.HOUR_OF_DAY);
-        minute_x= appointmentCalendar.get(Calendar.MINUTE);
-
         theTime.setText(newFormat);
-//        theTime.setText(hour_x+":"+minute_x);
+
 
     }
 
@@ -216,13 +256,47 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//            hour_x=hourOfDay;
-//            minute_x=minute;
             appointmentCalendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
             appointmentCalendar.set(Calendar.MINUTE,minute);
+
             setToday();
+//            setTime(appointmentCalendar);
+
+//            hour_x=hourOfDay;
+//            minute_x=minute;
+
         }
     };
+
+    private void setTime(Calendar appointmentCalendar) {
+
+        switch (appointmentCalendar.get(Calendar.MINUTE)%10){
+            case 1:
+                appointmentCalendar.add(Calendar.MINUTE,-1);
+                break;
+            case 2:
+                appointmentCalendar.add(Calendar.MINUTE,-2);
+                break;
+            case 3:
+                appointmentCalendar.add(Calendar.MINUTE,2);
+                break;
+            case 4:
+                appointmentCalendar.add(Calendar.MINUTE,1);
+                break;
+            case 6:
+                appointmentCalendar.add(Calendar.MINUTE,-1);
+                break;
+            case 7:
+                appointmentCalendar.add(Calendar.MINUTE,-2);
+                break;
+            case 8:
+                appointmentCalendar.add(Calendar.MINUTE,2);
+                break;
+            case 9:
+                appointmentCalendar.add(Calendar.MINUTE,1);
+                break;
+        }
+    }
 
     private void goMain() {
         Intent myIntent = new Intent(this,MainActivity.class);
@@ -231,30 +305,46 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
     }
 
     public void saveAppointment() {
+//      TODO Need to test all data by "CustomerProfile" and test the valid date for appointment
 
-        customerProfile.setPhone(cPhone.getText().toString());
 
-        if(customerProfile.getPhone().equals("")){
+        if(dbHandler.getCustomerByName(customerNameSearch.getText().toString())!= null){
+            customerProfile = dbHandler.getCustomerByName(customerNameSearch.getText().toString());
+        }else if(dbHandler.getCustomerByPhone(customerNameSearch.getText().toString())!= null){
+            customerProfile =dbHandler.getCustomerByPhone(customerNameSearch.getText().toString());
+        }
+
+        if(customerProfile == null){
             Toast.makeText(this, R.string.emptyField, Toast.LENGTH_SHORT).show();
         }else{
 
-
-            if(dbHandler.getCustomerByPhone(customerProfile.getPhone())!=null)
-                customerProfile = dbHandler.getCustomerByPhone(customerProfile.getPhone());
 
             if(customerProfile.get_id() != -1) {
 //                newAppointment = new Appointment(appointmentCalendar,customerProfile.get_id());
                 newAppointment.setDateAndTime(appointmentCalendar);
                 newAppointment.setCustomerID(customerProfile.get_id());
 
+                if(customerProfile.getGender() ==1){
+                    newAppointment.setHaircutTime(settings.getInt(USER_MALE_HAIRCUT_TIME,35));
+                    newAppointment.setHaircutPrice(settings.getInt(USER_MALE_HAIRCUT_PRICE,35));
+                }else{
+                    newAppointment.setHaircutTime(settings.getInt(USER_FEMALE_HAIRCUT_TIME,45));
+                    newAppointment.setHaircutPrice(settings.getInt(USER_FEMALE_HAIRCUT_PRICE,45));
+                }
 
 
-                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                String newFormat = formatter.format(appointmentCalendar.getTime());
 
-                if(!dbHandler.isCustomerSchedule(newAppointment,newFormat)){
+                /*SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.dateFormat, Locale.getDefault());
+                String newFormat = formatter.format(appointmentCalendar.getTime());*/
 
-                    if (dbHandler.addAppointment(newAppointment)) {
+                String newDateFormat = DateUtils.getFullSDF(appointmentCalendar.getTime());
+                String newDateAndTimeFormat = DateUtils.getFullSDF(appointmentCalendar.getTime());
+
+//                TODO Schedule customer test with DB
+                if(!dbHandler.isCustomerSchedule(newAppointment,newDateFormat)){
+
+                    if (dbHandler.addAppointment(newAppointment)&&
+                            dbHandler.testIfAppointmentAvailable(this,appointmentCalendar.getTime())) {
                         //                Remainder Sms Handler
                         if (customerProfile.getRemainder() == 1) {
                             setRemainder();
@@ -266,7 +356,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                     } else {
                         Toast.makeText(this, R.string.failedToSave, Toast.LENGTH_SHORT).show();
                     }
-//                cPhone.setText(customerProfile.getName());
+//                customerNameSearch.setText(customerProfile.getName());
                 }else{
                     Toast.makeText(this, ""+getResources().getString(R.string.alreadyHaveAppointment), Toast.LENGTH_SHORT).show();
                 }
@@ -296,7 +386,12 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                             customerProfile = dbHandler.getCustomerByPhone(customerProfile.getPhone());
                             newAppointment = new Appointment(appointmentCalendar, customerProfile.get_id());
 
-                            if (dbHandler.addAppointment(newAppointment)) {
+                            newAppointment.setHaircutTime(settings.getInt(USER_MALE_HAIRCUT_TIME,35));
+                            newAppointment.setHaircutPrice(settings.getInt(USER_MALE_HAIRCUT_PRICE,35));
+
+
+                            if (dbHandler.addAppointment(newAppointment)&&
+                                    dbHandler.testIfAppointmentAvailable(NewAppointmentActivity.this,appointmentCalendar.getTime())) {
                                 Toast.makeText(NewAppointmentActivity.this, R.string.saved, Toast.LENGTH_LONG).show();
                                 goMain();
                             }
@@ -342,33 +437,13 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
 
     public void importCustomer() {
-//        TODO  need to add import from app and user phone book ,customer need to choose with alert dialog.
 
-        if(!cPhone.getText().toString().equals("") &&
-                cPhone.getText().toString().length()>8) {
-
-            if(customerProfile.get_id()!= -1) {
-                customerProfile = dbHandler.getCustomerByPhone(cPhone.getText().toString());
-                if (customerProfile != null) {
-                    cPhone.setText(customerProfile.getName());
-                }
-            }
-//            else{
-//                Toast.makeText(this, R.string.customerDoesntExist, Toast.LENGTH_SHORT).show();
-//            }
-
-        }else{
             Intent getCustomerIntent = new Intent(this , CustomersListActivity.class);
             Bundle bundle = new Bundle();
             bundle.putInt(BundleConstants.GET_CUSTOMER,0);
             getCustomerIntent.putExtras(bundle);
 
             startActivityForResult(getCustomerIntent, REQUEST_CODE_GET_USER);
-//            Uri uri = Uri.parse("content://contacts");
-//            Intent intent = new Intent(Intent.ACTION_PICK, uri);
-//            intent.setType(Phone.CONTENT_TYPE);
-//            startActivityForResult(intent, REQUEST_CODE);
-        }
     }
 
     //Choose phone in contact and set edit text
@@ -391,9 +466,9 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                 if(dbHandler.getCustomerByPhone(number)!=null)
                 {
                     customerProfile = dbHandler.getCustomerByPhone(number);
-                    cPhone.setText(customerProfile.getName());
+                    customerNameSearch.setText(customerProfile.getName());
                 }else{
-                    cPhone.setText(number);
+                    customerNameSearch.setText(number);
                 }
 
             }
@@ -403,7 +478,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                 Bundle bundle = data.getExtras();
                 bundle.getInt(BundleConstants.GET_CUSTOMER);
                 customerProfile = dbHandler.getCustomerByID(bundle.getInt(BundleConstants.GET_CUSTOMER));
-                cPhone.setText(customerProfile.getName());
+                customerNameSearch.setText(customerProfile.getName());
 
             }
     }

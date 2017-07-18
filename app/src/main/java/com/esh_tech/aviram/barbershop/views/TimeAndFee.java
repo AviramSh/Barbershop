@@ -67,7 +67,7 @@ public class TimeAndFee extends AppCompatActivity implements View.OnClickListene
                  haircutPrice > 0){
 
             editor.putInt(USER_MALE_HAIRCUT_PRICE,Integer.parseInt(etManPrice.getText().toString()));
-            editor.putString(USER_MALE_HAIRCUT_TIME,etManTime.getText().toString());
+            editor.putInt(USER_MALE_HAIRCUT_TIME,Integer.parseInt(etManTime.getText().toString()));
 
             editor.apply();
         }else flag = false;
@@ -84,7 +84,7 @@ public class TimeAndFee extends AppCompatActivity implements View.OnClickListene
                 haircutPrice > 0){
 
             editor.putInt(USER_FEMALE_HAIRCUT_PRICE, Integer.parseInt(etWomanPrice.getText().toString()));
-            editor.putString(USER_FEMALE_HAIRCUT_TIME,etWomanTime.getText().toString());
+            editor.putInt(USER_FEMALE_HAIRCUT_TIME,Integer.parseInt(etWomanTime.getText().toString()));
 
             editor.apply();
         }else flag = false;

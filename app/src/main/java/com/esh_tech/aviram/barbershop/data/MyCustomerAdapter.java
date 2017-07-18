@@ -99,7 +99,7 @@ public class MyCustomerAdapter extends ArrayAdapter<Customer>
                 {
                     // use the lower characters just for the comparison
                     Customer m = items.get(i);
-                    if(m.getName().toLowerCase().contains(constraint.toString()))
+                    if(m.getName().toLowerCase().startsWith(constraint.toString()))
                         newItems.add(items.get(i));
                 }
                 result.count = newItems.size();

@@ -25,7 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.esh_tech.aviram.barbershop.data.DateHandler;
+import com.esh_tech.aviram.barbershop.Utils.DateUtils;
 import com.esh_tech.aviram.barbershop.data.*;
 import com.esh_tech.aviram.barbershop.R;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
@@ -144,8 +144,8 @@ public class AppointmentListActivity extends AppCompatActivity implements View.O
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy \n EEEE", Locale.getDefault());
         String dateForDisplay = sdf.format(newCalendar.getTime());
-        if(dateForDisplay.contains(new DateHandler().getOnlyDateSDF(Calendar.getInstance()))) {
-            theDate.setText(new DateHandler().getOnlyDateSDF(Calendar.getInstance())+" \n"+
+        if(dateForDisplay.contains(new DateUtils().getOnlyDateSDF(Calendar.getInstance()))) {
+            theDate.setText(new DateUtils().getOnlyDateSDF(Calendar.getInstance())+" \n"+
             getResources().getString(R.string.today));
         }else{
             theDate.setText(dateForDisplay);
@@ -198,9 +198,9 @@ public class AppointmentListActivity extends AppCompatActivity implements View.O
                 tvTime.setTextColor(getResources().getColor(android.R.color.holo_green_light));
                 rbGetAllHaircut.setChecked(false);
             }else if(rbDidntgetHaircut.isChecked()&&appointment.getTackAnHaircut()==0 &&
-                    new DateHandler().compareDates(
+                    new DateUtils().compareDates(
                             appointment.getDateAndTimeToDisplay(),
-                            new DateHandler().getFullSDF(Calendar.getInstance()))==1){
+                            new DateUtils().getFullSDF(Calendar.getInstance()))==1){
                 tvName.setTextColor(getResources().getColor(android.R.color.holo_red_light));
                 tvTime.setTextColor(getResources().getColor(android.R.color.holo_red_light));
                 rbGetAllHaircut.setChecked(false);

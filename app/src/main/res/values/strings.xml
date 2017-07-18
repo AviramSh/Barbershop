@@ -197,6 +197,8 @@
     <string name="endDate">תאריך סיום</string>
     <string name="end">סיום</string>
     <string name="targetMail">שלח אל</string>
+    <string name="customerSearch">חיפוש לקוח</string>
+    <string name="There_is_a_scheduled_appointment">יש תור במועד זה</string>
 
 
     <string-array name="spinner_hours">

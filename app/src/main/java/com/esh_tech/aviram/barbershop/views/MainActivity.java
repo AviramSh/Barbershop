@@ -25,15 +25,13 @@ import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
+import com.esh_tech.aviram.barbershop.Utils.DateUtils;
 import com.esh_tech.aviram.barbershop.data.*;
 import com.esh_tech.aviram.barbershop.R;
-import com.esh_tech.aviram.barbershop.views.*;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_AUTO_LOGIN;
 
@@ -249,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                "dd/MM/yyyy", Locale.getDefault());
 //        String dateForDisplay = sdf.format(Calendar.getInstance().getTime());
 
-        allAppointments = dbHandler.getWaitingListAppointments(new DateHandler().getOnlyDateSDF(Calendar.getInstance()));
+        allAppointments = dbHandler.getWaitingListAppointments(new DateUtils().getOnlyDateSDF(Calendar.getInstance()));
 
 //minutes, hour, day,month, year, customerName, customerID
 //        allAppointments.add(new Appointment(15,8,4,5,1987,"Avi",3));
@@ -294,9 +292,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 tvName.setTextColor(getResources().getColor(android.R.color.holo_green_light));
 
 
-                if(new DateHandler().compareDates(
+                if(new DateUtils().compareDates(
                         appointment.getDateAndTimeToDisplay(),
-                        new DateHandler().getFullSDF(Calendar.getInstance()))==1) {
+                        new DateUtils().getFullSDF(Calendar.getInstance()))==1) {
                     tvName.setTextColor(getResources().getColor(android.R.color.holo_red_light));
                 }
             }

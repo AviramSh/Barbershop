@@ -303,6 +303,8 @@ package com.esh_tech.aviram.barbershop.data;
 
 
 
+import com.esh_tech.aviram.barbershop.Utils.DateUtils;
+
 import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
@@ -317,8 +319,9 @@ public class Appointment {
 
     private Date dateAndTime;
 
-    private Time theTime;
+
     private int haircutTime;
+    private int haircutPrice;
     private int customerID;
     private int tackAnHaircut;
 
@@ -341,8 +344,17 @@ public class Appointment {
         this.tackAnHaircut =tackAnHaircut;
     }
 
+    public Appointment(int _id, String dateAndTime, int customerID, int tackAnHaircut, int haircutTime ,int haircutPrice) {
+        this._id = _id;
+        setDateAndTime(dateAndTime);
+        this.haircutTime = haircutTime;
+        this.haircutPrice = haircutPrice;
+        this.customerID = customerID;
+        this.tackAnHaircut = tackAnHaircut;
+    }
+
     public Appointment() {
-        this(-1,"",-1,0);
+        this(-1,"",-1,0,0,0);
     }
 
 
@@ -350,6 +362,23 @@ public class Appointment {
 
 
 //    Getters and Setters
+
+
+    public int getHaircutPrice() {
+        return haircutPrice;
+    }
+
+    public void setHaircutPrice(int haircutPrice) {
+        this.haircutPrice = haircutPrice;
+    }
+
+    public int getHaircutTime() {
+        return haircutTime;
+    }
+
+    public void setHaircutTime(int haircutTime) {
+        this.haircutTime = haircutTime;
+    }
 
     public int getTackAnHaircut() {
         return tackAnHaircut;
@@ -376,7 +405,7 @@ public class Appointment {
         this.dateAndTime = dateAndTime.getTime();
     }
 
-//    new handler in DateHandler
+//    new handler in DateUtils
     public void setDateAndTime(String setDate){
 //
 //        SimpleDateFormat sdf = new SimpleDateFormat(
@@ -390,7 +419,7 @@ public class Appointment {
 ////        SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy HH:mm:");
 ////        String newFormat = formatter.format(testDate);
 
-        this.dateAndTime = new DateHandler().getDateObjectByString(setDate);
+        this.dateAndTime = new DateUtils().getDateObjectByString(setDate);
     }
 
     public Date getDateAndTime() {
@@ -401,10 +430,10 @@ public class Appointment {
 //        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
 //        String newFormat = formatter.format(dateAndTime.getTimeSDF());
 //        return newFormat;
-        return new DateHandler().getTimeSDF(dateAndTime);
+        return new DateUtils().getTimeSDF(dateAndTime);
     }
     public String getDateAndTimeToDisplay() {
-        return new DateHandler().getFullSDF(dateAndTime);
+        return new DateUtils().getFullSDF(dateAndTime);
 //        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
 //        String newFormat = formatter.format(dateAndTime.getTimeSDF());
 //        return newFormat;
