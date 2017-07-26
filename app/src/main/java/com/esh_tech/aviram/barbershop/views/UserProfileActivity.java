@@ -35,7 +35,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
     private void init() {
 
         etUserName = (EditText)findViewById(R.id.etUserName);
-        etUserLastName = (EditText)findViewById(R.id.etUserLastName);
+        etUserLastName = (EditText)findViewById(R.id.etPassword);
         etUserTelephone= (EditText)findViewById(R.id.etUserTelephone);
 
         etBusinessName = (EditText)findViewById(R.id.etBusinessName);

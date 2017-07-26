@@ -10,6 +10,13 @@ public class Product {
     private int quantity;
     private double price;
 
+    public Product() {
+        this._id = -1;
+        this.name = "";
+        this.quantity = 1;
+        this.price = 1;
+    }
+
     public Product(String name, int quantity, double price) {
         this.name = name;
         this.quantity = quantity;

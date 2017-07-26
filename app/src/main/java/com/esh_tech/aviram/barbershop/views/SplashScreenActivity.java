@@ -7,13 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 
+import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 import com.esh_tech.aviram.barbershop.R;
+import com.esh_tech.aviram.barbershop.data.Customer;
 
 import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.*;
 
 
 public class SplashScreenActivity extends AppCompatActivity {
 
+    BarbershopDBHandler dbHandler;
     ProgressBar loding;
 
     @Override
@@ -43,6 +46,10 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                     if (!username.equals("") && savePassword && register) {
                         //Login with User password
+                        //    Database
+                        /*dbHandler =new BarbershopDBHandler(SplashScreenActivity.this);
+                        dbHandler.addCustomer(new Customer());*/
+
                         Intent myIntent = new Intent(SplashScreenActivity.this, MainActivity.class);
                         startActivity(myIntent);
                         SplashScreenActivity.this.finish();

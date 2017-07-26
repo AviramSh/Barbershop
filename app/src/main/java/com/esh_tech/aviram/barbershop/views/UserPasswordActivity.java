@@ -71,6 +71,7 @@ public class UserPasswordActivity extends AppCompatActivity implements View.OnCl
                     editor.putBoolean(USER_AUTO_LOGIN, true);
                     editor.apply();
                 }
+                editor.apply();
                 if (register) {
                     this.finish();
                 } else {

@@ -45,6 +45,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 AppointmentsDBConstants.APPOINTMENT_ID        + " INTEGER PRIMARY KEY AUTOINCREMENT  , "+
                 AppointmentsDBConstants.APPOINTMENT_DATE + " TEXT ,"+
                 CustomersDBConstants.CUSTOMER_ID + " INTEGER , "+
+                AppointmentsDBConstants.APPOINTMENT_TIME + " INTEGER , "+
+                AppointmentsDBConstants.APPOINTMENT_PRICE + " DOUBLE ," +
                 AppointmentsDBConstants.APPOINTMENT_EXECUTED + " INTEGER "
                 +");");
 

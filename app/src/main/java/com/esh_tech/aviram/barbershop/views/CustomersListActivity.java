@@ -19,7 +19,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -58,7 +57,7 @@ public class CustomersListActivity extends AppCompatActivity {
 
     ArrayList<Customer> allCustomers =new ArrayList<Customer>();
     ListView customerListView;
-    MyCustomersAdapter usersAdapter;
+//    MyCustomersAdapter usersAdapter;
 
 //    Database
     BarbershopDBHandler dbHandler;
@@ -75,20 +74,37 @@ public class CustomersListActivity extends AppCompatActivity {
 
 //        database
         dbHandler = new BarbershopDBHandler(this);
-
-
-//        Connect list view
-        customerListView = (ListView) findViewById(R.id.customersLv);
-
 //        fill components
         populateCustomers();
 
-//        Connect adapter with custom view
-        usersAdapter = new MyCustomersAdapter(this, R.layout.custom_contact_row, allCustomers);
 
-        customerListView.setAdapter(usersAdapter);
+//        Full Adapter
+        customerListView = (ListView)findViewById(R.id.customersLv);
+        customerFilterText = (EditText)findViewById(R.id.customerFilterText);
 
+        customersAdapter = new MyCustomerAdapter(this,
+                R.layout.custom_contact_row,
+                allCustomers);
+        customerListView.setAdapter(customersAdapter);
 
+        customerFilterText.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                customersAdapter.getFilter().filter(s.toString());
+            }
+        });
+
+////        Connect list view
+//        customerListView = (ListView) findViewById(R.id.customersLv);
+////        Connect adapter with custom view
+//        usersAdapter = new MyCustomersAdapter(this, R.layout.custom_contact_row, allCustomers);
+//        customerListView.setAdapter(usersAdapter);
 
         customerListView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
@@ -123,7 +139,7 @@ public class CustomersListActivity extends AppCompatActivity {
                         new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                retunUser(position);
+                                returnUser(position);
                             }
                         }
                 );
@@ -133,31 +149,9 @@ public class CustomersListActivity extends AppCompatActivity {
         }
 
 
-        customerListView = (ListView)findViewById(R.id.customersLv);
-        customerFilterText = (EditText)findViewById(R.id.customerFilterText);
-
-        customersAdapter = new MyCustomerAdapter(this,
-                android.R.layout.simple_list_item_1,
-                allCustomers);
-        customerListView.setAdapter(customersAdapter);
-
-        customerFilterText.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                customersAdapter.getFilter().filter(s.toString());
-            }
-        });
-
-
     }
 
-    private void retunUser(int position) {
+    private void returnUser(int position) {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
 
@@ -196,9 +190,9 @@ public class CustomersListActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if(dbHandler.deleteCustomerById(customer.get_id())){
                     Toast.makeText(CustomersListActivity.this, "Customer Deleted", Toast.LENGTH_SHORT).show();
-//                    allCustomers = dbHandler.getAllCustomers();
+                    allCustomers = dbHandler.getAllCustomers();
                     populateCustomers();
-                    usersAdapter.notifyDataSetChanged();
+                    customersAdapter.notifyDataSetChanged();
 
                 }
 
@@ -252,47 +246,47 @@ public class CustomersListActivity extends AppCompatActivity {
 
     //Listener
 
-    //Creating custom Adpter for the list view GUI
-    class MyCustomersAdapter extends ArrayAdapter<Customer> {
-
-        public MyCustomersAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Customer> objects) {
-            super(context, resource, objects);
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
-            Customer customer = getItem(position);
-
-            if (convertView == null){
-                Log.e("Test get view","inside if with position"+position);
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_contact_row,parent,false);
-            }
-
-            TextView tvName = (TextView) convertView.findViewById(R.id.customerNameET);
-            TextView tvPhone = (TextView)convertView.findViewById(R.id.customerPhoneEt);
-            ImageView customerIcon = (ImageView)convertView.findViewById(R.id.customerIconIv);
-
-
-            //Data
-            tvName.setText(customer.getName());
-            tvPhone.setText(String.valueOf(customer.getPhone()));
-
-            customer.setPhoto(dbHandler.getUserPictureByID(customer.get_id()));
-
-            if (customer.get_id()!= -1 && customer.getPhoto() != null) {
-                customerIcon.setImageBitmap(customer.getPhoto());
-            }else {
-                if (customer.getGender() == 1) customerIcon.setImageResource(R.drawable.usermale48);
-                else customerIcon.setImageResource(R.drawable.userfemale48);
-            }
-
-            usersAdapter.notifyDataSetChanged();
-
-            return convertView;
-        }
-    }
+//    //Creating custom Adpter for the list view GUI
+//    class MyCustomersAdapter extends ArrayAdapter<Customer> {
+//
+//        public MyCustomersAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Customer> objects) {
+//            super(context, resource, objects);
+//        }
+//
+//        @NonNull
+//        @Override
+//        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+//
+//            Customer customer = getItem(position);
+//
+//            if (convertView == null){
+//                Log.e("Test get view","inside if with position"+position);
+//                convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_contact_row,parent,false);
+//            }
+//
+//            TextView tvName = (TextView) convertView.findViewById(R.id.customerNameET);
+//            TextView tvPhone = (TextView)convertView.findViewById(R.id.customerPhoneEt);
+//            ImageView customerIcon = (ImageView)convertView.findViewById(R.id.customerIconIv);
+//
+//
+//            //Data
+//            tvName.setText(customer.getName());
+//            tvPhone.setText(String.valueOf(customer.getPhone()));
+//
+//            customer.setPhoto(dbHandler.getUserPictureByID(customer.get_id()));
+//
+//            if (customer.get_id()!= -1 && customer.getPhoto() != null) {
+//                customerIcon.setImageBitmap(customer.getPhoto());
+//            }else {
+//                if (customer.getGender() == 1) customerIcon.setImageResource(R.drawable.usermale48);
+//                else customerIcon.setImageResource(R.drawable.userfemale48);
+//            }
+//
+//            usersAdapter.notifyDataSetChanged();
+//
+//            return convertView;
+//        }
+//    }
 
 
     public void onClickSelectContact(View btnSelectContact) {
@@ -334,7 +328,7 @@ public class CustomersListActivity extends AppCompatActivity {
                     }
 
                     allCustomers.add(newCustomer);
-                    usersAdapter.notifyDataSetChanged();
+                    customersAdapter.notifyDataSetChanged();
                     Toast.makeText(this, newCustomer.getName() + " Saved.", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, newCustomer.getName() + " Didn't Saved.", Toast.LENGTH_SHORT).show();

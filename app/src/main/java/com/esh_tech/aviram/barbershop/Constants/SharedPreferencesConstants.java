@@ -14,4 +14,7 @@ public class SharedPreferencesConstants {
     public static final String BUSINESS_NAME = "BUSINESS_NAME";
     public static final String BUSINESS_ADDRESS = "BUSINESS_ADDRESS";
     public static final String BUSINESS_PHONE = "BUSINESS_PHONE";
+
+    public static final String PASSWORD_DATE_FOR_REST = "PASSWORD_DATE_FOR_REST";
+    public static final String PASSWORD_COUNTER = "PASSWORD_COUNTER";
 }

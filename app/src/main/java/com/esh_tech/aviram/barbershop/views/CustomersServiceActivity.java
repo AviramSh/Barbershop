@@ -69,6 +69,7 @@ public class CustomersServiceActivity extends AppCompatActivity implements View.
                 this.finish();
                 break;
 
+//            TODO Create customers Email report
 
             default:
                 Toast.makeText(this, "Not Initialized yet", Toast.LENGTH_SHORT).show();

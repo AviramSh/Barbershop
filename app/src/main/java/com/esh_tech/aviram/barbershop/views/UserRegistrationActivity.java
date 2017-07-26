@@ -41,7 +41,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
         editor = settings.edit();
 
         name = (EditText)findViewById(R.id.etUserName);
-        lastName = (EditText)findViewById(R.id.etUserLastName);
+        lastName = (EditText)findViewById(R.id.etPassword);
         phone = (EditText)findViewById(R.id.etUserTelephone);
 
         businessName = (EditText)findViewById(R.id.etBusinessName);
@@ -69,8 +69,8 @@ public class UserRegistrationActivity extends AppCompatActivity {
         boolean register = settings.getBoolean(USER_IS_REGISTER, false);
 
         if(saveUserdata() && !register){
-            Intent passwordIntent = new Intent(this, UserPasswordActivity.class);
-            startActivity(passwordIntent);
+            Intent emailIntent = new Intent(this, UserEmailActivity.class);
+            startActivity(emailIntent);
             this.finish();
         }else{
             if(register)
@@ -107,6 +107,16 @@ public class UserRegistrationActivity extends AppCompatActivity {
         else if(testString.length()<2){flag = false; errorMassage += "Last name is to short\n";}else {
             editor.putString(USER_LAST_NAME,testString);
         }
+
+/*//        Email testing
+        testString = email.getText().toString();
+        if(testString.equals("")){flag = false; errorMassage += "Email is null\n";}
+        else if(testString.length()<2){flag = false; errorMassage += "Email is to short\n";}else {
+            editor.putString(USER_EMAIL,testString);
+        }*/
+
+
+
 //Phone testing
         testString = phone.getText().toString();
         if(testString.equals("")){flag = false; errorMassage += "Phone is null\n";}

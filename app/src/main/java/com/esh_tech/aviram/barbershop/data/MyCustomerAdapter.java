@@ -15,9 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
+import com.esh_tech.aviram.barbershop.R;
 
 
 /**
@@ -136,14 +138,24 @@ public class MyCustomerAdapter extends ArrayAdapter<Customer>
         Customer customerPosition = mItems.get(position);
 
         LayoutInflater inflater = activityContext.getLayoutInflater();
-        View row = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+        View row = inflater.inflate(R.layout.custom_contact_row, parent, false);
 
         // if this is a group reminder hat this user didn't create, we add the
         // the name of the reminder originator in the paranthesis
-        TextView propertyText = (TextView) row.findViewById(android.R.id.text1);
+        TextView propertyText = (TextView) row.findViewById(R.id.customerNameET);
+        TextView propertyPhoneText = (TextView) row.findViewById(R.id.customerPhoneEt);
+        ImageView customerIcon = (ImageView)row.findViewById(R.id.customerIconIv);
 //        propertyText.setText(customerPosition.toString());	// changed from reminderNames to mItems
         propertyText.setText(customerPosition.getName());
-
+        propertyPhoneText.setText(customerPosition.getPhone());
+        if(dbHandler.getUserPictureByID(customerPosition.get_id()) != null)
+            customerIcon.setImageBitmap(dbHandler.getUserPictureByID(customerPosition.get_id()));
+        else if (customerPosition.get_id()!= -1 && customerPosition.getPhoto() != null) {
+            customerIcon.setImageBitmap(customerPosition.getPhoto());
+        }else {
+            if (customerPosition.getGender() == 1) customerIcon.setImageResource(R.drawable.usermale48);
+            else customerIcon.setImageResource(R.drawable.userfemale48);
+        }
 
         row.setTag(customerPosition.get_id());
 

@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="start"
     android:background="@color/background"
-    tools:context="com.esh_tech.aviram.barbershop.views.UserRegistrationActivity">
-
+    tools:context="com.esh_tech.aviram.barbershop.views.UserEmailActivity">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_marginBottom="32dp"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
@@ -28,29 +27,39 @@
         android:layout_marginEnd="24dp">
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/textView29"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/email" />
+
+        <EditText
+            android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:text="@string/nameTV"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/etUserName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
+            android:inputType="textEmailAddress"
             android:maxLength="25"
             android:maxLines="1"
-            android:gravity="start" />
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/tvErrorLable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:visibility="invisible"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:text="@string/familyname"
+            android:text="@string/password"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp" />
 
@@ -59,104 +68,87 @@
             android:singleLine="true"
             android:maxLines="1"
             android:maxLength="25"
+            android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start" />
+
+        <TextView
+            android:id="@+id/tvErrorLablePassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:visibility="invisible"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/textView9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:text="@string/phone"
+            android:text="@string/repassword"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/etUserTelephone"
-            android:inputType="phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
+            android:id="@+id/etRePassword"
             android:singleLine="true"
             android:maxLines="1"
-            android:maxLength="15"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:text="@string/businessName"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/etBusinessName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:maxLength="25"
-            android:singleLine="true"
-            android:maxLines="1"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="start" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/tvErrorLableRePassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:text="@string/phonebusines"
+            android:visibility="invisible"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btVerify"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"
+            android:paddingTop="10dp"
+            android:text="@string/sand_verify" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:paddingTop="10dp"
+            android:text="@string/verificationCode"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/etBusinessPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="phone"
-            android:maxLength="15"
+            android:id="@+id/etVerificationCode"
             android:singleLine="true"
+            android:inputType="number"
             android:maxLines="1"
-            android:gravity="start" />
+            android:maxLength="5"
+            android:paddingTop="10dp"
+            android:background="@color/empty"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            android:gravity="center" />
 
-        <TextView
-            android:id="@+id/textView15"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:text="@string/businessAddress"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/etBusinessAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLength="30"
-            android:singleLine="true"
-            android:maxLines="1"
-            android:gravity="start" />
-
-        <LinearLayout
+        <Button
+            android:id="@+id/btSave"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:paddingTop="20dp"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="415dp">
-
-            <ImageButton
-                android:id="@+id/imageButton4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/background"
-                android:onClick="passwordActivityNext"
-                app:srcCompat="@drawable/barberscissors"
-                tools:layout_editor_absoluteX="272dp"
-                tools:layout_editor_absoluteY="395dp" />
-        </LinearLayout>
+            android:layout_marginTop="10dp"
+            android:background="@color/colorAccent"
+            android:paddingTop="10dp"
+            android:text="@string/verify"
+            android:visibility="invisible" />
 
     </LinearLayout>
 

@@ -1,7 +1,10 @@
 package com.esh_tech.aviram.barbershop.Utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
+import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.data.Config;
 import com.esh_tech.aviram.barbershop.R;
 
@@ -27,6 +30,8 @@ public class MailUtils {
 //
 //    public static String fromUserName = "irit.lovenberg@gmail.com";
 //    public static String fromPassword = "160876";
+    static String myEmail;
+    static String password;
 
 
     public static final String TAG = "TestMails";
@@ -43,12 +48,14 @@ public class MailUtils {
 
     public static boolean sendMail(Context context, String targetEmail, String attachmentFilePath)
     {
-
+        final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         Session session = Session.getInstance(SMTPprops,
                 new javax.mail.Authenticator(){
                     protected PasswordAuthentication getPasswordAuthentication()
                     {
-                        return new PasswordAuthentication(Config.EMAIL, Config.PASSWORD);
+//                        TODO Support email
+                        return new PasswordAuthentication(settings.getString(UserDBConstants.USER_EMAIL,""),
+                                settings.getString(UserDBConstants.USER_EMAIL_PASSWORD,""));
                     }
                 });
 
@@ -63,7 +70,7 @@ public class MailUtils {
             // first mail is to the Admin - order details
             Message message = new MimeMessage(session);
             message = constructMail(context, message,
-                    new InternetAddress(Config.EMAIL),
+                    new InternetAddress(settings.getString(UserDBConstants.USER_EMAIL,"")),
                     targetEmail, attachmentFilePath);
 
             Transport.send(message);

@@ -10,6 +10,8 @@ public class UserDBConstants {
     public static final String USER_IS_REGISTER ="USER_IS_REGISTER";
     public static final String USER_NAME ="USER_NAME";
     public static final String USER_LAST_NAME ="USER_LAST_NAME";
+    public static final String USER_EMAIL ="USER_EMAIL";
+    public static final String USER_EMAIL_PASSWORD ="USER_EMAIL_PASSWORD";
     public static final String USER_PHONE ="USER_PHONE";
     public static final String USER_PASSWORD ="USER_PASSWORD";
     public static final String USER_AUTO_LOGIN ="USER_AUTO_LOGIN";

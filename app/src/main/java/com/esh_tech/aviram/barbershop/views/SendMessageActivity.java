@@ -59,7 +59,7 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
 
     private void init() {
 
-//        TODO Design GUI delete email or convert to TextView
+//        TODO Design GUI delete etEmail or convert to TextView
         Intent myIntent =getIntent();
 //        Toast.makeText(this, myIntent.getStringExtra("userPhone"), Toast.LENGTH_SHORT).show();
         dbHandler = new BarbershopDBHandler(this);
@@ -141,14 +141,14 @@ public class SendMessageActivity extends AppCompatActivity implements View.OnCli
 //            finish();
 //        } catch (android.content.ActivityNotFoundException ex) {
 //            Toast.makeText(SendMessageActivity.this,
-//                    "There is no email client installed.", Toast.LENGTH_SHORT).show();
+//                    "There is no etEmail client installed.", Toast.LENGTH_SHORT).show();
 //        }
-        //Getting content for email
+        //Getting content for etEmail
 
         //Creating SendMail object
         SendMail sm = new SendMail(this, emailTo, getResources().getString(R.string.emailSubject), message);
 
-        //Executing sendmail to send email
+        //Executing sendmail to send etEmail
         sm.execute();
     }
 

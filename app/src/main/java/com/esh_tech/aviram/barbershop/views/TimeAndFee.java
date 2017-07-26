@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.R;
 
 import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.*;
@@ -43,6 +44,11 @@ public class TimeAndFee extends AppCompatActivity implements View.OnClickListene
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(TimeAndFee.this);
 
+        etManPrice.setText(String.valueOf(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_PRICE,35)));
+        etManTime.setText(String.valueOf(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_TIME,35)));
+
+        etWomanPrice.setText(String.valueOf(settings.getInt(UserDBConstants.USER_FEMALE_HAIRCUT_PRICE,35)));
+        etWomanPrice.setText(String.valueOf(settings.getInt(UserDBConstants.USER_FEMALE_HAIRCUT_TIME,35)));
 //        Get Values
         register = settings.getBoolean(USER_IS_REGISTER, false);
         editor = settings.edit();

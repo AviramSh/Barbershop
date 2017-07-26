@@ -318,15 +318,16 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             Toast.makeText(this, R.string.emptyField, Toast.LENGTH_SHORT).show();
         }else{
 
-
             if(customerProfile.get_id() != -1) {
 //                newAppointment = new Appointment(appointmentCalendar,customerProfile.get_id());
                 newAppointment.setDateAndTime(appointmentCalendar);
                 newAppointment.setCustomerID(customerProfile.get_id());
 
-                if(customerProfile.getGender() ==1){
-                    newAppointment.setHaircutTime(settings.getInt(USER_MALE_HAIRCUT_TIME,35));
-                    newAppointment.setHaircutPrice(settings.getInt(USER_MALE_HAIRCUT_PRICE,35));
+                if(customerProfile.getGender() == 1){
+                    newAppointment.setHaircutTime(35);
+                    newAppointment.setHaircutPrice(35);
+                    /*newAppointment.setHaircutTime(settings.getInt(USER_MALE_HAIRCUT_TIME,35));
+                    newAppointment.setHaircutPrice(settings.getInt(USER_MALE_HAIRCUT_PRICE,35));*/
                 }else{
                     newAppointment.setHaircutTime(settings.getInt(USER_FEMALE_HAIRCUT_TIME,45));
                     newAppointment.setHaircutPrice(settings.getInt(USER_FEMALE_HAIRCUT_PRICE,45));
@@ -341,10 +342,10 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                 String newDateAndTimeFormat = DateUtils.getFullSDF(appointmentCalendar.getTime());
 
 //                TODO Schedule customer test with DB
-                if(!dbHandler.isCustomerSchedule(newAppointment,newDateFormat)){
+                if(!dbHandler.isCustomerSchedule(newAppointment,newDateFormat)&&
+                        dbHandler.testIfAppointmentAvailable(this,appointmentCalendar.getTime())){
 
-                    if (dbHandler.addAppointment(newAppointment)&&
-                            dbHandler.testIfAppointmentAvailable(this,appointmentCalendar.getTime())) {
+                    if (dbHandler.addAppointment(newAppointment)) {
                         //                Remainder Sms Handler
                         if (customerProfile.getRemainder() == 1) {
                             setRemainder();
@@ -362,50 +363,55 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                 }
 
             }else{
-                final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
-                customerProfile.setPhone(customerProfile.getPhone());
-                mBuilder.setTitle(R.string.dialogCreateNewCustomer);
-
-                mBuilder.setNeutralButton(R.string.createNewCustomer, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent myIntent = new Intent(NewAppointmentActivity.this,NewCustomerActivity.class);
-                        myIntent.putExtra(CustomersDBConstants.CUSTOMER_PHONE,customerProfile.getPhone());
-                        startActivity(myIntent);
-                        NewAppointmentActivity.this.finish();
-                    }
-                });
-
-
-                mBuilder.setNegativeButton(R.string.guest, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        customerProfile.setName(getResources().getString(R.string.guest));
-                        customerProfile.setPhone(customerProfile.getPhone());
-                        if(dbHandler.addCustomer(customerProfile)) {
-                            customerProfile = dbHandler.getCustomerByPhone(customerProfile.getPhone());
-                            newAppointment = new Appointment(appointmentCalendar, customerProfile.get_id());
-
-                            newAppointment.setHaircutTime(settings.getInt(USER_MALE_HAIRCUT_TIME,35));
-                            newAppointment.setHaircutPrice(settings.getInt(USER_MALE_HAIRCUT_PRICE,35));
-
-
-                            if (dbHandler.addAppointment(newAppointment)&&
-                                    dbHandler.testIfAppointmentAvailable(NewAppointmentActivity.this,appointmentCalendar.getTime())) {
-                                Toast.makeText(NewAppointmentActivity.this, R.string.saved, Toast.LENGTH_LONG).show();
-                                goMain();
-                            }
-                        }else{
-                            Toast.makeText(NewAppointmentActivity.this, R.string.failedToSave, Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-
-                AlertDialog dialog = mBuilder.create();
-                dialog.show();
-
+                guestHandler();
             }
         }
+
+    }
+
+    private void guestHandler() {
+
+        final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+        customerProfile.setPhone(customerProfile.getPhone());
+        mBuilder.setTitle(R.string.dialogCreateNewCustomer);
+
+        mBuilder.setNeutralButton(R.string.createNewCustomer, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent myIntent = new Intent(NewAppointmentActivity.this,NewCustomerActivity.class);
+                myIntent.putExtra(CustomersDBConstants.CUSTOMER_PHONE,customerProfile.getPhone());
+                startActivity(myIntent);
+                NewAppointmentActivity.this.finish();
+            }
+        });
+
+
+        mBuilder.setNegativeButton(R.string.guest, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                customerProfile.setName(getResources().getString(R.string.guest));
+                customerProfile.setPhone(customerProfile.getPhone());
+
+                if(dbHandler.addCustomer(customerProfile)) {
+                    customerProfile = dbHandler.getCustomerByPhone(customerProfile.getPhone());
+                    newAppointment = new Appointment(appointmentCalendar, customerProfile.get_id());
+
+                    newAppointment.setHaircutTime(settings.getInt(USER_MALE_HAIRCUT_TIME,35));
+                    newAppointment.setHaircutPrice(settings.getInt(USER_MALE_HAIRCUT_PRICE,35));
+
+                    if (dbHandler.addAppointment(newAppointment)&&
+                            dbHandler.testIfAppointmentAvailable(NewAppointmentActivity.this,appointmentCalendar.getTime())) {
+                        Toast.makeText(NewAppointmentActivity.this, R.string.saved, Toast.LENGTH_LONG).show();
+                        goMain();
+                    }
+                }/*else{
+                    Toast.makeText(NewAppointmentActivity.this, R.string.failedToSave, Toast.LENGTH_LONG).show();
+                }*/
+            }
+        });
+
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
 
     }
 

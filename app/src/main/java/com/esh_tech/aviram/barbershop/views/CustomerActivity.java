@@ -215,13 +215,11 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
 
                 break;
             case R.id.btClose:
-                myIntent = new Intent(this,MainActivity.class);
-                startActivity(myIntent);
                 this.finish();
                 break;
             default:
                 customerPic = (ImageView) findViewById(R.id.customerMainPic);
-                Toast.makeText(this, "Not Initialized", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.not_initialized_yet, Toast.LENGTH_LONG).show();
                 break;
         }
     }

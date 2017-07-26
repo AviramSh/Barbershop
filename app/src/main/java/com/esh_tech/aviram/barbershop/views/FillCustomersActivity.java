@@ -49,7 +49,7 @@ public class FillCustomersActivity extends AppCompatActivity {
 
     ArrayList<Customer> allCustomers =new ArrayList<Customer>();
     ListView customerListView;
-    FillCustomersActivity.MyCustomersAdapter usersAdapter;
+//    FillCustomersActivity.MyCustomersAdapter usersAdapter;
 
     //    Database
     BarbershopDBHandler dbHandler;
@@ -58,7 +58,7 @@ public class FillCustomersActivity extends AppCompatActivity {
     SharedPreferences settings;
     SharedPreferences.Editor editor;
 
-
+    MyCustomerAdapter customersAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,15 +72,19 @@ public class FillCustomersActivity extends AppCompatActivity {
     private void init() {
 //        Database
         dbHandler = new BarbershopDBHandler(this);
-
+        allCustomers = dbHandler.getAllCustomers();
         //        Connect list view
         customerListView =(ListView)findViewById(R.id.fillCustomersLv);
 
         //        Connect adapter with custom view
-        usersAdapter = new MyCustomersAdapter(this,R.layout.custom_contact_row,allCustomers);
+//        usersAdapter = new MyCustomersAdapter(this,R.layout.custom_contact_row,allCustomers);
 
-        customerListView.setAdapter(usersAdapter);
+//        customerListView.setAdapter(usersAdapter);
 
+        customersAdapter = new MyCustomerAdapter(this,
+                R.layout.custom_contact_row,
+                allCustomers);
+        customerListView.setAdapter(customersAdapter);
     }
 
     //allCustomers.add(new Customer(retrieveContactName(),"050-342-3242","aaa@mmm.com",true));
@@ -99,43 +103,45 @@ public class FillCustomersActivity extends AppCompatActivity {
     }
 
     //Creating custom Adapter for the list view GUI
-    class MyCustomersAdapter extends ArrayAdapter<Customer> {
-
-        public MyCustomersAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Customer> objects) {
-            super(context, resource, objects);
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
-            Customer customer = getItem(position);
-
-            if (convertView == null){
-                Log.e("Test get view","inside if with position"+position);
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_contact_row,parent,false);
-            }
-
-            TextView tvName = (TextView) convertView.findViewById(R.id.customerNameET);
-            TextView tvPhone = (TextView)convertView.findViewById(R.id.customerPhoneEt);
-            ImageView customerIcon = (ImageView)convertView.findViewById(R.id.customerIconIv);
-
-
-
-            //Data
-            tvName.setText(customer.getName());
-            tvPhone.setText(customer.getPhone());
-
-            /*if(customer.getCustomerPhoto() != null) {
-                customerIcon.setImageBitmap(customer.getCustomerPhoto());
-            }else */if(customer.getGender()==1) {
-                customerIcon.setImageResource(R.drawable.usermale48);
-            }else {
-                customerIcon.setImageResource(R.drawable.userfemale48);
-            }
-            return convertView;
-        }
-    }
+//    class MyCustomersAdapter extends ArrayAdapter<Customer> {
+//
+//        public MyCustomersAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Customer> objects) {
+//            super(context, resource, objects);
+//        }
+//
+//        @NonNull
+//        @Override
+//        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+//
+//            Customer customer = getItem(position);
+//
+//            if (convertView == null){
+//                Log.e("Test get view","inside if with position"+position);
+//                convertView = LayoutInflater.from(getContext()).inflate(R.layout.custom_contact_row,parent,false);
+//            }
+//
+//            TextView tvName = (TextView) convertView.findViewById(R.id.customerNameET);
+//            TextView tvPhone = (TextView)convertView.findViewById(R.id.customerPhoneEt);
+//            ImageView customerIcon = (ImageView)convertView.findViewById(R.id.customerIconIv);
+//
+//
+//
+//            //Data
+//            tvName.setText(customer.getName());
+//            tvPhone.setText(customer.getPhone());
+//
+//            if(customer.getGender()==1) {
+//                customerIcon.setImageResource(R.drawable.usermale48);
+//            }else {
+//                customerIcon.setImageResource(R.drawable.userfemale48);
+//            }
+//
+//            if(customer.getPhoto() != null) {
+//                customerIcon.setImageBitmap(customer.getPhoto());
+//            }
+//            return convertView;
+//        }
+//    }
 
     public void onClickSelectContact(View btnSelectContact) {
 
@@ -161,8 +167,13 @@ public class FillCustomersActivity extends AppCompatActivity {
 
                 newCustomer.setName(retrieveContactName());
                 newCustomer.setPhone(retrieveContactNumber());
-                Bitmap photo =retrieveContactPhoto();
+                Bitmap photo = retrieveContactPhoto();
 
+                try {
+                    newCustomer.setPhoto(photo);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 //                Toast.makeText(this, newCustomer.getName()+" :"+newCustomer.getPhone(), Toast.LENGTH_SHORT).show();
 
 //                allCustomers.add(newCustomer);
@@ -170,10 +181,11 @@ public class FillCustomersActivity extends AppCompatActivity {
                 if(dbHandler.getCustomerByPhone(newCustomer.getPhone())== null) {
                     if (dbHandler.addCustomer(newCustomer)) {
                         allCustomers.add(newCustomer);
-                        usersAdapter.notifyDataSetChanged();
+//                        usersAdapter.notifyDataSetChanged();
 //                        allCustomers.add(newCustomer);
-                        usersAdapter.notifyDataSetChanged();
+                        customersAdapter.notifyDataSetChanged();
                         Toast.makeText(this, newCustomer.getName() + R.string.saved, Toast.LENGTH_SHORT).show();
+
                     } else {
                         Toast.makeText(this, newCustomer.getName() + R.string.failedToSave, Toast.LENGTH_SHORT).show();
                     }

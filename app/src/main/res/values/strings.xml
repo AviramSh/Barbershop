@@ -199,6 +199,14 @@
     <string name="targetMail">שלח אל</string>
     <string name="customerSearch">חיפוש לקוח</string>
     <string name="There_is_a_scheduled_appointment">יש תור במועד זה</string>
+    <string name="resatYourPassWord">איפוס סיסמה</string>
+    <string name="passwordSentToYourEmail">הסיסמה נשלחה לאימייל</string>
+    <string name="verificationCode">קוד אימות</string>
+    <string name="verify">אימות</string>
+    <string name="not_initialized_yet">עוד לא הוגדר</string>
+    <string name="sand_verify">שלח קוד אימות</string>
+    <string name="verification_code_send_to_your_email">קוד אימות נשלח לאיימל שלך</string>
+    <string name="title_user_email_activity">רישום אימייל</string>
 
 
     <string-array name="spinner_hours">

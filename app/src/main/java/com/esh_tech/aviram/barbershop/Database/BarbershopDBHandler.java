@@ -33,14 +33,21 @@ import java.util.Locale;
 public class BarbershopDBHandler {
 
     private MySQLiteHelper dbHelper;
+    private Context context;
 
     public BarbershopDBHandler(Context context) {
+        this.context = context;
         dbHelper= new MySQLiteHelper(context, MainDBConstants.BARBERSHOP_DB_NAME,null, MainDBConstants.BARBERSHOP_DB_VERSION);
     }
 
     //    Add Customer ID(String name, String phone, String secondPhone, String email, Double bill, Bitmap photo, boolean gender, boolean remainder)
     public boolean addCustomer(Customer customer){
         long result = -1;
+        if (getCustomerByPhone(customer.getPhone())==null) {
+            Toast.makeText(context, R.string.customerExist, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues columnValues = new ContentValues();
@@ -64,7 +71,9 @@ public class BarbershopDBHandler {
                     null);
         }
         db.close();
-
+        if(customer.getPhoto()!=null){
+            addPicture(getCustomerByPhone(customer.getPhone()).get_id(),customer.getPhoto());
+        }
         return (result != -1);
     }
     public ArrayList<Customer> getAllCustomers() {
@@ -76,6 +85,7 @@ public class BarbershopDBHandler {
                 null,null,null,null,null,CustomersDBConstants.CUSTOMER_NAME+" ASC");
 
         while (customersCursor.moveToNext())
+
             customersList.add(new Customer(
                     customersCursor.getInt(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_ID)),
                     customersCursor.getString(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_NAME)),
@@ -182,7 +192,7 @@ public class BarbershopDBHandler {
 
 
     //    Add Appointment ID(Date theDate, Time theTime, int haircutTime, int customerID)
-
+// TODO Fix all the database Handler Queries
     public boolean addAppointment(Appointment appointment){
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -192,6 +202,8 @@ public class BarbershopDBHandler {
 //        Set the date
         columnValues.put(AppointmentsDBConstants.APPOINTMENT_DATE,appointment.getDateAndTimeToDisplay());
         columnValues.put(AppointmentsDBConstants.CUSTOMER_ID,appointment.getCustomerID());
+        columnValues.put(AppointmentsDBConstants.APPOINTMENT_PRICE,appointment.getHaircutPrice());
+        columnValues.put(AppointmentsDBConstants.APPOINTMENT_TIME,appointment.getHaircutTime());
         columnValues.put(AppointmentsDBConstants.APPOINTMENT_EXECUTED,appointment.getTackAnHaircut());
 
 
@@ -217,7 +229,9 @@ public class BarbershopDBHandler {
                         AppointmentsCursor.getInt(AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.APPOINTMENT_ID)),
                         AppointmentsCursor.getString(AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.APPOINTMENT_DATE)),
                         AppointmentsCursor.getInt(AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.CUSTOMER_ID)),
-                        AppointmentsCursor.getInt(AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.APPOINTMENT_EXECUTED))
+                        AppointmentsCursor.getInt(AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.APPOINTMENT_EXECUTED)),
+                        AppointmentsCursor.getInt(AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.APPOINTMENT_TIME)),
+                        AppointmentsCursor.getDouble(AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.APPOINTMENT_PRICE))
                 ));
             }
         AppointmentsCursor.close();
@@ -270,6 +284,8 @@ public class BarbershopDBHandler {
         columnValues.put(AppointmentsDBConstants.APPOINTMENT_DATE,appointment.getDateAndTimeToDisplay());
         columnValues.put(AppointmentsDBConstants.CUSTOMER_ID,appointment.getCustomerID());
         columnValues.put(AppointmentsDBConstants.APPOINTMENT_EXECUTED,appointment.getTackAnHaircut());
+        columnValues.put(AppointmentsDBConstants.APPOINTMENT_TIME,appointment.getHaircutTime());
+        columnValues.put(AppointmentsDBConstants.APPOINTMENT_PRICE,appointment.getHaircutPrice());
 
 
         long result = db.update(AppointmentsDBConstants.APPOINTMENTS_TABLE_NAME,
@@ -317,7 +333,7 @@ public class BarbershopDBHandler {
     }
 
     public boolean testIfAppointmentAvailable(Context context,Date receivedDate) {
-
+//        TODO Meed To Test Method
         ArrayList<Appointment> myAppointments = getAllAppointments(DateUtils.getStringFromDate(receivedDate));
         Calendar date1;
         Calendar date2;
@@ -326,7 +342,7 @@ public class BarbershopDBHandler {
         date1.setTime(receivedDate);
         date1.set(Calendar.SECOND,0);
 
-
+        if(myAppointments.isEmpty())return true;
 //        Toast.makeText(context, "Date1 : "+ DateUtils.getFullSDF(receivedDate)
 //                + "  Date2 : "+ DateUtils.getFullSDF(myAppointments.get(0).getDateAndTime()), Toast.LENGTH_LONG).show();
         for (Appointment appointment:
@@ -335,46 +351,90 @@ public class BarbershopDBHandler {
             date2 = Calendar.getInstance();
             date2.setTime(appointment.getDateAndTime());
             date2.set(Calendar.SECOND,0);
-
-//            Toast.makeText(context, "Date1 : "+ DateUtils.getFullSDF(receivedDate)
-//            + "  Date2 : "+ DateUtils.getFullSDF(appointment.getDateAndTime()), Toast.LENGTH_SHORT).show();
-
-            //equals() returns true if both the dates are equal
-            if (date1.equals(date2)) {
-                Toast.makeText(context, R.string.There_is_a_scheduled_appointment + " \n" +
-                        getCustomerByID(appointment.get_id()).getName() + " " + appointment.getDateAndTimeToDisplay(), Toast.LENGTH_SHORT).show();
+            if((date1.getTimeInMillis() - date2.getTimeInMillis())/60000 <= 35){
+                Toast.makeText(context,
+                        "There is already a scheduled appointment in : "+DateUtils.getFullSDF(date2), Toast.LENGTH_LONG).show();
                 return false;
-//            System.out.println("Date1 is equal Date2");
-            } else if (date1.after(date2)) {
-
-                try {
-                    date2.add(Calendar.MINUTE, -appointment.getHaircutTime());
-                } catch (Exception e) {
-                    date2.add(Calendar.MINUTE, -35);
-                }
-
-                if (!date1.after(date2)) {
-                    Toast.makeText(context, R.string.There_is_a_scheduled_appointment + " \n" +
-                            getCustomerByID(appointment.get_id()).getName() + " " + appointment.getDateAndTimeToDisplay(), Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-//                Toast.makeText(context, "Date1 : "+ DateUtils.getFullSDF(receivedDate)
-//                        + "  Date2 : "+ DateUtils.getFullSDF(myAppointments.get(0).getDateAndTime()), Toast.LENGTH_LONG).show();
-//            System.out.println("Date1 is after Date2");
-            } else if (date1.before(date2)) {
-                try {
-                    date2.add(Calendar.MINUTE, appointment.getHaircutTime());
-                } catch (Exception e) {
-                    date2.add(Calendar.MINUTE, 35);
-                }
-
-                if (!date1.before(date2) || date1.equals(date2)) {
-                    Toast.makeText(context, R.string.There_is_a_scheduled_appointment + " \n" +
-                            getCustomerByID(appointment.get_id()).getName() + " " + appointment.getDateAndTimeToDisplay(), Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-//            System.out.println("Date1 is before Date2");
             }
+
+//            /*if((date1.get(Calendar.HOUR)+1) < date2.get(Calendar.HOUR)) {
+//                Toast.makeText(context, DateUtils.getFullSDF(date1)+" Date+1 is Small "+DateUtils.getFullSDF(date2), Toast.LENGTH_LONG).show();
+//            }else if((date1.get(Calendar.HOUR)-1) > date2.get(Calendar.HOUR)){
+//                Toast.makeText(context, DateUtils.getFullSDF(date1)+" Date-1 is Big "+DateUtils.getFullSDF(date2), Toast.LENGTH_LONG).show();
+//            }else
+//                Toast.makeText(context, DateUtils.getFullSDF(date1)+" Error "+DateUtils.getFullSDF(date2), Toast.LENGTH_LONG).show();*/
+//
+//            /*Toast.makeText(context, "compare date : "+DateUtils.compareDates(date1,date2)+"\nDate1: "+DateUtils.getFullSDF(date1) +
+//                    "\n Date2: "+DateUtils.getFullSDF(date2), Toast.LENGTH_LONG).show();*/
+////            Toast.makeText(context, "Date1 : "+ DateUtils.getFullSDF(receivedDate)
+////            + "  Date2 : "+ DateUtils.getFullSDF(appointment.getDateAndTime()), Toast.LENGTH_SHORT).show();
+//
+//            //equals() returns true if both the dates are equal
+////            Toast.makeText(context, DateUtils.compareDatesAppointments(context,date1.getTime(),date2.getTime()), Toast.LENGTH_SHORT).show();
+//            /*for(int i = 0; i<2;i++) {
+//                Toast.makeText(context, DateUtils.getFullSDF(date1)+" == "+DateUtils.getFullSDF(date2), Toast.LENGTH_SHORT).show();
+//                switch (DateUtils.compareDatesAppointments(context, date1.getTime(), date2.getTime())) {
+//                    case "0":
+//                        Toast.makeText(context, "0", Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case "1":
+//                        Toast.makeText(context, "1", Toast.LENGTH_SHORT).show();
+//                        date2.add(Calendar.MINUTE,35);
+//                        Toast.makeText(context, DateUtils.getFullSDF(date1)+" == "+DateUtils.getFullSDF(date2), Toast.LENGTH_LONG).show();
+//                        break;
+//
+//                    case "2":
+//                        Toast.makeText(context, "2", Toast.LENGTH_SHORT).show();
+//                        break;
+//
+//                    default:
+//                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+//                        break;
+//                }
+//            }*/
+//
+//            /*if (date1.equals(date2)) {
+//                Toast.makeText(context, R.string.There_is_a_scheduled_appointment + " \n" +
+//                        getCustomerByID(appointment.get_id()).getName() + " " + appointment.getDateAndTimeToDisplay(), Toast.LENGTH_SHORT).show();
+//                return false;
+////            System.out.println("Date1 is equal Date2");
+//            }
+//
+//            if (date1.after(date2)) {
+//                *//*Toast.makeText(context, "Date1: "+DateUtils.getFullSDF(date1) +
+//                        "\n>\n Date2: "+DateUtils.getFullSDF(date2)+"", Toast.LENGTH_LONG).show();*//*
+//                try {
+//                    date2.add(Calendar.MINUTE, -appointment.getHaircutTime());
+//                } catch (Exception e) {
+//                    date2.add(Calendar.MINUTE, -35);
+//                }
+//
+//                if (!date1.after(date2)) {
+//                    Toast.makeText(context, R.string.There_is_a_scheduled_appointment + " \n" +
+//                            getCustomerByID(appointment.get_id()).getName() + " " + appointment.getDateAndTimeToDisplay(), Toast.LENGTH_SHORT).show();
+//                    return false;
+//                }
+////                Toast.makeText(context, "Date1 : "+ DateUtils.getFullSDF(receivedDate)
+////                        + "  Date2 : "+ DateUtils.getFullSDF(myAppointments.get(0).getDateAndTime()), Toast.LENGTH_LONG).show();
+////            System.out.println("Date1 is after Date2");
+//            }
+//
+//            if (date1.before(date2)) {
+//                *//*Toast.makeText(context, "Date1: "+DateUtils.getFullSDF(date1) +
+//                        "\n<\n Date2: "+DateUtils.getFullSDF(date2)+"", Toast.LENGTH_LONG).show();*//*
+//                try {
+//                    date2.add(Calendar.MINUTE, appointment.getHaircutTime());
+//                } catch (Exception e) {
+//                    date2.add(Calendar.MINUTE, 35);
+//                }
+//
+//                if (!date1.before(date2) || date1.equals(date2)) {
+//                    Toast.makeText(context, R.string.There_is_a_scheduled_appointment + " \n" +
+//                            getCustomerByID(appointment.get_id()).getName() + " " + appointment.getDateAndTimeToDisplay(), Toast.LENGTH_SHORT).show();
+//                    return false;
+//                }
+////            System.out.println("Date1 is before Date2");
+//            }*/
 
         }
 

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:background="@color/productListColor"
+    android:gravity="center"
     android:layout_weight="100"
     android:padding="10dp"
     android:layout_height="match_parent">
@@ -35,6 +36,7 @@
         android:layout_height="wrap_content"
         android:textStyle="bold|normal|italic"
         android:paddingTop="10dp"
+        android:paddingLeft="40dp"
         android:gravity="start"
         android:layout_weight="15"
         android:padding="10dp"

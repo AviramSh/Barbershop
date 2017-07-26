@@ -172,8 +172,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //    Handling the Appointment list view
     private void appointmentHandler(final int position) {
 
-
-        Toast.makeText(this, dbHandler.getCustomerByID(allAppointments.get(position).getCustomerID())+"", Toast.LENGTH_SHORT).show();
+        Customer customer =dbHandler.getCustomerByID(allAppointments.get(position).getCustomerID());
+        Toast.makeText(this, customer.getName()+"", Toast.LENGTH_SHORT).show();
 
 
         final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
@@ -199,11 +199,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     if (customer != null) {
                         settings = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+
                         if(customer.getGender()==1){
                             purchase.setPrice(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_PRICE,0));
 
                         }else{
                             purchase.setPrice(settings.getInt(UserDBConstants.USER_FEMALE_HAIRCUT_PRICE,0));
+                        }
+                        if(customer.getName().equals(getResources().getString(R.string.guest))){
+                            dbHandler.deleteCustomerById(customer.get_id());
+                            Toast.makeText(MainActivity.this, "Delete :"+R.string.guest, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

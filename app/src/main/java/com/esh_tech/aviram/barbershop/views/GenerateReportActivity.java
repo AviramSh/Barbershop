@@ -4,9 +4,11 @@ package com.esh_tech.aviram.barbershop.views;
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -19,6 +21,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 import com.esh_tech.aviram.barbershop.R;
 import com.esh_tech.aviram.barbershop.Utils.MailUtils;
@@ -54,9 +57,7 @@ public class GenerateReportActivity extends AppCompatActivity {
     EditText fromDateEdit, toDateEdit;
     MyGlobalUser myApp;
     String reportEmail;
-    String siteManager;
-    String siteName;
-    String licensePlateNumber;
+    SharedPreferences settings;
     public static final int WRITE_EXTERNAL_STORAGE_REQUEST = 1;
     Calendar fromDate, toDate;
     Spinner rideStatusSpinner;
@@ -80,9 +81,11 @@ public class GenerateReportActivity extends AppCompatActivity {
 
     public void initComponents() {
         dbHandler = new BarbershopDBHandler(this);
+        this.settings = PreferenceManager.getDefaultSharedPreferences(this);
+
         targetMailEdit = (EditText) findViewById(R.id.targetMailEdit);
 //        targetMailEdit.setText(myApp.getEmail());
-        targetMailEdit.setText(Config.EMAIL);
+        targetMailEdit.setText(settings.getString(UserDBConstants.USER_EMAIL,""));
 
         rideStatusSpinner = (Spinner) findViewById(R.id.ridesStatusSpinner);
 //        rideStatusSpinner.setSelection(2);
@@ -202,7 +205,7 @@ public class GenerateReportActivity extends AppCompatActivity {
 
 
 
-//        TODO set user email by default with Shared Preferences
+//        TODO set user etEmail by default with Shared Preferences
         reportEmail = targetMailEdit.getText().toString();
 
         if(reportEmail !=null && !reportEmail.equals("")) {
@@ -261,7 +264,7 @@ public class GenerateReportActivity extends AppCompatActivity {
                         WRITE_EXTERNAL_STORAGE_REQUEST);
             } else {
 //                TODO Change Directory folder
-                File folder = new File(Environment.getExternalStorageDirectory() + "/WasteTrack");
+                File folder = new File(Environment.getExternalStorageDirectory() + "/Barbershop");
 
                 boolean var = false;
                 if (!folder.exists())

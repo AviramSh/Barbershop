@@ -321,7 +321,7 @@ public class Appointment {
 
 
     private int haircutTime;
-    private int haircutPrice;
+    private double haircutPrice;
     private int customerID;
     private int tackAnHaircut;
 
@@ -337,14 +337,14 @@ public class Appointment {
         this.customerID = customerID;
     }
 
-    public Appointment(int _id, String dateAndTime, int customerID,int tackAnHaircut) {
-        this._id = _id;
-        setDateAndTime(dateAndTime);
-        this.customerID = customerID;
-        this.tackAnHaircut =tackAnHaircut;
-    }
+//    public Appointment(int _id, String dateAndTime, int customerID,int tackAnHaircut) {
+//        this._id = _id;
+//        setDateAndTime(dateAndTime);
+//        this.customerID = customerID;
+//        this.tackAnHaircut =tackAnHaircut;
+//    }
 
-    public Appointment(int _id, String dateAndTime, int customerID, int tackAnHaircut, int haircutTime ,int haircutPrice) {
+    public Appointment(int _id, String dateAndTime, int customerID, int tackAnHaircut, int haircutTime ,double haircutPrice) {
         this._id = _id;
         setDateAndTime(dateAndTime);
         this.haircutTime = haircutTime;
@@ -364,11 +364,11 @@ public class Appointment {
 //    Getters and Setters
 
 
-    public int getHaircutPrice() {
+    public double getHaircutPrice() {
         return haircutPrice;
     }
 
-    public void setHaircutPrice(int haircutPrice) {
+    public void setHaircutPrice(double haircutPrice) {
         this.haircutPrice = haircutPrice;
     }
 
