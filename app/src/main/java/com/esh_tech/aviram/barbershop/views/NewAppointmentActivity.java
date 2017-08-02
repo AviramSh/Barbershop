@@ -44,6 +44,7 @@ import com.esh_tech.aviram.barbershop.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_FEMALE_HAIRCUT_PRICE;
@@ -66,11 +67,11 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
     Calendar appointmentCalendar;
     Button theDate;
     Button theTime;
-    int year_x;
-    int month_x;
-    int day_x;
-    int hour_x;
-    int minute_x;
+//    int year_x;
+//    int month_x;
+//    int day_x;
+//    int hour_x;
+//    int minute_x;
     static final int DIALOG_ID = 0;
     static final int DIALOG_ID_TIME = 1;
     //static final int DIALOG_ID = 0;
@@ -111,15 +112,19 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         theTime= (Button)findViewById(R.id.btTime);
         appointmentCalendar = Calendar.getInstance();
         appointmentCalendar.add(Calendar.DAY_OF_MONTH,1);
+        settings = PreferenceManager.getDefaultSharedPreferences(this);
         customerProfile = new Customer();
+        customerProfile.setName(getResources().getString(R.string.guest));
         newAppointment =new Appointment();
+
+
+        newAppointment.setHaircutTime(settings.getInt(USER_MALE_HAIRCUT_TIME,35));
+        newAppointment.setHaircutPrice(settings.getInt(USER_MALE_HAIRCUT_PRICE,35));
 
         settings = PreferenceManager.getDefaultSharedPreferences(NewAppointmentActivity.this);
 
 
         setToday();
-
-
 
         try{
             Bundle bundle = getIntent().getExtras();
@@ -131,6 +136,16 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         }catch (NullPointerException e){
             e.getMessage();
         }
+
+/*
+        Toast.makeText(this, Calendar.getInstance().get(Calendar.DAY_OF_WEEK)+" \n"+
+
+                settings.getString(SharedPreferencesConstants.MONDAY_TIME_OPEN,"")+" - "+
+                settings.getString(SharedPreferencesConstants.MONDAY_TIME_CLOSE,""), Toast.LENGTH_SHORT).show();
+        */
+
+
+
 
     }
 
@@ -256,8 +271,14 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            appointmentCalendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
-            appointmentCalendar.set(Calendar.MINUTE,minute);
+
+            Date m1 = DateUtils.getTimeDateByString(settings.getString(SharedPreferencesConstants.MONDAY_TIME_CLOSE,""));
+            Calendar c1 = DateUtils.toCalendar(m1);
+
+            if(c1.get(Calendar.HOUR_OF_DAY) > hourOfDay ) {
+                appointmentCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                appointmentCalendar.set(Calendar.MINUTE, minute);
+            }
 
             setToday();
 //            setTime(appointmentCalendar);
@@ -305,8 +326,6 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
     }
 
     public void saveAppointment() {
-//      TODO Need to test all data by "CustomerProfile" and test the valid date for appointment
-
 
         if(dbHandler.getCustomerByName(customerNameSearch.getText().toString())!= null){
             customerProfile = dbHandler.getCustomerByName(customerNameSearch.getText().toString());
@@ -323,12 +342,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                 newAppointment.setDateAndTime(appointmentCalendar);
                 newAppointment.setCustomerID(customerProfile.get_id());
 
-                if(customerProfile.getGender() == 1){
-                    newAppointment.setHaircutTime(35);
-                    newAppointment.setHaircutPrice(35);
-                    /*newAppointment.setHaircutTime(settings.getInt(USER_MALE_HAIRCUT_TIME,35));
-                    newAppointment.setHaircutPrice(settings.getInt(USER_MALE_HAIRCUT_PRICE,35));*/
-                }else{
+                if(customerProfile.getGender() == 0){
                     newAppointment.setHaircutTime(settings.getInt(USER_FEMALE_HAIRCUT_TIME,45));
                     newAppointment.setHaircutPrice(settings.getInt(USER_FEMALE_HAIRCUT_PRICE,45));
                 }
@@ -341,15 +355,17 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                 String newDateFormat = DateUtils.getFullSDF(appointmentCalendar.getTime());
                 String newDateAndTimeFormat = DateUtils.getFullSDF(appointmentCalendar.getTime());
 
+                newAppointment.setDateAndTime(appointmentCalendar);
+
 //                TODO Schedule customer test with DB
                 if(!dbHandler.isCustomerSchedule(newAppointment,newDateFormat)&&
-                        dbHandler.testIfAppointmentAvailable(this,appointmentCalendar.getTime())){
+                        dbHandler.testIfAppointmentAvailable(this,newAppointment)){
 
                     if (dbHandler.addAppointment(newAppointment)) {
                         //                Remainder Sms Handler
                         if (customerProfile.getRemainder() == 1) {
                             setRemainder();
-                            Toast.makeText(this, "Remainder saved", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, R.string.remainder_saved, Toast.LENGTH_SHORT).show();
                         }
                         Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
                         goMain();
@@ -358,9 +374,9 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                         Toast.makeText(this, R.string.failedToSave, Toast.LENGTH_SHORT).show();
                     }
 //                customerNameSearch.setText(customerProfile.getName());
-                }else{
+                }/*else{
                     Toast.makeText(this, ""+getResources().getString(R.string.alreadyHaveAppointment), Toast.LENGTH_SHORT).show();
-                }
+                }*/
 
             }else{
                 guestHandler();
@@ -400,7 +416,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                     newAppointment.setHaircutPrice(settings.getInt(USER_MALE_HAIRCUT_PRICE,35));
 
                     if (dbHandler.addAppointment(newAppointment)&&
-                            dbHandler.testIfAppointmentAvailable(NewAppointmentActivity.this,appointmentCalendar.getTime())) {
+                            dbHandler.testIfAppointmentAvailable(NewAppointmentActivity.this,newAppointment)) {
                         Toast.makeText(NewAppointmentActivity.this, R.string.saved, Toast.LENGTH_LONG).show();
                         goMain();
                     }
@@ -427,7 +443,22 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                 Intent m = new Intent(NewAppointmentActivity.this, AlarmService.class);
                 m.putExtra(SharedPreferencesConstants.USER_PHONE_SMS, customerProfile.getPhone());
                 try {
-                    m.putExtra(SharedPreferencesConstants.USER_SMS_CONTENT, settings.getString(UserDBConstants.USER_DEFAULT_SMS, getResources().getString(R.string.defaultSms)));
+                    String sendMessage="";
+
+                    if(settings.getBoolean(SharedPreferencesConstants.SYSTEM_DEFAULT_SMS_IS_CHECKED,false)){
+                        sendMessage +=getResources().getString(R.string.system_sms_1_add_name)+
+                        customerProfile.getName()+
+                                getResources().getString(R.string.system_sms_2_add_time)+
+                        newAppointment.getDateAndTimeToDisplay()+
+                                getResources().getString(R.string.system_sms_3add_business)+
+                        settings.getString(SharedPreferencesConstants.BUSINESS_NAME,".");
+                    }else{
+                        sendMessage +=settings.getString(UserDBConstants.USER_DEFAULT_SMS,"");
+                    }
+
+                    m.putExtra(
+                            SharedPreferencesConstants.USER_SMS_CONTENT,sendMessage);
+
                     pIntent = PendingIntent.getService(getApplicationContext(), 0, m, PendingIntent.FLAG_UPDATE_CURRENT);
 
                     aManager = (AlarmManager) getSystemService(ALARM_SERVICE);

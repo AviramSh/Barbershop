@@ -199,6 +199,17 @@ public class DateUtils {
         }
     }
 
+    public static Date getTimeDateByString(String stringDate)
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat(timeFormat, Locale.getDefault());
+        try {
+            return sdf.parse(stringDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static String getStringFromDate(Date date)
     {
         SimpleDateFormat sdf = new SimpleDateFormat(dateFormat,Locale.getDefault());

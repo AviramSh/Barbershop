@@ -158,15 +158,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void logout() {
-        settings = PreferenceManager.getDefaultSharedPreferences(this);
-        editor = settings.edit();
-        editor.putBoolean(USER_AUTO_LOGIN,false);
-        editor.apply();
 
-        Intent myIntent = new Intent(this,LoginActivity.class);
-        startActivity(myIntent);
-        this.finish();
+    public void logout() {
+
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_menu_close_clear_cancel)
+                .setTitle(R.string.logout)
+                .setMessage(R.string.are_you_sure_you_whant_to_logout)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        settings = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                        editor = settings.edit();
+                        editor.putBoolean(USER_AUTO_LOGIN,false);
+                        editor.apply();
+
+                        Intent myIntent = new Intent(MainActivity.this,LoginActivity.class);
+                        startActivity(myIntent);
+                        finish();
+                    }
+
+                })
+                .setNegativeButton(R.string.no, null)
+                .show();
+
     }
 
     //    Handling the Appointment list view
@@ -263,10 +279,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        allAppointments.add(new Appointment(13,8,4,5,1987,"avi",3));
     }
 
-
-    private void settime() {
-
-    }
 
     class MyAppointmentsAdapter extends ArrayAdapter<Appointment> {
 

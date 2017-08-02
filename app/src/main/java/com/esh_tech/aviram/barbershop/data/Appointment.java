@@ -321,9 +321,9 @@ public class Appointment {
 
 
     private int haircutTime;
-    private double haircutPrice;
     private int customerID;
     private int tackAnHaircut;
+    private double haircutPrice;
 
 
     //      Constructors.

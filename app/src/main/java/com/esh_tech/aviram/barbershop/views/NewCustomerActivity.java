@@ -192,7 +192,8 @@ public class NewCustomerActivity extends AppCompatActivity implements View.OnCli
         if (!testString.equals("Error :")) {
             Toast.makeText(this, testString, Toast.LENGTH_LONG).show();
         }else{
-            if(dbHandler.addCustomer(customerProfile)){
+
+            if(dbHandler.updateCustomer(customerProfile)){
                 Toast.makeText(this, R.string.saved, Toast.LENGTH_LONG).show();
                 Intent myIntent = new Intent(this, CustomersListActivity.class);
                 startActivity(myIntent);

@@ -35,21 +35,13 @@
     <string name="defaultSms">סמס ברירת מחדל</string>
     <string name="customSms">משתמש</string>
     <string name="systemSms">שלום \"שם הלקוח\" להזכירך תורך ב\"שעה ותאריך\" תודה</string>
+    <string name="system_sms_1_add_name">שלום </string>
+    <string name="system_sms_2_add_time"> להזכירך תורך ב</string>
+    <string name="system_sms_3add_business"> בתודה </string>
     <string name="smstime">זמן לשליחת הודעה</string>
     <string name="customerretention">שימור לקוחת</string>
     <string name="nextturn">התור הבא</string>
-    <string name="templist">\n
-        מאיר אליהו
-         \t \t \t 12:30
-    \n=====================\n
-    רן פלק
-        \t \t \t \t \t \t \t
-          12:45
-    \n=====================\n
-    אלון משה
-        \t \t \t \t\t
-          13:00
-    \n=====================\n</string>
+
     <string name="newturn">תור חדש</string>
     <string name="stock">מלאי</string>
     <string name="search">חיפוש</string>
@@ -108,16 +100,15 @@
         <item>16:00</item>
     </string-array>
 
-    <string-array name="spinner_smstime">
-        <item>00:30</item>
-        <item>01:00</item>
-        <item>01:30</item>
-        <item>02:00</item>
-        <item>02:30</item>
-        <item>03:00</item>
+    <string-array name="spinner_sms_time">
+        <item>1 hour</item>
+        <item>2 hours</item>
+        <item>4 hours</item>
+        <item>24 hour</item>
+        <!--<item>03:00</item>
         <item>03:30</item>
         <item>04:30</item>
-        <item>05:00</item>
+        <item>05:00</item>-->
     </string-array>
 
 </resources>

@@ -41,4 +41,18 @@
         android:layout_weight="15"
         android:padding="10dp"
         android:hint="@string/empty" />
+
+    <ImageButton
+        android:id="@+id/btPlus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/productListColor"
+        android:src="@drawable/next48"/>
+
+    <ImageButton
+        android:id="@+id/btMinus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/productListColor"
+        android:src="@drawable/previous48"/>
 </LinearLayout>

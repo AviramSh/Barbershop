@@ -32,6 +32,7 @@ import java.util.Locale;
 
 public class BarbershopDBHandler {
 
+
     private MySQLiteHelper dbHelper;
     private Context context;
 
@@ -43,7 +44,7 @@ public class BarbershopDBHandler {
     //    Add Customer ID(String name, String phone, String secondPhone, String email, Double bill, Bitmap photo, boolean gender, boolean remainder)
     public boolean addCustomer(Customer customer){
         long result = -1;
-        if (getCustomerByPhone(customer.getPhone())==null) {
+        if (getCustomerByPhone(customer.getPhone())!=null) {
             Toast.makeText(context, R.string.customerExist, Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -74,6 +75,33 @@ public class BarbershopDBHandler {
         if(customer.getPhoto()!=null){
             addPicture(getCustomerByPhone(customer.getPhone()).get_id(),customer.getPhoto());
         }
+        return (result != -1);
+    }
+    public boolean updateCustomer(Customer customer){
+        long result = -1;
+        if (getCustomerByPhone(customer.getPhone())==null) {
+            Toast.makeText(context, R.string.customerDoesntExist, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues columnValues = new ContentValues();
+
+        columnValues.put(CustomersDBConstants.CUSTOMER_NAME,customer.getName());
+        columnValues.put(CustomersDBConstants.CUSTOMER_PHONE,customer.getPhone());
+        columnValues.put(CustomersDBConstants.CUSTOMER_BIRTHDAY,customer.getBirthday());
+        columnValues.put(CustomersDBConstants.CUSTOMER_EMAIL , customer.getEmail());
+        columnValues.put(CustomersDBConstants.CUSTOMER_BILL , customer.getBill());
+        columnValues.put(CustomersDBConstants.CUSTOMER_GENDER , customer.getGender());
+        columnValues.put(CustomersDBConstants.CUSTOMER_REMAINDER , customer.getRemainder());
+
+        result = db.update(CustomersDBConstants.CUSTOMERS_TABLE_NAME,
+                columnValues,
+                CustomersDBConstants.CUSTOMER_ID +"= "+customer.get_id(),
+                null);
+
+        db.close();
+
         return (result != -1);
     }
     public ArrayList<Customer> getAllCustomers() {
@@ -195,8 +223,11 @@ public class BarbershopDBHandler {
 // TODO Fix all the database Handler Queries
     public boolean addAppointment(Appointment appointment){
 
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        if(!testIfAppointmentAvailable(context,appointment)){
+            return false;
+        }
 
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues columnValues = new ContentValues();
 
 //        Set the date
@@ -332,29 +363,41 @@ public class BarbershopDBHandler {
         return returnAppointments;
     }
 
-    public boolean testIfAppointmentAvailable(Context context,Date receivedDate) {
-//        TODO Meed To Test Method
-        ArrayList<Appointment> myAppointments = getAllAppointments(DateUtils.getStringFromDate(receivedDate));
+    public boolean testIfAppointmentAvailable(Context context,Appointment appointmentToTest) {
+//        TODO Need To Test Method
+        ArrayList<Appointment> appointmentsList = getAllAppointments(
+                DateUtils.getStringFromDate(
+                        appointmentToTest.getDateAndTime()));
+
         Calendar date1;
         Calendar date2;
 
         date1 = Calendar.getInstance();
-        date1.setTime(receivedDate);
+        date1.setTime(appointmentToTest.getDateAndTime());
         date1.set(Calendar.SECOND,0);
 
-        if(myAppointments.isEmpty())return true;
+        if(appointmentsList.isEmpty())return true;
 //        Toast.makeText(context, "Date1 : "+ DateUtils.getFullSDF(receivedDate)
 //                + "  Date2 : "+ DateUtils.getFullSDF(myAppointments.get(0).getDateAndTime()), Toast.LENGTH_LONG).show();
-        for (Appointment appointment:
-                myAppointments) {
+        for (Appointment appointmentItem:
+                appointmentsList) {
 
             date2 = Calendar.getInstance();
-            date2.setTime(appointment.getDateAndTime());
+            date2.setTime(appointmentItem.getDateAndTime());
             date2.set(Calendar.SECOND,0);
-            if((date1.getTimeInMillis() - date2.getTimeInMillis())/60000 <= 35){
+
+            if(Math.abs(date1.getTimeInMillis() - date2.getTimeInMillis())/60000 <= appointmentToTest.getHaircutTime()){
+                Calendar temp = Calendar.getInstance();
+                temp.setTime(date2.getTime());
+                temp.add(Calendar.MINUTE,appointmentItem.getHaircutTime());
+
+
                 Toast.makeText(context,
-                        "There is already a scheduled appointment in : "+DateUtils.getFullSDF(date2), Toast.LENGTH_LONG).show();
+                        context.getResources().getString(R.string.already_scheduled)+
+                                "\n"+DateUtils.getTimeSDF(date2.getTime())+" - "+DateUtils.getTimeSDF(temp.getTime()),
+                        Toast.LENGTH_LONG).show();
                 return false;
+
             }
 
 //            /*if((date1.get(Calendar.HOUR)+1) < date2.get(Calendar.HOUR)) {
@@ -553,6 +596,22 @@ public class BarbershopDBHandler {
 
         return (result != -1);
     }
+    public Product getProductByName(String name) {
+
+        ArrayList<Product> productsList =getAllProducts();
+
+        for (Product index:
+             productsList) {
+            if(index.getName().equals(name))
+                return index;
+        }
+
+        return null;
+    }
+
+
+
+
 
 //    PURCHASE
 
@@ -670,6 +729,8 @@ public class BarbershopDBHandler {
     }
 
 
+
+
 //    PICTURE TABLE.
 
 //    PicturesDBConstants.PICTURE_ID        + " INTEGER PRIMARY KEY AUTOINCREMENT  , "+
@@ -738,5 +799,6 @@ public class BarbershopDBHandler {
         return null;
 
     }
+
 
 }

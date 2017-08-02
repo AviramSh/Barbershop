@@ -222,9 +222,13 @@ public class UserEmailActivity extends AppCompatActivity implements View.OnClick
             editor.putString(UserDBConstants.USER_EMAIL_PASSWORD,password.getText().toString());
             editor.apply();
 
-            Intent passwordIntent = new Intent(this, UserPasswordActivity.class);
-            startActivity(passwordIntent);
-            this.finish();
+            if(settings.getBoolean(UserDBConstants.USER_IS_REGISTER,false)){
+                this.finish();
+            }else{
+                Intent smsIntent = new Intent(this, smsSettings.class);
+                startActivity(smsIntent);
+                this.finish();
+            }
         }
     }
 }

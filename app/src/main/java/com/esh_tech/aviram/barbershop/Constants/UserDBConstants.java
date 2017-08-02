@@ -26,6 +26,7 @@ public class UserDBConstants {
     public static final String USER_FEMALE_HAIRCUT_TIME="USER_FEMALE_HAIRCUT_TIME";
     public static final String USER_FEMALE_HAIRCUT_PRICE="USER_FEMALE_HAIRCUT_PRICE";
 
-    public static final String USER_SMS_TIME = "USER_SMS_TIME";
+
+    public static final String USER_SMS_TIME = "USER_SMS_TIME";//int
     public static final String USER_DEFAULT_SMS = "USER_DEFAULT_SMS";
 }
