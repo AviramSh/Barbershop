@@ -295,8 +295,11 @@ public class GenerateReportActivity extends AppCompatActivity {
 //                    }
 
                     double calc = 0;
+
                     for (Appointment appointment : appointmentList) {
-                        Customer customer =dbHandler.getCustomerByID(appointment.getCustomerID());
+
+
+                        Customer customer = dbHandler.getCustomerByID(appointment.getCustomerID());
 
                         writer.println(
                                 appointment.get_id() + "," +

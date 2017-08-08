@@ -111,6 +111,7 @@ public class BarbershopDBHandler {
 
         Cursor customersCursor = db.query(CustomersDBConstants.CUSTOMERS_TABLE_NAME,
                 null,null,null,null,null,CustomersDBConstants.CUSTOMER_NAME+" ASC");
+//        customersCursor.moveToNext();
 
         while (customersCursor.moveToNext())
 
@@ -125,6 +126,7 @@ public class BarbershopDBHandler {
                     customersCursor.getInt(customersCursor.getColumnIndex(CustomersDBConstants.CUSTOMER_REMAINDER))
 
             ));
+
 
         customersCursor.close();
         return customersList;
@@ -328,14 +330,22 @@ public class BarbershopDBHandler {
         return (result != -1);
     }
     public boolean isCustomerSchedule(Appointment newAppointment ,String testDate) {
-        ArrayList<Appointment> myAppointments = getAllAppointments();
+        if (newAppointment.get_id()== 0)
+            return false;
+        Calendar start = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+
+        start.setTime(newAppointment.getDateAndTime());
+        end.setTime(newAppointment.getDateAndTime());
+        end.add(Calendar.DAY_OF_MONTH,3);
+
+        ArrayList<Appointment> myAppointments = getAllAppointmentsFromTo(start,end);
 
         for (Appointment testAppointment:
                 myAppointments) {
 
-
-            if(testAppointment.getDateAndTimeToDisplay().toLowerCase().contains(testDate)
-            && testAppointment.getCustomerID() == newAppointment.getCustomerID()) {
+            if(testAppointment.getDateAndTimeToDisplay().toLowerCase().contains(testDate)&&
+                    testAppointment.getCustomerID() == newAppointment.getCustomerID()) {
                 return true;
             }
         }

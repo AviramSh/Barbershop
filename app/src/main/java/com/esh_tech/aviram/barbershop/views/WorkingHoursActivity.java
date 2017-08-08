@@ -16,6 +16,7 @@ import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_IS_R
 
 import com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants;
 import com.esh_tech.aviram.barbershop.R;
+import com.esh_tech.aviram.barbershop.Utils.DateUtils;
 
 import java.util.Calendar;
 
@@ -30,6 +31,8 @@ public class WorkingHoursActivity extends AppCompatActivity {
     CheckBox cbDay;
     Spinner sStart;
     Spinner sEnd;
+
+    Calendar myCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,8 @@ public class WorkingHoursActivity extends AppCompatActivity {
         sEnd = (Spinner)findViewById(R.id.sundayEspin);
 
 
+        myCalendar = Calendar.getInstance();
+
 
     }
 
@@ -61,112 +66,211 @@ public class WorkingHoursActivity extends AppCompatActivity {
 
         if(setWorkingHours(view)) {
             if (register) {
-                this.finish();
+//                this.finish();
             } else {
-                Intent timeFeeActivity = new Intent(this, TimeAndFee.class);
-                startActivity(timeFeeActivity);
-                this.finish();
+//                Intent timeFeeActivity = new Intent(this, TimeAndFee.class);
+//                startActivity(timeFeeActivity);
+//                this.finish();
             }
         }
-        /*Toast.makeText(this,
-                settings.getString(SharedPreferencesConstants.SUNDAY_TIME_OPEN,"Err")
-                        +" - "+
-                        settings.getString(SharedPreferencesConstants.SUNDAY_TIME_CLOSE,"Err")
-                        +"\n"+
-                        settings.getString(SharedPreferencesConstants.MONDAY_TIME_OPEN,"Err")
-                        +" - "+
-                        settings.getString(SharedPreferencesConstants.MONDAY_TIME_CLOSE,"Err")
-                        +"\n"+
-                        settings.getString(SharedPreferencesConstants.TUESDAY_TIME_OPEN,"Err")
-                        +" - "+
-                        settings.getString(SharedPreferencesConstants.TUESDAY_TIME_CLOSE,"Err")
-                        +"\n"+
-        "", Toast.LENGTH_SHORT).show();*/
-
     }
 
     private void testData() {
-        Calendar myCalendar;
-        editor = settings.edit();
 
+        editor = settings.edit();
 
         cbDay = (CheckBox)findViewById(R.id.sundayCb);
         if(cbDay.isChecked()) {
-            setUpDaysAndHours(R.id.sundaySspin,R.id.sundayEspin,
-                    SharedPreferencesConstants.SUNDAY_TIME_OPEN,
-                    SharedPreferencesConstants.SUNDAY_TIME_CLOSE);
+
+            sStart = (Spinner) findViewById(R.id.sundaySspin);
+            sEnd = (Spinner) findViewById(R.id.sundayEspin);
+
+            if(sStart.getSelectedItem().equals(getResources().getString(R.string.rest))||
+                    sEnd.getSelectedItem().equals(getResources().getString(R.string.rest))){
+                saveDate(SharedPreferencesConstants.SUNDAY_TIME_OPEN,SharedPreferencesConstants.SUNDAY_TIME_CLOSE,
+                        "","");
+            }else{
+
+                saveDate(SharedPreferencesConstants.SUNDAY_TIME_OPEN,SharedPreferencesConstants.SUNDAY_TIME_CLOSE,
+                        (String)sStart.getSelectedItem(),(String)sEnd.getSelectedItem());
+
+            }
+
+
         }
 
+
         cbDay = (CheckBox)findViewById(R.id.mondayCb);
+
         if(cbDay.isChecked()) {
-            setUpDaysAndHours(R.id.mondaySspin,R.id.mondayEspin,
-                    SharedPreferencesConstants.MONDAY_TIME_OPEN,
-                    SharedPreferencesConstants.MONDAY_TIME_CLOSE);
+
+            sStart = (Spinner) findViewById(R.id.mondaySspin);
+            sEnd = (Spinner) findViewById(R.id.mondayEspin);
+
+
+
         }
+
 
         cbDay = (CheckBox)findViewById(R.id.tuesdayCb);
         if(cbDay.isChecked()) {
-            setUpDaysAndHours(R.id.tuesdaySspin, R.id.tuesdayEspin,
-                    SharedPreferencesConstants.TUESDAY_TIME_OPEN,
-                    SharedPreferencesConstants.TUESDAY_TIME_CLOSE);
-        }
 
+
+            sStart = (Spinner) findViewById(R.id.tuesdaySspin);
+            sEnd = (Spinner) findViewById(R.id.tuesdayEspin);
+
+
+        }
 
         cbDay = (CheckBox)findViewById(R.id.wednesdayCb);
         if(cbDay.isChecked()) {
-            setUpDaysAndHours(R.id.wednesdaySspin, R.id.wednesdayEspin,
-                    SharedPreferencesConstants.WEDNESDAY_TIME_OPEN,
-                    SharedPreferencesConstants.WEDNESDAY_TIME_CLOSE);
+
+
+            sStart = (Spinner) findViewById(R.id.wednesdaySspin);
+            sEnd = (Spinner) findViewById(R.id.wednesdayEspin);
+
         }
+
+
 
         cbDay = (CheckBox)findViewById(R.id.thursdayCb);
         if(cbDay.isChecked()) {
-            setUpDaysAndHours(R.id.thursdaySspin, R.id.thursdayEspin,
-                    SharedPreferencesConstants.THURSDAY_TIME_OPEN,
-                    SharedPreferencesConstants.THURSDAY_TIME_CLOSE);
+
+
+            sStart = (Spinner) findViewById(R.id.thursdaySspin);
+            sEnd = (Spinner) findViewById(R.id.thursdayEspin);
+
+
+
         }
 
         cbDay = (CheckBox)findViewById(R.id.fridayCb);
         if(cbDay.isChecked()) {
-            setUpDaysAndHours(R.id.fridaySspin, R.id.fridayEspin,
-                    SharedPreferencesConstants.FRIDAY_TIME_OPEN,
-                    SharedPreferencesConstants.FRIDAY_TIME_CLOSE);
+
+            sStart = (Spinner) findViewById(R.id.fridaySspin);
+            sEnd = (Spinner) findViewById(R.id.fridayEspin);
+
         }
 
         cbDay = (CheckBox)findViewById(R.id.saturdayCb);
         if(cbDay.isChecked()) {
-            setUpDaysAndHours(R.id.saturdaySspin, R.id.saturdayEspin,
-                    SharedPreferencesConstants.SATURDAY_TIME_OPEN,
-                    SharedPreferencesConstants.SATURDAY_TIME_CLOSE);
+
+
+            sStart = (Spinner) findViewById(R.id.saturdaySspin);
+            sEnd = (Spinner) findViewById(R.id.saturdayEspin);
+
+
         }
+        editor.apply();
+
+//
+//        cbDay = (CheckBox)findViewById(R.id.mondayCb);
+//        if(cbDay.isChecked()) {
+//            setUpDaysAndHours(R.id.mondaySspin,R.id.mondayEspin,
+//                    SharedPreferencesConstants.MONDAY_TIME_OPEN,
+//                    SharedPreferencesConstants.MONDAY_TIME_CLOSE);
+//        }
+//
+//        cbDay = (CheckBox)findViewById(R.id.tuesdayCb);
+//        if(cbDay.isChecked()) {
+//            setUpDaysAndHours(R.id.tuesdaySspin, R.id.tuesdayEspin,
+//                    SharedPreferencesConstants.TUESDAY_TIME_OPEN,
+//                    SharedPreferencesConstants.TUESDAY_TIME_CLOSE);
+//        }
+//
+//
+//        cbDay = (CheckBox)findViewById(R.id.wednesdayCb);
+//        if(cbDay.isChecked()) {
+//            setUpDaysAndHours(R.id.wednesdaySspin, R.id.wednesdayEspin,
+//                    SharedPreferencesConstants.WEDNESDAY_TIME_OPEN,
+//                    SharedPreferencesConstants.WEDNESDAY_TIME_CLOSE);
+//        }
+//
+//        cbDay = (CheckBox)findViewById(R.id.thursdayCb);
+//        if(cbDay.isChecked()) {
+//            setUpDaysAndHours(R.id.thursdaySspin, R.id.thursdayEspin,
+//                    SharedPreferencesConstants.THURSDAY_TIME_OPEN,
+//                    SharedPreferencesConstants.THURSDAY_TIME_CLOSE);
+//        }
+//
+//        cbDay = (CheckBox)findViewById(R.id.fridayCb);
+//        if(cbDay.isChecked()) {
+//            setUpDaysAndHours(R.id.fridaySspin, R.id.fridayEspin,
+//                    SharedPreferencesConstants.FRIDAY_TIME_OPEN,
+//                    SharedPreferencesConstants.FRIDAY_TIME_CLOSE);
+//        }
+//
+//        cbDay = (CheckBox)findViewById(R.id.saturdayCb);
+//        if(cbDay.isChecked()) {
+//            setUpDaysAndHours(R.id.saturdaySspin, R.id.saturdayEspin,
+//                    SharedPreferencesConstants.SATURDAY_TIME_OPEN,
+//                    SharedPreferencesConstants.SATURDAY_TIME_CLOSE);
+//        }
+//
+//
+//        editor.apply();
+    }
+
+    private boolean saveDate(String labelOpen,String labelClose,
+                          String openTime,String closeTime) {
+        
+//        if(openTime.equals(getResources().getString(R.string.rest))|| closeTime.equals(getResources().getString(R.string.rest))) {
+//            Toast.makeText(this, "Rest day", Toast.LENGTH_SHORT).show();
+//            return true;
+//        }
+        if(openTime.equals("")|| closeTime.equals("")) {
+            Toast.makeText(this, "Rest day", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        Calendar cOpen = Calendar.getInstance();
+        Calendar cClose = Calendar.getInstance();
+
+        String[] separatedOpenTime = openTime.split(":");
+
+        String[] separatedCloseTime = closeTime.split(":");
+
+        cOpen.set(Calendar.HOUR_OF_DAY,Integer.parseInt(separatedOpenTime[0]));
+        cOpen.set(Calendar.MINUTE,Integer.parseInt(separatedOpenTime[1]));
+
+        cClose.set(Calendar.HOUR_OF_DAY,Integer.parseInt(separatedCloseTime[0]));
+        cClose.set(Calendar.MINUTE,Integer.parseInt(separatedCloseTime[1]));
+
+
+        Toast.makeText(this, DateUtils.getFullSDF(cOpen)+" - "+DateUtils.getFullSDF(cClose), Toast.LENGTH_SHORT).show();
+        editor = settings.edit();
+
+
 
 
         editor.apply();
+        return true;
     }
 
-    private boolean setUpDaysAndHours(int sId,int eId,String sLabel ,String eLabel) {
-
-        sStart = (Spinner) findViewById(sId);
-        sEnd = (Spinner) findViewById(eId);
-
-        if(sStart.getSelectedItemId() < sEnd.getSelectedItemId()){
-            editor.putString(
-                    sLabel,
-                    sStart.getSelectedItem().toString());
-            editor.putString(
-                    eLabel ,
-                    sEnd.getSelectedItem().toString());
-        }else{
-            editor.putString(
-                    eLabel,
-                    sStart.getSelectedItem().toString());
-            editor.putString(
-                    sLabel ,
-                    sEnd.getSelectedItem().toString());
-        }
-
-        return false;
-    }
+//    private boolean setUpDaysAndHours(int sId,int eId,String sLabel ,String eLabel) {
+//
+//        sStart = (Spinner) findViewById(sId);
+//        sEnd = (Spinner) findViewById(eId);
+//
+//        if(sStart.getSelectedItemPosition() < sEnd.getSelectedItemPosition()){
+//
+//            editor.putInt(
+//                    sLabel,
+//                    sStart.getSelectedItemPosition());
+//
+//            editor.putInt(
+//                    eLabel ,
+//                    sEnd.getSelectedItemPosition());
+//        }else{
+//            editor.putInt(
+//                    eLabel,
+//                    sStart.getSelectedItemPosition());
+//            editor.putInt(
+//                    sLabel ,
+//                    sEnd.getSelectedItemPosition());
+//        }
+//
+//        return false;
+//    }
 
 
     //    Need Work
@@ -209,5 +313,6 @@ public class WorkingHoursActivity extends AppCompatActivity {
 //        return false;
 //    }
 }
+
 
 

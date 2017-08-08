@@ -4,4 +4,141 @@
     <string name="failedToSave">שמירה נכשלה</string>
     <string name="appointmentsScreenTitle">תורים</string>
     <string name="send">שלח</string>
+    <string name="app_name">מספריים</string>
+    <string name="user_nameTV">שם משתמש</string>
+    <string name="login">התחבר</string>
+    <string name="exit">יציאה</string>
+    <string name="register">Register</string>
+    <string name="password">סיסמה</string>
+    <string name="fPassword">שכחתי סיסמה</string>
+    <string name="customers">לקוחות</string>
+    <string name="appointment">תורים</string>
+    <string name="calendar">לוח שנה</string>
+    <string name="settings">הגדרות</string>
+    <string name="balance">מאזן</string>
+    <string name="nameTV">שם</string>
+    <string name="familyname">משפחה</string>
+    <string name="businessName">שם העסק</string>
+    <string name="phone">טלפון</string>
+    <string name="phonebusines">טלפון העסק</string>
+    <string name="businessAddress">כתובת העסק</string>
+
+    <string name="sunday">יום ראשון</string>
+    <string name="monday">יום שני</string>
+    <string name="tuesday">יום שלישי</string>
+    <string name="wednesday">יום רביעי</string>
+    <string name="thursday">יום חמישי</string>
+    <string name="friday">יום שישי</string>
+    <string name="saturday">יום שבת</string>
+    <string name="addCustomers">הוסף לקוחות</string>
+    <string name="manHaircut">תספורת גבר</string>
+    <string name="womanHaircut">תספורת אישה</string>
+    <string name="time">זמן</string>
+    <string name="cost">מחיר</string>
+    <string name="messages">הודעות</string>
+    <string name="defaultSms">סמס ברירת מחדל</string>
+    <string name="customSms">משתמש</string>
+    <string name="systemSms">שלום \"שם הלקוח\" להזכירך תורך ב\"שעה ותאריך\" תודה</string>
+    <string name="system_sms_1_add_name">שלום </string>
+    <string name="system_sms_2_add_time"> להזכירך תורך ב</string>
+    <string name="system_sms_3add_business"> בתודה </string>
+    <string name="smstime">זמן לשליחת הודעה</string>
+    <string name="customerretention">שימור לקוחת</string>
+    <string name="nextturn">התור הבא</string>
+
+    <string name="newturn">תור חדש</string>
+    <string name="stock">מלאי</string>
+    <string name="search">חיפוש</string>
+    <string name="phone2">טלפון 2</string>
+    <string name="haircutcounter">מונה תספורות</string>
+    <string name="credit">אשראי</string>
+    <string name="saveBt">שמור</string>
+    <string name="cancel">ביטול</string>
+    <string name="reminder">תזכורת</string>
+    <string name="from"> החל מ- </string>
+    <string name="start">החל</string>
+    <string name="until">ועד</string>
+    <string name="haircuts">תספורות</string>
+    <string name="pay">תשלום</string>
+    <string name="back">חזרה</string>
+    <string name="stocklist">רשימת מלאי</string>
+    <string name="product">מוצר</string>
+    <string name="amount">כמות</string>
+    <string name="today">היום</string>
+    <string name="hour">שעה</string>
+    <string name="free">פנוי</string>
+    <string name="taken">תפוס</string>
+    <string name="freeturn">תור פנוי</string>
+    <string name="sortBy">מיין לפי</string>
+    <string name="all">הכל</string>
+    <string name="chooseDate">בחר תאריך</string>
+    <string name="myProfile">הפרופיל שלי</string>
+    <string name="workdays">ימי עבודה</string>
+    <string name="myBarbershop">המספרה שלי</string>
+    <string name="changePassword">שינוי סיסמה</string>
+    <string name="about">אודות</string>
+    <string name="logout">התנתק</string>
+    <string name="savePassword">שמור סיסמה</string>
+    <string name="repassword">חזור על הסיסמה</string>
+    <string name="appointmentList">תורות ב</string>
+    <string name="male">גבר</string>
+    <string name="female">אישה</string>
+    <string name="email">אייימל</string>
+    <string name="customerName">שם לקוח</string>
+    <string name="appointmentSaved">תור נשמר</string>
+    <string name="price">מחיר</string>
+    <string name="quantity">כמות</string>
+    <string name="productName">שם מוצר</string>
+
+    <string-array name="spinner_hours">
+        <item>מנוחה</item>
+        <item>06:00</item><!--0-->
+        <item>06:30</item><!--1-->
+        <item>07:00</item><!--2-->
+        <item>07:30</item><!--3-->
+        <item>08:00</item><!--4-->
+        <item>08:30</item><!--5-->
+        <item>09:00</item><!--6-->
+        <item>09:30</item><!--7-->
+        <item>10:00</item><!--8-->
+        <item>10:30</item><!--9-->
+        <item>11:00</item><!--10-->
+        <item>11:30</item><!--11-->
+        <item>12:00</item><!--12-->
+        <item>12:30</item><!--13-->
+        <item>13:00</item><!--14-->
+        <item>13:30</item><!--15-->
+        <item>14:00</item><!--16-->
+        <item>14:30</item><!--17-->
+        <item>15:00</item><!--18-->
+        <item>15:30</item><!--19-->
+        <item>16:00</item><!--20-->
+        <item>16:30</item><!--21-->
+        <item>17:00</item><!--22-->
+        <item>17:30</item><!--23-->
+        <item>18:00</item><!--24-->
+        <item>18:30</item><!--25-->
+        <item>19:00</item><!--26-->
+        <item>19:30</item><!--27-->
+        <item>20:00</item><!--28-->
+        <item>20:30</item><!--29-->
+        <item>21:00</item><!--30-->
+        <item>21:30</item><!--31-->
+        <item>22:00</item><!--32-->
+        <item>22:30</item><!--33-->
+        <item>23:00</item><!--34-->
+        <item>23:30</item><!--35-->
+
+    </string-array>
+
+    <string-array name="spinner_sms_time">
+        <item>1 hour</item>
+        <item>2 hours</item>
+        <item>4 hours</item>
+        <item>24 hour</item>
+        <!--<item>03:00</item>
+        <item>03:30</item>
+        <item>04:30</item>
+        <item>05:00</item>-->
+    </string-array>
 </resources>

@@ -67,14 +67,10 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
     Calendar appointmentCalendar;
     Button theDate;
     Button theTime;
-//    int year_x;
-//    int month_x;
-//    int day_x;
-//    int hour_x;
-//    int minute_x;
+
     static final int DIALOG_ID = 0;
     static final int DIALOG_ID_TIME = 1;
-    //static final int DIALOG_ID = 0;
+
 
     //List
     ArrayList<String> turnsList = new ArrayList<String>();
@@ -272,13 +268,13 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-            Date m1 = DateUtils.getTimeDateByString(settings.getString(SharedPreferencesConstants.MONDAY_TIME_CLOSE,""));
-            Calendar c1 = DateUtils.toCalendar(m1);
-
-            if(c1.get(Calendar.HOUR_OF_DAY) > hourOfDay ) {
-                appointmentCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                appointmentCalendar.set(Calendar.MINUTE, minute);
-            }
+//
+//            if(settings.getInt(SharedPreferencesConstants.MONDAY_TIME_CLOSE,0) > hourOfDay
+//                    ||settings.getInt(SharedPreferencesConstants.MONDAY_TIME_CLOSE,0) == hourOfDay &&
+//                    m1.getHours() > minute) {
+//                appointmentCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+//                appointmentCalendar.set(Calendar.MINUTE, minute);
+//            }
 
             setToday();
 //            setTime(appointmentCalendar);
@@ -337,51 +333,57 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             Toast.makeText(this, R.string.emptyField, Toast.LENGTH_SHORT).show();
         }else{
 
-            if(customerProfile.get_id() != -1) {
-//                newAppointment = new Appointment(appointmentCalendar,customerProfile.get_id());
-                newAppointment.setDateAndTime(appointmentCalendar);
-                newAppointment.setCustomerID(customerProfile.get_id());
+            if(customerProfile.get_id() != -1 || customerProfile.get_id() !=0) {
+                registerHandler();
+            }else{
+                guestHandler();
+            }
+        }
 
-                if(customerProfile.getGender() == 0){
-                    newAppointment.setHaircutTime(settings.getInt(USER_FEMALE_HAIRCUT_TIME,45));
-                    newAppointment.setHaircutPrice(settings.getInt(USER_FEMALE_HAIRCUT_PRICE,45));
-                }
+    }
+
+    private void registerHandler() {
+
+//                newAppointment = new Appointment(appointmentCalendar,customerProfile.get_id());
+        newAppointment.setDateAndTime(appointmentCalendar);
+        newAppointment.setCustomerID(customerProfile.get_id());
+
+        if(customerProfile.getGender() == 0){
+            newAppointment.setHaircutTime(settings.getInt(USER_FEMALE_HAIRCUT_TIME,45));
+            newAppointment.setHaircutPrice(settings.getInt(USER_FEMALE_HAIRCUT_PRICE,45));
+        }
 
 
 
                 /*SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.dateFormat, Locale.getDefault());
                 String newFormat = formatter.format(appointmentCalendar.getTime());*/
 
-                String newDateFormat = DateUtils.getFullSDF(appointmentCalendar.getTime());
-                String newDateAndTimeFormat = DateUtils.getFullSDF(appointmentCalendar.getTime());
+        String newDateFormat = DateUtils.getFullSDF(appointmentCalendar.getTime());
+        String newDateAndTimeFormat = DateUtils.getFullSDF(appointmentCalendar.getTime());
 
-                newAppointment.setDateAndTime(appointmentCalendar);
+        newAppointment.setDateAndTime(appointmentCalendar);
 
 //                TODO Schedule customer test with DB
-                if(!dbHandler.isCustomerSchedule(newAppointment,newDateFormat)&&
-                        dbHandler.testIfAppointmentAvailable(this,newAppointment)){
+        if(!dbHandler.isCustomerSchedule(newAppointment,newDateFormat)&&
+                dbHandler.testIfAppointmentAvailable(this,newAppointment)){
 
-                    if (dbHandler.addAppointment(newAppointment)) {
-                        //                Remainder Sms Handler
-                        if (customerProfile.getRemainder() == 1) {
-                            setRemainder();
-                            Toast.makeText(this, R.string.remainder_saved, Toast.LENGTH_SHORT).show();
-                        }
-                        Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
-                        goMain();
+            if (dbHandler.addAppointment(newAppointment)) {
+                //                Remainder Sms Handler
+                if (customerProfile.getRemainder() == 1) {
+                    setRemainder();
+                    Toast.makeText(this, R.string.remainder_saved, Toast.LENGTH_SHORT).show();
+                }
+                Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
+                goMain();
 
-                    } else {
-                        Toast.makeText(this, R.string.failedToSave, Toast.LENGTH_SHORT).show();
-                    }
+            } else {
+                Toast.makeText(this, R.string.failedToSave, Toast.LENGTH_SHORT).show();
+            }
 //                customerNameSearch.setText(customerProfile.getName());
-                }/*else{
+        }/*else{
                     Toast.makeText(this, ""+getResources().getString(R.string.alreadyHaveAppointment), Toast.LENGTH_SHORT).show();
                 }*/
 
-            }else{
-                guestHandler();
-            }
-        }
 
     }
 
@@ -405,6 +407,9 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         mBuilder.setNegativeButton(R.string.guest, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
+                customerProfile.set_id(0);
+
                 customerProfile.setName(getResources().getString(R.string.guest));
                 customerProfile.setPhone(customerProfile.getPhone());
 

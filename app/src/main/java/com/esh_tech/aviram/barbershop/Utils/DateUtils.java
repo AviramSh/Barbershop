@@ -202,8 +202,10 @@ public class DateUtils {
     public static Date getTimeDateByString(String stringDate)
     {
         SimpleDateFormat sdf = new SimpleDateFormat(timeFormat, Locale.getDefault());
+        Date d1 = Calendar.getInstance().getTime();
         try {
-            return sdf.parse(stringDate);
+            d1.setTime(sdf.parse(stringDate).getTime());
+            return d1;
         } catch (ParseException e) {
             e.printStackTrace();
             return null;

@@ -204,19 +204,48 @@
     <string name="are_you_sure_you_whant_to_logout">האם אתה בטוח שאתה רוצה להתנתק?</string>
     <string name="yes">כן</string>
     <string name="no">לא</string>
+    <string name="rest">Rest</string>
 
 
     <string-array name="spinner_hours">
-        <item>07:00</item>
-        <item>08:00</item>
-        <item>09:00</item>
-        <item>10:00</item>
-        <item>11:00</item>
-        <item>12:00</item>
-        <item>13:00</item>
-        <item>14:00</item>
-        <item>15:00</item>
-        <item>16:00</item>
+        <item>Rest</item>
+        <item>06:00</item><!--0-->
+        <item>06:30</item><!--1-->
+        <item>07:00</item><!--2-->
+        <item>07:30</item><!--3-->
+        <item>08:00</item><!--4-->
+        <item>08:30</item><!--5-->
+        <item>09:00</item><!--6-->
+        <item>09:30</item><!--7-->
+        <item>10:00</item><!--8-->
+        <item>10:30</item><!--9-->
+        <item>11:00</item><!--10-->
+        <item>11:30</item><!--11-->
+        <item>12:00</item><!--12-->
+        <item>12:30</item><!--13-->
+        <item>13:00</item><!--14-->
+        <item>13:30</item><!--15-->
+        <item>14:00</item><!--16-->
+        <item>14:30</item><!--17-->
+        <item>15:00</item><!--18-->
+        <item>15:30</item><!--19-->
+        <item>16:00</item><!--20-->
+        <item>16:30</item><!--21-->
+        <item>17:00</item><!--22-->
+        <item>17:30</item><!--23-->
+        <item>18:00</item><!--24-->
+        <item>18:30</item><!--25-->
+        <item>19:00</item><!--26-->
+        <item>19:30</item><!--27-->
+        <item>20:00</item><!--28-->
+        <item>20:30</item><!--29-->
+        <item>21:00</item><!--30-->
+        <item>21:30</item><!--31-->
+        <item>22:00</item><!--32-->
+        <item>22:30</item><!--33-->
+        <item>23:00</item><!--34-->
+        <item>23:30</item><!--35-->
+
     </string-array>
 
 

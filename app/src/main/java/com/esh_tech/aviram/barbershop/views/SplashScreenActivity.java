@@ -6,11 +6,11 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 import com.esh_tech.aviram.barbershop.R;
+import com.esh_tech.aviram.barbershop.data.Customer;
 
 import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.*;
 
@@ -27,15 +27,16 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        lodData();
+        loadData();
     }
 
-    private void lodData() {
+    private void loadData() {
         this.setTitle(R.string.title_splash_activity);
         settings = PreferenceManager.getDefaultSharedPreferences(this);
         loading = (ProgressBar) findViewById(R.id.progressBar);
         loading.computeScroll();
-        setUpDefaultData();
+        if (!settings.getBoolean(USER_IS_REGISTER,false))
+                setUpDefaultData();
 
         Thread myThread = new Thread() {
             @Override
@@ -101,6 +102,9 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         editor.putString(UserDBConstants.USER_EMAIL, "aviram.note@gmail.com");
         editor.putString(UserDBConstants.USER_EMAIL_PASSWORD, "avi304287");
+
+        dbHandler = new BarbershopDBHandler(SplashScreenActivity.this);
+        dbHandler.addCustomer(new Customer());
 
         editor.apply();
     }
