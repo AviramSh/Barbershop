@@ -15,7 +15,7 @@ import java.util.Locale;
 public class DateUtils {
 
 //    public static final String dateFormat = "dd/MM/yyyy HH:mm";
-    public static final String dateDayFormat ="dd/MM/yyyy \n EEEE";
+    public static final String dateDayNameFormat ="dd/MM/yyyy \n EEEE";
     public static final String dateFormat = "dd/MM/yyyy";
     public static final String timeFormat = "HH:mm";
     public static final String timeDateFormat = "HH:mm dd/MM/yyyy";

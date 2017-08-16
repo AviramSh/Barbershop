@@ -25,10 +25,9 @@
         android:layout_marginEnd="8dp" />
 
     <ImageButton
-        android:id="@+id/imageButton26"
+        android:id="@+id/ibAddProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="addProduct"
         app:srcCompat="@drawable/screatenew"
         android:background="@color/background"
         app:layout_constraintLeft_toRightOf="@+id/ibSave"
@@ -60,7 +59,7 @@
         android:layout_width="0dp"
         android:layout_height="300dp"
         android:layout_margin="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton26"
+        app:layout_constraintBottom_toTopOf="@+id/ibAddProduct"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

@@ -34,7 +34,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".views.WorkingHoursActivity"
+            android:name=".views.SplashScreenActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -73,7 +73,7 @@
             android:label="@string/title_user_registration_activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".views.SplashScreenActivity"
+            android:name=".views.WorkingHoursActivity"
             android:label="@string/title_working_hours_activity"
             android:screenOrientation="portrait" />
         <activity

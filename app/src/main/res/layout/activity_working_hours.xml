@@ -85,14 +85,14 @@
             tools:layout_editor_absoluteY="8dp">
 
             <Spinner
-                android:id="@+id/mondayEspin"
+                android:id="@+id/mondaySspin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.95"
                 android:entries="@array/spinner_hours" />
 
             <Spinner
-                android:id="@+id/mondaySspin"
+                android:id="@+id/mondayEspin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -118,7 +118,7 @@
             android:orientation="horizontal">
 
             <Spinner
-                android:id="@+id/tuesdayEspin"
+                android:id="@+id/tuesdaySspin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -127,7 +127,7 @@
                 tools:layout_editor_absoluteY="144dp" />
 
             <Spinner
-                android:id="@+id/tuesdaySspin"
+                android:id="@+id/tuesdayEspin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -155,7 +155,7 @@
             android:orientation="horizontal">
 
             <Spinner
-                android:id="@+id/wednesdayEspin"
+                android:id="@+id/wednesdaySspin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -164,7 +164,7 @@
                 tools:layout_editor_absoluteY="197dp" />
 
             <Spinner
-                android:id="@+id/wednesdaySspin"
+                android:id="@+id/wednesdayEspin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -192,7 +192,7 @@
             android:orientation="horizontal">
 
             <Spinner
-                android:id="@+id/thursdayEspin"
+                android:id="@+id/thursdaySspin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -201,7 +201,7 @@
                 tools:layout_editor_absoluteY="252dp" />
 
             <Spinner
-                android:id="@+id/thursdaySspin"
+                android:id="@+id/thursdayEspin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -229,7 +229,7 @@
             android:orientation="horizontal">
 
             <Spinner
-                android:id="@+id/fridayEspin"
+                android:id="@+id/fridaySspin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -238,7 +238,7 @@
                 tools:layout_editor_absoluteY="308dp" />
 
             <Spinner
-                android:id="@+id/fridaySspin"
+                android:id="@+id/fridayEspin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -266,7 +266,7 @@
             android:orientation="horizontal">
 
             <Spinner
-                android:id="@+id/saturdayEspin"
+                android:id="@+id/saturdaySspin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -275,7 +275,7 @@
                 tools:layout_editor_absoluteY="378dp" />
 
             <Spinner
-                android:id="@+id/saturdaySspin"
+                android:id="@+id/saturdayEspin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -289,10 +289,9 @@
 
 
     <ImageButton
-        android:id="@+id/nextIb"
+        android:id="@+id/btSave"
         android:layout_width="64dp"
         android:layout_height="60dp"
-        android:onClick="timeAndFee"
         app:srcCompat="@drawable/barberscissors"
         android:background="@color/background"
         app:layout_constraintBottom_toBottomOf="parent"

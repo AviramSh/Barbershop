@@ -22,17 +22,17 @@ public class SharedPreferencesConstants {
     public static final String PASSWORD_DATE_FOR_REST = "PASSWORD_DATE_FOR_REST";
 
     public static final String SUNDAY_TIME_OPEN = "SUNDAY_TIME_OPEN";
-    public static final String SUNDAY_TIME_CLOSE = "SUNDAY_TIME_CLOSE";
+//    public static final String SUNDAY_TIME_CLOSE = "SUNDAY_TIME_CLOSE";
     public static final String MONDAY_TIME_OPEN = "MONDAY_TIME_OPEN";
-    public static final String MONDAY_TIME_CLOSE = "MONDAY_TIME_CLOSE";
+//    public static final String MONDAY_TIME_CLOSE = "MONDAY_TIME_CLOSE";
     public static final String TUESDAY_TIME_OPEN = "TUESDAY_TIME_OPEN";
-    public static final String TUESDAY_TIME_CLOSE = "TUESDAY_TIME_CLOSE";
+//    public static final String TUESDAY_TIME_CLOSE = "TUESDAY_TIME_CLOSE";
     public static final String WEDNESDAY_TIME_OPEN = "WEDNESDAY_TIME_OPEN";
-    public static final String WEDNESDAY_TIME_CLOSE = "WEDNESDAY_TIME_CLOSE";
+//    public static final String WEDNESDAY_TIME_CLOSE = "WEDNESDAY_TIME_CLOSE";
     public static final String THURSDAY_TIME_OPEN = "THURSDAY_TIME_OPEN";
-    public static final String THURSDAY_TIME_CLOSE = "THURSDAY_TIME_CLOSE";
+//    public static final String THURSDAY_TIME_CLOSE = "THURSDAY_TIME_CLOSE";
     public static final String FRIDAY_TIME_OPEN = "FRIDAY_TIME_OPEN";
-    public static final String FRIDAY_TIME_CLOSE = "FRIDAY_TIME_CLOSE";
+//    public static final String FRIDAY_TIME_CLOSE = "FRIDAY_TIME_CLOSE";
     public static final String SATURDAY_TIME_OPEN = "SATURDAY_TIME_OPEN";
-    public static final String SATURDAY_TIME_CLOSE = "SATURDAY_TIME_CLOSE";
+//    public static final String SATURDAY_TIME_CLOSE = "SATURDAY_TIME_CLOSE";
 }
