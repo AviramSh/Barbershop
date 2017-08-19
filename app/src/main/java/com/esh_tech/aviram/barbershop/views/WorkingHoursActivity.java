@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
@@ -101,39 +102,69 @@ public class WorkingHoursActivity extends AppCompatActivity implements View.OnCl
     private void setData() {
 
         setHour(SharedPreferencesConstants.SUNDAY_TIME_OPEN,0,(CheckBox)findViewById(R.id.sundayCb));
-        setHour(SharedPreferencesConstants.SUNDAY_TIME_CLOSE,1,(CheckBox)findViewById(R.id.sundayCb));
+//        setHour(SharedPreferencesConstants.SUNDAY_TIME_OPEN,1,(CheckBox)findViewById(R.id.sundayCb));
+//        setHour(SharedPreferencesConstants.SUNDAY_TIME_OPEN,1,(CheckBox)findViewById(R.id.sundayCb));
 
         setHour(SharedPreferencesConstants.MONDAY_TIME_OPEN,2,(CheckBox)findViewById(R.id.mondayCb));
-        setHour(SharedPreferencesConstants.MONDAY_TIME_CLOSE,3,(CheckBox)findViewById(R.id.mondayCb));
+//        setHour(SharedPreferencesConstants.MONDAY_TIME_OPEN,3,(CheckBox)findViewById(R.id.mondayCb));
+//        setHour(SharedPreferencesConstants.MONDAY_TIME_CLOSE,3,(CheckBox)findViewById(R.id.mondayCb));
 
         setHour(SharedPreferencesConstants.TUESDAY_TIME_OPEN,4,(CheckBox)findViewById(R.id.tuesdayCb));
-        setHour(SharedPreferencesConstants.TUESDAY_TIME_CLOSE,5,(CheckBox)findViewById(R.id.tuesdayCb));
+//        setHour(SharedPreferencesConstants.TUESDAY_TIME_OPEN,5,(CheckBox)findViewById(R.id.tuesdayCb));
+//        setHour(SharedPreferencesConstants.TUESDAY_TIME_CLOSE,5,(CheckBox)findViewById(R.id.tuesdayCb));
 
         setHour(SharedPreferencesConstants.WEDNESDAY_TIME_OPEN,6,(CheckBox)findViewById(R.id.wednesdayCb));
-        setHour(SharedPreferencesConstants.WEDNESDAY_TIME_CLOSE,7,(CheckBox)findViewById(R.id.wednesdayCb));
+//        setHour(SharedPreferencesConstants.WEDNESDAY_TIME_OPEN,7,(CheckBox)findViewById(R.id.wednesdayCb));
+//        setHour(SharedPreferencesConstants.WEDNESDAY_TIME_CLOSE,7,(CheckBox)findViewById(R.id.wednesdayCb));
 
         setHour(SharedPreferencesConstants.THURSDAY_TIME_OPEN,8,(CheckBox)findViewById(R.id.thursdayCb));
-        setHour(SharedPreferencesConstants.THURSDAY_TIME_CLOSE,9,(CheckBox)findViewById(R.id.thursdayCb));
+//        setHour(SharedPreferencesConstants.THURSDAY_TIME_OPEN,9,(CheckBox)findViewById(R.id.thursdayCb));
+//        setHour(SharedPreferencesConstants.THURSDAY_TIME_CLOSE,9,(CheckBox)findViewById(R.id.thursdayCb));
 
         setHour(SharedPreferencesConstants.FRIDAY_TIME_OPEN,10,(CheckBox)findViewById(R.id.fridayCb));
-        setHour(SharedPreferencesConstants.FRIDAY_TIME_CLOSE,11,(CheckBox)findViewById(R.id.fridayCb));
+        setHour(SharedPreferencesConstants.FRIDAY_TIME_OPEN,11,(CheckBox)findViewById(R.id.fridayCb));
+//        setHour(SharedPreferencesConstants.FRIDAY_TIME_CLOSE,11,(CheckBox)findViewById(R.id.fridayCb));
 
         setHour(SharedPreferencesConstants.SATURDAY_TIME_OPEN,12,(CheckBox)findViewById(R.id.saturdayCb));
-        setHour(SharedPreferencesConstants.SATURDAY_TIME_CLOSE,13,(CheckBox)findViewById(R.id.saturdayCb));
+//        setHour(SharedPreferencesConstants.SATURDAY_TIME_OPEN,13,(CheckBox)findViewById(R.id.saturdayCb));
+//        setHour(SharedPreferencesConstants.SATURDAY_TIME_CLOSE,13,(CheckBox)findViewById(R.id.saturdayCb));
     }
 
     private boolean setHour(String label,int index,CheckBox cbId) {
+        int i=0;
+        String[] hoursArray = getResources().getStringArray(R.array.spinner_hours);
+        String dayHours = settings.getString(label,"");
+        String[] splitDayHours = dayHours.split(":");
+
 
         cbId.setChecked(false);
 
-        if(!settings.getString(label,"").equals("") &&
-                !settings.getString(label,"").equals(getResources().getString(R.string.rest))){
-            String[] hoursArray = getResources().getStringArray(R.array.spinner_hours);
+        if(!splitDayHours[0].equals("") &&
+                !splitDayHours[0].equals(getResources().getString(R.string.rest))){
 
-            for (int i=0 ; i < hoursArray.length ; i++) {
-                if (hoursArray[i].equals(settings.getString(label, ""))&&i!=0) {
+            Log.d("TAG","New Spinner");
+
+            for (i=0 ; i < hoursArray.length ; i++) {
+                Log.d("TAG",i+")First Loop: dayHours:"+dayHours+" contains ==> "+hoursArray[i]);
+
+                if(dayHours.contains(hoursArray[i])) {
+                    Log.d("TAG","Start Yes");
                     spinners.get(index).setSelection(i);
                     cbId.setChecked(true);
+                    i++;
+                    break;
+
+                }
+
+            }
+
+            for (; i < hoursArray.length ; i++){
+                Log.d("TAG",i+")Second Loop: dayHours:"+dayHours+" contains ==> "+hoursArray[i]+"-"+hoursArray[i].length());
+
+                if(dayHours.contains(hoursArray[i])){
+                    spinners.get(index+1).setSelection(i);
+                    Log.d("TAG","End Yes");
+                    break;
                 }
             }
 
@@ -160,12 +191,14 @@ public class WorkingHoursActivity extends AppCompatActivity implements View.OnCl
             if(sStart.getSelectedItemPosition()==sEnd.getSelectedItemPosition()&& sStart.getSelectedItemPosition()!=0){
                 Toast.makeText(this, R.string.sunday_invalid_time, Toast.LENGTH_SHORT).show();
             }else {
-                saveDate(SharedPreferencesConstants.SUNDAY_TIME_OPEN, SharedPreferencesConstants.SUNDAY_TIME_CLOSE,
+                /*saveDate(SharedPreferencesConstants.SUNDAY_TIME_OPEN, SharedPreferencesConstants.SUNDAY_TIME_CLOSE,
+                        (String) sStart.getSelectedItem(), (String) sEnd.getSelectedItem());*/
+                saveDate(SharedPreferencesConstants.SUNDAY_TIME_OPEN,
                         (String) sStart.getSelectedItem(), (String) sEnd.getSelectedItem());
             }
 
         }else{
-            saveDate(SharedPreferencesConstants.SUNDAY_TIME_OPEN, SharedPreferencesConstants.SUNDAY_TIME_CLOSE,
+            saveDate(SharedPreferencesConstants.SUNDAY_TIME_OPEN,
                     getResources().getString(R.string.rest), getResources().getString(R.string.rest));
         }
 
@@ -179,11 +212,11 @@ public class WorkingHoursActivity extends AppCompatActivity implements View.OnCl
             if(sStart.getSelectedItemPosition()==sEnd.getSelectedItemPosition()&& sStart.getSelectedItemPosition()!=0){
                 Toast.makeText(this, R.string.monday_invalid_time, Toast.LENGTH_SHORT).show();
             }else {
-                saveDate(SharedPreferencesConstants.MONDAY_TIME_OPEN, SharedPreferencesConstants.MONDAY_TIME_CLOSE,
+                saveDate(SharedPreferencesConstants.MONDAY_TIME_OPEN,
                         (String) sStart.getSelectedItem(), (String) sEnd.getSelectedItem());
             }
         }else{
-            saveDate(SharedPreferencesConstants.MONDAY_TIME_OPEN, SharedPreferencesConstants.MONDAY_TIME_CLOSE,
+            saveDate(SharedPreferencesConstants.MONDAY_TIME_OPEN,
                     getResources().getString(R.string.rest), getResources().getString(R.string.rest));
         }
 
@@ -196,11 +229,11 @@ public class WorkingHoursActivity extends AppCompatActivity implements View.OnCl
             if(sStart.getSelectedItemPosition()==sEnd.getSelectedItemPosition()&& sStart.getSelectedItemPosition()!=0){
                 Toast.makeText(this, R.string.tuesday_invalid_time, Toast.LENGTH_SHORT).show();
             }else {
-                saveDate(SharedPreferencesConstants.TUESDAY_TIME_OPEN, SharedPreferencesConstants.TUESDAY_TIME_CLOSE,
+                saveDate(SharedPreferencesConstants.TUESDAY_TIME_OPEN,
                         (String) sStart.getSelectedItem(), (String) sEnd.getSelectedItem());
             }
         }else{
-            saveDate(SharedPreferencesConstants.TUESDAY_TIME_OPEN, SharedPreferencesConstants.TUESDAY_TIME_CLOSE,
+            saveDate(SharedPreferencesConstants.TUESDAY_TIME_OPEN,
                     getResources().getString(R.string.rest), getResources().getString(R.string.rest));
         }
 
@@ -214,11 +247,11 @@ public class WorkingHoursActivity extends AppCompatActivity implements View.OnCl
             if(sStart.getSelectedItemPosition()==sEnd.getSelectedItemPosition()&& sStart.getSelectedItemPosition()!=0){
                 Toast.makeText(this, R.string.wednesday_invalid_time, Toast.LENGTH_SHORT).show();
             }else {
-                saveDate(SharedPreferencesConstants.WEDNESDAY_TIME_OPEN, SharedPreferencesConstants.WEDNESDAY_TIME_CLOSE,
+                saveDate(SharedPreferencesConstants.WEDNESDAY_TIME_OPEN,
                         (String) sStart.getSelectedItem(), (String) sEnd.getSelectedItem());
             }
         }else{
-            saveDate(SharedPreferencesConstants.WEDNESDAY_TIME_OPEN, SharedPreferencesConstants.WEDNESDAY_TIME_CLOSE,
+            saveDate(SharedPreferencesConstants.WEDNESDAY_TIME_OPEN,
                     getResources().getString(R.string.rest), getResources().getString(R.string.rest));
         }
 
@@ -234,12 +267,12 @@ public class WorkingHoursActivity extends AppCompatActivity implements View.OnCl
             if(sStart.getSelectedItemPosition()==sEnd.getSelectedItemPosition()&& sStart.getSelectedItemPosition()!=0){
                 Toast.makeText(this, R.string.thursday_invalid_time, Toast.LENGTH_SHORT).show();
             }else {
-                saveDate(SharedPreferencesConstants.THURSDAY_TIME_OPEN, SharedPreferencesConstants.THURSDAY_TIME_CLOSE,
+                saveDate(SharedPreferencesConstants.THURSDAY_TIME_OPEN,
                         (String) sStart.getSelectedItem(), (String) sEnd.getSelectedItem());
             }
 
         }else{
-            saveDate(SharedPreferencesConstants.THURSDAY_TIME_OPEN, SharedPreferencesConstants.TUESDAY_TIME_CLOSE,
+            saveDate(SharedPreferencesConstants.THURSDAY_TIME_OPEN,
                     getResources().getString(R.string.rest), getResources().getString(R.string.rest));
         }
 
@@ -252,12 +285,12 @@ public class WorkingHoursActivity extends AppCompatActivity implements View.OnCl
             if(sStart.getSelectedItemPosition()==sEnd.getSelectedItemPosition() && sStart.getSelectedItemPosition()!=0){
                 Toast.makeText(this, R.string.friday_invalid_time, Toast.LENGTH_SHORT).show();
             }else {
-                saveDate(SharedPreferencesConstants.FRIDAY_TIME_OPEN, SharedPreferencesConstants.FRIDAY_TIME_CLOSE,
+                saveDate(SharedPreferencesConstants.FRIDAY_TIME_OPEN,
                         (String) sStart.getSelectedItem(), (String) sEnd.getSelectedItem());
             }
 
         }else{
-            saveDate(SharedPreferencesConstants.FRIDAY_TIME_OPEN, SharedPreferencesConstants.FRIDAY_TIME_CLOSE,
+            saveDate(SharedPreferencesConstants.FRIDAY_TIME_OPEN,
                     getResources().getString(R.string.rest), getResources().getString(R.string.rest));
         }
 
@@ -268,11 +301,11 @@ public class WorkingHoursActivity extends AppCompatActivity implements View.OnCl
             if(sStart.getSelectedItemPosition()==sEnd.getSelectedItemPosition()&& sStart.getSelectedItemPosition()!=0){
                 Toast.makeText(this, R.string.saturday_invalid_time, Toast.LENGTH_SHORT).show();
             }else {
-                saveDate(SharedPreferencesConstants.SATURDAY_TIME_OPEN, SharedPreferencesConstants.SATURDAY_TIME_CLOSE,
+                saveDate(SharedPreferencesConstants.SATURDAY_TIME_OPEN,
                         (String) sStart.getSelectedItem(), (String) sEnd.getSelectedItem());
             }
         }else{
-            saveDate(SharedPreferencesConstants.SATURDAY_TIME_OPEN, SharedPreferencesConstants.SATURDAY_TIME_CLOSE,
+            saveDate(SharedPreferencesConstants.SATURDAY_TIME_OPEN,
                     getResources().getString(R.string.rest), getResources().getString(R.string.rest));
         }
 
@@ -332,14 +365,14 @@ public class WorkingHoursActivity extends AppCompatActivity implements View.OnCl
 //        editor.apply();
     }
 
-    private boolean saveDate(String labelOpen,String labelClose,
+    private boolean saveDate(String labelOpen,
                           String openTime,String closeTime) {
 
 
         if(openTime.equals(getResources().getString(R.string.rest))|| closeTime.equals(getResources().getString(R.string.rest))) {
 //            Toast.makeText(this, "Rest day", Toast.LENGTH_SHORT).show();
             editor.putString(labelOpen,"");
-            editor.putString(labelClose,"");
+//            editor.putString(labelClose,"");
             return true;
         }else{
             editor.putString(labelOpen,openTime+":"+closeTime);

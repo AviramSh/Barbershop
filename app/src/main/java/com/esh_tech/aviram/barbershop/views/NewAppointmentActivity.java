@@ -21,6 +21,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -33,6 +34,7 @@ import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Constants.BundleConstants;
 import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
+import com.esh_tech.aviram.barbershop.Constants.LogConstants;
 import com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants;
 import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
@@ -71,6 +73,11 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
     static final int DIALOG_ID = 0;
     static final int DIALOG_ID_TIME = 1;
+
+//    Logs
+//    private static final String TAG="";
+    private static final String APPOINTMENT_HANDLER="APPOINTMENT_HANDLER";
+    private static final String CUSTOMER_HANDLER="CUSTOMER_HANDLER";
 
 
     //List
@@ -120,14 +127,12 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
         customerProfile = new Customer();
         customerProfile.setName(getResources().getString(R.string.guest));
+
         newAppointment =new Appointment();
-
-
         newAppointment.setHaircutTime(settings.getInt(USER_MALE_HAIRCUT_TIME,35));
         newAppointment.setHaircutPrice(settings.getInt(USER_MALE_HAIRCUT_PRICE,35));
 
         settings = PreferenceManager.getDefaultSharedPreferences(NewAppointmentActivity.this);
-
 
         setToday();
 
@@ -140,9 +145,8 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             }
         }catch (NullPointerException e){
             e.getMessage();
+            Log.e(CUSTOMER_HANDLER,"Null pointer , No customer Id on Intent Extras");
         }
-        ..
-//        Toast.makeText(this, ""+getOpenDaysAndHours(appointmentCalendar.get(Calendar.DAY_OF_WEEK)), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -196,14 +200,39 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
 
         if(appointmentCalendar.before(Calendar.getInstance())){
-            
+
             appointmentCalendar.setTime(Calendar.getInstance().getTime());
             appointmentCalendar.add(Calendar.MINUTE,5);
             setTime(appointmentCalendar);
 
         }else{
+
             setTime(appointmentCalendar);
         }
+
+
+        String[] workTime = getOpenDaysAndHours(appointmentCalendar.get(Calendar.DAY_OF_WEEK));
+        for (int i=0;workTime == null || workTime[0].equals("")|| workTime[0].equals("-1");i++){
+            appointmentCalendar.add(Calendar.DAY_OF_MONTH,1);
+            workTime = getOpenDaysAndHours(appointmentCalendar.get(Calendar.DAY_OF_WEEK));
+            if(i==15) {
+                Log.d(APPOINTMENT_HANDLER, "SetToday() error in finding an appointment date..for is to long.");
+                break;
+            }
+        }
+
+//       /*
+//        if(workTime==null){
+//            Log.e(APPOINTMENT_HANDLER,"WorkTime() is Null.");
+//            Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show();
+//        }else {
+//            while (workTime[0].equals("") ||
+//                    workTime[0].equals("-1")) {
+//                    workTime = getOpenDaysAndHours(appointmentCalendar.get(Calendar.DAY_OF_WEEK));
+//            }
+//        }*/
+
+
 
         SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.dateDayNameFormat, Locale.getDefault());
         String newFormat = formatter.format(appointmentCalendar.getTime());
@@ -257,11 +286,6 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             Calendar cTestDate = Calendar.getInstance();
             cTestDate.set(year,month,dayOfMonth);
 
-            if(testPicDate(cTestDate)){
-
-            }
-
-
             if(cTestDate.before(Calendar.getInstance())){
                 appointmentCalendar.setTime(Calendar.getInstance().getTime());
                 setToday();
@@ -270,9 +294,26 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 //
 //                theDate.setText(newFormat);*/
             }else{
-                appointmentCalendar.setTime(cTestDate.getTime());
-                setToday();
+
+                String[] str = getOpenDaysAndHours(cTestDate.get(Calendar.DAY_OF_WEEK));
+                if(str==null){
+                    Log.d(APPOINTMENT_HANDLER,"getOpenDaysAndHours() return null.");
+                }else{
+
+                    if(str[0].equals("-1")|| str[0].equals("")){
+                        Log.d(APPOINTMENT_HANDLER,"getOpenDaysAndHours() return Illegal date : "+str[0]);
+                    }else{
+//                    appointmentCalendar.set(year,month,dayOfMonth);
+                        appointmentCalendar.setTime(cTestDate.getTime());
+                        setToday();
+                    }
+                }
+
             }
+
+
+
+
 
         }
     };
