@@ -1,13 +1,17 @@
 package com.esh_tech.aviram.barbershop.Database;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants;
+import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.R;
 import com.esh_tech.aviram.barbershop.Utils.DateUtils;
 import com.esh_tech.aviram.barbershop.data.*;
@@ -17,6 +21,7 @@ import com.esh_tech.aviram.barbershop.Constants.MainDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.PicturesDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.ProductsDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.PurchaseDBConstants;
+import com.esh_tech.aviram.barbershop.views.MainActivity;
 
 
 import java.text.ParseException;
@@ -33,8 +38,10 @@ import java.util.Locale;
 public class BarbershopDBHandler {
 
 
+    SharedPreferences settings;
     private MySQLiteHelper dbHelper;
     private Context context;
+    private static final String TAG="MyDebug";
 
     public BarbershopDBHandler(Context context) {
         this.context = context;
@@ -43,11 +50,17 @@ public class BarbershopDBHandler {
 
     //    Add Customer ID(String name, String phone, String secondPhone, String email, Double bill, Bitmap photo, boolean gender, boolean remainder)
     public boolean addCustomer(Customer customer){
+        settings = PreferenceManager.getDefaultSharedPreferences(context);
+
         long result = -1;
         if (getCustomerByPhone(customer.getPhone())!=null) {
             Toast.makeText(context, R.string.customerExist, Toast.LENGTH_SHORT).show();
             return false;
         }
+        /*if (customer.get_id()==1 && settings.getBoolean(UserDBConstants.USER_IS_REGISTER,false)){
+            updateCustomer(customer);
+            return updateCustomer(customer);
+        }*/
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -61,7 +74,7 @@ public class BarbershopDBHandler {
         columnValues.put(CustomersDBConstants.CUSTOMER_GENDER , customer.getGender());
         columnValues.put(CustomersDBConstants.CUSTOMER_REMAINDER , customer.getRemainder());
 
-        if(customer.get_id() == -1) {
+        if(customer.get_id() == 1 && getCustomerByID(customer.get_id())==null) {
             result = db.insertOrThrow(CustomersDBConstants.CUSTOMERS_TABLE_NAME,
                     null,
                     columnValues);
@@ -72,13 +85,19 @@ public class BarbershopDBHandler {
                     null);
         }
         db.close();
+
         if(customer.getPhoto()!=null){
-            addPicture(getCustomerByPhone(customer.getPhone()).get_id(),customer.getPhoto());
+            Customer p1 = getCustomerByPhone(customer.getPhone());
+            if(p1!=null)
+                addPicture(p1.get_id(),customer.getPhoto());
         }
+
+        Log.d(TAG,"Add Customer "+customer);
         return (result != -1);
     }
     public boolean updateCustomer(Customer customer){
         long result = -1;
+        if(customer.get_id()!=0)
         if (getCustomerByPhone(customer.getPhone())==null) {
             Toast.makeText(context, R.string.customerDoesntExist, Toast.LENGTH_SHORT).show();
             return false;
@@ -101,7 +120,7 @@ public class BarbershopDBHandler {
                 null);
 
         db.close();
-
+        Log.d(TAG,"Update Customer "+customer);
         return (result != -1);
     }
     public ArrayList<Customer> getAllCustomers() {
@@ -330,7 +349,7 @@ public class BarbershopDBHandler {
         return (result != -1);
     }
     public boolean isCustomerSchedule(Appointment newAppointment ,String testDate) {
-        if (newAppointment.get_id()== 0)
+        if (newAppointment.get_id()== 1)
             return false;
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
@@ -396,7 +415,7 @@ public class BarbershopDBHandler {
             date2.setTime(appointmentItem.getDateAndTime());
             date2.set(Calendar.SECOND,0);
 
-            if(Math.abs(date1.getTimeInMillis() - date2.getTimeInMillis())/60000 <= appointmentToTest.getHaircutTime()){
+            if(Math.abs(date1.getTimeInMillis() - date2.getTimeInMillis())/60000 < appointmentToTest.getHaircutTime()){
                 Calendar temp = Calendar.getInstance();
                 temp.setTime(date2.getTime());
                 temp.add(Calendar.MINUTE,appointmentItem.getHaircutTime());

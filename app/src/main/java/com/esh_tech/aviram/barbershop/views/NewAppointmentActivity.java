@@ -56,18 +56,18 @@ import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_MALE
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class NewAppointmentActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private static final String TAG = "MY_TAG";
     Customer customerProfile;
     ArrayList<Customer> customersList;
     ArrayList<String> customersNames;
 
-    //    SharedPreferences
+//    SharedPreferences
     SharedPreferences settings;
 
 
     //Calendar
     Calendar appointmentCalendar;
-//    Calendar openingCalendar;
-//    Calendar closingCalendar;
+
     Button theDate;
     Button theTime;
 
@@ -78,6 +78,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 //    private static final String TAG="";
     private static final String APPOINTMENT_HANDLER="APPOINTMENT_HANDLER";
     private static final String CUSTOMER_HANDLER="CUSTOMER_HANDLER";
+    private static final String DATE_HANDLER="DATE_HANDLER";
 
 
     //List
@@ -117,13 +118,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         theTime= (Button)findViewById(R.id.btTime);
 
         appointmentCalendar = Calendar.getInstance();
-//        openingCalendar = Calendar.getInstance();
-//        closingCalendar = Calendar.getInstance();
-
         appointmentCalendar.add(Calendar.DAY_OF_MONTH,1);
-//        openingCalendar.setTime(appointmentCalendar.getTime());
-//        closingCalendar.setTime(appointmentCalendar.getTime());
-
 
         customerProfile = new Customer();
         customerProfile.setName(getResources().getString(R.string.guest));
@@ -131,8 +126,6 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         newAppointment =new Appointment();
         newAppointment.setHaircutTime(settings.getInt(USER_MALE_HAIRCUT_TIME,35));
         newAppointment.setHaircutPrice(settings.getInt(USER_MALE_HAIRCUT_PRICE,35));
-
-        settings = PreferenceManager.getDefaultSharedPreferences(NewAppointmentActivity.this);
 
         setToday();
 
@@ -206,7 +199,6 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             setTime(appointmentCalendar);
 
         }else{
-
             setTime(appointmentCalendar);
         }
 
@@ -216,35 +208,14 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             appointmentCalendar.add(Calendar.DAY_OF_MONTH,1);
             workTime = getOpenDaysAndHours(appointmentCalendar.get(Calendar.DAY_OF_WEEK));
             if(i==15) {
-                Log.d(APPOINTMENT_HANDLER, "SetToday() error in finding an appointment date..for is to long.");
+                Log.e(APPOINTMENT_HANDLER, "SetToday() error in finding an appointment date..for is to long.");
                 break;
             }
         }
 
-//       /*
-//        if(workTime==null){
-//            Log.e(APPOINTMENT_HANDLER,"WorkTime() is Null.");
-//            Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show();
-//        }else {
-//            while (workTime[0].equals("") ||
-//                    workTime[0].equals("-1")) {
-//                    workTime = getOpenDaysAndHours(appointmentCalendar.get(Calendar.DAY_OF_WEEK));
-//            }
-//        }*/
 
-
-
-        SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.dateDayNameFormat, Locale.getDefault());
-        String newFormat = formatter.format(appointmentCalendar.getTime());
-
-        theDate.setText(newFormat);
-
-        formatter = new SimpleDateFormat(DateUtils.timeFormat, Locale.getDefault());
-        newFormat = formatter.format(appointmentCalendar.getTime());
-
-
-        theTime.setText(newFormat);
-
+        theDate.setText(DateUtils.getDateDaySDF(appointmentCalendar));
+        theTime.setText(DateUtils.getTimeSDF(appointmentCalendar.getTime()));
 
     }
 
@@ -370,10 +341,9 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
             if (cTest.getTimeInMillis()<Calendar.getInstance().getTimeInMillis())
             {
-                Toast.makeText(NewAppointmentActivity.this, "Date not good", Toast.LENGTH_SHORT).show();
+                Log.d(TAG,"Date not good" );
             }else
             {
-                Toast.makeText(NewAppointmentActivity.this, "Date is good", Toast.LENGTH_SHORT).show();
                 appointmentCalendar.set(Calendar.HOUR_OF_DAY ,hourOfDay);
                 appointmentCalendar.set(Calendar.MINUTE,minute);
             }
@@ -426,28 +396,35 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
         switch (day){
             case Calendar.SUNDAY:
+                Log.d(DATE_HANDLER,"Input Day "+day+" found .");
                 return settings.getString(SharedPreferencesConstants.SUNDAY_TIME_OPEN,"-1").split(":");
 
             case Calendar.MONDAY:
+                Log.d(DATE_HANDLER,"Input Day "+day+" found .");
                 return settings.getString(SharedPreferencesConstants.MONDAY_TIME_OPEN,"-1").split(":");
 
             case Calendar.TUESDAY:
+                Log.d(DATE_HANDLER,"Input Day "+day+" found .");
                 return settings.getString(SharedPreferencesConstants.TUESDAY_TIME_OPEN,"-1").split(":");
 
             case Calendar.WEDNESDAY:
+                Log.d(DATE_HANDLER,"Input Day "+day+" found .");
                 return settings.getString(SharedPreferencesConstants.WEDNESDAY_TIME_OPEN,"-1").split(":");
 
             case Calendar.THURSDAY:
+                Log.d(DATE_HANDLER,"Input Day "+day+" found .");
                 return settings.getString(SharedPreferencesConstants.THURSDAY_TIME_OPEN,"-1").split(":");
 
             case Calendar.FRIDAY:
+                Log.d(DATE_HANDLER,"Input Day "+day+" found .");
                 return settings.getString(SharedPreferencesConstants.FRIDAY_TIME_OPEN,"-1").split(":");
 
             case Calendar.SATURDAY:
+                Log.d(DATE_HANDLER,"Input Day "+day+" found .");
                 return settings.getString(SharedPreferencesConstants.SATURDAY_TIME_OPEN,"-1").split(":");
 
             default:
-                Toast.makeText(NewAppointmentActivity.this, R.string.not_initialized_yet, Toast.LENGTH_SHORT).show();
+                Log.e(DATE_HANDLER,"Input Error Day "+day+"found .");
                 return null;
 
         }
@@ -490,8 +467,12 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
     }
 
     public void saveAppointment() {
+        Toast.makeText(this, ""+customerProfile.get_id(), Toast.LENGTH_SHORT).show();
+         Toast.makeText(this, ""+customerProfile.getName(), Toast.LENGTH_SHORT).show();
 
-        if(dbHandler.getCustomerByName(customerNameSearch.getText().toString())!= null){
+        if(customerProfile.get_id()!=1)
+            registerHandler();
+        else if(dbHandler.getCustomerByName(customerNameSearch.getText().toString())!= null){
             customerProfile = dbHandler.getCustomerByName(customerNameSearch.getText().toString());
         }else if(dbHandler.getCustomerByPhone(customerNameSearch.getText().toString())!= null){
             customerProfile =dbHandler.getCustomerByPhone(customerNameSearch.getText().toString());
@@ -501,7 +482,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             Toast.makeText(this, R.string.emptyField, Toast.LENGTH_SHORT).show();
         }else{
 
-            if(customerProfile.get_id() != -1 || customerProfile.get_id() !=0) {
+            if(customerProfile.get_id() != 1) {
                 registerHandler();
             }else{
                 guestHandler();
@@ -522,9 +503,6 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         }
 
 
-
-                /*SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.dateFormat, Locale.getDefault());
-                String newFormat = formatter.format(appointmentCalendar.getTime());*/
 
         String newDateFormat = DateUtils.getFullSDF(appointmentCalendar.getTime());
         String newDateAndTimeFormat = DateUtils.getFullSDF(appointmentCalendar.getTime());
@@ -547,16 +525,11 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             } else {
                 Toast.makeText(this, R.string.failedToSave, Toast.LENGTH_SHORT).show();
             }
-//                customerNameSearch.setText(customerProfile.getName());
-        }/*else{
-                    Toast.makeText(this, ""+getResources().getString(R.string.alreadyHaveAppointment), Toast.LENGTH_SHORT).show();
-                }*/
-
-
+        }
     }
 
     private void guestHandler() {
-
+        customerProfile.set_id(1);
         final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
         customerProfile.setPhone(customerProfile.getPhone());
         mBuilder.setTitle(R.string.dialogCreateNewCustomer);
@@ -575,8 +548,6 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         mBuilder.setNegativeButton(R.string.guest, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-                customerProfile.set_id(0);
 
                 customerProfile.setName(getResources().getString(R.string.guest));
                 customerProfile.setPhone(customerProfile.getPhone());

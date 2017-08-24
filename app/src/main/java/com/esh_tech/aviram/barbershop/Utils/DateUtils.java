@@ -181,6 +181,11 @@ public class DateUtils {
         return getTimeSDF(myDate.getTime());
     }
 
+    public static String getDateDaySDF(Calendar convertTime){
+        SimpleDateFormat formatter = new SimpleDateFormat(dateDayNameFormat ,Locale.getDefault());
+        return formatter.format(convertTime.getTime());
+    }
+
 
     public static Calendar toCalendar(Date date){
         Calendar cal = Calendar.getInstance();

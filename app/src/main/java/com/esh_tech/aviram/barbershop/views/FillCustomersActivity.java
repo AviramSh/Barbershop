@@ -218,52 +218,49 @@ public class FillCustomersActivity extends AppCompatActivity {
             Toast.makeText(this, "contact name is " + contactName, Toast.LENGTH_SHORT).show();
 
             cursor.close();
-
-/*//            Contact number
-            String contactNumber = null;
-
-            // getting contacts ID
-            Cursor cursorID = getContentResolver().query(uriContact,
-                    new String[]{ContactsContract.Contacts._ID},
-                    null, null, null);
-
-            if (cursorID.moveToFirst()) {
-
-                contactID = cursorID.getString(cursorID.getColumnIndex(ContactsContract.Contacts._ID));
-            }
-
-            cursorID.close();
-
-            Log.d(TAG, "Contact ID: " + contactID);
-
-            // Using the contact ID now we will get contact phone number
-            Cursor cursorPhone = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                    new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER},
-
-                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ? AND " +
-                            ContactsContract.CommonDataKinds.Phone.TYPE + " = " +
-                            ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE,
-
-                    new String[]{contactID},
-                    null);
-
-            if (cursorPhone.moveToFirst()) {
-                contactNumber = cursorPhone.getString(cursorPhone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-            }
-
-            cursorPhone.close();
-
-            Log.d(TAG, "Contact Phone Number: " + contactNumber);
-
-            Toast.makeText(this, "Contact Phone Number: " + contactNumber, Toast.LENGTH_LONG).show();*/
-//            Toast.makeText(this, "Contact Name : " + contactName, Toast.LENGTH_LONG).show();
+///*//            Contact number
+//            String contactNumber = null;
+//
+//            // getting contacts ID
+//            Cursor cursorID = getContentResolver().query(uriContact,
+//                    new String[]{ContactsContract.Contacts._ID},
+//                    null, null, null);
+//
+//            if (cursorID.moveToFirst()) {
+//
+//                contactID = cursorID.getString(cursorID.getColumnIndex(ContactsContract.Contacts._ID));
+//            }
+//
+//            cursorID.close();
+//
+//            Log.d(TAG, "Contact ID: " + contactID);
+//
+//            // Using the contact ID now we will get contact phone number
+//            Cursor cursorPhone = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+//                    new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER},
+//
+//                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ? AND " +
+//                            ContactsContract.CommonDataKinds.Phone.TYPE + " = " +
+//                            ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE,
+//
+//                    new String[]{contactID},
+//                    null);
+//
+//            if (cursorPhone.moveToFirst()) {
+//                contactNumber = cursorPhone.getString(cursorPhone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+//            }
+//
+//            cursorPhone.close();
+//
+//            Log.d(TAG, "Contact Phone Number: " + contactNumber);
+//
+//            Toast.makeText(this, "Contact Phone Number: " + contactNumber, Toast.LENGTH_LONG).show();*/
+////            Toast.makeText(this, "Contact Name : " + contactName, Toast.LENGTH_LONG).show();
         }
 
 
 
         Log.d(TAG, "Contact Name: " + contactName);
-
-//        Toast.makeText(this, contactName+" "+contactPhone, Toast.LENGTH_SHORT).show();
         return contactName;
 
     }

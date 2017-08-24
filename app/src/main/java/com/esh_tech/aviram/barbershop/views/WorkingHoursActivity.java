@@ -102,32 +102,19 @@ public class WorkingHoursActivity extends AppCompatActivity implements View.OnCl
     private void setData() {
 
         setHour(SharedPreferencesConstants.SUNDAY_TIME_OPEN,0,(CheckBox)findViewById(R.id.sundayCb));
-//        setHour(SharedPreferencesConstants.SUNDAY_TIME_OPEN,1,(CheckBox)findViewById(R.id.sundayCb));
-//        setHour(SharedPreferencesConstants.SUNDAY_TIME_OPEN,1,(CheckBox)findViewById(R.id.sundayCb));
 
         setHour(SharedPreferencesConstants.MONDAY_TIME_OPEN,2,(CheckBox)findViewById(R.id.mondayCb));
-//        setHour(SharedPreferencesConstants.MONDAY_TIME_OPEN,3,(CheckBox)findViewById(R.id.mondayCb));
-//        setHour(SharedPreferencesConstants.MONDAY_TIME_CLOSE,3,(CheckBox)findViewById(R.id.mondayCb));
 
         setHour(SharedPreferencesConstants.TUESDAY_TIME_OPEN,4,(CheckBox)findViewById(R.id.tuesdayCb));
-//        setHour(SharedPreferencesConstants.TUESDAY_TIME_OPEN,5,(CheckBox)findViewById(R.id.tuesdayCb));
-//        setHour(SharedPreferencesConstants.TUESDAY_TIME_CLOSE,5,(CheckBox)findViewById(R.id.tuesdayCb));
 
         setHour(SharedPreferencesConstants.WEDNESDAY_TIME_OPEN,6,(CheckBox)findViewById(R.id.wednesdayCb));
-//        setHour(SharedPreferencesConstants.WEDNESDAY_TIME_OPEN,7,(CheckBox)findViewById(R.id.wednesdayCb));
-//        setHour(SharedPreferencesConstants.WEDNESDAY_TIME_CLOSE,7,(CheckBox)findViewById(R.id.wednesdayCb));
 
-        setHour(SharedPreferencesConstants.THURSDAY_TIME_OPEN,8,(CheckBox)findViewById(R.id.thursdayCb));
-//        setHour(SharedPreferencesConstants.THURSDAY_TIME_OPEN,9,(CheckBox)findViewById(R.id.thursdayCb));
-//        setHour(SharedPreferencesConstants.THURSDAY_TIME_CLOSE,9,(CheckBox)findViewById(R.id.thursdayCb));
+        setHour(SharedPreferencesConstants.THURSDAY_TIME_OPEN,8,(CheckBox)findViewById(R.id.thursdayCb));;
 
         setHour(SharedPreferencesConstants.FRIDAY_TIME_OPEN,10,(CheckBox)findViewById(R.id.fridayCb));
-        setHour(SharedPreferencesConstants.FRIDAY_TIME_OPEN,11,(CheckBox)findViewById(R.id.fridayCb));
-//        setHour(SharedPreferencesConstants.FRIDAY_TIME_CLOSE,11,(CheckBox)findViewById(R.id.fridayCb));
 
         setHour(SharedPreferencesConstants.SATURDAY_TIME_OPEN,12,(CheckBox)findViewById(R.id.saturdayCb));
-//        setHour(SharedPreferencesConstants.SATURDAY_TIME_OPEN,13,(CheckBox)findViewById(R.id.saturdayCb));
-//        setHour(SharedPreferencesConstants.SATURDAY_TIME_CLOSE,13,(CheckBox)findViewById(R.id.saturdayCb));
+
     }
 
     private boolean setHour(String label,int index,CheckBox cbId) {

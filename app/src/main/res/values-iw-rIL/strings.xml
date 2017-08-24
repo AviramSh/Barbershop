@@ -215,6 +215,7 @@
     <string name="thursday_invalid_time">thurssday invalid time</string>
     <string name="friday_invalid_time">friday invalid time</string>
     <string name="saturday_invalid_time">saturday invalid time</string>
+    <string name="customer_deleted">Customer Deleted</string>
 
 
     <string-array name="spinner_hours">

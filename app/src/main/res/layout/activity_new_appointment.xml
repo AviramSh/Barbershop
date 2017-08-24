@@ -70,7 +70,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="16dp"
         android:gravity="start"
-        style="@style/Headlines"
+        style="@style/head_lines"
         android:text="@string/newturn"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="24sp"

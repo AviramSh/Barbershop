@@ -189,7 +189,7 @@ public class CustomersListActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(dbHandler.deleteCustomerById(customer.get_id())){
-                    Toast.makeText(CustomersListActivity.this, "Customer Deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CustomersListActivity.this, R.string.customer_deleted, Toast.LENGTH_SHORT).show();
                     allCustomers = dbHandler.getAllCustomers();
                     populateCustomers();
                     customersAdapter.notifyDataSetChanged();

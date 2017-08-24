@@ -144,4 +144,17 @@ public class Customer {
     public void setPhoto(Bitmap photo) {
         this.photo = photo;
     }
+
+    @Override
+    public String toString() {
+        return "Customer:" +
+                " ID:" + _id +
+                ", Name: " + name + '\'' +
+                ", Phone: " + phone + '\'' +
+                ", Birthday: " + birthday + '\'' +
+                ", Email: " + email + '\'' +
+                ", Bill=" + bill +
+                ", Gender=" + gender +
+                ", Remainder=" + remainder ;
+    }
 }

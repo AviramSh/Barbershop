@@ -7,11 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 
+import com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants;
 import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 import com.esh_tech.aviram.barbershop.R;
 import com.esh_tech.aviram.barbershop.data.Customer;
 
+import static com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants.*;
 import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.*;
 
 
@@ -103,8 +105,30 @@ public class SplashScreenActivity extends AppCompatActivity {
         editor.putString(UserDBConstants.USER_EMAIL, "aviram.note@gmail.com");
         editor.putString(UserDBConstants.USER_EMAIL_PASSWORD, "avi304287");
 
+
+
+
+        editor.putString(SUNDAY_TIME_OPEN,"06:00:18:00");
+
+        editor.putString(MONDAY_TIME_OPEN,"06:00:18:00");
+
+        editor.putString(TUESDAY_TIME_OPEN,"06:00:18:00");
+
+        editor.putString(WEDNESDAY_TIME_OPEN,"06:00:18:00");
+
+        editor.putString(THURSDAY_TIME_OPEN,"06:00:18:00");
+
+        editor.putString(FRIDAY_TIME_OPEN,"06:00:18:00");
+
+        editor.putString(SATURDAY_TIME_OPEN,"");
+
         dbHandler = new BarbershopDBHandler(SplashScreenActivity.this);
-        dbHandler.addCustomer(new Customer());
+
+        Customer p1 =new Customer();
+        p1.set_id(1);
+        p1.setName(getResources().getString(R.string.guest));
+
+        dbHandler.addCustomer(p1);
 
         editor.apply();
     }

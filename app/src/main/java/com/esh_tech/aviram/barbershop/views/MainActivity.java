@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.nfc.Tag;
 import android.preference.PreferenceManager;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -37,6 +38,7 @@ import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_AUTO
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private static final String TAG = "Programmer";
     //    SharedPreferences
     SharedPreferences settings;
     SharedPreferences.Editor editor;
@@ -97,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 //        fill components
         populateAppointment();
-
+//        Toast.makeText(this, " "+dbHandler.getAllCustomers().size()+"id_"+dbHandler.getAllCustomers().get(0).get_id(), Toast.LENGTH_SHORT).show();
 //        Connect adapter with custom view
         appointmentAdapter= new MyAppointmentsAdapter(this,R.layout.custom_appointment_row,allAppointments);
 
@@ -189,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void appointmentHandler(final int position) {
 
         Customer customer =dbHandler.getCustomerByID(allAppointments.get(position).getCustomerID());
-        Toast.makeText(this, customer.getName()+"", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, customer.getName()+"", Toast.LENGTH_SHORT).show();
 
 
         final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
@@ -222,10 +224,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }else{
                             purchase.setPrice(settings.getInt(UserDBConstants.USER_FEMALE_HAIRCUT_PRICE,0));
                         }
-                        if(customer.getName().equals(getResources().getString(R.string.guest))){
-                            dbHandler.deleteCustomerById(customer.get_id());
-                            Toast.makeText(MainActivity.this, "Delete :"+R.string.guest, Toast.LENGTH_SHORT).show();
-                        }
+////                        if(customer.getName().equals(getResources().getString(R.string.guest))){
+////                            dbHandler.deleteCustomerById(customer.get_id());
+////                            Toast.makeText(MainActivity.this, "Delete :"+R.string.guest, Toast.LENGTH_SHORT).show();
+//                        }
                     }
                 }
                 //                Need to update database
@@ -235,7 +237,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 allAppointments.get(position).setTackAnHaircut(1);
                 if(dbHandler.updateAppointment(allAppointments.get(position))){
-                    Toast.makeText(MainActivity.this, "Record updated", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MainActivity.this, "Record updated", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG,"Appointment ID:"+allAppointments.get(position).get_id()+" - Record updated");
                 }
 
                 allAppointments.remove(position);
@@ -262,8 +265,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void populateAppointment() {
-        allAppointments = new ArrayList<Appointment>();
 
+        allAppointments = new ArrayList<Appointment>();
+        ArrayList<Customer> getCustomers = dbHandler.getAllCustomers();
+
+        for (Customer customer :
+                getCustomers) {
+            Log.d(TAG,"Add Customer "+customer);
+        }
 //        SimpleDateFormat sdf = new SimpleDateFormat(
 //                "dd/MM/yyyy", Locale.getDefault());
 //        String dateForDisplay = sdf.format(Calendar.getInstance().getTime());
@@ -301,11 +310,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             TextView tvTime = (TextView)convertView.findViewById(R.id.tvCustomerTime);
 
 
-
+            Log.d(TAG,""+dbHandler.getCustomerByID(appointment.getCustomerID()));
 //            Data
+
+//            Toast.makeText(MainActivity.this, ""+appointment.getCustomerID(), Toast.LENGTH_SHORT).show();
             if (appointment != null) {
                 tvTime.setText(appointment.getTime());
-                tvName.setText(dbHandler.getCustomerByID(appointment.getCustomerID()).getName());
+                if(appointment.getCustomerID()==1){
+                    tvName.setText(getResources().getString(R.string.guest));
+                }
+                else {
+                    tvName.setText(dbHandler.getCustomerByID(appointment.getCustomerID()).getName());
+                }
                 tvName.setTextColor(getResources().getColor(android.R.color.holo_green_light));
 
 
@@ -315,8 +331,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     tvName.setTextColor(getResources().getColor(android.R.color.holo_red_light));
                 }
             }
-
-
 
 //            tvTime.setText(String.valueOf(appointment.getHour()) +":"+ String.valueOf(appointment.getMinutes()));
 
