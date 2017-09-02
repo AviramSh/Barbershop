@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
         android:text="@string/today"
+        android:textSize="18dp"
         android:onClick="onClick"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
@@ -72,11 +73,10 @@
 
             <TextView
                 android:id="@+id/editText14"
-                android:layout_width="94dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:gravity="center"
-                android:inputType="textPersonName"
                 android:text="@string/hour"
                 android:textSize="24sp" />
 

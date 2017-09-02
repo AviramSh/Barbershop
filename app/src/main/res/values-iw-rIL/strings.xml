@@ -215,7 +215,9 @@
     <string name="thursday_invalid_time">thurssday invalid time</string>
     <string name="friday_invalid_time">friday invalid time</string>
     <string name="saturday_invalid_time">saturday invalid time</string>
-    <string name="customer_deleted">Customer Deleted</string>
+    <string name="customer_deleted">לקוח נמחק</string>
+    <string name="is_a_free_day"> הוא יום חופש</string>
+    <string name="customer_is_schedule">Customer is schedule</string>
 
 
     <string-array name="spinner_hours">

@@ -18,7 +18,7 @@ public class DateUtils {
     public static final String dateDayNameFormat ="dd/MM/yyyy \n EEEE";
     public static final String dateFormat = "dd/MM/yyyy";
     public static final String timeFormat = "HH:mm";
-    public static final String timeDateFormat = "HH:mm dd/MM/yyyy";
+    public static final String dayNameFormat = "EEEE";
     public static final String reportDateFormat = "HH:mm dd/MM/yyyy";
 
 
@@ -220,6 +220,12 @@ public class DateUtils {
     public static String getStringFromDate(Date date)
     {
         SimpleDateFormat sdf = new SimpleDateFormat(dateFormat,Locale.getDefault());
+        return sdf.format(date);
+    }
+
+    public static String getTheDayName(Date date)
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat(dayNameFormat,Locale.getDefault());
         return sdf.format(date);
     }
 

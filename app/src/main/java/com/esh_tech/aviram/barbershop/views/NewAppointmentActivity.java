@@ -46,6 +46,7 @@ import com.esh_tech.aviram.barbershop.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_FEMALE_HAIRCUT_PRICE;
@@ -140,6 +141,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             e.getMessage();
             Log.e(CUSTOMER_HANDLER,"Null pointer , No customer Id on Intent Extras");
         }
+        customerNameSearch.setText(customerProfile.getName());
     }
 
     @Override
@@ -152,7 +154,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                 importCustomer();
                 break;
             case R.id.ibCancel:
-                goMain();
+                this.finish();
                 break;
 
             default:
@@ -171,8 +173,8 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
         for (Customer index :
                 customersList) {
-            if (index.get_id() != -1){
-                customersNames.add(index.getName());
+            if (index.get_id() != 1){
+                customersNames.add(index.getName()+"\n"+index.getPhone());
             }
         }
 
@@ -183,7 +185,9 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                customerProfile = dbHandler.getCustomerByName(customerNameSearch.getText().toString());
+                customerProfile = dbHandler.getCustomerByPhone(customerNameSearch.getText().toString().split("\n")[1]);
+                customerNameSearch.setText(customerProfile.getName());
+
 
             }
         });
@@ -257,7 +261,11 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             Calendar cTestDate = Calendar.getInstance();
             cTestDate.set(year,month,dayOfMonth);
 
-            if(cTestDate.before(Calendar.getInstance())){
+//            if(cTestDate.before(Calendar.getInstance())){
+            if(!(cTestDate.get(Calendar.YEAR)>=Calendar.getInstance().get(Calendar.YEAR)&&
+                    cTestDate.get(Calendar.MONTH)>=Calendar.getInstance().get(Calendar.MONTH)&&
+                    cTestDate.get(Calendar.DAY_OF_MONTH)>=Calendar.getInstance().get(Calendar.DAY_OF_MONTH))){
+
                 appointmentCalendar.setTime(Calendar.getInstance().getTime());
                 setToday();
 //                /*SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.dateDayNameFormat, Locale.getDefault());
@@ -272,6 +280,8 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                 }else{
 
                     if(str[0].equals("-1")|| str[0].equals("")){
+                        Toast.makeText(NewAppointmentActivity.this, DateUtils.getTheDayName(cTestDate.getTime())+
+                                " "+getResources().getString(R.string.is_a_free_day), Toast.LENGTH_SHORT).show();
                         Log.d(APPOINTMENT_HANDLER,"getOpenDaysAndHours() return Illegal date : "+str[0]);
                     }else{
 //                    appointmentCalendar.set(year,month,dayOfMonth);
@@ -460,34 +470,32 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         }
     }
 
-    private void goMain() {
-        Intent myIntent = new Intent(this,MainActivity.class);
-        startActivity(myIntent);
-        this.finish();
-    }
 
     public void saveAppointment() {
-        Toast.makeText(this, ""+customerProfile.get_id(), Toast.LENGTH_SHORT).show();
-         Toast.makeText(this, ""+customerProfile.getName(), Toast.LENGTH_SHORT).show();
 
-        if(customerProfile.get_id()!=1)
+//        Toast.makeText(this, ""+customerProfile.get_id(), Toast.LENGTH_SHORT).show();
+//         Toast.makeText(this, ""+customerProfile.getName(), Toast.LENGTH_SHORT).show();
+
+        if(customerProfile.get_id()!=-1 || customerProfile.get_id()==1)
             registerHandler();
-        else if(dbHandler.getCustomerByName(customerNameSearch.getText().toString())!= null){
+        else if(dbHandler.getCustomerByName(customerNameSearch.getText().toString())!= null)
+        {
             customerProfile = dbHandler.getCustomerByName(customerNameSearch.getText().toString());
-        }else if(dbHandler.getCustomerByPhone(customerNameSearch.getText().toString())!= null){
-            customerProfile =dbHandler.getCustomerByPhone(customerNameSearch.getText().toString());
-        }
-
-        if(customerProfile == null){
-            Toast.makeText(this, R.string.emptyField, Toast.LENGTH_SHORT).show();
-        }else{
-
-            if(customerProfile.get_id() != 1) {
-                registerHandler();
-            }else{
-                guestHandler();
+        }else
+            if(dbHandler.getCustomerByPhone(customerNameSearch.getText().toString())!= null)
+            {
+                customerProfile =dbHandler.getCustomerByPhone(customerNameSearch.getText().toString());
             }
+
+        if(customerProfile.get_id() != -1 )
+        {
+            registerHandler();
         }
+        else
+        {
+            guestHandler();
+        }
+
 
     }
 
@@ -509,6 +517,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
         newAppointment.setDateAndTime(appointmentCalendar);
 
+
 //                TODO Schedule customer test with DB
         if(!dbHandler.isCustomerSchedule(newAppointment,newDateFormat)&&
                 dbHandler.testIfAppointmentAvailable(this,newAppointment)){
@@ -520,7 +529,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                     Toast.makeText(this, R.string.remainder_saved, Toast.LENGTH_SHORT).show();
                 }
                 Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
-                goMain();
+                this.finish();
 
             } else {
                 Toast.makeText(this, R.string.failedToSave, Toast.LENGTH_SHORT).show();
@@ -529,9 +538,12 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
     }
 
     private void guestHandler() {
+
         customerProfile.set_id(1);
+
         final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
         customerProfile.setPhone(customerProfile.getPhone());
+
         mBuilder.setTitle(R.string.dialogCreateNewCustomer);
 
         mBuilder.setNeutralButton(R.string.createNewCustomer, new DialogInterface.OnClickListener() {
@@ -562,7 +574,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                     if (dbHandler.addAppointment(newAppointment)&&
                             dbHandler.testIfAppointmentAvailable(NewAppointmentActivity.this,newAppointment)) {
                         Toast.makeText(NewAppointmentActivity.this, R.string.saved, Toast.LENGTH_LONG).show();
-                        goMain();
+                        NewAppointmentActivity.this.finish();
                     }
                 }/*else{
                     Toast.makeText(NewAppointmentActivity.this, R.string.failedToSave, Toast.LENGTH_LONG).show();

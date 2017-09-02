@@ -74,8 +74,9 @@ public class CustomersListActivity extends AppCompatActivity {
 
 //        database
         dbHandler = new BarbershopDBHandler(this);
-//        fill components
-        populateCustomers();
+        allCustomers = dbHandler.getAllCustomers();
+////        fill components
+//        populateCustomers();
 
 
 //        Full Adapter
@@ -231,8 +232,13 @@ public class CustomersListActivity extends AppCompatActivity {
 
     //Testing customer list
     private void populateCustomers() {
+
         allCustomers = dbHandler.getAllCustomers();
-//        lvProducts.deferNotifyDataSetChanged();
+        customersAdapter = new MyCustomerAdapter(this,
+                R.layout.custom_contact_row,
+                allCustomers);
+        customerListView.setAdapter(customersAdapter);
+//        customerListView.deferNotifyDataSetChanged();
 
 
     }
@@ -328,7 +334,8 @@ public class CustomersListActivity extends AppCompatActivity {
                     }
 
                     allCustomers.add(newCustomer);
-                    customersAdapter.notifyDataSetChanged();
+                    populateCustomers();
+//                    customersAdapter.notifyDataSetChanged();
                     Toast.makeText(this, newCustomer.getName() + " Saved.", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, newCustomer.getName() + " Didn't Saved.", Toast.LENGTH_SHORT).show();
@@ -337,6 +344,8 @@ public class CustomersListActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.customerExist, Toast.LENGTH_SHORT).show();
             }
 
+        }else{
+            Toast.makeText(this, "Failed to import contact", Toast.LENGTH_SHORT).show();
         }
     }
 

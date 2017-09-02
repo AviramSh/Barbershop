@@ -103,7 +103,6 @@ public class AppointmentListActivity extends AppCompatActivity implements View.O
 
     @Override
     public void onClick(View v) {
-        Intent myIntent;
         switch (v.getId()){
             case R.id.btNextDay:
                 restDate(1);
@@ -127,13 +126,9 @@ public class AppointmentListActivity extends AppCompatActivity implements View.O
                 restDate(0);
                 break;
             case R.id.btBack:
-                myIntent = new Intent(this,MainActivity.class);
-                startActivity(myIntent);
                 this.finish();
                 break;
             default:
-                myIntent = new Intent(this,MainActivity.class);
-                startActivity(myIntent);
                 this.finish();
                 Toast.makeText(this, "Not Initialized yet", Toast.LENGTH_SHORT).show();
                 break;
@@ -191,7 +186,7 @@ public class AppointmentListActivity extends AppCompatActivity implements View.O
 //            Data
 
             tvName.setText(dbHandler.getCustomerByID(appointment.getCustomerID()).getName());
-            tvTime.setText(appointment.getDateAndTimeToDisplay());
+            tvTime.setText(appointment.getTime());
 
             if(rbGetHaircut.isChecked()&&appointment.getTackAnHaircut()==1){
                 tvName.setTextColor(getResources().getColor(android.R.color.holo_green_light));

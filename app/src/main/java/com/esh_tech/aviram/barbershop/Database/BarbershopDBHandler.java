@@ -51,8 +51,8 @@ public class BarbershopDBHandler {
     //    Add Customer ID(String name, String phone, String secondPhone, String email, Double bill, Bitmap photo, boolean gender, boolean remainder)
     public boolean addCustomer(Customer customer){
         settings = PreferenceManager.getDefaultSharedPreferences(context);
-
         long result = -1;
+
         if (getCustomerByPhone(customer.getPhone())!=null) {
             Toast.makeText(context, R.string.customerExist, Toast.LENGTH_SHORT).show();
             return false;
@@ -74,7 +74,7 @@ public class BarbershopDBHandler {
         columnValues.put(CustomersDBConstants.CUSTOMER_GENDER , customer.getGender());
         columnValues.put(CustomersDBConstants.CUSTOMER_REMAINDER , customer.getRemainder());
 
-        if(customer.get_id() == 1 && getCustomerByID(customer.get_id())==null) {
+        if(getCustomerByID(customer.get_id())==null) {
             result = db.insertOrThrow(CustomersDBConstants.CUSTOMERS_TABLE_NAME,
                     null,
                     columnValues);
@@ -92,7 +92,7 @@ public class BarbershopDBHandler {
                 addPicture(p1.get_id(),customer.getPhoto());
         }
 
-        Log.d(TAG,"Add Customer "+customer);
+        Log.d(TAG,"Customer Added "+customer);
         return (result != -1);
     }
     public boolean updateCustomer(Customer customer){
@@ -244,7 +244,8 @@ public class BarbershopDBHandler {
 // TODO Fix all the database Handler Queries
     public boolean addAppointment(Appointment appointment){
 
-        if(!testIfAppointmentAvailable(context,appointment)){
+        if(!testIfAppointmentAvailable(context,appointment) &&
+                !isCustomerSchedule(appointment,appointment.getDateAndTimeToDisplay())){
             return false;
         }
 
@@ -349,8 +350,10 @@ public class BarbershopDBHandler {
         return (result != -1);
     }
     public boolean isCustomerSchedule(Appointment newAppointment ,String testDate) {
-        if (newAppointment.get_id()== 1)
+
+        if (newAppointment.getCustomerID()== 1||newAppointment.getCustomerID()== -1)
             return false;
+
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
 
@@ -363,8 +366,13 @@ public class BarbershopDBHandler {
         for (Appointment testAppointment:
                 myAppointments) {
 
-            if(testAppointment.getDateAndTimeToDisplay().toLowerCase().contains(testDate)&&
-                    testAppointment.getCustomerID() == newAppointment.getCustomerID()) {
+            Log.d("Testing Date : ",testAppointment.getDateAndTimeToDisplay().toLowerCase()+" - "+testDate);
+
+            /*if(testAppointment.getDateAndTimeToDisplay().toLowerCase().contains(testDate)&&*/
+            if(testAppointment.getCustomerID() == newAppointment.getCustomerID()) {
+                Toast.makeText(context,
+                        context.getResources().getString( R.string.customer_is_schedule) +" "+testAppointment.getDateAndTimeToDisplay(),
+                        Toast.LENGTH_SHORT).show();
                 return true;
             }
         }
@@ -413,18 +421,20 @@ public class BarbershopDBHandler {
 
             date2 = Calendar.getInstance();
             date2.setTime(appointmentItem.getDateAndTime());
+            date2.add(Calendar.MINUTE,1);
             date2.set(Calendar.SECOND,0);
 
-            if(Math.abs(date1.getTimeInMillis() - date2.getTimeInMillis())/60000 < appointmentToTest.getHaircutTime()){
+            if(Math.abs(date1.getTimeInMillis() - date2.getTimeInMillis())/60000 < appointmentToTest.getHaircutTime()-1){
                 Calendar temp = Calendar.getInstance();
+                date2.add(Calendar.MINUTE,-1);
                 temp.setTime(date2.getTime());
                 temp.add(Calendar.MINUTE,appointmentItem.getHaircutTime());
-
 
                 Toast.makeText(context,
                         context.getResources().getString(R.string.already_scheduled)+
                                 "\n"+DateUtils.getTimeSDF(date2.getTime())+" - "+DateUtils.getTimeSDF(temp.getTime()),
                         Toast.LENGTH_LONG).show();
+
                 return false;
 
             }
