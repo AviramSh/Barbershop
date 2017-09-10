@@ -401,7 +401,6 @@ public class BarbershopDBHandler {
     }
 
     public boolean testIfAppointmentAvailable(Context context,Appointment appointmentToTest) {
-//        TODO Need To Test Method
         ArrayList<Appointment> appointmentsList = getAllAppointments(
                 DateUtils.getStringFromDate(
                         appointmentToTest.getDateAndTime()));

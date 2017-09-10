@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:weightSum="130"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_small_vertical_margin"
+    android:layoutDirection="rtl"
+    tools:context="com.esh_tech.aviram.barbershop.views.CustomersReportActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:textColor="@color/basic"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/customers_report"
+        android:id="@+id/textView"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <!--android:entries="@array/ridesStatuses"-->
+    <!--android:layout_width="0dp"-->
+    <!--    <Spinner android:id="@+id/ridesStatusSpinner"
+
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:gravity="right"
+            android:spinnerMode="dialog"
+
+            tools:layout_editor_absoluteY="0dp"
+            tools:layout_editor_absoluteX="8dp" />-->
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:textColor="@color/basic"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/targetMail"
+        android:id="@+id/taregtMailText"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="13"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/targetMailEdit"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp" />
+
+    <TextView
+        android:background="@drawable/rounded_rect"
+        android:textSize="@dimen/menu_font_size"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15"
+        android:text="@string/action_issueReport"
+        android:onClick="generateReport"
+        android:id="@+id/generateReportButton"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp" />
+
+</LinearLayout>

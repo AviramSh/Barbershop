@@ -4,4 +4,5 @@
     <dimen name="activity_vertical_margin">30dp</dimen>
     <dimen name="activity_small_vertical_margin">15dp</dimen>
     <dimen name="menu_font_size">24sp</dimen>
+    <string name="no_haircuts_for_this_dates">No haircuts for this dates</string>
 </resources>

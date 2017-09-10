@@ -216,6 +216,13 @@
     <string name="customer_deleted">Customer Deleted</string>
     <string name="is_a_free_day">is a Free Day</string>
     <string name="customer_is_schedule">Customer is schedule</string>
+    <string name="bill_report">Bill Report</string>
+    <string name="report_generated">Report Generated</string>
+    <string name="report_failure">Report Failure</string>
+    <string name="report_filed">Report filed</string>
+    <string name="try_again">Try again..</string>
+    <string name="customers_list_is_empty">Customers list is empty</string>
+    <string name="customers_report">Customers Report</string>
 
 
     <string-array name="spinner_hours">
