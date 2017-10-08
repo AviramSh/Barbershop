@@ -58,13 +58,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         init();
     }
-
-//    Menu bar
+    //    Menu bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main,menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent;
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 logout();
                 break;
             default:
-                Toast.makeText(this, "Not Initialized yet", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.not_initialized_yet), Toast.LENGTH_SHORT).show();
                 break;
         }
         return true;
@@ -89,10 +89,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void init() {
+        this.setTitle("");
         //        Database
         dbHandler = new BarbershopDBHandler(this);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 //        Connect list view
         lsNextAppointment = (ListView) findViewById(R.id.lvNextAppointment);

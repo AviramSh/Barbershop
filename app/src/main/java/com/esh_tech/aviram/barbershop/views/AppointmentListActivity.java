@@ -125,9 +125,9 @@ public class AppointmentListActivity extends AppCompatActivity implements View.O
             case R.id.rbDidntGetHaircut:
                 restDate(0);
                 break;
-            case R.id.btBack:
-                this.finish();
-                break;
+//            case R.id.btBack:
+//                this.finish();
+//                break;
             default:
                 this.finish();
                 Toast.makeText(this, "Not Initialized yet", Toast.LENGTH_SHORT).show();
@@ -161,9 +161,9 @@ public class AppointmentListActivity extends AppCompatActivity implements View.O
         lvAppointment.setAdapter(appointmentAdapter);
     }
 
-    class MyAppointmentsAdapter extends ArrayAdapter<Appointment> {
+    private class MyAppointmentsAdapter extends ArrayAdapter<Appointment> {
 
-        public MyAppointmentsAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Appointment> objects) {
+        private MyAppointmentsAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Appointment> objects) {
             super(context, resource, objects);
         }
 
@@ -214,9 +214,9 @@ public class AppointmentListActivity extends AppCompatActivity implements View.O
             case R.id.btDate:
                 showDialog(DIALOG_ID);
                 break;
-            case R.id.btTime:
-                showDialog(DIALOG_ID_TIME);
-                break;
+//            case R.id.btTime:
+//                showDialog(DIALOG_ID_TIME);
+//                break;
         }
     }
 

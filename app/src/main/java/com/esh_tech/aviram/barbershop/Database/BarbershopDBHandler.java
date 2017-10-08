@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
+import android.media.audiofx.BassBoost;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -45,6 +46,7 @@ public class BarbershopDBHandler {
 
     public BarbershopDBHandler(Context context) {
         this.context = context;
+        settings = PreferenceManager.getDefaultSharedPreferences(context);
         dbHelper= new MySQLiteHelper(context, MainDBConstants.BARBERSHOP_DB_NAME,null, MainDBConstants.BARBERSHOP_DB_VERSION);
     }
 
@@ -522,6 +524,165 @@ public class BarbershopDBHandler {
         return true;
     }
 
+    public boolean testIfAppointmentAvailable(Appointment appointmentToTest) {
+        ArrayList<Appointment> appointmentsList = getAllAppointments(
+                DateUtils.getStringFromDate(
+                        appointmentToTest.getDateAndTime()));
+
+        Calendar date1;
+        Calendar date2;
+
+        date1 = Calendar.getInstance();
+        date1.setTime(appointmentToTest.getDateAndTime());
+        date1.set(Calendar.SECOND,0);
+
+        if(appointmentsList.isEmpty())return true;
+//        Toast.makeText(context, "Date1 : "+ DateUtils.getFullSDF(receivedDate)
+//                + "  Date2 : "+ DateUtils.getFullSDF(myAppointments.get(0).getDateAndTime()), Toast.LENGTH_LONG).show();
+        for (Appointment appointmentItem:
+                appointmentsList) {
+
+            date2 = Calendar.getInstance();
+            date2.setTime(appointmentItem.getDateAndTime());
+            date2.add(Calendar.MINUTE,1);
+            date2.set(Calendar.SECOND,0);
+
+            if(Math.abs(date1.getTimeInMillis() - date2.getTimeInMillis())/60000 < appointmentToTest.getHaircutTime()-1){
+                Calendar temp = Calendar.getInstance();
+                date2.add(Calendar.MINUTE,-1);
+                temp.setTime(date2.getTime());
+                temp.add(Calendar.MINUTE,appointmentItem.getHaircutTime());
+
+                Toast.makeText(context,
+                        context.getResources().getString(R.string.already_scheduled)+
+                                "\n"+DateUtils.getTimeSDF(date2.getTime())+" - "+DateUtils.getTimeSDF(temp.getTime()),
+                        Toast.LENGTH_LONG).show();
+
+                return false;
+
+            }
+
+//            /*if((date1.get(Calendar.HOUR)+1) < date2.get(Calendar.HOUR)) {
+//                Toast.makeText(context, DateUtils.getFullSDF(date1)+" Date+1 is Small "+DateUtils.getFullSDF(date2), Toast.LENGTH_LONG).show();
+//            }else if((date1.get(Calendar.HOUR)-1) > date2.get(Calendar.HOUR)){
+//                Toast.makeText(context, DateUtils.getFullSDF(date1)+" Date-1 is Big "+DateUtils.getFullSDF(date2), Toast.LENGTH_LONG).show();
+//            }else
+//                Toast.makeText(context, DateUtils.getFullSDF(date1)+" Error "+DateUtils.getFullSDF(date2), Toast.LENGTH_LONG).show();*/
+//
+//            /*Toast.makeText(context, "compare date : "+DateUtils.compareDates(date1,date2)+"\nDate1: "+DateUtils.getFullSDF(date1) +
+//                    "\n Date2: "+DateUtils.getFullSDF(date2), Toast.LENGTH_LONG).show();*/
+////            Toast.makeText(context, "Date1 : "+ DateUtils.getFullSDF(receivedDate)
+////            + "  Date2 : "+ DateUtils.getFullSDF(appointment.getDateAndTime()), Toast.LENGTH_SHORT).show();
+//
+//            //equals() returns true if both the dates are equal
+////            Toast.makeText(context, DateUtils.compareDatesAppointments(context,date1.getTime(),date2.getTime()), Toast.LENGTH_SHORT).show();
+//            /*for(int i = 0; i<2;i++) {
+//                Toast.makeText(context, DateUtils.getFullSDF(date1)+" == "+DateUtils.getFullSDF(date2), Toast.LENGTH_SHORT).show();
+//                switch (DateUtils.compareDatesAppointments(context, date1.getTime(), date2.getTime())) {
+//                    case "0":
+//                        Toast.makeText(context, "0", Toast.LENGTH_SHORT).show();
+//                        break;
+//                    case "1":
+//                        Toast.makeText(context, "1", Toast.LENGTH_SHORT).show();
+//                        date2.add(Calendar.MINUTE,35);
+//                        Toast.makeText(context, DateUtils.getFullSDF(date1)+" == "+DateUtils.getFullSDF(date2), Toast.LENGTH_LONG).show();
+//                        break;
+//
+//                    case "2":
+//                        Toast.makeText(context, "2", Toast.LENGTH_SHORT).show();
+//                        break;
+//
+//                    default:
+//                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+//                        break;
+//                }
+//            }*/
+//
+//            /*if (date1.equals(date2)) {
+//                Toast.makeText(context, R.string.There_is_a_scheduled_appointment + " \n" +
+//                        getCustomerByID(appointment.get_id()).getName() + " " + appointment.getDateAndTimeToDisplay(), Toast.LENGTH_SHORT).show();
+//                return false;
+////            System.out.println("Date1 is equal Date2");
+//            }
+//
+//            if (date1.after(date2)) {
+//                *//*Toast.makeText(context, "Date1: "+DateUtils.getFullSDF(date1) +
+//                        "\n>\n Date2: "+DateUtils.getFullSDF(date2)+"", Toast.LENGTH_LONG).show();*//*
+//                try {
+//                    date2.add(Calendar.MINUTE, -appointment.getHaircutTime());
+//                } catch (Exception e) {
+//                    date2.add(Calendar.MINUTE, -35);
+//                }
+//
+//                if (!date1.after(date2)) {
+//                    Toast.makeText(context, R.string.There_is_a_scheduled_appointment + " \n" +
+//                            getCustomerByID(appointment.get_id()).getName() + " " + appointment.getDateAndTimeToDisplay(), Toast.LENGTH_SHORT).show();
+//                    return false;
+//                }
+////                Toast.makeText(context, "Date1 : "+ DateUtils.getFullSDF(receivedDate)
+////                        + "  Date2 : "+ DateUtils.getFullSDF(myAppointments.get(0).getDateAndTime()), Toast.LENGTH_LONG).show();
+////            System.out.println("Date1 is after Date2");
+//            }
+//
+//            if (date1.before(date2)) {
+//                *//*Toast.makeText(context, "Date1: "+DateUtils.getFullSDF(date1) +
+//                        "\n<\n Date2: "+DateUtils.getFullSDF(date2)+"", Toast.LENGTH_LONG).show();*//*
+//                try {
+//                    date2.add(Calendar.MINUTE, appointment.getHaircutTime());
+//                } catch (Exception e) {
+//                    date2.add(Calendar.MINUTE, 35);
+//                }
+//
+//                if (!date1.before(date2) || date1.equals(date2)) {
+//                    Toast.makeText(context, R.string.There_is_a_scheduled_appointment + " \n" +
+//                            getCustomerByID(appointment.get_id()).getName() + " " + appointment.getDateAndTimeToDisplay(), Toast.LENGTH_SHORT).show();
+//                    return false;
+//                }
+////            System.out.println("Date1 is before Date2");
+//            }*/
+
+        }
+
+        return true;
+    }
+
+
+
+
+
+
+    public ArrayList<Appointment> getTodayFreeAppointmentsList(Calendar cTodayTest, int startHour, int startMin, int endHour, int endMin) {
+//      TODO Method that generate all the free appointment of the day
+        Log.d("FreeAppointments","Start");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(cTodayTest.getTime());
+
+        calendar.set(Calendar.HOUR_OF_DAY,startHour);
+        calendar.set(Calendar.MINUTE,startMin);
+
+        Appointment appointment = new Appointment();
+        appointment.setHaircutTime(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_TIME,20));
+
+        appointment.setDateAndTime(calendar);
+        Log.d("FreeAppointments","Start Date: "+appointment.getDateAndTimeToDisplay());
+
+        ArrayList<Appointment> freeAppointmentsList = new ArrayList<Appointment>();
+
+        while (calendar.get(Calendar.HOUR_OF_DAY) <= endHour && calendar.get(Calendar.DAY_OF_MONTH) == cTodayTest.get(Calendar.DAY_OF_MONTH)){
+
+            if(testIfAppointmentAvailable(appointment)) {
+                Log.d("FreeAppointments","Add an'appintment to list : "+appointment.getDateAndTimeToDisplay());
+                freeAppointmentsList.add(appointment);
+            }else{Log.d("FreeAppointments","Not Free Date : "+appointment.getDateAndTimeToDisplay());}
+
+
+            calendar.add(Calendar.HOUR_OF_DAY, appointment.getHaircutTime());
+            appointment.setDateAndTime(calendar);
+        }
+
+        Log.d("FreeAppointments","List Lang : "+freeAppointmentsList.size());
+        return (!freeAppointmentsList.isEmpty())? freeAppointmentsList : null;
+    }
 
     public ArrayList<Appointment> getTodayAppointments(Date myDate) {
 

@@ -214,9 +214,9 @@ public class NewCustomerActivity extends AppCompatActivity implements View.OnCli
             case R.id.btTheDate:
                 showDialog(DIALOG_ID);
                 break;
-            case R.id.btTime:
-                showDialog(DIALOG_ID_TIME);
-                break;
+//            case R.id.btTime:
+//                showDialog(DIALOG_ID_TIME);
+//                break;
         }
     }
 

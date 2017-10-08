@@ -206,7 +206,6 @@ public class UserEmailActivity extends AppCompatActivity implements View.OnClick
                 }
             }, 20000);
 
-
         }
     }
 

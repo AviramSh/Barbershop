@@ -38,41 +38,70 @@ public class BarbershopActivity extends AppCompatActivity implements View.OnClic
 
         settings = PreferenceManager.getDefaultSharedPreferences(this);
 
-        settings.getString(SharedPreferencesConstants.BUSINESS_NAME,"MY_BUSINESS_NAME");
+        /*settings.getString(SharedPreferencesConstants.BUSINESS_NAME,
+                getResources().getString(R.string.default_business_name));*/
 
 
         businessName = (EditText)findViewById(R.id.etBusinessName);
         businessAddress = (EditText)findViewById(R.id.etBusinessAddress);
         businessPhone = (EditText)findViewById(R.id.etBusinessPhone);
 
-        businessName.setText(settings.getString(SharedPreferencesConstants.BUSINESS_NAME,"MY_BUSINESS_NAME"));
-        businessAddress.setText(settings.getString(SharedPreferencesConstants.BUSINESS_ADDRESS,"MY_BUSINESS_ADDRESS"));
-        businessPhone.setText(settings.getString(SharedPreferencesConstants.BUSINESS_PHONE,"MY_BUSINESS_PHONE"));
+        businessName.setText(settings.getString(SharedPreferencesConstants.BUSINESS_NAME,
+                getResources().getString(R.string.default_business_name)));
+
+        businessAddress.setText(settings.getString(SharedPreferencesConstants.BUSINESS_ADDRESS,
+                getResources().getString(R.string.default_business_address)));
+        businessPhone.setText(settings.getString(SharedPreferencesConstants.BUSINESS_PHONE,
+                getResources().getString(R.string.default_business_phone)));
 
     }
 
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.btBack){
-            Intent intent= new Intent(this,SettingsActivity.class);
-            startActivity(intent);
-            this.finish();
-        }
+//        if(v.getId() == R.id.btBack){
+//            Intent intent= new Intent(this,SettingsActivity.class);
+//            startActivity(intent);
+//            this.finish();
+//        }
         switch (v.getId()){
             case R.id.btBack:
 
                 break;
             case R.id.btSave:
-//                TODO Save data in shared Preferences is user want to save data
-                //        editor = settings.edit();
-                //        editor.putString(SharedPreferencesConstants.BUSINESS_NAME,"MY_BUSINESS_NAME");
-                //        editor.apply();
+                if(saveBusinessData())this.finish();
+                else Toast.makeText(this, R.string.fields_are_not_full, Toast.LENGTH_SHORT).show();
                 break;
 
             default:
-                Toast.makeText(this, "Not Initialized yet", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.not_initialized_yet), Toast.LENGTH_SHORT).show();
                 break;
         }
     }
+
+    private boolean saveBusinessData() {
+//                TODO Save data in shared Preferences is user want to save data
+
+        if(businessName.getText().toString().equals("")||
+                businessPhone.getText().toString().equals("")||
+                businessAddress.getText().toString().equals("")){
+            Toast.makeText(this, getResources().getString(R.string.fields_are_not_full), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        try {
+
+            editor = settings.edit();
+            editor.putString(SharedPreferencesConstants.BUSINESS_NAME,businessName.getText().toString());
+            editor.putString(SharedPreferencesConstants.BUSINESS_PHONE,businessPhone.getText().toString());
+            editor.putString(SharedPreferencesConstants.BUSINESS_ADDRESS,businessAddress.getText().toString());
+            editor.apply();
+//            Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+//            Toast.makeText(this, "DATA ERROR", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
 }

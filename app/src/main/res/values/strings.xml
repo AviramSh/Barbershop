@@ -223,6 +223,10 @@
     <string name="try_again">Try again..</string>
     <string name="customers_list_is_empty">Customers list is empty</string>
     <string name="customers_report">Customers Report</string>
+    <string name="default_business_name">MY BUSINESS NAME</string>
+    <string name="default_business_address">MY BUSINESS ADDRESS</string>
+    <string name="default_business_phone">MY BUSINESS PHONE</string>
+    <string name="next_appointment">Next Appointment</string>
 
 
     <string-array name="spinner_hours">

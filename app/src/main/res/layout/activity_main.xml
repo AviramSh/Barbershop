@@ -323,7 +323,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/nextturn"
+        android:text="@string/next_appointment"
         style="@style/main_title_item"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -337,13 +337,13 @@
         app:layout_constraintRight_toRightOf="@+id/lvNextAppointment"
         android:layout_marginLeft="51dp"
         app:layout_constraintLeft_toLeftOf="@+id/lvNextAppointment"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.544" />
 
     <TextView
         android:id="@+id/textView22"
-        android:layout_width="77dp"
-        android:layout_height="17dp"
-        android:text="@string/newturn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/newAppointment"
         style="@style/main_title_item"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
