@@ -337,12 +337,7 @@ public class Appointment {
         this.customerID = customerID;
     }
 
-//    public Appointment(int _id, String dateAndTime, int customerID,int tackAnHaircut) {
-//        this._id = _id;
-//        setDateAndTime(dateAndTime);
-//        this.customerID = customerID;
-//        this.tackAnHaircut =tackAnHaircut;
-//    }
+
 
     public Appointment(int _id, String dateAndTime, int customerID, int tackAnHaircut, int haircutTime ,double haircutPrice) {
         this._id = _id;

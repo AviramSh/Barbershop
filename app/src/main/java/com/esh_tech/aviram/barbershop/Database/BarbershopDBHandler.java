@@ -272,7 +272,8 @@ public class BarbershopDBHandler {
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor AppointmentsCursor = db.query(AppointmentsDBConstants.APPOINTMENTS_TABLE_NAME,
+        Cursor AppointmentsCursor =
+                db.query(AppointmentsDBConstants.APPOINTMENTS_TABLE_NAME,
                 null, null, null, null, null, AppointmentsDBConstants.APPOINTMENT_DATE+" ASC");
 
         while (AppointmentsCursor.moveToNext())
@@ -653,31 +654,40 @@ public class BarbershopDBHandler {
 
     public ArrayList<Appointment> getTodayFreeAppointmentsList(Calendar cTodayTest, int startHour, int startMin, int endHour, int endMin) {
 //      TODO Method that generate all the free appointment of the day
-        Log.d("FreeAppointments","Start");
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(cTodayTest.getTime());
 
-        calendar.set(Calendar.HOUR_OF_DAY,startHour);
-        calendar.set(Calendar.MINUTE,startMin);
+        Log.d("FreeAppointments","Start Date: "+startHour+":"+startMin+" -- "+endHour+":"+endMin);
+
+        Log.d("FreeAppointments","Start");
+
+        Calendar cStart = Calendar.getInstance();
+        cStart.setTime(cTodayTest.getTime());
+        Calendar cEnd = Calendar.getInstance();
+        cEnd.setTime(cTodayTest.getTime());
+
+        cStart.set(Calendar.HOUR_OF_DAY,startHour);
+        cStart.set(Calendar.MINUTE,startMin);
+        cEnd.set(Calendar.HOUR_OF_DAY,endHour);
+        cEnd.set(Calendar.MINUTE,endMin);
 
         Appointment appointment = new Appointment();
         appointment.setHaircutTime(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_TIME,20));
 
-        appointment.setDateAndTime(calendar);
-        Log.d("FreeAppointments","Start Date: "+appointment.getDateAndTimeToDisplay());
+        appointment.setDateAndTime(cStart);
+        Log.d("FreeAppointments","Start Date: "+appointment.getDateAndTimeToDisplay()+" End Date: "+DateUtils.getFullSDF(cEnd));
 
         ArrayList<Appointment> freeAppointmentsList = new ArrayList<Appointment>();
-
-        while (calendar.get(Calendar.HOUR_OF_DAY) <= endHour && calendar.get(Calendar.DAY_OF_MONTH) == cTodayTest.get(Calendar.DAY_OF_MONTH)){
-
+        int i=0;
+        while (cStart.after(cEnd)){
+            Log.d("FreeAppointments","While: "+appointment.getDateAndTimeToDisplay()+" End Date: "+DateUtils.getFullSDF(cEnd));
+            Log.d("FreeAppointments",++i+")New Date "+appointment.getDateAndTimeToDisplay());
             if(testIfAppointmentAvailable(appointment)) {
                 Log.d("FreeAppointments","Add an'appintment to list : "+appointment.getDateAndTimeToDisplay());
                 freeAppointmentsList.add(appointment);
             }else{Log.d("FreeAppointments","Not Free Date : "+appointment.getDateAndTimeToDisplay());}
 
-
-            calendar.add(Calendar.HOUR_OF_DAY, appointment.getHaircutTime());
-            appointment.setDateAndTime(calendar);
+            Log.d("FreeAppointments","Testing Date: "+appointment.getDateAndTime());
+            cStart.add(Calendar.HOUR_OF_DAY, appointment.getHaircutTime());
+            appointment.setDateAndTime(cStart);
         }
 
         Log.d("FreeAppointments","List Lang : "+freeAppointmentsList.size());
