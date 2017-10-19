@@ -139,17 +139,23 @@ public class AppointmentListActivity extends AppCompatActivity implements View.O
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy \n EEEE", Locale.getDefault());
         String dateForDisplay = sdf.format(newCalendar.getTime());
-        if(dateForDisplay.contains(new DateUtils().getOnlyDateSDF(Calendar.getInstance()))) {
-            theDate.setText(new DateUtils().getOnlyDateSDF(Calendar.getInstance())+" \n"+
+
+        if(DateUtils.getOnlyDate(newCalendar).contains(DateUtils.getOnlyDate(Calendar.getInstance()))) {
+            theDate.setText(DateUtils.getOnlyDate(newCalendar)+" \n"+
             getResources().getString(R.string.today));
         }else{
-            theDate.setText(dateForDisplay);
+            theDate.setText(DateUtils.getDateAndName(newCalendar));
         }
 
-        sdf = new SimpleDateFormat("dd/MM/yyyy",Locale.getDefault());
-        dateForDisplay = sdf.format(newCalendar.getTime());
+//        if(dateForDisplay.contains(new DateUtils().getOnlyDateSDF(Calendar.getInstance()))) {
+//            theDate.setText(new DateUtils().getOnlyDateSDF(Calendar.getInstance())+" \n"+
+//            getResources().getString(R.string.today));
+//        }else{
+//            theDate.setText(dateForDisplay);
+//        }
 
-        allAppointments = dbHandler.getAllAppointments(dateForDisplay);
+
+        allAppointments = dbHandler.getAllAppointments(newCalendar);
 
     }
 
@@ -186,16 +192,15 @@ public class AppointmentListActivity extends AppCompatActivity implements View.O
 //            Data
 
             tvName.setText(dbHandler.getCustomerByID(appointment.getCustomerID()).getName());
-            tvTime.setText(appointment.getTime());
+            tvTime.setText(DateUtils.getOnlyTime(appointment.getcDateAndTime()));
 
             if(rbGetHaircut.isChecked()&&appointment.getTackAnHaircut()==1){
                 tvName.setTextColor(getResources().getColor(android.R.color.holo_green_light));
                 tvTime.setTextColor(getResources().getColor(android.R.color.holo_green_light));
                 rbGetAllHaircut.setChecked(false);
-            }else if(rbDidntgetHaircut.isChecked()&&appointment.getTackAnHaircut()==0 &&
+            }else if(rbDidntgetHaircut.isChecked()&&appointment.getTackAnHaircut() == 0 &&
                     new DateUtils().compareDates(
-                            appointment.getDateAndTimeToDisplay(),
-                            new DateUtils().getFullSDF(Calendar.getInstance()))==1){
+                            appointment.getcDateAndTime(),Calendar.getInstance()) == 1){
                 tvName.setTextColor(getResources().getColor(android.R.color.holo_red_light));
                 tvTime.setTextColor(getResources().getColor(android.R.color.holo_red_light));
                 rbGetAllHaircut.setChecked(false);

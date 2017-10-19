@@ -73,7 +73,8 @@ public class NewCustomerActivity extends AppCompatActivity implements View.OnCli
 
         newCalendar = Calendar.getInstance();
         theDate = (Button)findViewById(R.id.btTheDate);
-        theDate.setText(new DateUtils().getOnlyDateSDF(newCalendar));
+
+        theDate.setText(DateUtils.getOnlyDate(newCalendar));
 //        newCalendar.set(1900,1,1);
 
         customerProfile = new Customer();
@@ -179,7 +180,7 @@ public class NewCustomerActivity extends AppCompatActivity implements View.OnCli
 
 
         if(newCalendar.get(Calendar.YEAR) <= (Calendar.getInstance().get(Calendar.YEAR)-18)){
-            customerProfile.setBirthday(new DateUtils().getOnlyDateSDF(newCalendar));
+            customerProfile.setBirthday(DateUtils.getOnlyDate(newCalendar));
 //            Toast.makeText(this, "Birth day saved"+ new DateUtils().getOnlyDateSDF(newCalendar), Toast.LENGTH_SHORT).show();
         }
 
@@ -238,7 +239,7 @@ public class NewCustomerActivity extends AppCompatActivity implements View.OnCli
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
             newCalendar.set(year,month,dayOfMonth);
-            theDate.setText(new DateUtils().getOnlyDateSDF(newCalendar));
+            theDate.setText(DateUtils.getOnlyDate(newCalendar));
 //            populateAppointment();
 //            restDate(0);
         }

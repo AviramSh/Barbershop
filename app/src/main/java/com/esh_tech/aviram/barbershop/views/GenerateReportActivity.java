@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 import com.esh_tech.aviram.barbershop.R;
+import com.esh_tech.aviram.barbershop.Utils.DateUtils;
 import com.esh_tech.aviram.barbershop.Utils.MailUtils;
 import com.esh_tech.aviram.barbershop.data.Appointment;
 import com.esh_tech.aviram.barbershop.data.Config;
@@ -269,7 +270,7 @@ public class GenerateReportActivity extends AppCompatActivity {
 
                     PrintWriter writer = new PrintWriter(filename, "UTF-8");
                     writer.write('\ufeff');
-                    writer.println("Appointment ID,Customer Name,Customer Phone,Customer Bill,Appointment Date,Appointment Time");
+                    writer.println("Appointment ID,Customer Name,Customer Phone,Customer Bill,Appointment Date");
 //
 //                    for (Ride ride : appointmentList) {
 //                        writer.println(
@@ -298,8 +299,7 @@ public class GenerateReportActivity extends AppCompatActivity {
                                         customer.getName() + "," +
                                         customer.getPhone() + "," +
                                         customer.getBill() + "," +
-                                        appointment.getDateAndTimeToDisplay() + "," +
-                                        appointment.getTime());
+                                        DateUtils.setCalendarToDB(appointment.getcDateAndTime()));
                     }
 
                     writer.close();

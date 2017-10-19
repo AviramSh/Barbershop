@@ -114,7 +114,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void resatPassword() {
 //        TODO Test if record is ok if not connect to support
-        String todayDate = DateUtils.getStringFromDate(Calendar.getInstance().getTime());
+        String todayDate = DateUtils.getDateAndTime(Calendar.getInstance());
         String testDate= settings.getString(
                 SharedPreferencesConstants.PASSWORD_DATE_FOR_REST,"");
 

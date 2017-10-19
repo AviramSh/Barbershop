@@ -5,7 +5,6 @@ import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,12 +35,10 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Constants.BundleConstants;
 import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
-import com.esh_tech.aviram.barbershop.Constants.LogConstants;
 import com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants;
 import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
@@ -53,7 +50,6 @@ import com.esh_tech.aviram.barbershop.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -244,7 +240,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         }
 
 
-        theDate.setText(DateUtils.getDateDaySDF(appointmentCalendar));
+        theDate.setText(DateUtils.getDateAndName(appointmentCalendar));
 //        theTime.setText(DateUtils.getTimeSDF(appointmentCalendar.getTime()));
 
     }
@@ -262,31 +258,34 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
     }
 
     private void populateAppointment() {
+//
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy \n EEEE", Locale.getDefault());
+//        String dateForDisplay = sdf.format(appointmentCalendar.getTime());
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy \n EEEE", Locale.getDefault());
-        String dateForDisplay = sdf.format(appointmentCalendar.getTime());
 
 
-        if(dateForDisplay.contains(new DateUtils().getOnlyDateSDF(Calendar.getInstance()))) {
-            theDate.setText(new DateUtils().getOnlyDateSDF(Calendar.getInstance())+" \n"+
+        if(DateUtils.getOnlyDate(
+                appointmentCalendar).contains(DateUtils.getOnlyDate(Calendar.getInstance()))) {
+            theDate.setText(DateUtils.getOnlyDate(Calendar.getInstance())+" \n"+
                     getResources().getString(R.string.today));
         }else{
-            theDate.setText(dateForDisplay);
+            theDate.setText(DateUtils.getDateAndName(appointmentCalendar));
         }
 
 
 //        sdf = new SimpleDateFormat("dd/MM/yyyy",Locale.getDefault());
-        sdf = new SimpleDateFormat(DateUtils.dateFormat,Locale.getDefault());
-        dateForDisplay = sdf.format(appointmentCalendar.getTime());
+//        sdf = new SimpleDateFormat(DateUtils.sdf_d,Locale.getDefault());
+//        dateForDisplay = sdf.format(appointmentCalendar.getTime());
 
 
         String[] workTime = getOpenDaysAndHours(appointmentCalendar.get(Calendar.DAY_OF_WEEK));
+
         if(workTime!=null && workTime.length>3) {
             allAppointments = dbHandler.getTodayFreeAppointmentsList(appointmentCalendar,
                     Integer.parseInt(workTime[0]),Integer.parseInt(workTime[1]),
                     Integer.parseInt(workTime[2]),Integer.parseInt(workTime[3]));
         }else{
-            allAppointments = dbHandler.getAllAppointments(dateForDisplay);
+            allAppointments = dbHandler.getAllAppointments(appointmentCalendar);
         }
 
     }
@@ -327,7 +326,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
                 appointmentCalendar.setTime(Calendar.getInstance().getTime());
                 setToday();
-//                /*SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.dateDayNameFormat, Locale.getDefault());
+//                /*SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.sdf_d_n, Locale.getDefault());
 //                String newFormat = formatter.format(appointmentCalendar.getTime());
 //
 //                theDate.setText(newFormat);*/
@@ -339,7 +338,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                 }else{
 
                     if(str[0].equals("-1")|| str[0].equals("")){
-                        Toast.makeText(NewAppointmentActivity.this, DateUtils.getTheDayName(cTestDate.getTime())+
+                        Toast.makeText(NewAppointmentActivity.this, DateUtils.getOnlyDay(cTestDate)+
                                 " "+getResources().getString(R.string.is_a_free_day), Toast.LENGTH_SHORT).show();
                         Log.d(APPOINTMENT_HANDLER,"getOpenDaysAndHours() return Illegal date : "+str[0]);
                     }else{
@@ -563,7 +562,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
     private void registerHandler() {
 
 //                newAppointment = new Appointment(appointmentCalendar,customerProfile.get_id());
-        newAppointment.setDateAndTime(appointmentCalendar);
+        newAppointment.setcDateAndTime(appointmentCalendar);
         newAppointment.setCustomerID(customerProfile.get_id());
 
         if(customerProfile.getGender() == 0){
@@ -572,15 +571,11 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         }
 
 
-
-        String newDateFormat = DateUtils.getFullSDF(appointmentCalendar.getTime());
-        String newDateAndTimeFormat = DateUtils.getFullSDF(appointmentCalendar.getTime());
-
-        newAppointment.setDateAndTime(appointmentCalendar);
+        newAppointment.setcDateAndTime(appointmentCalendar);
 
 
 //                TODO Schedule customer test with DB
-        if(!dbHandler.isCustomerSchedule(newAppointment,newDateFormat)&&
+        if(!dbHandler.isCustomerSchedule(newAppointment)&&
                 dbHandler.testIfAppointmentAvailable(this,newAppointment)){
 
             if (dbHandler.addAppointment(newAppointment)) {
@@ -669,7 +664,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                         sendMessage +=getResources().getString(R.string.system_sms_1_add_name)+
                         customerProfile.getName()+
                                 getResources().getString(R.string.system_sms_2_add_time)+
-                        newAppointment.getDateAndTimeToDisplay()+
+                        DateUtils.getDateAndTime(newAppointment.getcDateAndTime())+
                                 getResources().getString(R.string.system_sms_3add_business)+
                         settings.getString(SharedPreferencesConstants.BUSINESS_NAME,".");
                     }else{
@@ -770,7 +765,10 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 //            Data
 
             tvName.setText("Free");
-            tvTime.setText(appointment.getTime());
+
+            if (appointment != null) {
+                tvTime.setText(DateUtils.getOnlyTime(appointment.getcDateAndTime()));
+            }
 /*
 
             if(rbGetHaircut.isChecked()&&appointment.getTackAnHaircut()==1){

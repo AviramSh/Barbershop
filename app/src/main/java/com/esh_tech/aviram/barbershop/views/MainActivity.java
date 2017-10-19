@@ -278,7 +278,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                "dd/MM/yyyy", Locale.getDefault());
 //        String dateForDisplay = sdf.format(Calendar.getInstance().getTime());
 
-        allAppointments = dbHandler.getWaitingListAppointments(new DateUtils().getOnlyDateSDF(Calendar.getInstance()));
+        allAppointments = dbHandler.getWaitingListAppointments(Calendar.getInstance());
 
 //minutes, hour, day,month, year, customerName, customerID
 //        allAppointments.add(new Appointment(15,8,4,5,1987,"Avi",3));
@@ -316,7 +316,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 //            Toast.makeText(MainActivity.this, ""+appointment.getCustomerID(), Toast.LENGTH_SHORT).show();
             if (appointment != null) {
-                tvTime.setText(appointment.getTime());
+                tvTime.setText(
+                        DateUtils.getOnlyTime(appointment.getcDateAndTime()));
                 if(appointment.getCustomerID()==1){
                     tvName.setText(getResources().getString(R.string.guest));
                 }
@@ -327,8 +328,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                 if(new DateUtils().compareDates(
-                        appointment.getDateAndTimeToDisplay(),
-                        new DateUtils().getFullSDF(Calendar.getInstance()))==1) {
+                        appointment.getcDateAndTime(),
+                        Calendar.getInstance())==1) {
                     tvName.setTextColor(getResources().getColor(android.R.color.holo_red_light));
                 }
             }

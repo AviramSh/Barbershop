@@ -6,12 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
-import android.media.audiofx.BassBoost;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants;
 import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.R;
 import com.esh_tech.aviram.barbershop.Utils.DateUtils;
@@ -22,10 +20,8 @@ import com.esh_tech.aviram.barbershop.Constants.MainDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.PicturesDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.ProductsDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.PurchaseDBConstants;
-import com.esh_tech.aviram.barbershop.views.MainActivity;
 
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -247,7 +243,7 @@ public class BarbershopDBHandler {
     public boolean addAppointment(Appointment appointment){
 
         if(!testIfAppointmentAvailable(context,appointment) &&
-                !isCustomerSchedule(appointment,appointment.getDateAndTimeToDisplay())){
+                !isCustomerSchedule(appointment)){
             return false;
         }
 
@@ -255,7 +251,8 @@ public class BarbershopDBHandler {
         ContentValues columnValues = new ContentValues();
 
 //        Set the date
-        columnValues.put(AppointmentsDBConstants.APPOINTMENT_DATE,appointment.getDateAndTimeToDisplay());
+        columnValues.put(AppointmentsDBConstants.APPOINTMENT_DATE,
+                DateUtils.setCalendarToDB(appointment.getcDateAndTime()));
         columnValues.put(AppointmentsDBConstants.CUSTOMER_ID,appointment.getCustomerID());
         columnValues.put(AppointmentsDBConstants.APPOINTMENT_PRICE,appointment.getHaircutPrice());
         columnValues.put(AppointmentsDBConstants.APPOINTMENT_TIME,appointment.getHaircutTime());
@@ -267,6 +264,7 @@ public class BarbershopDBHandler {
 
         return (result != -1);
     }
+
     public ArrayList<Appointment> getAllAppointments() {
         ArrayList<Appointment> AppointmentsList = new ArrayList<Appointment>();
 
@@ -283,7 +281,9 @@ public class BarbershopDBHandler {
                                     AppointmentsDBConstants.CUSTOMER_ID)))!=null) {
                 AppointmentsList.add(new Appointment(
                         AppointmentsCursor.getInt(AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.APPOINTMENT_ID)),
-                        AppointmentsCursor.getString(AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.APPOINTMENT_DATE)),
+                        DateUtils.getCalendar(
+                                AppointmentsCursor.getString(
+                                        AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.APPOINTMENT_DATE))),
                         AppointmentsCursor.getInt(AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.CUSTOMER_ID)),
                         AppointmentsCursor.getInt(AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.APPOINTMENT_EXECUTED)),
                         AppointmentsCursor.getInt(AppointmentsCursor.getColumnIndex(AppointmentsDBConstants.APPOINTMENT_TIME)),
@@ -293,7 +293,9 @@ public class BarbershopDBHandler {
         AppointmentsCursor.close();
         return AppointmentsList;
     }
-    public ArrayList<Appointment> getAllAppointments(String receivedDate) {
+    public ArrayList<Appointment> getAllAppointments(Calendar receivedDate) {
+
+        String dateToTest = DateUtils.getOnlyDate(receivedDate);
 
         ArrayList<Appointment> myAppointments = getAllAppointments();
         ArrayList<Appointment> myDateAppointments = new ArrayList<Appointment>();
@@ -301,9 +303,10 @@ public class BarbershopDBHandler {
         for (Appointment appointment:
                 myAppointments) {
 
-            Log.d("The Getting Date : ",appointment.getDateAndTimeToDisplay());
+//            Log.d("The Getting Date : ",DateUtils.setCalendarToDB(appointment.getcDateAndTime()));
 
-                if(appointment.getDateAndTimeToDisplay().toLowerCase().contains(receivedDate)) {
+                if(DateUtils.setCalendarToDB(
+                        appointment.getcDateAndTime()).toLowerCase().contains(dateToTest)) {
 //                    Log.d("found","found");
                     myDateAppointments.add(appointment);
                 }
@@ -311,7 +314,9 @@ public class BarbershopDBHandler {
 
         return myDateAppointments;
     }
-    public ArrayList<Appointment> getWaitingListAppointments(String receivedDate) {
+    public ArrayList<Appointment> getWaitingListAppointments(Calendar receivedDate) {
+
+        String dateToTest = DateUtils.getOnlyDate(receivedDate);
 
         ArrayList<Appointment> myAppointments = getAllAppointments();
         ArrayList<Appointment> myDateAppointments = new ArrayList<Appointment>();
@@ -319,9 +324,10 @@ public class BarbershopDBHandler {
         for (Appointment appointment:
                 myAppointments) {
 
-            Log.d("The Getting Date : ",appointment.getDateAndTimeToDisplay());
+            Log.d("The Getting Date : ",DateUtils.setCalendarToDB(appointment.getcDateAndTime()));
 
-            if(appointment.getDateAndTimeToDisplay().toLowerCase().contains(receivedDate)&&
+            if(DateUtils.setCalendarToDB(
+                    appointment.getcDateAndTime()).toLowerCase().contains(dateToTest)&&
                     appointment.getTackAnHaircut()!=1) {
 //                    Log.d("found","found");
                 myDateAppointments.add(appointment);
@@ -337,7 +343,8 @@ public class BarbershopDBHandler {
         ContentValues columnValues = new ContentValues();
 
 //        Set the date
-        columnValues.put(AppointmentsDBConstants.APPOINTMENT_DATE,appointment.getDateAndTimeToDisplay());
+        columnValues.put(AppointmentsDBConstants.APPOINTMENT_DATE,
+                DateUtils.setCalendarToDB(appointment.getcDateAndTime()));
         columnValues.put(AppointmentsDBConstants.CUSTOMER_ID,appointment.getCustomerID());
         columnValues.put(AppointmentsDBConstants.APPOINTMENT_EXECUTED,appointment.getTackAnHaircut());
         columnValues.put(AppointmentsDBConstants.APPOINTMENT_TIME,appointment.getHaircutTime());
@@ -352,7 +359,7 @@ public class BarbershopDBHandler {
 
         return (result != -1);
     }
-    public boolean isCustomerSchedule(Appointment newAppointment ,String testDate) {
+    public boolean isCustomerSchedule(Appointment newAppointment) {
 
         if (newAppointment.getCustomerID()== 1||newAppointment.getCustomerID()== -1)
             return false;
@@ -360,8 +367,8 @@ public class BarbershopDBHandler {
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
 
-        start.setTime(newAppointment.getDateAndTime());
-        end.setTime(newAppointment.getDateAndTime());
+        start.setTime(newAppointment.getcDateAndTime().getTime());
+        end.setTime(newAppointment.getcDateAndTime().getTime());
         end.add(Calendar.DAY_OF_MONTH,3);
 
         ArrayList<Appointment> myAppointments = getAllAppointmentsFromTo(start,end);
@@ -369,12 +376,12 @@ public class BarbershopDBHandler {
         for (Appointment testAppointment:
                 myAppointments) {
 
-            Log.d("Testing Date : ",testAppointment.getDateAndTimeToDisplay().toLowerCase()+" - "+testDate);
+//            Log.d("Testing Date : ",DateUtils.setCalendarToDB(testAppointment.getcDateAndTime()).toLowerCase()+" - "+testDate);
 
             /*if(testAppointment.getDateAndTimeToDisplay().toLowerCase().contains(testDate)&&*/
             if(testAppointment.getCustomerID() == newAppointment.getCustomerID()) {
                 Toast.makeText(context,
-                        context.getResources().getString( R.string.customer_is_schedule) +" "+testAppointment.getDateAndTimeToDisplay(),
+                        context.getResources().getString( R.string.customer_is_schedule) +" "+DateUtils.setCalendarToDB(testAppointment.getcDateAndTime()),
                         Toast.LENGTH_SHORT).show();
                 return true;
             }
@@ -388,7 +395,7 @@ public class BarbershopDBHandler {
         ArrayList<Appointment> returnAppointments =new ArrayList<Appointment>();
 
         while (fromDate.before(toDate)||fromDate.equals(toDate) ){
-            ArrayList<Appointment> appointments = getAllAppointments(DateUtils.getStringFromDate(fromDate.getTime()));
+            ArrayList<Appointment> appointments = getAllAppointments(fromDate);
 
             for (Appointment index :
                     appointments) {
@@ -404,25 +411,23 @@ public class BarbershopDBHandler {
     }
 
     public boolean testIfAppointmentAvailable(Context context,Appointment appointmentToTest) {
-        ArrayList<Appointment> appointmentsList = getAllAppointments(
-                DateUtils.getStringFromDate(
-                        appointmentToTest.getDateAndTime()));
+        ArrayList<Appointment> appointmentsList = getAllAppointments(appointmentToTest.getcDateAndTime());
 
         Calendar date1;
         Calendar date2;
 
         date1 = Calendar.getInstance();
-        date1.setTime(appointmentToTest.getDateAndTime());
+        date1.setTime(appointmentToTest.getcDateAndTime().getTime());
         date1.set(Calendar.SECOND,0);
 
         if(appointmentsList.isEmpty())return true;
 //        Toast.makeText(context, "Date1 : "+ DateUtils.getFullSDF(receivedDate)
-//                + "  Date2 : "+ DateUtils.getFullSDF(myAppointments.get(0).getDateAndTime()), Toast.LENGTH_LONG).show();
+//                + "  Date2 : "+ DateUtils.getFullSDF(myAppointments.get(0).getcDateAndTime()), Toast.LENGTH_LONG).show();
         for (Appointment appointmentItem:
                 appointmentsList) {
 
             date2 = Calendar.getInstance();
-            date2.setTime(appointmentItem.getDateAndTime());
+            date2.setTime(appointmentItem.getcDateAndTime().getTime());
             date2.add(Calendar.MINUTE,1);
             date2.set(Calendar.SECOND,0);
 
@@ -434,7 +439,7 @@ public class BarbershopDBHandler {
 
                 Toast.makeText(context,
                         context.getResources().getString(R.string.already_scheduled)+
-                                "\n"+DateUtils.getTimeSDF(date2.getTime())+" - "+DateUtils.getTimeSDF(temp.getTime()),
+                                "\n"+DateUtils.setCalendarToDB(date2)+" - "+DateUtils.setCalendarToDB(temp),
                         Toast.LENGTH_LONG).show();
 
                 return false;
@@ -451,7 +456,7 @@ public class BarbershopDBHandler {
 //            /*Toast.makeText(context, "compare date : "+DateUtils.compareDates(date1,date2)+"\nDate1: "+DateUtils.getFullSDF(date1) +
 //                    "\n Date2: "+DateUtils.getFullSDF(date2), Toast.LENGTH_LONG).show();*/
 ////            Toast.makeText(context, "Date1 : "+ DateUtils.getFullSDF(receivedDate)
-////            + "  Date2 : "+ DateUtils.getFullSDF(appointment.getDateAndTime()), Toast.LENGTH_SHORT).show();
+////            + "  Date2 : "+ DateUtils.getFullSDF(appointment.getcDateAndTime()), Toast.LENGTH_SHORT).show();
 //
 //            //equals() returns true if both the dates are equal
 ////            Toast.makeText(context, DateUtils.compareDatesAppointments(context,date1.getTime(),date2.getTime()), Toast.LENGTH_SHORT).show();
@@ -499,7 +504,7 @@ public class BarbershopDBHandler {
 //                    return false;
 //                }
 ////                Toast.makeText(context, "Date1 : "+ DateUtils.getFullSDF(receivedDate)
-////                        + "  Date2 : "+ DateUtils.getFullSDF(myAppointments.get(0).getDateAndTime()), Toast.LENGTH_LONG).show();
+////                        + "  Date2 : "+ DateUtils.getFullSDF(myAppointments.get(0).getcDateAndTime()), Toast.LENGTH_LONG).show();
 ////            System.out.println("Date1 is after Date2");
 //            }
 //
@@ -527,24 +532,23 @@ public class BarbershopDBHandler {
 
     public boolean testIfAppointmentAvailable(Appointment appointmentToTest) {
         ArrayList<Appointment> appointmentsList = getAllAppointments(
-                DateUtils.getStringFromDate(
-                        appointmentToTest.getDateAndTime()));
+                appointmentToTest.getcDateAndTime());
 
         Calendar date1;
         Calendar date2;
 
         date1 = Calendar.getInstance();
-        date1.setTime(appointmentToTest.getDateAndTime());
+        date1.setTime(appointmentToTest.getcDateAndTime().getTime());
         date1.set(Calendar.SECOND,0);
 
         if(appointmentsList.isEmpty())return true;
 //        Toast.makeText(context, "Date1 : "+ DateUtils.getFullSDF(receivedDate)
-//                + "  Date2 : "+ DateUtils.getFullSDF(myAppointments.get(0).getDateAndTime()), Toast.LENGTH_LONG).show();
+//                + "  Date2 : "+ DateUtils.getFullSDF(myAppointments.get(0).getcDateAndTime()), Toast.LENGTH_LONG).show();
         for (Appointment appointmentItem:
                 appointmentsList) {
 
             date2 = Calendar.getInstance();
-            date2.setTime(appointmentItem.getDateAndTime());
+            date2.setTime(appointmentItem.getcDateAndTime().getTime());
             date2.add(Calendar.MINUTE,1);
             date2.set(Calendar.SECOND,0);
 
@@ -556,13 +560,12 @@ public class BarbershopDBHandler {
 
                 Toast.makeText(context,
                         context.getResources().getString(R.string.already_scheduled)+
-                                "\n"+DateUtils.getTimeSDF(date2.getTime())+" - "+DateUtils.getTimeSDF(temp.getTime()),
+                                "\n"+DateUtils.setCalendarToDB(date2)+" - "+DateUtils.setCalendarToDB(temp),
                         Toast.LENGTH_LONG).show();
 
                 return false;
 
             }
-
 //            /*if((date1.get(Calendar.HOUR)+1) < date2.get(Calendar.HOUR)) {
 //                Toast.makeText(context, DateUtils.getFullSDF(date1)+" Date+1 is Small "+DateUtils.getFullSDF(date2), Toast.LENGTH_LONG).show();
 //            }else if((date1.get(Calendar.HOUR)-1) > date2.get(Calendar.HOUR)){
@@ -573,7 +576,7 @@ public class BarbershopDBHandler {
 //            /*Toast.makeText(context, "compare date : "+DateUtils.compareDates(date1,date2)+"\nDate1: "+DateUtils.getFullSDF(date1) +
 //                    "\n Date2: "+DateUtils.getFullSDF(date2), Toast.LENGTH_LONG).show();*/
 ////            Toast.makeText(context, "Date1 : "+ DateUtils.getFullSDF(receivedDate)
-////            + "  Date2 : "+ DateUtils.getFullSDF(appointment.getDateAndTime()), Toast.LENGTH_SHORT).show();
+////            + "  Date2 : "+ DateUtils.getFullSDF(appointment.getcDateAndTime()), Toast.LENGTH_SHORT).show();
 //
 //            //equals() returns true if both the dates are equal
 ////            Toast.makeText(context, DateUtils.compareDatesAppointments(context,date1.getTime(),date2.getTime()), Toast.LENGTH_SHORT).show();
@@ -621,7 +624,7 @@ public class BarbershopDBHandler {
 //                    return false;
 //                }
 ////                Toast.makeText(context, "Date1 : "+ DateUtils.getFullSDF(receivedDate)
-////                        + "  Date2 : "+ DateUtils.getFullSDF(myAppointments.get(0).getDateAndTime()), Toast.LENGTH_LONG).show();
+////                        + "  Date2 : "+ DateUtils.getFullSDF(myAppointments.get(0).getcDateAndTime()), Toast.LENGTH_LONG).show();
 ////            System.out.println("Date1 is after Date2");
 //            }
 //
@@ -641,7 +644,6 @@ public class BarbershopDBHandler {
 //                }
 ////            System.out.println("Date1 is before Date2");
 //            }*/
-
         }
 
         return true;
@@ -655,10 +657,6 @@ public class BarbershopDBHandler {
     public ArrayList<Appointment> getTodayFreeAppointmentsList(Calendar cTodayTest, int startHour, int startMin, int endHour, int endMin) {
 //      TODO Method that generate all the free appointment of the day
 
-        Log.d("FreeAppointments","Start Date: "+startHour+":"+startMin+" -- "+endHour+":"+endMin);
-
-        Log.d("FreeAppointments","Start");
-
         Calendar cStart = Calendar.getInstance();
         cStart.setTime(cTodayTest.getTime());
         Calendar cEnd = Calendar.getInstance();
@@ -669,65 +667,70 @@ public class BarbershopDBHandler {
         cEnd.set(Calendar.HOUR_OF_DAY,endHour);
         cEnd.set(Calendar.MINUTE,endMin);
 
+
+//        Log.d("FreeAppointments","Start Date: "+DateUtils.+":"+startMin+" -- "+endHour+":"+endMin);
+
         Appointment appointment = new Appointment();
         appointment.setHaircutTime(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_TIME,20));
 
-        appointment.setDateAndTime(cStart);
-        Log.d("FreeAppointments","Start Date: "+appointment.getDateAndTimeToDisplay()+" End Date: "+DateUtils.getFullSDF(cEnd));
+        appointment.setcDateAndTime(cStart);
+//        Log.d("FreeAppointments","Start Date: "+appointment.getDateAndTimeToDisplay()+" End Date: "+DateUtils.getFullSDF(cEnd));
 
         ArrayList<Appointment> freeAppointmentsList = new ArrayList<Appointment>();
         int i=0;
-        while (cStart.after(cEnd)){
-            Log.d("FreeAppointments","While: "+appointment.getDateAndTimeToDisplay()+" End Date: "+DateUtils.getFullSDF(cEnd));
-            Log.d("FreeAppointments",++i+")New Date "+appointment.getDateAndTimeToDisplay());
-            if(testIfAppointmentAvailable(appointment)) {
-                Log.d("FreeAppointments","Add an'appintment to list : "+appointment.getDateAndTimeToDisplay());
-                freeAppointmentsList.add(appointment);
-            }else{Log.d("FreeAppointments","Not Free Date : "+appointment.getDateAndTimeToDisplay());}
+        while (cStart.before(cEnd)){
 
-            Log.d("FreeAppointments","Testing Date: "+appointment.getDateAndTime());
+//            Log.d("FreeAppointments","While: "+appointment.getDateAndTimeToDisplay()+" End Date: "+DateUtils.getFullSDF(cEnd));
+//            Log.d("FreeAppointments",++i+")New Date "+appointment.getDateAndTimeToDisplay());
+
+            if(testIfAppointmentAvailable(appointment)) {
+//                Log.d("FreeAppointments","Add an'appintment to list : "+appointment.getDateAndTimeToDisplay());
+                freeAppointmentsList.add(appointment);
+            }else{Log.d("FreeAppointments","Not Free Date : "+DateUtils.setCalendarToDB(appointment.getcDateAndTime()));}
+
+            Log.d("FreeAppointments","Testing Date: "+DateUtils.setCalendarToDB(appointment.getcDateAndTime()));
+
+
             cStart.add(Calendar.HOUR_OF_DAY, appointment.getHaircutTime());
-            appointment.setDateAndTime(cStart);
+            appointment.setcDateAndTime(cStart);
         }
 
         Log.d("FreeAppointments","List Lang : "+freeAppointmentsList.size());
         return (!freeAppointmentsList.isEmpty())? freeAppointmentsList : null;
     }
 
-    public ArrayList<Appointment> getTodayAppointments(Date myDate) {
-
-        ArrayList<Appointment> myDateAppointments = new ArrayList<Appointment>();
-
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        String newFormat = formatter.format(myDate.getTime());
-        myDateAppointments = getAllAppointments(newFormat);
-
-
-        return myDateAppointments;
-}
-    public ArrayList<String> getScheduledAppointments() {
-
-        ArrayList<Appointment> myAppointments = getAllAppointments();
-        ArrayList<Customer> myCustomers = getAllCustomers();
-        ArrayList<String> myScheduledList = new ArrayList<String>();
-
-        for (Appointment appointment:
-                myAppointments) {
-//            myScheduledList.add(myScheduledList(getAppointmentByCustomerId(customer.get_id())));
+//    public ArrayList<Appointment> getTodayAppointments(Calendar myDate) {
 //
-//            String selectQuery = "SELECT * FROM " +
-//                    CustomersDBConstants.CUSTOMERS_TABLE_NAME + " WHERE "+
-//                    CustomersDBConstants.CUSTOMER_ID +" == "+appointment.getCustomerID()+";";
-            for (Customer customer :
-                    myCustomers) {
-                if (appointment.getCustomerID() == customer.get_id()){
-                    myScheduledList.add(customer.getName()+" "+appointment.getDateAndTimeToDisplay());
-                }
-            }
-        }
+//        ArrayList<Appointment> myDateAppointments = new ArrayList<Appointment>();
+//
+//        myDateAppointments = getAllAppointments(myDate);
+//
+//        return myDateAppointments;
+//}
 
-        return myScheduledList;
-    }
+//    public ArrayList<String> getScheduledAppointments() {
+//
+//        ArrayList<Appointment> myAppointments = getAllAppointments();
+//        ArrayList<Customer> myCustomers = getAllCustomers();
+//        ArrayList<String> myScheduledList = new ArrayList<String>();
+//
+//        for (Appointment appointment:
+//                myAppointments) {
+////            myScheduledList.add(myScheduledList(getAppointmentByCustomerId(customer.get_id())));
+////
+////            String selectQuery = "SELECT * FROM " +
+////                    CustomersDBConstants.CUSTOMERS_TABLE_NAME + " WHERE "+
+////                    CustomersDBConstants.CUSTOMER_ID +" == "+appointment.getCustomerID()+";";
+//            for (Customer customer :
+//                    myCustomers) {
+//                if (appointment.getCustomerID() == customer.get_id()){
+//                    myScheduledList.add(customer.getName()+" "+appointment.getDateAndTimeToDisplay());
+//                }
+//            }
+//        }
+//
+//        return myScheduledList;
+//    }
 
 
 

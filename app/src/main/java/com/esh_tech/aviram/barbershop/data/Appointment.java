@@ -305,7 +305,6 @@ package com.esh_tech.aviram.barbershop.data;
 
 import com.esh_tech.aviram.barbershop.Utils.DateUtils;
 
-import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -317,7 +316,7 @@ public class Appointment {
 
     private int _id;
 
-    private Date dateAndTime;
+    private Calendar cDateAndTime;
 
 
     private int haircutTime;
@@ -328,20 +327,20 @@ public class Appointment {
 
     //      Constructors.
 
-    public Appointment(Date dateAndTime, int customerID) {
-        this.dateAndTime = dateAndTime;
+    public Appointment(Calendar cDateAndTime, int customerID) {
+        this.cDateAndTime = cDateAndTime;
         this.customerID = customerID;
     }
-    public Appointment(Calendar dateAndTime, int customerID) {
-        setDateAndTime(dateAndTime);
-        this.customerID = customerID;
-    }
+//    public Appointment(Calendar cDateAndTime, int customerID) {
+//        setDateAndTime(cDateAndTime);
+//        this.customerID = customerID;
+//    }
 
 
 
-    public Appointment(int _id, String dateAndTime, int customerID, int tackAnHaircut, int haircutTime ,double haircutPrice) {
+    public Appointment(int _id, Calendar cDateAndTime, int customerID, int tackAnHaircut, int haircutTime , double haircutPrice) {
         this._id = _id;
-        setDateAndTime(dateAndTime);
+        this.cDateAndTime =cDateAndTime;
         this.haircutTime = haircutTime;
         this.haircutPrice = haircutPrice;
         this.customerID = customerID;
@@ -349,7 +348,7 @@ public class Appointment {
     }
 
     public Appointment() {
-        this(-1,"",-1,0,0,0);
+        this(-1,Calendar.getInstance(),-1,0,0,0);
     }
 
 
@@ -391,59 +390,56 @@ public class Appointment {
         this._id = _id;
     }
 
-    //Getter And Setter.
-    public void setDateAndTime(Date dateAndTime) {
-        this.dateAndTime = dateAndTime;
+//    //Getter And Setter.
+    public void setcDateAndTime(Calendar cDateAndTime) {
+        this.cDateAndTime = cDateAndTime;
     }
 
-    public void setDateAndTime(Calendar dateAndTime) {
-        this.dateAndTime = dateAndTime.getTime();
+    public Calendar getcDateAndTime() {
+        return cDateAndTime;
     }
 
-//    new handler in DateUtils
-    public void setDateAndTime(String setDate){
-//
-//        SimpleDateFormat sdf = new SimpleDateFormat(
-//                "dd/MM/yyyy HH:mm", Locale.getDefault());
-//        Date testDate = null;
-//        try {
-//            testDate = sdf.parse(setDate);
-//        }catch(Exception ex){
-//            ex.printStackTrace();
-//        }
-////        SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy HH:mm:");
-////        String newFormat = formatter.format(testDate);
-
-        this.dateAndTime = new DateUtils().getDateObjectByString(setDate);
-    }
-
-    public Date getDateAndTime() {
-        return dateAndTime;
-    }
-
-    public String getTime(){
-//        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-//        String newFormat = formatter.format(dateAndTime.getTimeSDF());
-//        return newFormat;
-        return new DateUtils().getTimeSDF(dateAndTime);
-    }
-    public String getDateAndTimeToDisplay() {
-        return new DateUtils().getFullSDF(dateAndTime);
-//        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
-//        String newFormat = formatter.format(dateAndTime.getTimeSDF());
-//        return newFormat;
-    }
-
-    //    public void setTheDate(Calendar c1) {
-//        Date date = c1.getTimeSDF();
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-//
-//        String myDate= null;
-//
-//        myDate = sdf.format(date);
-//
-//        this.theDate = myDate;
+    //
+//    public void setDateAndTime(Calendar dateAndTime) {
+//        this.cDateAndTime = dateAndTime;
 //    }
+//
+//
+//
+//
+//
+////    new handler in DateUtils
+//    public void setDateAndTime(String setDate){
+//        this.cDateAndTime = DateUtils.getCalendar(setDate);
+//    }
+//
+//    public Date getcDateAndTime() {
+//        return cDateAndTime;
+//    }
+//
+//    public String getTime(){
+////        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+////        String newFormat = formatter.format(cDateAndTime.getTimeSDF());
+////        return newFormat;
+//        return new DateUtils().getTimeSDF(cDateAndTime);
+//    }
+//    public String getDateAndTimeToDisplay() {
+//        return new DateUtils().getFullSDF(cDateAndTime);
+////        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
+////        String newFormat = formatter.format(cDateAndTime.getTimeSDF());
+////        return newFormat;
+//    }
+//
+//    //    public void setTheDate(Calendar c1) {
+////        Date date = c1.getTimeSDF();
+////        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+////
+////        String myDate= null;
+////
+////        myDate = sdf.format(date);
+////
+////        this.theDate = myDate;
+////    }
 
     public int getCustomerID() {
         return customerID;
