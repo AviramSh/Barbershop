@@ -263,7 +263,6 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 //        String dateForDisplay = sdf.format(appointmentCalendar.getTime());
 
 
-
         if(DateUtils.getOnlyDate(
                 appointmentCalendar).contains(DateUtils.getOnlyDate(Calendar.getInstance()))) {
             theDate.setText(DateUtils.getOnlyDate(Calendar.getInstance())+" \n"+
@@ -280,7 +279,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
         String[] workTime = getOpenDaysAndHours(appointmentCalendar.get(Calendar.DAY_OF_WEEK));
 
-        if(workTime!=null && workTime.length>3) {
+        if(workTime!=null && workTime.length > 3) {
             allAppointments = dbHandler.getTodayFreeAppointmentsList(appointmentCalendar,
                     Integer.parseInt(workTime[0]),Integer.parseInt(workTime[1]),
                     Integer.parseInt(workTime[2]),Integer.parseInt(workTime[3]));
@@ -497,6 +496,8 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         }
     }
 
+
+
     private void setTime(Calendar appointmentCalendar) {
 
         switch (appointmentCalendar.get(Calendar.MINUTE)%10){
@@ -525,6 +526,8 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                 appointmentCalendar.add(Calendar.MINUTE,1);
                 break;
         }
+
+        this.appointmentCalendar = appointmentCalendar;
     }
 
 

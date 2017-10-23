@@ -229,6 +229,11 @@
     <string name="default_business_address">כתובת של העסק שלי</string>
     <string name="default_business_phone">טלפון של העסק שלי</string>
     <string name="next_appointment">תור הבא</string>
+    <string name="the_report_was_sent">הדו"ח נשלח</string>
+    <string name="the_report_was_not_sent">The report was not sent</string>
+    <string name="send_report">שלח דו"ח</string>
+    <string name="send_bills_reports_from">שלח דו"ח חשבון מ:</string>
+    <string name="report">Report</string>
 
 
     <string-array name="spinner_hours">

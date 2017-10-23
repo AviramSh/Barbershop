@@ -674,6 +674,7 @@ public class BarbershopDBHandler {
         appointment.setHaircutTime(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_TIME,20));
 
         appointment.setcDateAndTime(cStart);
+
 //        Log.d("FreeAppointments","Start Date: "+appointment.getDateAndTimeToDisplay()+" End Date: "+DateUtils.getFullSDF(cEnd));
 
         ArrayList<Appointment> freeAppointmentsList = new ArrayList<Appointment>();
@@ -682,6 +683,7 @@ public class BarbershopDBHandler {
 
 //            Log.d("FreeAppointments","While: "+appointment.getDateAndTimeToDisplay()+" End Date: "+DateUtils.getFullSDF(cEnd));
 //            Log.d("FreeAppointments",++i+")New Date "+appointment.getDateAndTimeToDisplay());
+
 
             if(testIfAppointmentAvailable(appointment)) {
 //                Log.d("FreeAppointments","Add an'appintment to list : "+appointment.getDateAndTimeToDisplay());
@@ -692,10 +694,15 @@ public class BarbershopDBHandler {
 
 
             cStart.add(Calendar.HOUR_OF_DAY, appointment.getHaircutTime());
-            appointment.setcDateAndTime(cStart);
+
+            Calendar temp = Calendar.getInstance();
+            temp.setTime(cStart.getTime());
+
+            appointment.setcDateAndTime(temp);
         }
 
         Log.d("FreeAppointments","List Lang : "+freeAppointmentsList.size());
+
         return (!freeAppointmentsList.isEmpty())? freeAppointmentsList : null;
     }
 
@@ -917,16 +924,18 @@ public class BarbershopDBHandler {
 
         Cursor purchaseCursor = db.query(PurchaseDBConstants.PURCHASES_TABLE_NAME,null,null,null,null,null,null);
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+//        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
 
 //        Purchase(int id, int appointmentID, int productID,int customerID,String date, double price)
 
 //        purchaseCursor.moveToFirst();
-        String testFormat = formatter.format(startDate.getTime());
+//        String testFormat = formatter.format(startDate.getTime());
+
         while (purchaseCursor.moveToNext()){
-            testFormat = formatter.format(startDate.getTime());
-            if (purchaseCursor.getString(purchaseCursor.getColumnIndex(PurchaseDBConstants.PURCHASE_DATE)).contains(testFormat)) {
+//            testFormat = formatter.format(startDate.getTime());
+            if (purchaseCursor.getString(purchaseCursor.getColumnIndex(PurchaseDBConstants.PURCHASE_DATE)).contains(
+                    DateUtils.getOnlyDate(startDate))) {
                 myPurchase.add(new Purchase(
                         purchaseCursor.getInt(purchaseCursor.getColumnIndex(PurchaseDBConstants.PURCHASE_ID)),
                         purchaseCursor.getInt(purchaseCursor.getColumnIndex(PurchaseDBConstants.APPOINTMENT_ID)),
@@ -937,6 +946,7 @@ public class BarbershopDBHandler {
                 ));
             }
         }
+        purchaseCursor.close();
         return myPurchase;
     }
 

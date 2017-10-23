@@ -242,21 +242,20 @@ public class StockActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.ibSave){
-            Intent intent = new Intent(this,MainActivity.class);
-            startActivity(intent);
-            this.finish();
-        }
+
 
         switch (v.getId()){
             case R.id.ibAddProduct:
                 addProduct();
                 break;
 
+            case R.id.ibSave:
+                this.finish();
+                break;
+
             case R.id.btPlus:
 
                 break;
-        
             case R.id.btMinus:
 
                 break;

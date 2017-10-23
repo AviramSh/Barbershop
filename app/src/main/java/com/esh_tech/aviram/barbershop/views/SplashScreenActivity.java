@@ -11,7 +11,10 @@ import com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants;
 import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 import com.esh_tech.aviram.barbershop.R;
+import com.esh_tech.aviram.barbershop.data.Appointment;
 import com.esh_tech.aviram.barbershop.data.Customer;
+
+import java.util.Calendar;
 
 import static com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants.*;
 import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.*;
@@ -127,9 +130,27 @@ public class SplashScreenActivity extends AppCompatActivity {
         Customer p1 =new Customer();
         p1.set_id(1);
         p1.setName(getResources().getString(R.string.guest));
-
         dbHandler.addCustomer(p1);
 
+        Appointment appointment = new Appointment();
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE,45);
+        appointment.setcDateAndTime(calendar);
+        appointment.setCustomerID(1);
+        dbHandler.addAppointment(appointment);
+
+
+        Appointment appointment1 = new Appointment();
+        calendar.add(Calendar.MINUTE,45);
+        appointment1.setcDateAndTime(calendar);
+        appointment1.setCustomerID(1);
+        dbHandler.addAppointment(appointment1);
+
+        Appointment appointment2 = new Appointment();
+        calendar.add(Calendar.MINUTE,45);
+        appointment2.setcDateAndTime(calendar);
+        appointment2.setCustomerID(1);
+        dbHandler.addAppointment(appointment2);
         editor.apply();
     }
 }

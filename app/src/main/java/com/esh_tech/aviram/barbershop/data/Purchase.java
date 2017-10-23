@@ -1,5 +1,7 @@
 package com.esh_tech.aviram.barbershop.data;
 
+import com.esh_tech.aviram.barbershop.Utils.DateUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -31,6 +33,11 @@ public class Purchase {
         this.customerID = customerID;
         this.date = date;
         this.price = price;
+    }
+    public Purchase(Appointment appointment) {
+
+        this(-1,appointment.get_id(),0,appointment.getCustomerID(),
+                DateUtils.getDateAndTime(appointment.getcDateAndTime()),appointment.getHaircutPrice());
     }
 
 

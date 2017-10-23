@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //    Handling the Appointment list view
     private void appointmentHandler(final int position) {
 
-        Customer customer =dbHandler.getCustomerByID(allAppointments.get(position).getCustomerID());
+//        Customer customer =dbHandler.getCustomerByID(allAppointments.get(position).getCustomerID());
 //        Toast.makeText(this, customer.getName()+"", Toast.LENGTH_SHORT).show();
 
 
@@ -205,41 +205,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(MainActivity.this, R.string.getHaircut, Toast.LENGTH_LONG).show();
 
-                Purchase purchase = new Purchase();
                 Appointment appointment = allAppointments.get(position);
 
 
                 if(appointment != null) {
-                    purchase.setAppointmentID(appointment.get_id());
-                    purchase.setCustomerID(appointment.getCustomerID());
-
-                    Customer customer = dbHandler.getCustomerByID(appointment.getCustomerID());
-
-
-                    if (customer != null) {
-                        settings = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-
-                        if(customer.getGender()==1){
-                            purchase.setPrice(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_PRICE,0));
-
-                        }else{
-                            purchase.setPrice(settings.getInt(UserDBConstants.USER_FEMALE_HAIRCUT_PRICE,0));
-                        }
-////                        if(customer.getName().equals(getResources().getString(R.string.guest))){
-////                            dbHandler.deleteCustomerById(customer.get_id());
-////                            Toast.makeText(MainActivity.this, "Delete :"+R.string.guest, Toast.LENGTH_SHORT).show();
+//                    purchase.setAppointmentID(appointment.get_id());
+//                    purchase.setCustomerID(appointment.getCustomerID());
+//                    purchase.setPrice(appointment.getHaircutPrice());//
+//                    if (customer != null) {
+//                        settings = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+//
+//                        if(customer.getGender()==1){
+//                            purchase.setPrice(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_PRICE,0));
+//
+//                        }else{
+//                            purchase.setPrice(settings.getInt(UserDBConstants.USER_FEMALE_HAIRCUT_PRICE,0));
 //                        }
-                    }
-                }
-                //                Need to update database
-                if(dbHandler.addPurchase(purchase)){
-                    Log.d("Aviram","Purchase saved:");
-                }else Log.d("Aviram","Purchase Unsaved:");
+//                        if(customer.getName().equals(getResources().getString(R.string.guest))){
+//                            dbHandler.deleteCustomerById(customer.get_id());
+//                            Toast.makeText(MainActivity.this, "Delete :"+R.string.guest, Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+                    //                Need to update database
+                    appointment.setTackAnHaircut(1);
 
-                allAppointments.get(position).setTackAnHaircut(1);
-                if(dbHandler.updateAppointment(allAppointments.get(position))){
+                    Purchase purchase = new Purchase(appointment);
+                    if(dbHandler.addPurchase(purchase)){
+                        Log.d(TAG,"Purchase saved:");
+                    }else Log.d(TAG,"Purchase Unsaved:");
+
+                }
+
+
+                if(dbHandler.updateAppointment(appointment)){
 //                    Toast.makeText(MainActivity.this, "Record updated", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG,"Appointment ID:"+allAppointments.get(position).get_id()+" - Record updated");
+                    assert appointment != null;
+                    Log.d(TAG,"Appointment ID:"+appointment.get_id()+" - Record updated");
                 }
 
                 allAppointments.remove(position);

@@ -227,6 +227,11 @@
     <string name="default_business_address">MY BUSINESS ADDRESS</string>
     <string name="default_business_phone">MY BUSINESS PHONE</string>
     <string name="next_appointment">Next Appointment</string>
+    <string name="the_report_was_sent">The report was sent.</string>
+    <string name="the_report_was_not_sent">The report was not sent</string>
+    <string name="send_report">Send report</string>
+    <string name="send_bills_reports_from">Send bills reports from:</string>
+    <string name="report">Report</string>
 
 
     <string-array name="spinner_hours">

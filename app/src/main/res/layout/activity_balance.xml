@@ -82,20 +82,20 @@
 
     <TextView
         android:id="@+id/etPayment"
-        android:layout_width="189dp"
+        android:layout_width="150dp"
         android:layout_height="45dp"
         android:textSize="24sp"
         android:gravity="center"
         android:background="@color/empty"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintRight_toLeftOf="@+id/editText123"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/button4"
         android:layout_marginRight="8dp"
-        app:layout_constraintHorizontal_bias="0.595"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button4" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.502" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -119,15 +119,15 @@
         android:ems="10"
         android:gravity="center"
         android:background="@color/empty"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="8dp"
-        app:layout_constraintRight_toLeftOf="@+id/editText13"
-        android:layout_marginRight="8dp"
-        app:layout_constraintHorizontal_bias="0.526"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/etPayment" />
+        app:layout_constraintBottom_toTopOf="@+id/etPayment"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.527" />
 
     <TextView
         android:id="@+id/editText13"
@@ -136,10 +136,9 @@
         android:inputType="textPersonName"
         android:textSize="24dp"
         android:text="@string/haircuts"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etCounter" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/etCounter"
+        tools:layout_editor_absoluteX="16dp" />
 
     <TextView
         android:id="@+id/editText123"
@@ -148,10 +147,9 @@
         android:inputType="textPersonName"
         android:textSize="24dp"
         android:text="@string/pay"
-        android:layout_marginRight="16dp"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginEnd="16dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etPayment" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/etPayment"
+        tools:layout_editor_absoluteX="10dp" />
 
     <Button
         android:id="@+id/button4"
@@ -185,13 +183,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/calc"
-        android:textSize="24dp"
+        android:textSize="24sp"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="@+id/ibCalcHaircut"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="@+id/ibCalcHaircut"
         android:layout_marginTop="0dp"
         app:layout_constraintTop_toBottomOf="@+id/ibCalcHaircut" />
+
+    <TextView
+        android:id="@+id/textView32"
+        android:text="@string/report"
+        android:textSize="24sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/ibCreateReport"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="@+id/ibCreateReport"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/ibCreateReport" />
 
     <ImageButton
         android:id="@+id/ibCreateReport"

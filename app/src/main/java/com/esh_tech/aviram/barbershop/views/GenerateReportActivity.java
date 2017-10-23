@@ -270,7 +270,7 @@ public class GenerateReportActivity extends AppCompatActivity {
 
                     PrintWriter writer = new PrintWriter(filename, "UTF-8");
                     writer.write('\ufeff');
-                    writer.println("Appointment ID,Customer Name,Customer Phone,Customer Bill,Appointment Date");
+                    writer.println("Appointment ID,Customer Name,Customer Phone,Customer Bill,Appointment Date A Time");
 //
 //                    for (Ride ride : appointmentList) {
 //                        writer.println(
