@@ -392,7 +392,7 @@ public class Appointment {
 
 //    //Getter And Setter.
     public void setcDateAndTime(Calendar cDateAndTime) {
-        this.cDateAndTime = cDateAndTime;
+        this.cDateAndTime.setTime(cDateAndTime.getTime());
     }
 
     public Calendar getcDateAndTime() {

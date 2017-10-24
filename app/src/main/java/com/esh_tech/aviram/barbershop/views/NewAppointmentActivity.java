@@ -47,6 +47,8 @@ import com.esh_tech.aviram.barbershop.data.AlarmService;
 import com.esh_tech.aviram.barbershop.data.Appointment;
 import com.esh_tech.aviram.barbershop.data.Customer;
 import com.esh_tech.aviram.barbershop.R;
+import com.esh_tech.aviram.barbershop.data.Purchase;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -61,7 +63,7 @@ import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_MALE
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class NewAppointmentActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private static final String TAG = "MY_TAG";
+    private static final String TAG = "NewAppointment";
     Customer customerProfile;
     ArrayList<Customer> customersList;
     ArrayList<String> customersNames;
@@ -79,7 +81,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
     Calendar appointmentCalendar;
 
     Button theDate;
-    Button theTime;
+    TextView theTime;
 
     static final int DIALOG_ID = 0;
     static final int DIALOG_ID_TIME = 1;
@@ -125,7 +127,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         settings = PreferenceManager.getDefaultSharedPreferences(this);
         setAutoComplete();
         theDate = (Button)findViewById(R.id.btDate);
-//        theTime= (Button)findViewById(R.id.btTime);
+        theTime= (TextView)findViewById(R.id.tv_opening_hours);
 
         appointmentCalendar = Calendar.getInstance();
         appointmentCalendar.add(Calendar.DAY_OF_MONTH,1);
@@ -137,7 +139,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         newAppointment.setHaircutTime(settings.getInt(USER_MALE_HAIRCUT_TIME,35));
         newAppointment.setHaircutPrice(settings.getInt(USER_MALE_HAIRCUT_PRICE,35));
 
-        setToday();
+//        setToday();
 
         try{
             Bundle bundle = getIntent().getExtras();
@@ -157,12 +159,15 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 //        Appointment list settings
         lvAppointment = (ListView) findViewById(R.id.lvAppointment);
 
-//        fill components
-        populateAppointment();
 
 //        Connect adapter with custom view
-        appointmentAdapter = new MyAppointmentsAdapter(this, R.layout.custom_appointment_row, allAppointments);
-        lvAppointment.setAdapter(appointmentAdapter);
+//        appointmentAdapter = new MyAppointmentsAdapter(this, R.layout.custom_appointment_row, allAppointments);
+//        lvAppointment.setAdapter(appointmentAdapter);
+
+
+//        fill components
+//        populateAppointment();
+        setToday();
     }
 
     @Override
@@ -239,24 +244,17 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             }
         }
 
+        if(workTime != null && !workTime[0].equals("")&& !workTime[0].equals("-1"))
+            theTime.setText(getResources().getString(R.string.opening_hours)+"\n"+workTime[0]+":"+workTime[1]+" - "+workTime[2]+":"+workTime[3]);
 
-        theDate.setText(DateUtils.getDateAndName(appointmentCalendar));
+
+//        theDate.setText(DateUtils.getDateAndName(appointmentCalendar));
+        populateAppointment();
+
+
 //        theTime.setText(DateUtils.getTimeSDF(appointmentCalendar.getTime()));
 
     }
-
-    public void showDialog(View v) {
-
-        switch (v.getId()){
-            case R.id.btDate:
-                showDialog(DIALOG_ID);
-                break;
-//            case R.id.btTime:
-//                showDialog(DIALOG_ID_TIME);
-//                break;
-        }
-    }
-
     private void populateAppointment() {
 //
 //        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy \n EEEE", Locale.getDefault());
@@ -283,12 +281,71 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             allAppointments = dbHandler.getTodayFreeAppointmentsList(appointmentCalendar,
                     Integer.parseInt(workTime[0]),Integer.parseInt(workTime[1]),
                     Integer.parseInt(workTime[2]),Integer.parseInt(workTime[3]));
-        }else{
-            allAppointments = dbHandler.getAllAppointments(appointmentCalendar);
         }
+//        appointmentAdapter.notifyDataSetChanged();
+        //        Connect adapter with custom view
+        Log.d(TAG,"First Appointment in the list in: "+DateUtils.getDateAndTime(allAppointments.get(0).getcDateAndTime()));
+        appointmentAdapter = new MyAppointmentsAdapter(this, R.layout.custom_appointment_row, allAppointments);
+        lvAppointment.setAdapter(appointmentAdapter);
+
+        lvAppointment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                appointmentHandler(position);
+            }
+        });
+    }
+    private void appointmentHandler(final int position) {
+
+        final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+
+        mBuilder.setTitle(R.string.newAppointment);
+        mBuilder.setMessage(getResources().getString(R.string.customer)+":"+customerProfile.getName()+"\n"+
+                getResources().getString(R.string.save_this_appointment)+
+                ": "+DateUtils.getDateAndTime(allAppointments.get(position).getcDateAndTime()));
+
+        mBuilder.setNeutralButton(R.string.save, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+//                Toast.makeText(NewAppointmentActivity.this, R.string.save, Toast.LENGTH_LONG).show();
+
+                Appointment appointment = allAppointments.get(position);
+                appointment.setCustomerID(customerProfile.get_id());
+
+                if(dbHandler.addAppointment(appointment))
+                    Toast.makeText(NewAppointmentActivity.this, R.string.saved, Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(NewAppointmentActivity.this, R.string.failedToSave, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+
+        mBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        });
+
+
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
 
     }
 
+    public void showDialog(View v) {
+
+        switch (v.getId()){
+            case R.id.btDate:
+                showDialog(DIALOG_ID);
+                break;
+//            case R.id.btTime:
+//                showDialog(DIALOG_ID_TIME);
+//                break;
+        }
+    }
 
 
 
@@ -319,9 +376,10 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             cTestDate.set(year,month,dayOfMonth);
 
 //            if(cTestDate.before(Calendar.getInstance())){
-            if(!(cTestDate.get(Calendar.YEAR)>=Calendar.getInstance().get(Calendar.YEAR)&&
-                    cTestDate.get(Calendar.MONTH)>=Calendar.getInstance().get(Calendar.MONTH)&&
-                    cTestDate.get(Calendar.DAY_OF_MONTH)>=Calendar.getInstance().get(Calendar.DAY_OF_MONTH))){
+//            if(!(cTestDate.get(Calendar.YEAR)>=Calendar.getInstance().get(Calendar.YEAR)&&
+//                    cTestDate.get(Calendar.MONTH)>=Calendar.getInstance().get(Calendar.MONTH)&&
+//                    cTestDate.get(Calendar.DAY_OF_MONTH)>=Calendar.getInstance().get(Calendar.DAY_OF_MONTH))){
+            if(Calendar.getInstance().after(cTestDate)){
 
                 appointmentCalendar.setTime(Calendar.getInstance().getTime());
                 setToday();
@@ -772,22 +830,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             if (appointment != null) {
                 tvTime.setText(DateUtils.getOnlyTime(appointment.getcDateAndTime()));
             }
-/*
-
-            if(rbGetHaircut.isChecked()&&appointment.getTackAnHaircut()==1){
-                tvName.setTextColor(getResources().getColor(android.R.color.holo_green_light));
-                tvTime.setTextColor(getResources().getColor(android.R.color.holo_green_light));
-                rbGetAllHaircut.setChecked(false);
-            }else if(rbDidntgetHaircut.isChecked()&&appointment.getTackAnHaircut()==0 &&
-                    new DateUtils().compareDates(
-                            appointment.getDateAndTimeToDisplay(),
-                            new DateUtils().getFullSDF(Calendar.getInstance()))==1){
-                tvName.setTextColor(getResources().getColor(android.R.color.holo_red_light));
-                tvTime.setTextColor(getResources().getColor(android.R.color.holo_red_light));
-                rbGetAllHaircut.setChecked(false);
-            }
-*/
-
+            Log.d(TAG,"Add new appointment :"+DateUtils.getDateAndTime(appointment.getcDateAndTime()));
             appointmentAdapter.notifyDataSetChanged();
             return convertView;
         }

@@ -19,7 +19,7 @@
         android:textColor="@color/basic"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/customers_report"
-        android:id="@+id/textView"
+        android:id="@+id/tvChoose_date_title"
         tools:layout_editor_absoluteY="0dp"
         tools:layout_editor_absoluteX="0dp" />
 

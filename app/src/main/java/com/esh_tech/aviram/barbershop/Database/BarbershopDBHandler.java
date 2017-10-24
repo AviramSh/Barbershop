@@ -241,7 +241,7 @@ public class BarbershopDBHandler {
     //    Add Appointment ID(Date theDate, Time theTime, int haircutTime, int customerID)
 // TODO Fix all the database Handler Queries
     public boolean addAppointment(Appointment appointment){
-
+//        TODO Test why NewAppointmentActivity not save new appointment
         if(!testIfAppointmentAvailable(context,appointment) &&
                 !isCustomerSchedule(appointment)){
             return false;
@@ -548,6 +548,7 @@ public class BarbershopDBHandler {
                 appointmentsList) {
 
             date2 = Calendar.getInstance();
+
             date2.setTime(appointmentItem.getcDateAndTime().getTime());
             date2.add(Calendar.MINUTE,1);
             date2.set(Calendar.SECOND,0);
@@ -659,46 +660,65 @@ public class BarbershopDBHandler {
 
         Calendar cStart = Calendar.getInstance();
         cStart.setTime(cTodayTest.getTime());
+
         Calendar cEnd = Calendar.getInstance();
         cEnd.setTime(cTodayTest.getTime());
 
         cStart.set(Calendar.HOUR_OF_DAY,startHour);
         cStart.set(Calendar.MINUTE,startMin);
+
         cEnd.set(Calendar.HOUR_OF_DAY,endHour);
         cEnd.set(Calendar.MINUTE,endMin);
 
 
-//        Log.d("FreeAppointments","Start Date: "+DateUtils.+":"+startMin+" -- "+endHour+":"+endMin);
+        Log.d("FreeAppointments","Start Date: "+startHour+":"+startMin+" -- "+endHour+":"+endMin);
 
-        Appointment appointment = new Appointment();
-        appointment.setHaircutTime(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_TIME,20));
 
-        appointment.setcDateAndTime(cStart);
+
+        int haircutTime = settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_TIME,20);
+
 
 //        Log.d("FreeAppointments","Start Date: "+appointment.getDateAndTimeToDisplay()+" End Date: "+DateUtils.getFullSDF(cEnd));
 
         ArrayList<Appointment> freeAppointmentsList = new ArrayList<Appointment>();
         int i=0;
+
         while (cStart.before(cEnd)){
 
 //            Log.d("FreeAppointments","While: "+appointment.getDateAndTimeToDisplay()+" End Date: "+DateUtils.getFullSDF(cEnd));
 //            Log.d("FreeAppointments",++i+")New Date "+appointment.getDateAndTimeToDisplay());
 
+            Appointment appointment = new Appointment();
+            appointment.setcDateAndTime(cStart);
+            appointment.setHaircutTime(haircutTime);
 
             if(testIfAppointmentAvailable(appointment)) {
-//                Log.d("FreeAppointments","Add an'appintment to list : "+appointment.getDateAndTimeToDisplay());
+                Log.d("FreeAppointments","Add an'appintment to list : "+
+                        DateUtils.setCalendarToDB(appointment.getcDateAndTime()));
                 freeAppointmentsList.add(appointment);
             }else{Log.d("FreeAppointments","Not Free Date : "+DateUtils.setCalendarToDB(appointment.getcDateAndTime()));}
 
             Log.d("FreeAppointments","Testing Date: "+DateUtils.setCalendarToDB(appointment.getcDateAndTime()));
 
 
-            cStart.add(Calendar.HOUR_OF_DAY, appointment.getHaircutTime());
+            cStart.add(Calendar.MINUTE, appointment.getHaircutTime());
+//
+//            Calendar temp = Calendar.getInstance();
+//            temp.setTime(cStart.getTime());
+//
+//            appointment.setcDateAndTime(temp);
+        }
 
-            Calendar temp = Calendar.getInstance();
-            temp.setTime(cStart.getTime());
+        Calendar temp = Calendar.getInstance();
+        temp.setTime(cStart.getTime());
+        temp.add(Calendar.MINUTE,-(haircutTime/2));
 
-            appointment.setcDateAndTime(temp);
+        Appointment appointment =new Appointment();
+        appointment.setcDateAndTime(temp);
+
+        if(testIfAppointmentAvailable(appointment)) {
+            appointment.setcDateAndTime(cStart);
+            freeAppointmentsList.add(appointment);
         }
 
         Log.d("FreeAppointments","List Lang : "+freeAppointmentsList.size());

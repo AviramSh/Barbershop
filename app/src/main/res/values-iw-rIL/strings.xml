@@ -234,6 +234,10 @@
     <string name="send_report">שלח דו"ח</string>
     <string name="send_bills_reports_from">שלח דו"ח חשבון מ:</string>
     <string name="report">Report</string>
+    <string name="opening_hours">Opening hours</string>
+    <string name="save">Save</string>
+    <string name="save_this_appointment">Save this apointment?</string>
+    <string name="customer">Customer</string>
 
 
     <string-array name="spinner_hours">
