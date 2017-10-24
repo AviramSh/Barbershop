@@ -26,6 +26,7 @@ import com.esh_tech.aviram.barbershop.R;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class CustomerActivity extends AppCompatActivity implements View.OnLongClickListener ,View.OnClickListener{
 
@@ -36,10 +37,10 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
 
     Customer customerProfile;
     ImageView customerPic;
-    Bitmap selectedProfilePicture;
-
-    static final int REQUEST_IMAGE_CAPTURE = 1;
     ImageView ivCustomerProfile;
+
+    Bitmap selectedProfilePicture;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
     TextView etTel;
 
     TextView tvCustomerName;
@@ -63,7 +64,7 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
 
         int id = getIntent().getIntExtra("customerId",-1);
         customerProfile = dbHandler.getCustomerByID(id);
-        etTel =(TextView)findViewById(R.id.tvCustomerPhone);
+//        etTel =(TextView)findViewById(R.id.tvCustomerPhone);
         setOnClickPictures();
 
 //        Disable the camera if the user has no camera.
@@ -92,15 +93,19 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
         ivCustomerProfile = (ImageView)findViewById(R.id.customerPic_1);
         ivCustomerProfile.setOnClickListener(this);
         ivCustomerProfile.setOnLongClickListener(this);
+
         ivCustomerProfile = (ImageView)findViewById(R.id.customerPic_2);
         ivCustomerProfile.setOnClickListener(this);
         ivCustomerProfile.setOnLongClickListener(this);
+
         ivCustomerProfile = (ImageView)findViewById(R.id.customerPic_3);
         ivCustomerProfile.setOnClickListener(this);
         ivCustomerProfile.setOnLongClickListener(this);
+
         ivCustomerProfile = (ImageView)findViewById(R.id.customerPic_4);
         ivCustomerProfile.setOnClickListener(this);
         ivCustomerProfile.setOnLongClickListener(this);
+
         ivCustomerProfile = (ImageView)findViewById(R.id.customerMainPic);
         ivCustomerProfile.setOnClickListener(this);
         ivCustomerProfile.setOnLongClickListener(this);
@@ -108,31 +113,32 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
 
     private void setCustomerPics() {
 
-        ArrayList<Bitmap> allCustomerPics =dbHandler.getAllPicturesByUserID(customerProfile.get_id());
+        ArrayList<Picture> allCustomerPics =dbHandler.getAllPicturesByUserID(customerProfile.get_id());
 
         if (!allCustomerPics.isEmpty()) {
 
             for (int i=0 ;i<allCustomerPics.size()&&i<5;i++){
+
                 switch (i){
                     case 0:
                         customerPic = (ImageView) findViewById(R.id.customerMainPic);
-                        customerPic.setImageBitmap(allCustomerPics.get(0));
+                        customerPic.setImageBitmap(allCustomerPics.get(0).getBitmapImageData());
                         break;
                     case 1:
                         customerPic = (ImageView) findViewById(R.id.customerPic_1);
-                        customerPic.setImageBitmap(allCustomerPics.get(1));
+                        customerPic.setImageBitmap(allCustomerPics.get(1).getBitmapImageData());
                         break;
                     case 2:
                         customerPic = (ImageView) findViewById(R.id.customerPic_2);
-                        customerPic.setImageBitmap(allCustomerPics.get(2));
+                        customerPic.setImageBitmap(allCustomerPics.get(2).getBitmapImageData());
                         break;
                     case 3:
                         customerPic = (ImageView) findViewById(R.id.customerPic_3);
-                        customerPic.setImageBitmap(allCustomerPics.get(3));
+                        customerPic.setImageBitmap(allCustomerPics.get(3).getBitmapImageData());
                         break;
                     case 4:
                         customerPic = (ImageView) findViewById(R.id.customerPic_4);
-                        customerPic.setImageBitmap(allCustomerPics.get(4));
+                        customerPic.setImageBitmap(allCustomerPics.get(4).getBitmapImageData());
                         break;
 
                     default:
@@ -273,11 +279,12 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
         LayoutInflater factory = LayoutInflater.from(this);
         final View view =factory.inflate(R.layout.custom_image_layout,null);
 
-        ArrayList<Bitmap> allCustomerPics =dbHandler.getAllPicturesByUserID(customerProfile.get_id());
+        ArrayList<Picture> allCustomerPics = dbHandler.getAllPicturesByUserID(customerProfile.get_id());
+
         if (!allCustomerPics.isEmpty()) {
             customerPic = (ImageView) view.findViewById(R.id.dialogImageView);
             try {
-                customerPic.setImageBitmap(allCustomerPics.get(position));
+                customerPic.setImageBitmap(allCustomerPics.get(position).getBitmapImageData());
             } catch (Exception e) {
                 Toast.makeText(this, R.string.picture_not_exist, Toast.LENGTH_SHORT).show();
             }
@@ -308,6 +315,7 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
         }else {
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+//            TODO Fix pic replacement need an id
         }
     }
 
@@ -324,7 +332,10 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
                 if (resultCode == RESULT_OK){
                     selectedProfilePicture = (Bitmap)data.getExtras().get("data");
                     customerPic.setImageBitmap(selectedProfilePicture);
-                    if(dbHandler.addPicture(customerProfile.get_id(),selectedProfilePicture)){
+
+                    Picture myPicture = new Picture(Calendar.getInstance(),selectedProfilePicture,customerProfile.get_id());
+
+                    if(dbHandler.addPicture(myPicture)){
                         Toast.makeText(this, R.string.picture_saved, Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(this, R.string.picture_didnt_saved, Toast.LENGTH_SHORT).show();

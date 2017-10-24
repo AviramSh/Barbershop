@@ -71,7 +71,7 @@
         android:layout_height="wrap_content"
         android:weightSum="100"
         android:orientation="horizontal"
-        android:gravity="center"
+        android:gravity="start"
         android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/fillProductLv"
         app:layout_constraintRight_toRightOf="@+id/fillProductLv"
@@ -85,8 +85,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold|normal|italic"
-            android:gravity="center"
-            android:layout_weight="70"
+            android:gravity="start"
+            android:layout_weight="20"
             android:padding="10dp"
             android:text="@string/product" />
 
@@ -95,8 +95,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold|normal|italic"
-            android:gravity="center"
-            android:layout_weight="15"
+            android:gravity="start"
+            android:layout_weight="10"
             android:padding="10dp"
             android:text="@string/price" />
 
@@ -105,8 +105,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold|normal|italic"
-            android:gravity="center"
-            android:layout_weight="15"
+            android:gravity="start"
+            android:layout_weight="10"
             android:padding="10dp"
             android:text="@string/quantity" />
     </LinearLayout>

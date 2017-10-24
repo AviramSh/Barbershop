@@ -137,9 +137,6 @@ public class AppointmentListActivity extends AppCompatActivity implements View.O
 
     private void populateAppointment() {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy \n EEEE", Locale.getDefault());
-        String dateForDisplay = sdf.format(newCalendar.getTime());
-
         if(DateUtils.getOnlyDate(newCalendar).contains(DateUtils.getOnlyDate(Calendar.getInstance()))) {
             theDate.setText(DateUtils.getOnlyDate(newCalendar)+" \n"+
             getResources().getString(R.string.today));

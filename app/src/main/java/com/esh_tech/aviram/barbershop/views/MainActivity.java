@@ -161,6 +161,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateAppointment();
+        appointmentAdapter= new MyAppointmentsAdapter(this,R.layout.custom_appointment_row,allAppointments);
+
+        lsNextAppointment.setAdapter(appointmentAdapter);
+
+    }
 
     public void logout() {
 

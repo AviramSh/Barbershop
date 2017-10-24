@@ -238,6 +238,7 @@
     <string name="save">Save</string>
     <string name="save_this_appointment">Save this apointment?</string>
     <string name="customer">Customer</string>
+    <string name="choose_appointment">Choose Appointment</string>
 
 
     <string-array name="spinner_hours">

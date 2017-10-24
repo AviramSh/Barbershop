@@ -87,7 +87,7 @@ public class BarbershopDBHandler {
         if(customer.getPhoto()!=null){
             Customer p1 = getCustomerByPhone(customer.getPhone());
             if(p1!=null)
-                addPicture(p1.get_id(),customer.getPhoto());
+                addPicture(new Picture(Calendar.getInstance(),customer.getPhoto(),p1.get_id()));
         }
 
         Log.d(TAG,"Customer Added "+customer);
@@ -238,19 +238,19 @@ public class BarbershopDBHandler {
 
 
 
-    //    Add Appointment ID(Date theDate, Time theTime, int haircutTime, int customerID)
-// TODO Fix all the database Handler Queries
+
+
     public boolean addAppointment(Appointment appointment){
-//        TODO Test why NewAppointmentActivity not save new appointment
-        if(!testIfAppointmentAvailable(context,appointment) &&
-                !isCustomerSchedule(appointment)){
+//          TODO Check why NewAppointmentActivity not saving guest appointment
+        if(!testIfAppointmentAvailable(appointment) ||
+                isCustomerSchedule(appointment)){
             return false;
         }
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues columnValues = new ContentValues();
 
-//        Set the date
+//        Set the data
         columnValues.put(AppointmentsDBConstants.APPOINTMENT_DATE,
                 DateUtils.setCalendarToDB(appointment.getcDateAndTime()));
         columnValues.put(AppointmentsDBConstants.CUSTOMER_ID,appointment.getCustomerID());
@@ -306,13 +306,32 @@ public class BarbershopDBHandler {
 //            Log.d("The Getting Date : ",DateUtils.setCalendarToDB(appointment.getcDateAndTime()));
 
                 if(DateUtils.setCalendarToDB(
-                        appointment.getcDateAndTime()).toLowerCase().contains(dateToTest)) {
+                        appointment.getcDateAndTime()).contains(dateToTest)) {
 //                    Log.d("found","found");
                     myDateAppointments.add(appointment);
                 }
             }
 
         return myDateAppointments;
+    }
+    public ArrayList<Appointment> getAllAppointmentsFromTo(Calendar fromDate, Calendar toDate) {
+
+        ArrayList<Appointment> returnAppointments =new ArrayList<Appointment>();
+
+        while (fromDate.before(toDate)||fromDate.equals(toDate) ){
+            ArrayList<Appointment> appointments = getAllAppointments(fromDate);
+
+            for (Appointment index :
+                    appointments) {
+                returnAppointments.add(index);
+            }
+
+
+            fromDate.add(Calendar.DAY_OF_MONTH,1);
+        }
+
+
+        return returnAppointments;
     }
     public ArrayList<Appointment> getWaitingListAppointments(Calendar receivedDate) {
 
@@ -360,9 +379,11 @@ public class BarbershopDBHandler {
         return (result != -1);
     }
     public boolean isCustomerSchedule(Appointment newAppointment) {
+//        Log.d(TAG,"isCustomerSchedule:Customer ID :"+newAppointment.getCustomerID());
 
-        if (newAppointment.getCustomerID()== 1||newAppointment.getCustomerID()== -1)
+        if (newAppointment.getCustomerID()== 1||newAppointment.getCustomerID()== -1) {
             return false;
+        }
 
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
@@ -380,34 +401,15 @@ public class BarbershopDBHandler {
 
             /*if(testAppointment.getDateAndTimeToDisplay().toLowerCase().contains(testDate)&&*/
             if(testAppointment.getCustomerID() == newAppointment.getCustomerID()) {
-                Toast.makeText(context,
-                        context.getResources().getString( R.string.customer_is_schedule) +" "+DateUtils.setCalendarToDB(testAppointment.getcDateAndTime()),
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context,
+//                        context.getResources().getString( R.string.customer_is_schedule) +" "+DateUtils.setCalendarToDB(testAppointment.getcDateAndTime()),
+//                        Toast.LENGTH_SHORT).show();
                 return true;
             }
         }
 
         return false;
 
-    }
-    public ArrayList<Appointment> getAllAppointmentsFromTo(Calendar fromDate, Calendar toDate) {
-
-        ArrayList<Appointment> returnAppointments =new ArrayList<Appointment>();
-
-        while (fromDate.before(toDate)||fromDate.equals(toDate) ){
-            ArrayList<Appointment> appointments = getAllAppointments(fromDate);
-
-            for (Appointment index :
-                    appointments) {
-                returnAppointments.add(index);
-            }
-
-
-            fromDate.add(Calendar.DAY_OF_MONTH,1);
-        }
-
-
-        return returnAppointments;
     }
 
     public boolean testIfAppointmentAvailable(Context context,Appointment appointmentToTest) {
@@ -529,7 +531,6 @@ public class BarbershopDBHandler {
 
         return true;
     }
-
     public boolean testIfAppointmentAvailable(Appointment appointmentToTest) {
         ArrayList<Appointment> appointmentsList = getAllAppointments(
                 appointmentToTest.getcDateAndTime());
@@ -559,10 +560,10 @@ public class BarbershopDBHandler {
                 temp.setTime(date2.getTime());
                 temp.add(Calendar.MINUTE,appointmentItem.getHaircutTime());
 
-                Toast.makeText(context,
-                        context.getResources().getString(R.string.already_scheduled)+
-                                "\n"+DateUtils.setCalendarToDB(date2)+" - "+DateUtils.setCalendarToDB(temp),
-                        Toast.LENGTH_LONG).show();
+//                Toast.makeText(context,
+//                        context.getResources().getString(R.string.already_scheduled)+
+//                                "\n"+DateUtils.setCalendarToDB(date2)+" - "+DateUtils.setCalendarToDB(temp),
+//                        Toast.LENGTH_LONG).show();
 
                 return false;
 
@@ -656,7 +657,7 @@ public class BarbershopDBHandler {
 
 
     public ArrayList<Appointment> getTodayFreeAppointmentsList(Calendar cTodayTest, int startHour, int startMin, int endHour, int endMin) {
-//      TODO Method that generate all the free appointment of the day
+
 
         Calendar cStart = Calendar.getInstance();
         cStart.setTime(cTodayTest.getTime());
@@ -692,7 +693,8 @@ public class BarbershopDBHandler {
             appointment.setcDateAndTime(cStart);
             appointment.setHaircutTime(haircutTime);
 
-            if(testIfAppointmentAvailable(appointment)) {
+            if(testIfAppointmentAvailable(appointment)&&
+                    (Calendar.getInstance().equals(appointment.getcDateAndTime())|| Calendar.getInstance().before(appointment.getcDateAndTime()))) {
                 Log.d("FreeAppointments","Add an'appintment to list : "+
                         DateUtils.setCalendarToDB(appointment.getcDateAndTime()));
                 freeAppointmentsList.add(appointment);
@@ -797,6 +799,7 @@ public class BarbershopDBHandler {
                     ProductsCursor.getInt(ProductsCursor.getColumnIndex(ProductsDBConstants.PRODUCT_PRICE))
             ));
 
+        ProductsCursor.close();
         return productsList;
     }
     public Product getProductByID(int id) {
@@ -981,22 +984,16 @@ public class BarbershopDBHandler {
 //    PicturesDBConstants.CUSTOMER_ID + " INTEGER "
 
 
-    public boolean addPicture(int customerId , Bitmap bitmapImageData) throws SQLiteException {
+    public boolean addPicture(Picture myPic) throws SQLiteException {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues columnValues = new ContentValues();
 
-        byte[] imageData =BitmapDBUtility.getBytes(bitmapImageData);
+        byte[] imageData =BitmapDBUtility.getBytes(myPic.getBitmapImageData());
 
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "dd/MM/yyyy HH:mm:ss", Locale.getDefault());
-        Date date = new Date();
-        dateFormat.format(date);
-
-        columnValues.put(PicturesDBConstants.PICTURE_NAME,dateFormat.format(date));
-
+        columnValues.put(PicturesDBConstants.PICTURE_NAME,myPic.getName());
         columnValues.put(PicturesDBConstants.PICTURE_DATA,imageData);
-        columnValues.put(PicturesDBConstants.CUSTOMER_ID,customerId );
+        columnValues.put(PicturesDBConstants.CUSTOMER_ID,myPic.getCustomerId());
 
 
         long result = db.insertOrThrow(PicturesDBConstants.PICTURES_TABLE_NAME,null,columnValues);
@@ -1004,24 +1001,40 @@ public class BarbershopDBHandler {
 
         return (result != -1);
     }
-    public ArrayList<Bitmap> getAllPicturesByUserID(int id) {
+    public ArrayList<Picture> getAllPicturesByUserID(int id) {
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        ArrayList<Bitmap> myPhotos = new ArrayList<Bitmap>();
-        BitmapDBUtility picsHandler = new BitmapDBUtility();
+        ArrayList<Picture> allCustomerPicList=new ArrayList<>();
 
-        Cursor picturesCursor = db.query(PicturesDBConstants.PICTURES_TABLE_NAME,null,null,null,null,null,null);
+//        ArrayList<Bitmap> myPhotos = new ArrayList<Bitmap>();
+//        BitmapDBUtility picsHandler = new BitmapDBUtility();
+
+//        AppointmentsDBConstants.APPOINTMENT_DATE+" ASC"
+        Cursor picturesCursor = db.query(
+                PicturesDBConstants.PICTURES_TABLE_NAME,null,null,null,null,null,PicturesDBConstants.PICTURE_NAME+" ASC");
 
         while (picturesCursor.moveToNext())
 
             if(picturesCursor.getInt(picturesCursor.getColumnIndex(PicturesDBConstants.CUSTOMER_ID))==id){
-
-                myPhotos.add(
+//                int id, Calendar name, Bitmap bitmapImageData, int customerId
+                allCustomerPicList.add(new Picture(
+                        picturesCursor.getInt(picturesCursor.getColumnIndex(PicturesDBConstants.PICTURE_ID)),
+                        picturesCursor.getString(picturesCursor.getColumnIndex(PicturesDBConstants.PICTURE_NAME)),
                         BitmapDBUtility.getImage(
                                 picturesCursor.getBlob(
-                                        picturesCursor.getColumnIndex(PicturesDBConstants.PICTURE_DATA))));
+                                        picturesCursor.getColumnIndex(PicturesDBConstants.PICTURE_DATA))),
+                        picturesCursor.getInt(picturesCursor.getColumnIndex(PicturesDBConstants.CUSTOMER_ID))
+                ));
+
+
+//                myPhotos.add(
+//                        BitmapDBUtility.getImage(
+//                                picturesCursor.getBlob(
+//                                        picturesCursor.getColumnIndex(PicturesDBConstants.PICTURE_DATA))));
             }
-        return myPhotos;
+
+            picturesCursor.close();
+        return allCustomerPicList;
 
     }
     public Bitmap getUserPictureByID(int id) {
@@ -1032,12 +1045,14 @@ public class BarbershopDBHandler {
 
         Cursor picturesCursor = db.query(PicturesDBConstants.PICTURES_TABLE_NAME,null,null,null,null,null,null);
 
-        while (picturesCursor.moveToNext())
-            if(picturesCursor.getInt(picturesCursor.getColumnIndex(PicturesDBConstants.CUSTOMER_ID))==id){
-                        return BitmapDBUtility.getImage(
-                                picturesCursor.getBlob(
-                                        picturesCursor.getColumnIndex(PicturesDBConstants.PICTURE_DATA)));
+        while (picturesCursor.moveToNext()) {
+            if (picturesCursor.getInt(picturesCursor.getColumnIndex(PicturesDBConstants.CUSTOMER_ID)) == id) {
+                return BitmapDBUtility.getImage(
+                        picturesCursor.getBlob(
+                                picturesCursor.getColumnIndex(PicturesDBConstants.PICTURE_DATA)));
             }
+        }
+        picturesCursor.close();
         return null;
 
     }

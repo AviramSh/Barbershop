@@ -22,6 +22,7 @@ public class DateUtils {
     public static final String sdf_n = "EEEE";
 
     public static final String sdf_d_t = "dd/MM/yyyy HH:mm";
+    public static final String sdf_d_t_s = "dd/MM/yyyy HH:mm:ss";
 
     public static final String sdf_d_n ="dd/MM/yyyy \n EEEE";
 
@@ -313,5 +314,23 @@ public int compareDates(Calendar c1, Calendar c2) {
         return formatter.format(calendar.getTime());
     }
 
+
+    public static Calendar getPicCalendar(String sdfToFormat){
+
+        try {
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat formatter = new SimpleDateFormat(sdf_d_t_s, Locale.getDefault());
+            cal.setTime(formatter.parse(sdfToFormat));
+            return cal;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+    public static String getPicName(Calendar calendar){
+        SimpleDateFormat formatter = new SimpleDateFormat(sdf_d_t, Locale.getDefault());
+        return formatter.format(calendar.getTime());
+    }
 
 }

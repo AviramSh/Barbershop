@@ -42,6 +42,7 @@ import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class CustomersListActivity extends AppCompatActivity {
@@ -176,7 +177,6 @@ public class CustomersListActivity extends AppCompatActivity {
         Intent customerProfile = new Intent(this,CustomerActivity.class);
         customerProfile.putExtra("customerId",customer.get_id());
         startActivity(customerProfile);
-        this.finish();
     }
 
     private void editCustomer(final Customer customer) {
@@ -328,9 +328,10 @@ public class CustomersListActivity extends AppCompatActivity {
                 if (dbHandler.addCustomer(newCustomer)) {
 
                     if(newCustomer.getPhoto() != null){
-                        dbHandler.addPicture(
-                                dbHandler.getCustomerByPhone(newCustomer.getPhone()).get_id(),
-                                newCustomer.getPhoto());
+                        dbHandler.addPicture(new Picture(
+                                Calendar.getInstance(),
+                                        newCustomer.getPhoto(),
+                                dbHandler.getCustomerByPhone(newCustomer.getPhone()).get_id()));
                     }
 
                     allCustomers.add(newCustomer);

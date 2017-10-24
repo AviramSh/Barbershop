@@ -37,6 +37,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.esh_tech.aviram.barbershop.Constants.AppointmentsDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.BundleConstants;
 import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants;
@@ -158,8 +159,12 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
 //        Appointment list settings
         lvAppointment = (ListView) findViewById(R.id.lvAppointment);
-
-
+        lvAppointment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                appointmentHandler(position);
+            }
+        });
 //        Connect adapter with custom view
 //        appointmentAdapter = new MyAppointmentsAdapter(this, R.layout.custom_appointment_row, allAppointments);
 //        lvAppointment.setAdapter(appointmentAdapter);
@@ -287,13 +292,6 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         Log.d(TAG,"First Appointment in the list in: "+DateUtils.getDateAndTime(allAppointments.get(0).getcDateAndTime()));
         appointmentAdapter = new MyAppointmentsAdapter(this, R.layout.custom_appointment_row, allAppointments);
         lvAppointment.setAdapter(appointmentAdapter);
-
-        lvAppointment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                appointmentHandler(position);
-            }
-        });
     }
     private void appointmentHandler(final int position) {
 
@@ -310,12 +308,19 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 //                Toast.makeText(NewAppointmentActivity.this, R.string.save, Toast.LENGTH_LONG).show();
 
                 Appointment appointment = allAppointments.get(position);
+                if(customerProfile.getGender()==1) {
+                    appointment.setHaircutPrice(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_PRICE,0));
+                }else{
+                    appointment.setHaircutPrice(settings.getInt(UserDBConstants.USER_FEMALE_HAIRCUT_PRICE,0));
+                }
                 appointment.setCustomerID(customerProfile.get_id());
 
-                if(dbHandler.addAppointment(appointment))
+                if(dbHandler.addAppointment(appointment)) {
                     Toast.makeText(NewAppointmentActivity.this, R.string.saved, Toast.LENGTH_SHORT).show();
-                else
+                    NewAppointmentActivity.this.finish();
+                }else {
                     Toast.makeText(NewAppointmentActivity.this, R.string.failedToSave, Toast.LENGTH_SHORT).show();
+                }
                 dialog.dismiss();
             }
         });
