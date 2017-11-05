@@ -63,24 +63,6 @@ public class smsSettings extends AppCompatActivity implements View.OnClickListen
 
         sMessageTime.setAdapter(adapter);
 
-        switch (settings.getInt(UserDBConstants.USER_SMS_TIME,0)){
-            case 1:
-                sMessageTime.setPromptId(0);
-                break;
-            case 2:
-                sMessageTime.setPromptId(1);
-                break;
-            case 4:
-                sMessageTime.setPromptId(2);
-                break;
-            case 24:
-                sMessageTime.setPromptId(3);
-                break;
-            default:
-                sMessageTime.setPromptId(0);
-                break;
-        }
-
         sMessageTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

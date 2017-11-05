@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants;
+import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.R;
 
 
@@ -46,12 +47,12 @@ public class BarbershopActivity extends AppCompatActivity implements View.OnClic
         businessAddress = (EditText)findViewById(R.id.etBusinessAddress);
         businessPhone = (EditText)findViewById(R.id.etBusinessPhone);
 
-        businessName.setText(settings.getString(SharedPreferencesConstants.BUSINESS_NAME,
+        businessName.setText(settings.getString(UserDBConstants.USER_BUSINESS_NAME,
                 getResources().getString(R.string.default_business_name)));
 
-        businessAddress.setText(settings.getString(SharedPreferencesConstants.BUSINESS_ADDRESS,
+        businessAddress.setText(settings.getString(UserDBConstants.USER_BUSINESS_ADDRESS,
                 getResources().getString(R.string.default_business_address)));
-        businessPhone.setText(settings.getString(SharedPreferencesConstants.BUSINESS_PHONE,
+        businessPhone.setText(settings.getString(UserDBConstants.USER_PHONE,
                 getResources().getString(R.string.default_business_phone)));
 
     }
@@ -92,9 +93,9 @@ public class BarbershopActivity extends AppCompatActivity implements View.OnClic
         try {
 
             editor = settings.edit();
-            editor.putString(SharedPreferencesConstants.BUSINESS_NAME,businessName.getText().toString());
-            editor.putString(SharedPreferencesConstants.BUSINESS_PHONE,businessPhone.getText().toString());
-            editor.putString(SharedPreferencesConstants.BUSINESS_ADDRESS,businessAddress.getText().toString());
+            editor.putString(UserDBConstants.USER_BUSINESS_NAME,businessName.getText().toString());
+            editor.putString(UserDBConstants.USER_PHONE,businessPhone.getText().toString());
+            editor.putString(UserDBConstants.USER_BUSINESS_ADDRESS,businessAddress.getText().toString());
             editor.apply();
 //            Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {

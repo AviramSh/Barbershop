@@ -85,7 +85,7 @@ public class MyGlobalUser extends Application {
 }
 */
 
-//  TODO Marge data
+
 public class MyGlobalUser extends Application {
     private String name;
     private String lastName;

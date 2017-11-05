@@ -133,7 +133,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         appointmentCalendar = Calendar.getInstance();
         appointmentCalendar.add(Calendar.DAY_OF_MONTH,1);
 
-        customerProfile = new Customer();
+        customerProfile = dbHandler.getCustomerByID(1);
         customerProfile.setName(getResources().getString(R.string.guest));
 
         newAppointment =new Appointment();
@@ -289,7 +289,18 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         }
 //        appointmentAdapter.notifyDataSetChanged();
         //        Connect adapter with custom view
-        Log.d(TAG,"First Appointment in the list in: "+DateUtils.getDateAndTime(allAppointments.get(0).getcDateAndTime()));
+//        Log.d(TAG,"First Appointment in the list in: "+DateUtils.getDateAndTime(allAppointments.get(0).getcDateAndTime()));
+//        if(allAppointments.isEmpty()) {
+//            appointmentAdapter = new MyAppointmentsAdapter(
+//                    this, R.layout.custom_appointment_row, new ArrayList<Appointment>());
+//            lvAppointment.setAdapter(appointmentAdapter);
+//            Toast.makeText(this, R.string.no_free_appointment, Toast.LENGTH_SHORT).show();
+//        }else{
+//            appointmentAdapter = new MyAppointmentsAdapter(this, R.layout.custom_appointment_row, allAppointments);
+//            lvAppointment.setAdapter(appointmentAdapter);
+//        }
+        if(allAppointments.isEmpty())
+            Toast.makeText(this, R.string.no_free_appointment, Toast.LENGTH_SHORT).show();
         appointmentAdapter = new MyAppointmentsAdapter(this, R.layout.custom_appointment_row, allAppointments);
         lvAppointment.setAdapter(appointmentAdapter);
     }
@@ -732,7 +743,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                                 getResources().getString(R.string.system_sms_2_add_time)+
                         DateUtils.getDateAndTime(newAppointment.getcDateAndTime())+
                                 getResources().getString(R.string.system_sms_3add_business)+
-                        settings.getString(SharedPreferencesConstants.BUSINESS_NAME,".");
+                        settings.getString(UserDBConstants.USER_BUSINESS_NAME,".");
                     }else{
                         sendMessage +=settings.getString(UserDBConstants.USER_DEFAULT_SMS,"");
                     }

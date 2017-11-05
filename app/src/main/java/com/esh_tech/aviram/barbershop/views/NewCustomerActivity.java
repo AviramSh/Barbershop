@@ -119,8 +119,6 @@ public class NewCustomerActivity extends AppCompatActivity implements View.OnCli
                 addCustomer();
                 break;
             case R.id.btClose:
-                Intent myIntent = new Intent(this,MainActivity.class);
-                startActivity(myIntent);
                 this.finish();
                 break;
 
@@ -196,8 +194,6 @@ public class NewCustomerActivity extends AppCompatActivity implements View.OnCli
 
             if(dbHandler.updateCustomer(customerProfile)){
                 Toast.makeText(this, R.string.saved, Toast.LENGTH_LONG).show();
-                Intent myIntent = new Intent(this, CustomersListActivity.class);
-                startActivity(myIntent);
                 this.finish();
             }else{
                 Toast.makeText(this, R.string.failedToSave, Toast.LENGTH_LONG).show();

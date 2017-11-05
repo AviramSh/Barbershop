@@ -5,6 +5,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
     private void init() {
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         etUserName = (EditText)findViewById(R.id.etUserName);
         etUserLastName = (EditText)findViewById(R.id.etPassword);
         etUserTelephone= (EditText)findViewById(R.id.etUserTelephone);
@@ -43,7 +45,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         etBusinessAddress = (EditText)findViewById(R.id.etBusinessAddress);
 
         settings = PreferenceManager.getDefaultSharedPreferences(this);
-        editor = settings.edit();
+        
 
         etUserName.setText(settings.getString(USER_NAME,""));
         etUserLastName.setText(settings.getString(USER_LAST_NAME,""));
@@ -59,10 +61,21 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
 
         switch (v.getId()){
+            case R.id.btSave:
+                saveUserChange();
+                break;
 
             default:
                 Toast.makeText(this, "Not Initialized", Toast.LENGTH_LONG).show();
                 break;
         }
+    }
+
+    private void saveUserChange() {
+        
+        editor = settings.edit();
+
+
+        editor.apply();
     }
 }

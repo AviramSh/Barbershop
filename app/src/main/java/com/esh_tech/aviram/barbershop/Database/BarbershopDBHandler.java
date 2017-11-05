@@ -564,7 +564,6 @@ public class BarbershopDBHandler {
 //                        context.getResources().getString(R.string.already_scheduled)+
 //                                "\n"+DateUtils.setCalendarToDB(date2)+" - "+DateUtils.setCalendarToDB(temp),
 //                        Toast.LENGTH_LONG).show();
-
                 return false;
 
             }
@@ -717,6 +716,7 @@ public class BarbershopDBHandler {
 
         Appointment appointment =new Appointment();
         appointment.setcDateAndTime(temp);
+        appointment.setHaircutTime(haircutTime);
 
         if(testIfAppointmentAvailable(appointment)) {
             appointment.setcDateAndTime(cStart);
@@ -725,7 +725,8 @@ public class BarbershopDBHandler {
 
         Log.d("FreeAppointments","List Lang : "+freeAppointmentsList.size());
 
-        return (!freeAppointmentsList.isEmpty())? freeAppointmentsList : null;
+//        return (!freeAppointmentsList.isEmpty())? freeAppointmentsList : null;
+        return freeAppointmentsList;
     }
 
 //    public ArrayList<Appointment> getTodayAppointments(Calendar myDate) {
@@ -984,21 +985,48 @@ public class BarbershopDBHandler {
 //    PicturesDBConstants.CUSTOMER_ID + " INTEGER "
 
 
-    public boolean addPicture(Picture myPic) throws SQLiteException {
+    public boolean addPicture(Picture pictureToSave) throws SQLiteException {
+
+        if(pictureToSave.getId() != new Picture().getId()){return updatePicture(pictureToSave);}
+
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues columnValues = new ContentValues();
 
-        byte[] imageData =BitmapDBUtility.getBytes(myPic.getBitmapImageData());
+        byte[] imageData = BitmapDBUtility.getBytes(pictureToSave.getBitmapImageData());
+
+        if(imageData==null){Log.d(TAG,"AddPicture(): Image data is null");return false;}
 
 
-        columnValues.put(PicturesDBConstants.PICTURE_NAME,myPic.getName());
+        columnValues.put(PicturesDBConstants.PICTURE_NAME,pictureToSave.getName());
         columnValues.put(PicturesDBConstants.PICTURE_DATA,imageData);
-        columnValues.put(PicturesDBConstants.CUSTOMER_ID,myPic.getCustomerId());
+        columnValues.put(PicturesDBConstants.CUSTOMER_ID,pictureToSave.getCustomerId());
 
 
         long result = db.insertOrThrow(PicturesDBConstants.PICTURES_TABLE_NAME,null,columnValues);
         db.close();
+        Log.d(TAG,"addPicture(): Pic was saved"+pictureToSave.getId()+" - "+pictureToSave.getName()+" -- "+pictureToSave.getCustomerId());
 
+        return (result != -1);
+    }
+    public boolean updatePicture(Picture pictureToUpdate){
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues columnValues = new ContentValues();
+        byte[] imageData =BitmapDBUtility.getBytes(pictureToUpdate.getBitmapImageData());
+
+        columnValues.put(PicturesDBConstants.PICTURE_NAME,pictureToUpdate.getName());
+        columnValues.put(PicturesDBConstants.PICTURE_DATA,imageData);
+        columnValues.put(PicturesDBConstants.CUSTOMER_ID,pictureToUpdate.getCustomerId());
+
+
+
+        int result = db.update(PicturesDBConstants.PICTURES_TABLE_NAME,
+                columnValues,
+                PicturesDBConstants.PICTURE_ID +"= "+pictureToUpdate.getId(),
+                null);
+
+        db.close();
+        Log.d(TAG,"Update Customer ID:"+pictureToUpdate.getId()+" Pic");
         return (result != -1);
     }
     public ArrayList<Picture> getAllPicturesByUserID(int id) {
@@ -1011,7 +1039,7 @@ public class BarbershopDBHandler {
 
 //        AppointmentsDBConstants.APPOINTMENT_DATE+" ASC"
         Cursor picturesCursor = db.query(
-                PicturesDBConstants.PICTURES_TABLE_NAME,null,null,null,null,null,PicturesDBConstants.PICTURE_NAME+" ASC");
+                PicturesDBConstants.PICTURES_TABLE_NAME,null,null,null,null,null,PicturesDBConstants.PICTURE_NAME+" DESC");
 
         while (picturesCursor.moveToNext())
 

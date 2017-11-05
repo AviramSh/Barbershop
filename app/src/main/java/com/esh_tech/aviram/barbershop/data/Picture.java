@@ -17,6 +17,10 @@ public class Picture {
     private Bitmap bitmapImageData;
     private int customerId;
 
+    public Picture() {
+        this(-1,Calendar.getInstance(),null,-1);
+    }
+
     public Picture(int id, Calendar name, Bitmap bitmapImageData, int customerId) {
         this.id = id;
         this.name = DateUtils.getPicName(name);
@@ -31,10 +35,7 @@ public class Picture {
     }
 
     public Picture(Calendar name, Bitmap bitmapImageData, int customerId) {
-
-        this.name = DateUtils.getPicName(name);
-        this.bitmapImageData = bitmapImageData;
-        this.customerId = customerId;
+        this(-1,name,bitmapImageData,customerId);
     }
 
     public int getId() {
@@ -49,8 +50,8 @@ public class Picture {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(Calendar name) {
+        this.name = DateUtils.getPicName(name);
     }
 
     public Bitmap getBitmapImageData() {

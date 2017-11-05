@@ -40,27 +40,27 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-
+        Intent myIntent;
 
         switch (v.getId()){
             case R.id.layProfile:
-                goUserProfile();
+                myIntent = new Intent(this,UserProfileActivity.class);
+                startActivity(myIntent);
                 break;
 
             case R.id.layHaircut:
-                openHaircutSettings();
+                myIntent = new Intent(this,TimeAndFee.class);
+                startActivity(myIntent);
                 break;
 
             case R.id.layBarbershop:
                 intent = new Intent(this,BarbershopActivity.class);
                 startActivity(intent);
-                this.finish();
                 break;
 
             case R.id.layWorkingDays:
                 intent = new Intent(this,WorkingHoursActivity.class);
                 startActivity(intent);
-                this.finish();
                 break;
 
             case R.id.layPassword:
@@ -91,22 +91,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     public void openWorkingDays(View view) {
         Intent myIntent = new Intent(this,WorkingHoursActivity.class);
         startActivity(myIntent);
-        this.finish();
     }
 
-    public void goUserProfile() {
-        Intent myIntent = new Intent(this,UserProfileActivity.class);
-        startActivity(myIntent);
-        this.finish();
-
-    }
-
-    public void openHaircutSettings() {
-        Intent myIntent = new Intent(this,TimeAndFee.class);
-        startActivity(myIntent);
-        this.finish();
-
-    }
 
     public void openPasswordSettings() {
 
@@ -124,9 +110,14 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             public void onClick(DialogInterface dialog, int which) {
 
                 if(etPassword.getText().toString().equals(settings.getString(UserDBConstants.USER_PASSWORD,""))) {
-                    Intent myIntent = new Intent(SettingsActivity.this, UserPasswordActivity.class);
-                    startActivity(myIntent);
-                    SettingsActivity.this.finish();
+//
+//                    Intent myIntent = new Intent(SettingsActivity.this, UserPasswordActivity.class);
+//                    startActivity(myIntent);
+//                    SettingsActivity.this.finish();
+                    Intent intent = new Intent(getApplicationContext(), UserPasswordActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+
                 }else{
                     Toast.makeText(SettingsActivity.this, R.string.incorrectPassword, Toast.LENGTH_LONG).show();
                 }
