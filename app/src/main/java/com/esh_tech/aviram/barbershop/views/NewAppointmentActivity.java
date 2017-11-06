@@ -28,6 +28,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -129,6 +130,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         setAutoComplete();
         theDate = (Button)findViewById(R.id.btDate);
         theTime= (TextView)findViewById(R.id.tv_opening_hours);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         appointmentCalendar = Calendar.getInstance();
         appointmentCalendar.add(Calendar.DAY_OF_MONTH,1);

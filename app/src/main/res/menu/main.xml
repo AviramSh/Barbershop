@@ -6,13 +6,13 @@
         android:id="@+id/action_settings"
         android:icon="@android:drawable/ic_menu_preferences"
         android:orderInCategory="100"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:title="@string/settings"/>
     <item
         android:id="@+id/action_about"
         android:orderInCategory="100"
         android:icon="@drawable/about50"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:title="@string/about"/>
 
     <item
@@ -20,7 +20,6 @@
         android:orderInCategory="100"
         android:icon="@drawable/exit40"
         android:title="@string/logout"
-        app:showAsAction="always" />
-
+        app:showAsAction="ifRoom" />
 
 </menu>
