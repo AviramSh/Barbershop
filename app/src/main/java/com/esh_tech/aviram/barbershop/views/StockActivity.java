@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class StockActivity extends AppCompatActivity implements View.OnClickListener,View.OnLongClickListener{
+public class StockActivity extends AppCompatActivity implements View.OnClickListener{
 
     EditText mProductName;
     EditText mProductQuantity;
@@ -69,88 +70,89 @@ public class StockActivity extends AppCompatActivity implements View.OnClickList
         allProducts = dbHandler.getAllProducts();
 
         //        Connect list view
-        lvProducts =(ListView)findViewById(R.id.fillProductLv);
-        createProduct = (ImageButton)findViewById(R.id.ibAddProduct);
+        lvProducts = findViewById(R.id.fillProductLv);
+        createProduct = findViewById(R.id.ibAddProduct);
         createProduct.setOnClickListener(this);
         //        Connect adapter with custom view
         productsAdapter = new MyProductsAdapter(this,R.layout.custom_product_list_row,allProducts);
+
         lvProducts.setAdapter(productsAdapter);
 
-////        TODO Fix long click and buttons
-//        lvProducts.setOnItemLongClickListener(
-//                new AdapterView.OnItemLongClickListener(){
+//        TODO Fix long click and buttons
+        lvProducts.setOnItemLongClickListener(
+                new AdapterView.OnItemLongClickListener(){
+
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                        Toast.makeText(StockActivity.this, "Long Click", Toast.LENGTH_SHORT).show();
+
+//                        Toast.makeText(StockActivity.this, "1 On Long Click", Toast.LENGTH_LONG).show();
+//                        AlertDialog.Builder mBuilder = new AlertDialog.Builder(StockActivity.this);
+//                        View mView = getLayoutInflater().inflate(R.layout.dialog_addproduct,null);
 //
-//                    @Override
-//                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                        Toast.makeText(StockActivity.this, "Long Click", Toast.LENGTH_SHORT).show();
+//                        mProductName = (EditText)mView.findViewById(R.id.etProductName);
+//                        mProductQuantity = (EditText)mView.findViewById(R.id.etProductQuantity);
+//                        mProductPrice = (EditText)mView.findViewById(R.id.etProductPrice);
 //
-////                        Toast.makeText(StockActivity.this, "1 On Long Click", Toast.LENGTH_LONG).show();
-////                        AlertDialog.Builder mBuilder = new AlertDialog.Builder(StockActivity.this);
-////                        View mView = getLayoutInflater().inflate(R.layout.dialog_addproduct,null);
-////
-////                        mProductName = (EditText)mView.findViewById(R.id.etProductName);
-////                        mProductQuantity = (EditText)mView.findViewById(R.id.etProductQuantity);
-////                        mProductPrice = (EditText)mView.findViewById(R.id.etProductPrice);
-////
-////
-////                        Toast.makeText(StockActivity.this, allProducts.get(position).getName()+"", Toast.LENGTH_SHORT).show();
-////                        mProduct = dbHandler.getProductByName(allProducts.get(position).getName());
-////
-////                        if(mProduct != null) {
-////                            Toast.makeText(StockActivity.this, "My pos :"+position, Toast.LENGTH_SHORT).show();
-////
-////                            mProductName.setText(mProduct.getName());
-////                            mProductQuantity.setText(String.valueOf(mProduct.getQuantity()));
-////                            mProductPrice.setText(String.valueOf(mProduct.getPrice()));
-////                        }else{
-////                            Toast.makeText(StockActivity.this, "Filed to import", Toast.LENGTH_SHORT).show();
-////                        }
-////
-////
-////
-////                        mBuilder.setNeutralButton(R.string.saveBt, new DialogInterface.OnClickListener() {
-////                            @Override
-////                            public void onClick(DialogInterface dialog, int which) {
-////
-////                                String name = mProductName.getText().toString();
-////                                String price = mProductPrice.getText().toString();
-////                                String quantity = mProductQuantity.getText().toString();
-////
-////                                if(name.isEmpty()|| price.isEmpty()|| quantity.isEmpty()){
-////                                    Toast.makeText(StockActivity.this, R.string.fields_are_not_full, Toast.LENGTH_LONG).show();
-////                                }else{
-////
-////                                    mProduct.setName(name);
-////                                    mProduct.setQuantity(Integer.parseInt(quantity));
-////                                    mProduct.setPrice(Double.parseDouble(price));
-////
-////                                    if(dbHandler.upDateProduct(mProduct)){
-////                                        Toast.makeText(StockActivity.this, name + R.string.saved, Toast.LENGTH_LONG).show();
-////                                        setProductView();
-////                                    }else Toast.makeText(StockActivity.this,  R.string.failedToSave +" "+name, Toast.LENGTH_LONG).show();
-////
-////                                }
-////                            }
-////                        });
-////
-////
-////                        mBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-////                            @Override
-////                            public void onClick(DialogInterface dialog, int which) {
-////
-////                                Toast.makeText(StockActivity.this, R.string.cancel, Toast.LENGTH_LONG).show();
-////                            }
-////                        });
-////
-////
-////                        mBuilder.setView(mView);
-////                        AlertDialog dialog = mBuilder.create();
-////                        dialog.show();
 //
-//                        return true;
-//                    }
-//                }
-//        );
+//                        Toast.makeText(StockActivity.this, allProducts.get(position).getName()+"", Toast.LENGTH_SHORT).show();
+//                        mProduct = dbHandler.getProductByName(allProducts.get(position).getName());
+//
+//                        if(mProduct != null) {
+//                            Toast.makeText(StockActivity.this, "My pos :"+position, Toast.LENGTH_SHORT).show();
+//
+//                            mProductName.setText(mProduct.getName());
+//                            mProductQuantity.setText(String.valueOf(mProduct.getQuantity()));
+//                            mProductPrice.setText(String.valueOf(mProduct.getPrice()));
+//                        }else{
+//                            Toast.makeText(StockActivity.this, "Filed to import", Toast.LENGTH_SHORT).show();
+//                        }
+//
+//
+//
+//                        mBuilder.setNeutralButton(R.string.saveBt, new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//
+//                                String name = mProductName.getText().toString();
+//                                String price = mProductPrice.getText().toString();
+//                                String quantity = mProductQuantity.getText().toString();
+//
+//                                if(name.isEmpty()|| price.isEmpty()|| quantity.isEmpty()){
+//                                    Toast.makeText(StockActivity.this, R.string.fields_are_not_full, Toast.LENGTH_LONG).show();
+//                                }else{
+//
+//                                    mProduct.setName(name);
+//                                    mProduct.setQuantity(Integer.parseInt(quantity));
+//                                    mProduct.setPrice(Double.parseDouble(price));
+//
+//                                    if(dbHandler.upDateProduct(mProduct)){
+//                                        Toast.makeText(StockActivity.this, name + R.string.saved, Toast.LENGTH_LONG).show();
+//                                        setProductView();
+//                                    }else Toast.makeText(StockActivity.this,  R.string.failedToSave +" "+name, Toast.LENGTH_LONG).show();
+//
+//                                }
+//                            }
+//                        });
+//
+//
+//                        mBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//
+//                                Toast.makeText(StockActivity.this, R.string.cancel, Toast.LENGTH_LONG).show();
+//                            }
+//                        });
+//
+//
+//                        mBuilder.setView(mView);
+//                        AlertDialog dialog = mBuilder.create();
+//                        dialog.show();
+
+                        return true;
+                    }
+                }
+        );
 
 
     }
@@ -248,24 +250,13 @@ public class StockActivity extends AppCompatActivity implements View.OnClickList
                 this.finish();
                 break;
 
-            case R.id.btPlus:
-
-                break;
-            case R.id.btMinus:
-
-                break;
             default:
                 Toast.makeText(this, R.string.not_initialized_yet, Toast.LENGTH_SHORT).show();
                 break;
         }
     }
 
-    @Override
-    public boolean onLongClick(View view) {
 
-        Toast.makeText(this, "Yesss", Toast.LENGTH_SHORT).show();
-        return true;
-    }
 //
 ///*
 //    @Override
@@ -330,16 +321,11 @@ public class StockActivity extends AppCompatActivity implements View.OnClickList
                         (TextView)convertView.findViewById(R.id.tv_product_quantity),
                                 (ImageButton)convertView.findViewById(R.id.btn_product_list_plus),
                                 (ImageButton)convertView.findViewById(R.id.btn_product_list_minus));
+
                 viewHolder.title.setText(getItem(position).getName());
                 viewHolder.quantity.setText(String.valueOf(getItem(position).getQuantity()));
                 viewHolder.price.setText(String.valueOf(getItem(position).getPrice()));
 
-//                viewHolder.product = getItem(position);
-//                viewHolder.title = (TextView)convertView.findViewById(R.id.tv_product_name);
-//                viewHolder.price = (TextView)convertView.findViewById(R.id.tv_product_price);
-//                viewHolder.quantity = (TextView)convertView.findViewById(R.id.tv_product_quantity);
-//                viewHolder.plus = (ImageButton)convertView.findViewById(R.id.btn_product_list_plus);
-//                viewHolder.minus = (ImageButton)convertView.findViewById(R.id.btn_product_list_minus);
 
                 convertView.setTag(viewHolder);
 
@@ -468,9 +454,54 @@ public class StockActivity extends AppCompatActivity implements View.OnClickList
                 this.price = price;
                 this.plus = plus;
                 this.minus = minus;
+
+                this.title.setOnLongClickListener(myOnItemLongClickListener);
+                this.quantity.setOnLongClickListener(myOnItemLongClickListener);
+                this.price.setOnLongClickListener(myOnItemLongClickListener);
+
+
                 this.plus.setOnClickListener(mMyLocalClickListener);
                 this.minus.setOnClickListener(mMyLocalClickListener);
             }
+
+            private View.OnLongClickListener myOnItemLongClickListener = new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+
+                    switch (view.getId()){
+                        case R.id.tv_product_name:
+                            changeValues(R.id.tv_product_name);
+//                            product.setQuantity(product.getQuantity()+1);
+//                            dbHandler.upDateProduct(product);
+//                            setProductView();
+                            break;
+                        case R.id.tv_product_quantity:
+
+//                            product.setQuantity(product.getQuantity()-1);
+//                            dbHandler.upDateProduct(product);
+//                            setProductView();
+                            break;
+                        case R.id.tv_product_price:
+
+//                            product.setQuantity(product.getQuantity()-1);
+//                            dbHandler.upDateProduct(product);
+//                            setProductView();
+                            break;
+                        default:
+                            Toast.makeText(StockActivity.this, R.string.not_initialized_yet, Toast.LENGTH_SHORT).show();
+
+                            break;
+                    }
+                    return true;
+                }
+            };
+//            private AdapterView.OnItemLongClickListener myOnItemLongClickListener = new AdapterView.OnItemLongClickListener() {
+//                @Override
+//                public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                    Toast.makeText(StockActivity.this, "AAAAA", Toast.LENGTH_SHORT).show();
+//                    return true;
+//                }
+//            };
 
             private View.OnClickListener mMyLocalClickListener = new View.OnClickListener() {
                 @Override
@@ -489,11 +520,42 @@ public class StockActivity extends AppCompatActivity implements View.OnClickList
                             dbHandler.upDateProduct(product);
                             setProductView();
                             break;
+                            default:
+                                Toast.makeText(StockActivity.this, R.string.not_initialized_yet, Toast.LENGTH_SHORT).show();
+
+                                break;
                     }
 
                 }
             };
         }
+    }
+
+    private void changeValues(int id) {
+//        TODO set all Components
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Title");
+
+// Set up the input
+        final EditText input = new EditText(this);
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_NUMBER| InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setView(input);
+
+// Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+//                m_Text = input.getText().toString();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
     }
 }
 
