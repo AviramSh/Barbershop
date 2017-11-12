@@ -483,4 +483,10 @@ public class CustomersListActivity extends AppCompatActivity {
 //        Toast.makeText(this, "Contact Phone Number: " + contactNumber, Toast.LENGTH_LONG).show();
         return contactNumber;
     }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        populateCustomers();
+    }
 }

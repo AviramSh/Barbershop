@@ -238,6 +238,7 @@
     <string name="customer">Customer</string>
     <string name="choose_appointment">Choose Appointment</string>
     <string name="no_free_appointment">No free appointment</string>
+    <string name="send_sms_remainder">Remainder</string>
 
 
     <string-array name="spinner_hours">

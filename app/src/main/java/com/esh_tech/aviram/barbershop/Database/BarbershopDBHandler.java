@@ -95,11 +95,12 @@ public class BarbershopDBHandler {
     }
     public boolean updateCustomer(Customer customer){
         long result = -1;
-        if(customer.get_id()!=0)
-        if (getCustomerByPhone(customer.getPhone())==null) {
-            Toast.makeText(context, R.string.customerDoesntExist, Toast.LENGTH_SHORT).show();
-            return false;
-        }
+
+//        if(customer.get_id()!=0)
+//            if (getCustomerByPhone(customer.getPhone())==null) {
+//                Toast.makeText(context, R.string.customerDoesntExist, Toast.LENGTH_SHORT).show();
+//                return false;
+//            }
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues columnValues = new ContentValues();
@@ -121,6 +122,8 @@ public class BarbershopDBHandler {
         Log.d(TAG,"Update Customer "+customer);
         return (result != -1);
     }
+
+
     public ArrayList<Customer> getAllCustomers() {
         ArrayList<Customer> customersList = new ArrayList<Customer>();
 

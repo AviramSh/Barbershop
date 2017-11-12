@@ -3,6 +3,7 @@ package com.esh_tech.aviram.barbershop.views;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -14,7 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +42,10 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
     ImageView tempCustomerPic;
     ImageView ivCustomerProfile;
 
+
+
+    Switch mRemainder;
+
     int picIndex =0;
     ArrayList<Picture> customerAlbum;
 
@@ -62,10 +69,16 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
     }
 
     private void init() {
+
+
         //        database
         dbHandler = new BarbershopDBHandler(this);
         customerProfile = new Customer();
         customerAlbum = new ArrayList<>();
+
+
+        mRemainder = findViewById(R.id.remainder_switch);
+
 
         int id = getIntent().getIntExtra("customerId",-1);
 
@@ -90,6 +103,19 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
             setCustomerPics();
 
         }
+
+        mRemainder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    customerProfile.setRemainder(1);
+                    dbHandler.updateCustomer(customerProfile);
+                }else{
+                    dbHandler.updateCustomer(customerProfile);
+                }
+            }
+        });
+        mRemainder.setChecked(customerProfile.getRemainder()==1);
 
     }
 
@@ -412,5 +438,16 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
 
     private boolean hasCamera() {
         return getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        customerProfile = dbHandler.getCustomerByID(customerProfile.get_id());
+        tvCustomerName.setText(customerProfile.getName());
+        tvCustomerPhone.setText(customerProfile.getPhone());
+        tvCustomerEmail.setText(customerProfile.getEmail());
+        customerAlbum = dbHandler.getAllPicturesByUserID(customerProfile.get_id());
+        setCustomerPics();
     }
 }

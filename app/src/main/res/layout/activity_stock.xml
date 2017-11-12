@@ -92,16 +92,6 @@
             android:text="@string/product" />
 
         <TextView
-            android:id="@+id/etProductPriceTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold|normal|italic"
-            android:gravity="start"
-            android:layout_weight="10"
-            android:padding="10dp"
-            android:text="@string/price" />
-
-        <TextView
             android:id="@+id/etProductQuantityTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -110,6 +100,16 @@
             android:layout_weight="10"
             android:padding="10dp"
             android:text="@string/quantity" />
+
+        <TextView
+            android:id="@+id/etProductPriceTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:gravity="start"
+            android:padding="10dp"
+            android:text="@string/price"
+            android:textStyle="bold|normal|italic" />
     </LinearLayout>
 
 

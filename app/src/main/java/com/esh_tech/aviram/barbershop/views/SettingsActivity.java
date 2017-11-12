@@ -70,12 +70,10 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             case R.id.layMessages:
                 intent = new Intent(this,smsSettings.class);
                 startActivity(intent);
-                this.finish();
                 break;
             case R.id.layAbout:
                 intent = new Intent(this,AboutActivity.class);
                 startActivity(intent);
-                this.finish();
                 break;
 //            TODO When user logout back navigation button  tack him to the MainActivity
             /*case R.id.layLogout:

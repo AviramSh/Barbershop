@@ -317,8 +317,8 @@ public class StockActivity extends AppCompatActivity implements View.OnClickList
 
                 ViewHolder viewHolder = new ViewHolder(getItem(position),
                         (TextView)convertView.findViewById(R.id.tv_product_name),
-                        (TextView)convertView.findViewById(R.id.tv_product_price),
                         (TextView)convertView.findViewById(R.id.tv_product_quantity),
+                        (TextView)convertView.findViewById(R.id.tv_product_price),
                                 (ImageButton)convertView.findViewById(R.id.btn_product_list_plus),
                                 (ImageButton)convertView.findViewById(R.id.btn_product_list_minus));
 
@@ -456,8 +456,8 @@ public class StockActivity extends AppCompatActivity implements View.OnClickList
                 this.minus = minus;
 
                 this.title.setOnLongClickListener(myOnItemLongClickListener);
-                this.quantity.setOnLongClickListener(myOnItemLongClickListener);
                 this.price.setOnLongClickListener(myOnItemLongClickListener);
+                this.quantity.setOnLongClickListener(myOnItemLongClickListener);
 
 
                 this.plus.setOnClickListener(mMyLocalClickListener);
@@ -532,10 +532,11 @@ public class StockActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void changeValues(final int id,final Product product) {
-//        TODO set all Components
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final EditText input = new EditText(this);
         builder.setView(input);
+
+
         switch (id){
             case R.id.tv_product_name:
                 builder.setTitle(getResources().getString(R.string.productName));

@@ -54,19 +54,25 @@ public class smsSettings extends AppCompatActivity implements View.OnClickListen
 //        editor.commit();
         etEtMessageContent = (EditText)findViewById(R.id.etUserMessage);
         rbDefault = (RadioButton)findViewById(R.id.rbDefaultMessage);
+        userPic = settings.getInt(UserDBConstants.USER_SMS_TIME,0);
 
-
+        Toast.makeText(this, "User position : "+userPic, Toast.LENGTH_SHORT).show();
 
         sMessageTime = (Spinner)findViewById(R.id.etSandTime);
+
+
         adapter = ArrayAdapter.createFromResource(this,R.array.spinner_sms_time,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         sMessageTime.setAdapter(adapter);
 
         sMessageTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                userPic =i;
+                userPic = i;
+
+
             }
 
             @Override
@@ -75,7 +81,7 @@ public class smsSettings extends AppCompatActivity implements View.OnClickListen
             }
         });
 
-
+        sMessageTime.setSelection(settings.getInt(UserDBConstants.USER_SMS_TIME,1));
 
 
 
@@ -117,6 +123,9 @@ public class smsSettings extends AppCompatActivity implements View.OnClickListen
 
         editor = settings.edit();
         editor.putInt(UserDBConstants.USER_SMS_TIME,userPic);
+        editor.apply();
+        Toast.makeText(this, "User position saved : "+userPic, Toast.LENGTH_SHORT).show();
+
         if(rbDefault.isChecked()){
 //            TODO Setup system default message.
 //            editor.putString(UserDBConstants.USER_DEFAULT_SMS,getResources().getString(R.string.systemSms));

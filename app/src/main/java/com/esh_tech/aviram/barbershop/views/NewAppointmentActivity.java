@@ -107,6 +107,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
     Appointment newAppointment;
 
 
+//    SMS
     private AlarmManager aManager;
     private PendingIntent pIntent;
     int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
@@ -319,7 +320,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
             @Override
             public void onClick(DialogInterface dialog, int which) {
 //                Toast.makeText(NewAppointmentActivity.this, R.string.save, Toast.LENGTH_LONG).show();
-
+//                TODO NEED TO WORK THROUGH SAVEAPPOINENT() SMS REMAINDER
                 Appointment appointment = allAppointments.get(position);
                 if(customerProfile.getGender()==1) {
                     appointment.setHaircutPrice(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_PRICE,0));
@@ -330,6 +331,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
                 if(dbHandler.addAppointment(appointment)) {
                     Toast.makeText(NewAppointmentActivity.this, R.string.saved, Toast.LENGTH_SHORT).show();
+//                    TODO OR SET REMAINDER METHOD
                     NewAppointmentActivity.this.finish();
                 }else {
                     Toast.makeText(NewAppointmentActivity.this, R.string.failedToSave, Toast.LENGTH_SHORT).show();
@@ -733,37 +735,66 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                     != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS},
                         MY_PERMISSIONS_REQUEST_SEND_SMS);
-            }else {
-                Intent m = new Intent(NewAppointmentActivity.this, AlarmService.class);
-                m.putExtra(SharedPreferencesConstants.USER_PHONE_SMS, customerProfile.getPhone());
-                try {
-                    String sendMessage="";
-
-                    if(settings.getBoolean(SharedPreferencesConstants.SYSTEM_DEFAULT_SMS_IS_CHECKED,false)){
-                        sendMessage +=getResources().getString(R.string.system_sms_1_add_name)+
-                        customerProfile.getName()+
-                                getResources().getString(R.string.system_sms_2_add_time)+
-                        DateUtils.getDateAndTime(newAppointment.getcDateAndTime())+
-                                getResources().getString(R.string.system_sms_3add_business)+
-                        settings.getString(UserDBConstants.USER_BUSINESS_NAME,".");
-                    }else{
-                        sendMessage +=settings.getString(UserDBConstants.USER_DEFAULT_SMS,"");
-                    }
-
-                    m.putExtra(
-                            SharedPreferencesConstants.USER_SMS_CONTENT,sendMessage);
-
-                    pIntent = PendingIntent.getService(getApplicationContext(), 0, m, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                    aManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-                    aManager.set(AlarmManager.RTC_WAKEUP, appointmentCalendar.getTimeInMillis(), pIntent);
-                    Toast.makeText(this, R.string.smsScheduled, Toast.LENGTH_SHORT).show();
-                } catch (NullPointerException e) {
-                    e.getMessage();
-                    Toast.makeText(this, R.string.smsNotScheduled, Toast.LENGTH_SHORT).show();
-                }
             }
+        Intent m = new Intent(NewAppointmentActivity.this, AlarmService.class);
+        m.putExtra(SharedPreferencesConstants.USER_PHONE_SMS, customerProfile.getPhone());
+        try {
+            String sendMessage="";
+
+            if(settings.getBoolean(SharedPreferencesConstants.SYSTEM_DEFAULT_SMS_IS_CHECKED,false)){
+                sendMessage +=getResources().getString(R.string.system_sms_1_add_name)+
+                        customerProfile.getName()+
+                        getResources().getString(R.string.system_sms_2_add_time)+
+                        DateUtils.getDateAndTime(newAppointment.getcDateAndTime())+
+                        getResources().getString(R.string.system_sms_3add_business)+
+                        settings.getString(UserDBConstants.USER_BUSINESS_NAME,".");
+            }else{
+                sendMessage +=settings.getString(UserDBConstants.USER_DEFAULT_SMS,"");
+            }
+
+            m.putExtra(
+                    SharedPreferencesConstants.USER_SMS_CONTENT,sendMessage);
+
+            pIntent = PendingIntent.getService(getApplicationContext(), 0, m, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            aManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+
+//                    settings.getInt(UserDBConstants.USER_SMS_TIME,1);
+
+            aManager.set(AlarmManager.RTC_WAKEUP, smsScheduleTime(settings.getInt(UserDBConstants.USER_SMS_TIME,1)), pIntent);
+
+            Toast.makeText(this, R.string.smsScheduled, Toast.LENGTH_SHORT).show();
+        } catch (NullPointerException e) {
+            e.getMessage();
+            Toast.makeText(this, R.string.smsNotScheduled, Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private long smsScheduleTime(int scheduleTime) {
+        Calendar remainderTime = Calendar.getInstance();
+        remainderTime.setTime(appointmentCalendar.getTime());
+
+        switch (scheduleTime){
+            case 0:
+                remainderTime.add(Calendar.HOUR_OF_DAY,1);
+                return remainderTime.getTimeInMillis();
+            case 1:
+                remainderTime.add(Calendar.HOUR_OF_DAY,2);
+                return remainderTime.getTimeInMillis();
+            case 2:
+                remainderTime.add(Calendar.HOUR_OF_DAY,4);
+                return remainderTime.getTimeInMillis();
+            case 3:
+                remainderTime.add(Calendar.HOUR_OF_DAY,24);
+                return remainderTime.getTimeInMillis();
+
+                default:
+                    remainderTime.add(Calendar.HOUR_OF_DAY,1);
+                    return remainderTime.getTimeInMillis();
+
+        }
     }
 
 
