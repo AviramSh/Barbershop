@@ -470,19 +470,19 @@ public class StockActivity extends AppCompatActivity implements View.OnClickList
 
                     switch (view.getId()){
                         case R.id.tv_product_name:
-                            changeValues(R.id.tv_product_name);
+                            changeValues(R.id.tv_product_name,product);
 //                            product.setQuantity(product.getQuantity()+1);
 //                            dbHandler.upDateProduct(product);
 //                            setProductView();
                             break;
                         case R.id.tv_product_quantity:
-
+                            changeValues(R.id.tv_product_quantity,product);
 //                            product.setQuantity(product.getQuantity()-1);
 //                            dbHandler.upDateProduct(product);
 //                            setProductView();
                             break;
                         case R.id.tv_product_price:
-
+                            changeValues(R.id.tv_product_price,product);
 //                            product.setQuantity(product.getQuantity()-1);
 //                            dbHandler.upDateProduct(product);
 //                            setProductView();
@@ -520,10 +520,10 @@ public class StockActivity extends AppCompatActivity implements View.OnClickList
                             dbHandler.upDateProduct(product);
                             setProductView();
                             break;
-                            default:
-                                Toast.makeText(StockActivity.this, R.string.not_initialized_yet, Toast.LENGTH_SHORT).show();
+                        default:
+                            Toast.makeText(StockActivity.this, R.string.not_initialized_yet, Toast.LENGTH_SHORT).show();
 
-                                break;
+                            break;
                     }
 
                 }
@@ -531,30 +531,71 @@ public class StockActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void changeValues(int id) {
+    private void changeValues(final int id,final Product product) {
 //        TODO set all Components
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Title");
-
-// Set up the input
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final EditText input = new EditText(this);
-// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        input.setInputType(InputType.TYPE_CLASS_NUMBER| InputType.TYPE_TEXT_VARIATION_PASSWORD);
         builder.setView(input);
+        switch (id){
+            case R.id.tv_product_name:
+                builder.setTitle(getResources().getString(R.string.productName));
+                input.setInputType(InputType.TYPE_CLASS_TEXT| InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                break;
+            case R.id.tv_product_quantity:
+                builder.setTitle(getResources().getString(R.string.quantity));
+                input.setInputType(InputType.TYPE_CLASS_NUMBER| InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                break;
+            case R.id.tv_product_price:
+                builder.setTitle(getResources().getString(R.string.price));
+                input.setInputType(InputType.TYPE_CLASS_NUMBER| InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+                break;
+            default:
+                Toast.makeText(StockActivity.this, R.string.not_initialized_yet, Toast.LENGTH_SHORT).show();
+
+                break;
+        }
+
+//        input.setInputType(InputType.TYPE_CLASS_NUMBER| InputType.TYPE_TEXT_VARIATION_PASSWORD);
+//        builder.setView(input);
 
 // Set up the buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getResources().getString(R.string.save), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-//                m_Text = input.getText().toString();
+
+                switch (id){
+                    case R.id.tv_product_name:
+                        product.setName(input.getText().toString());
+                        dbHandler.upDateProduct(product);
+                        setProductView();
+                        break;
+                    case R.id.tv_product_quantity:
+                        product.setQuantity(Integer.parseInt(input.getText().toString()));
+                        dbHandler.upDateProduct(product);
+                        setProductView();
+                        break;
+                    case R.id.tv_product_price:
+                        product.setPrice(Double.parseDouble(input.getText().toString()));
+                        dbHandler.upDateProduct(product);
+                        setProductView();
+
+                        break;
+                    default:
+                        Toast.makeText(StockActivity.this, R.string.not_initialized_yet, Toast.LENGTH_SHORT).show();
+
+                        break;
+                }
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+        builder.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
         });
+
         builder.show();
     }
 }
