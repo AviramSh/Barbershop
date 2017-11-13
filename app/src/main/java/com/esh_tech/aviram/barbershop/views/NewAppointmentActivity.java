@@ -331,7 +331,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
                 if(dbHandler.addAppointment(appointment)) {
                     Toast.makeText(NewAppointmentActivity.this, R.string.saved, Toast.LENGTH_SHORT).show();
-//                    TODO OR SET REMAINDER METHOD
+                    if(customerProfile.getRemainder()==1)setRemainder();
                     NewAppointmentActivity.this.finish();
                 }else {
                     Toast.makeText(NewAppointmentActivity.this, R.string.failedToSave, Toast.LENGTH_SHORT).show();
@@ -634,7 +634,8 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         }
         else
         {
-            guestHandler();
+//            guestHandler();
+            registerHandler();
         }
 
 
