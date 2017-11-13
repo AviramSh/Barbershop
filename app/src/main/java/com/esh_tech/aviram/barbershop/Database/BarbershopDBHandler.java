@@ -854,6 +854,12 @@ public class BarbershopDBHandler {
 
         return null;
     }
+    public boolean deleteProductById(int id) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        return db.delete(ProductsDBConstants.PRODUCTS_TABLE_NAME,
+                ProductsDBConstants.PRODUCT_ID+" = "+id,null)>0;
+    }
 
 
 

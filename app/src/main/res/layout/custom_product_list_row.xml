@@ -62,6 +62,14 @@
             android:layout_weight="15"
             app:srcCompat="@drawable/plus48" />
 
+        <ImageButton
+            android:id="@+id/btn_product_list_trash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/productListColor"
+            app:srcCompat="@drawable/trash" />
+
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
