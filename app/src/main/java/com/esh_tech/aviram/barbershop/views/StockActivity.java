@@ -565,7 +565,26 @@ public class StockActivity extends AppCompatActivity implements View.OnClickList
         builder.setView(input);
 
 
-        switch (id){
+
+
+//        result = number1/number2
+//        String stringdouble= Double.toString(result);
+//        textview1.setText(stringdouble));
+//
+//        or you can use the NumberFormat:
+//
+//        Double result = number1/number2;
+//        NumberFormat nm = NumberFormat.getNumberInstance();
+//        textview1.setText(nm.format(result));
+//
+//        To force for 3 units precision:
+//
+//        private static DecimalFormat REAL_FORMATTER = new DecimalFormat("0.###");
+//        textview1.setText(REAL_FORMATTER.format(result));
+
+
+
+            switch (id){
             case R.id.tv_product_name:
                 input.setText(product.getName());
                 builder.setTitle(getResources().getString(R.string.productName));

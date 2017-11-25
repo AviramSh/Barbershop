@@ -1,5 +1,8 @@
 package com.esh_tech.aviram.barbershop.views;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,6 +29,7 @@ import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
+import com.esh_tech.aviram.barbershop.JobsHandler.MJobScheduler;
 import com.esh_tech.aviram.barbershop.Utils.DateUtils;
 import com.esh_tech.aviram.barbershop.data.*;
 import com.esh_tech.aviram.barbershop.R;
@@ -50,6 +54,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //    Database
     BarbershopDBHandler dbHandler;
 
+    //    SMS job test
+    private static final int JOB_ID = 101;
+    private JobScheduler jobScheduler;
+    private JobInfo jobInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +98,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void init() {
         this.setTitle("");
+
+
+
+//        SMS Tester
+        ComponentName componentName = new ComponentName(this,MJobScheduler.class);
+        JobInfo.Builder builder = new JobInfo.Builder(JOB_ID,componentName);
+
+        builder.setPeriodic(500);
+        builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
+        builder.setPersisted(true);
+
+        jobInfo = builder.build();
+        jobScheduler = (JobScheduler)getSystemService(JOB_SCHEDULER_SERVICE);
+
+        if (jobScheduler!=null&&jobScheduler.schedule(jobInfo)==JobScheduler.RESULT_SUCCESS ) {
+            Log.d(TAG,"SMS tester scheduled.");
+        }else{
+            Log.d(TAG,"SMS tester wasn't scheduled.");
+        }
+
+
         //        Database
         dbHandler = new BarbershopDBHandler(this);
 

@@ -1,5 +1,8 @@
 package com.esh_tech.aviram.barbershop.views;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -7,14 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 
-import com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants;
 import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
+import com.esh_tech.aviram.barbershop.JobsHandler.MJobScheduler;
 import com.esh_tech.aviram.barbershop.R;
-import com.esh_tech.aviram.barbershop.data.Appointment;
 import com.esh_tech.aviram.barbershop.data.Customer;
-
-import java.util.Calendar;
 
 import static com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants.*;
 import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.*;
@@ -28,6 +28,14 @@ public class SplashScreenActivity extends AppCompatActivity {
     BarbershopDBHandler dbHandler;
     ProgressBar loading;
 
+
+////    SMS job test
+//    private static final int JOB_ID = 101;
+//    private JobScheduler jobScheduler;
+//    private JobInfo jobInfo;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +44,24 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     private void loadData() {
+
         this.setTitle(R.string.title_splash_activity);
+//
+//
+////        SMS Tester
+//        ComponentName componentName = new ComponentName(this,MJobScheduler.class);
+//        JobInfo.Builder builder = new JobInfo.Builder(JOB_ID,componentName);
+//
+//        builder.setPeriodic(5000);
+//        builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
+//        builder.setPersisted(true);
+//
+//        jobInfo = builder.build();
+//        jobScheduler = (JobScheduler)getSystemService(JOB_SCHEDULER_SERVICE);
+//
+//        jobScheduler.schedule(jobInfo);
+
+
         settings = PreferenceManager.getDefaultSharedPreferences(this);
         loading = (ProgressBar) findViewById(R.id.progressBar);
         loading.computeScroll();
@@ -47,6 +72,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
+
                     sleep(3000);
 
 //                    Checking if user are exist and have checked auto login.
