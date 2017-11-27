@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ComponentName componentName = new ComponentName(this,MJobScheduler.class);
         JobInfo.Builder builder = new JobInfo.Builder(JOB_ID,componentName);
 
-        builder.setPeriodic(500);
+        builder.setPeriodic(5000);
         builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
         builder.setPersisted(true);
 
@@ -180,7 +180,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(myIntent);
                 break;
             case R.id.btCustomersService:
-                myIntent = new Intent(this ,CustomersServiceActivity.class);
+//                myIntent = new Intent(this ,CustomersServiceActivity.class);
+                myIntent = new Intent(this ,AlbumActivity.class);
                 startActivity(myIntent);
                 break;
 

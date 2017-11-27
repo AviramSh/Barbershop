@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.graphics.Bitmap;
+import android.graphics.*;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -20,6 +20,7 @@ import com.esh_tech.aviram.barbershop.Constants.MainDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.PicturesDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.ProductsDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.PurchaseDBConstants;
+import com.esh_tech.aviram.barbershop.data.Picture;
 
 
 import java.text.SimpleDateFormat;
@@ -125,7 +126,7 @@ public class BarbershopDBHandler {
 
 
     public ArrayList<Customer> getAllCustomers() {
-        ArrayList<Customer> customersList = new ArrayList<Customer>();
+        ArrayList<Customer> customersList = new ArrayList<>();
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
@@ -301,7 +302,7 @@ public class BarbershopDBHandler {
         String dateToTest = DateUtils.getOnlyDate(receivedDate);
 
         ArrayList<Appointment> myAppointments = getAllAppointments();
-        ArrayList<Appointment> myDateAppointments = new ArrayList<Appointment>();
+        ArrayList<Appointment> myDateAppointments = new ArrayList<>();
 
         for (Appointment appointment:
                 myAppointments) {
@@ -319,7 +320,7 @@ public class BarbershopDBHandler {
     }
     public ArrayList<Appointment> getAllAppointmentsFromTo(Calendar fromDate, Calendar toDate) {
 
-        ArrayList<Appointment> returnAppointments =new ArrayList<Appointment>();
+        ArrayList<Appointment> returnAppointments =new ArrayList<>();
 
         while (fromDate.before(toDate)||fromDate.equals(toDate) ){
             ArrayList<Appointment> appointments = getAllAppointments(fromDate);
@@ -341,7 +342,7 @@ public class BarbershopDBHandler {
         String dateToTest = DateUtils.getOnlyDate(receivedDate);
 
         ArrayList<Appointment> myAppointments = getAllAppointments();
-        ArrayList<Appointment> myDateAppointments = new ArrayList<Appointment>();
+        ArrayList<Appointment> myDateAppointments = new ArrayList<>();
 
         for (Appointment appointment:
                 myAppointments) {
@@ -683,8 +684,8 @@ public class BarbershopDBHandler {
 
 //        Log.d("FreeAppointments","Start Date: "+appointment.getDateAndTimeToDisplay()+" End Date: "+DateUtils.getFullSDF(cEnd));
 
-        ArrayList<Appointment> freeAppointmentsList = new ArrayList<Appointment>();
-        int i=0;
+        ArrayList<Appointment> freeAppointmentsList = new ArrayList<>();
+//        int i=0;
 
         while (cStart.before(cEnd)){
 
@@ -788,7 +789,7 @@ public class BarbershopDBHandler {
         return (result != -1);
     }
     public ArrayList<Product> getAllProducts() {
-        ArrayList<Product> productsList = new ArrayList<Product>();
+        ArrayList<Product> productsList = new ArrayList<>();
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
@@ -806,25 +807,27 @@ public class BarbershopDBHandler {
         ProductsCursor.close();
         return productsList;
     }
-    public Product getProductByID(int id) {
 
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+//    public Product getProductByID(int id) {
+//
+//        SQLiteDatabase db = dbHelper.getReadableDatabase();
+//
+//        Cursor productCursor = db.query(ProductsDBConstants.PRODUCTS_TABLE_NAME,null,null,null,null,null,null);
+//
+//        while (productCursor.moveToNext())
+//
+//            if(productCursor.getInt(productCursor.getColumnIndex(ProductsDBConstants.PRODUCT_ID))==id){
+//                return new Product(
+//                        productCursor.getColumnIndex(ProductsDBConstants.PRODUCT_ID),
+//                        productCursor.getString(productCursor.getColumnIndex(ProductsDBConstants.PRODUCT_NAME)),
+//                        productCursor.getInt(productCursor.getColumnIndex(ProductsDBConstants.PRODUCT_QUANTITY)),
+//                        productCursor.getDouble(productCursor.getColumnIndex(ProductsDBConstants.PRODUCT_PRICE))
+//                );
+//            }
+//        return null;
+//
+//    }
 
-        Cursor productCursor = db.query(ProductsDBConstants.PRODUCTS_TABLE_NAME,null,null,null,null,null,null);
-
-        while (productCursor.moveToNext())
-
-            if(productCursor.getInt(productCursor.getColumnIndex(ProductsDBConstants.PRODUCT_ID))==id){
-                return new Product(
-                        productCursor.getColumnIndex(ProductsDBConstants.PRODUCT_ID),
-                        productCursor.getString(productCursor.getColumnIndex(ProductsDBConstants.PRODUCT_NAME)),
-                        productCursor.getInt(productCursor.getColumnIndex(ProductsDBConstants.PRODUCT_QUANTITY)),
-                        productCursor.getDouble(productCursor.getColumnIndex(ProductsDBConstants.PRODUCT_PRICE))
-                );
-            }
-        return null;
-
-    }
     public boolean upDateProduct(Product product) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -842,18 +845,19 @@ public class BarbershopDBHandler {
 
         return (result != -1);
     }
-    public Product getProductByName(String name) {
+//    public Product getProductByName(String name) {
+//
+//        ArrayList<Product> productsList =getAllProducts();
+//
+//        for (Product index:
+//             productsList) {
+//            if(index.getName().equals(name))
+//                return index;
+//        }
+//
+//        return null;
+//    }
 
-        ArrayList<Product> productsList =getAllProducts();
-
-        for (Product index:
-             productsList) {
-            if(index.getName().equals(name))
-                return index;
-        }
-
-        return null;
-    }
     public boolean deleteProductById(int id) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -892,7 +896,7 @@ public class BarbershopDBHandler {
         return (result != -1);
     }
     public ArrayList<Purchase> getAllPurchase() {
-        ArrayList<Purchase> PurchasesList = new ArrayList<Purchase>();
+        ArrayList<Purchase> PurchasesList = new ArrayList<>();
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
@@ -911,6 +915,7 @@ public class BarbershopDBHandler {
 
         return PurchasesList;
     }
+
     public Product getPurchaseByAppointmentID(int id) {
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -930,6 +935,7 @@ public class BarbershopDBHandler {
         return null;
 
     }
+
     public Product getPurchaseByProductID(int id) {
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -951,7 +957,7 @@ public class BarbershopDBHandler {
     }
     public ArrayList<Purchase> getPurchaseByDate(Calendar startDate) {
 
-        ArrayList<Purchase> myPurchase = new ArrayList<Purchase>();
+        ArrayList<Purchase> myPurchase = new ArrayList<>();
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
@@ -1094,5 +1100,41 @@ public class BarbershopDBHandler {
 
     }
 
+    public boolean deletePictureById(int id) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
+        return db.delete(PicturesDBConstants.PICTURES_TABLE_NAME,
+                PicturesDBConstants.PICTURE_ID+" = "+id,null)>0;
+    }
+
+    public ArrayList<Picture> getAllPictures() {
+
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        ArrayList<Picture> allCustomerPicList=new ArrayList<>();
+
+//        ArrayList<Bitmap> myPhotos = new ArrayList<Bitmap>();
+//        BitmapDBUtility picsHandler = new BitmapDBUtility();
+
+//        AppointmentsDBConstants.APPOINTMENT_DATE+" ASC"
+        Cursor picturesCursor = db.query(
+                PicturesDBConstants.PICTURES_TABLE_NAME,null,null,null,null,null,PicturesDBConstants.PICTURE_NAME+" DESC");
+
+        while (picturesCursor.moveToNext())
+
+                allCustomerPicList.add(new Picture(
+                        picturesCursor.getInt(picturesCursor.getColumnIndex(PicturesDBConstants.PICTURE_ID)),
+                        picturesCursor.getString(picturesCursor.getColumnIndex(PicturesDBConstants.PICTURE_NAME)),
+                        BitmapDBUtility.getImage(
+                                picturesCursor.getBlob(
+                                        picturesCursor.getColumnIndex(PicturesDBConstants.PICTURE_DATA))),
+                        picturesCursor.getInt(picturesCursor.getColumnIndex(PicturesDBConstants.CUSTOMER_ID))
+                ));
+//                myPhotos.add(
+//                        BitmapDBUtility.getImage(
+//                                picturesCursor.getBlob(
+//                                        picturesCursor.getColumnIndex(PicturesDBConstants.PICTURE_DATA))));
+        picturesCursor.close();
+        return allCustomerPicList;
+    }
 }

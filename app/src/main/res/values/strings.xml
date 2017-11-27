@@ -242,6 +242,7 @@
     <string name="are_you_sure_you_whant_to_delete">Are you sure you whant to delete</string>
     <string name="product_deleted">Product deleted</string>
     <string name="filed_to_delete">Filed to delete</string>
+    <string name="album">Album</string>
 
 
     <string-array name="spinner_hours">

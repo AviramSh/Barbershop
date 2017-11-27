@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#3846a0</color>//3846a0
     <color name="colorAccent">#FF4081</color>
     <color name="background">#e2fc9a</color>//bcc0da
+    <color name="album_background">#abc26b</color>//bcc0da
     <color name="buttonBackground">#c8f255</color>//bcc0da
     <color name="textBackground">#797b7b</color>
     <color name="empty">#fff</color>
