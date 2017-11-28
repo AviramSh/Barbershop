@@ -29,6 +29,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -72,7 +73,7 @@ public class CustomersListActivity extends AppCompatActivity {
     }
 
     private void init() {
-
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 //        database
         dbHandler = new BarbershopDBHandler(this);
         allCustomers = dbHandler.getAllCustomers();

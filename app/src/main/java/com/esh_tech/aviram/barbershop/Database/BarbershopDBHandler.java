@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.esh_tech.aviram.barbershop.Constants.MessageDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.R;
 import com.esh_tech.aviram.barbershop.Utils.DateUtils;
@@ -416,6 +417,17 @@ public class BarbershopDBHandler {
 
     }
 
+    public Appointment getAppointmentById(int appointment_id) {
+        ArrayList<Appointment>appointments= getAllAppointments(Calendar.getInstance());
+
+        for (Appointment index:
+             appointments) {
+            if(index.get_id()==appointment_id)
+                return index;
+        }
+
+        return null;
+    }
     public boolean testIfAppointmentAvailable(Context context,Appointment appointmentToTest) {
         ArrayList<Appointment> appointmentsList = getAllAppointments(appointmentToTest.getcDateAndTime());
 
@@ -1136,5 +1148,50 @@ public class BarbershopDBHandler {
 //                                        picturesCursor.getColumnIndex(PicturesDBConstants.PICTURE_DATA))));
         picturesCursor.close();
         return allCustomerPicList;
+    }
+
+
+
+    //    Messages table
+    public boolean addMessageRemainder(Message message){
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues columnValues = new ContentValues();
+
+//        Set the product
+        columnValues.put(MessageDBConstants.APPOINTMENT_ID , message.getAppointment_id());
+        columnValues.put(MessageDBConstants.CUSTOMER_ID, message.getCustomer_id());
+        columnValues.put(MessageDBConstants.MESSAGE_EXECUTE, message.getIsMessageExecute());
+        columnValues.put(MessageDBConstants.MESSAGE_TIME, DateUtils.getDateAndTime(message.getExecute_time()));
+
+        long result = db.insertOrThrow(PurchaseDBConstants.PURCHASES_TABLE_NAME,null,columnValues);
+        db.close();
+
+        return (result != -1);
+    }
+
+    public ArrayList<Message> getAllMessagesRemainder() {
+
+        ArrayList<Message> messagesList = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor messagesCursor = db.query(MessageDBConstants.MESSAGES_TABLE_NAME,
+                null,null,null,null,null,MessageDBConstants.MESSAGE_TIME +" ASC");
+//        customersCursor.moveToNext();
+
+        while (messagesCursor.moveToNext())
+
+            messagesList.add(new Message(
+                    messagesCursor.getInt(messagesCursor.getColumnIndex(MessageDBConstants.MESSAGES_ID)),
+                    messagesCursor.getInt(messagesCursor.getColumnIndex(MessageDBConstants.CUSTOMER_ID)),
+                    messagesCursor.getInt(messagesCursor.getColumnIndex(MessageDBConstants.APPOINTMENT_ID)),
+                    messagesCursor.getInt(messagesCursor.getColumnIndex(MessageDBConstants.MESSAGE_EXECUTE)),
+                    DateUtils.getCalendar(
+                            messagesCursor.getString(messagesCursor.getColumnIndex(MessageDBConstants.MESSAGE_TIME))
+                    )));
+
+        messagesCursor.close();
+        return messagesList;
     }
 }

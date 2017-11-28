@@ -875,12 +875,12 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
 //            Data
 
-            tvName.setText("Free");
+            tvName.setText(getResources().getString(R.string.free));
 
             if (appointment != null) {
                 tvTime.setText(DateUtils.getOnlyTime(appointment.getcDateAndTime()));
+                Log.d(TAG,"Add new appointment :"+DateUtils.getDateAndTime(appointment.getcDateAndTime()));
             }
-            Log.d(TAG,"Add new appointment :"+DateUtils.getDateAndTime(appointment.getcDateAndTime()));
             appointmentAdapter.notifyDataSetChanged();
             return convertView;
         }

@@ -147,7 +147,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                Toast.makeText(this, R.string.passwordSentToYourEmail, Toast.LENGTH_SHORT).show();
 
         }else {
-            Toast.makeText(this, R.string.incorrectUserame, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.incorrectUserName, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -167,7 +167,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(this, R.string.incorrectPassword, Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(this, R.string.incorrectUserame, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.incorrectUserName, Toast.LENGTH_SHORT).show();
             }
         }
 }

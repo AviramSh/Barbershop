@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.esh_tech.aviram.barbershop.Constants.AppointmentsDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
+import com.esh_tech.aviram.barbershop.Constants.MessageDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.PicturesDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.ProductsDBConstants;
 import com.esh_tech.aviram.barbershop.Constants.PurchaseDBConstants;
@@ -80,6 +81,15 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 PicturesDBConstants.CUSTOMER_ID + " INTEGER "
                 +");");
 
+        //        CREATING MESSAGE TABLE.
+        db.execSQL("CREATE TABLE " + MessageDBConstants.MESSAGES_TABLE_NAME +"("+
+                MessageDBConstants.MESSAGES_ID        + " INTEGER PRIMARY KEY AUTOINCREMENT  , "+
+                MessageDBConstants.CUSTOMER_ID + " INTEGER ,"+
+                MessageDBConstants.APPOINTMENT_ID + " INTEGER , "+
+                MessageDBConstants.MESSAGE_EXECUTE + " INTEGER , "+
+                MessageDBConstants.MESSAGE_TIME + " TEXT "
+                +");");
+
     }
 
     @Override
@@ -90,6 +100,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + ProductsDBConstants.PRODUCTS_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + PurchaseDBConstants.PURCHASES_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + PicturesDBConstants.PICTURES_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + MessageDBConstants.MESSAGES_TABLE_NAME);
+
 
         onCreate(db);
     }

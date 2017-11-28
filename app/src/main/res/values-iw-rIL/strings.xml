@@ -124,7 +124,7 @@
     <string name="passwordsDoNotMatch">ססמאות לא תואמות</string>
     <string name="passwordsTooShort">סיסמאה קצרה מידי</string>
     <string name="enterPassword">הכנס סיסמה</string>
-    <string name="incorrectUserame">שם משתמש שגוי</string>
+    <string name="incorrectUserName">שם משתמש שגוי</string>
     <string name="notSaved">לא נשמר</string>
     <string name="messageToShort">הודעה קצרה מדי</string>
     <string name="aboutContent">אודות</string>
@@ -230,21 +230,21 @@
     <string name="default_business_phone">טלפון של העסק שלי</string>
     <string name="next_appointment">תור הבא</string>
     <string name="the_report_was_sent">הדו"ח נשלח</string>
-    <string name="the_report_was_not_sent">The report was not sent</string>
+    <string name="the_report_was_not_sent">הדו"ח לא נשלח</string>
     <string name="send_report">שלח דו"ח</string>
     <string name="send_bills_reports_from">שלח דו"ח חשבון מ:</string>
-    <string name="report">Report</string>
-    <string name="opening_hours">Opening hours</string>
+    <string name="report">דו"ח</string>
+    <string name="opening_hours">שעות פתיחה</string>
     <string name="save">Save</string>
-    <string name="save_this_appointment">Save this apointment?</string>
-    <string name="customer">Customer</string>
-    <string name="choose_appointment">Choose Appointment</string>
-    <string name="no_free_appointment">No free appointment</string>
-    <string name="send_sms_remainder">Remainder</string>
-    <string name="are_you_sure_you_whant_to_delete">Are you sure you whant to delete</string>
-    <string name="product_deleted">Product deleted</string>
-    <string name="filed_to_delete">Filed to delete</string>
-    <string name="album">Album</string>
+    <string name="save_this_appointment">לשמור תור זה?</string>
+    <string name="customer">לקוח</string>
+    <string name="choose_appointment">בחר תור</string>
+    <string name="no_free_appointment">אין תורים פנויים</string>
+    <string name="send_sms_remainder">תזכורת</string>
+    <string name="are_you_sure_you_whant_to_delete">האם אתה בטוח שאתה מעונין למחוק</string>
+    <string name="product_deleted">מוצר נמחק</string>
+    <string name="filed_to_delete">נכשל למחוק</string>
+    <string name="album">אלבום</string>
 
 
     <string-array name="spinner_hours">
@@ -289,10 +289,10 @@
     </string-array>
 
     <string-array name="spinner_sms_time">
-        <item>1 hour</item>
-        <item>2 hours</item>
-        <item>4 hours</item>
-        <item>24 hour</item>
+        <item>1 שעות</item>
+        <item>2 שעות</item>
+        <item>4 שעות</item>
+        <item>24 שעות</item>
         <!--<item>03:00</item>
         <item>03:30</item>
         <item>04:30</item>
