@@ -69,8 +69,11 @@ public class SplashScreenActivity extends AppCompatActivity {
         settings = PreferenceManager.getDefaultSharedPreferences(this);
         loading = (ProgressBar) findViewById(R.id.progressBar);
         loading.computeScroll();
+
+
         if (!settings.getBoolean(USER_IS_REGISTER,false))
                 setUpDefaultData();
+
 
         Thread myThread = new Thread() {
             @Override

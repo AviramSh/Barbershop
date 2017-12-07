@@ -123,6 +123,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 //        SMS Tester
         ComponentName componentName = new ComponentName(this,MJobScheduler.class);
+
+
         JobInfo.Builder builder = new JobInfo.Builder(JOB_ID,componentName);
 
         builder.setPeriodic(5000);

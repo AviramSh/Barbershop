@@ -33,11 +33,13 @@
     <string name="messages">Messages</string>
     <string name="defaultSms">Default sms</string>
     <string name="customSms">User</string>
-    <string name="systemSms">שלום \"שם הלקוח\" להזכירך תורך ב\"שעה ותאריך\" בתודה \"שם העסק\".</string>
+    <!--<string name="systemSms">שלום \"שם הלקוח\" להזכירך תורך ב\"שעה ותאריך\" בתודה \"שם העסק\".</string>-->
+    <string name="systemSms">Hello "Customer name" its a you have haircut appointment in  </string>
+
     <string name="system_sms_1_add_name">Hello </string>
-    <string name="system_sms_2_add_time"> להזכירך תורך ב</string>
-    <string name="system_sms_3add_business"> בתודה </string>
-    <string name="smstime">זמן לשליחת הודעה</string>
+    <string name="system_sms_2_add_time"> you have appointment in </string>
+    <string name="system_sms_3add_business"> thank you </string>
+    <string name="smstime"> Message time</string>
     <string name="customerretention">Customers \n Retention</string>
     <string name="nextturn">Next turn</string>
 
@@ -243,6 +245,7 @@
     <string name="product_deleted">Product deleted</string>
     <string name="filed_to_delete">Filed to delete</string>
     <string name="album">Album</string>
+    <string name="messages_settings">Messages Settings</string>
 
 
     <string-array name="spinner_hours">

@@ -54,9 +54,11 @@ public class MJobExecuter extends AsyncTask <Void,Void,String>{
     @Override
     protected String doInBackground(Void... voids) {
 //        TODO Create an SMS Handler Scheduler for this service.
+        String logMessage = "Message Background Task : \n";
+
         Calendar cSendTime = Calendar.getInstance();
         settings = PreferenceManager.getDefaultSharedPreferences(context);
-        dbHandler = dbHandler = new BarbershopDBHandler(context);
+        dbHandler =  new BarbershopDBHandler(context);
         ArrayList<Message> messages = dbHandler.getAllMessagesRemainder();
 
         switch (settings.getInt(UserDBConstants.USER_SMS_TIME,2)){
@@ -88,23 +90,27 @@ public class MJobExecuter extends AsyncTask <Void,Void,String>{
 
 
                 Customer customerProfile = dbHandler.getCustomerByID(index.getCustomer_id());
-                Appointment newAppointment =dbHandler.getAppointmentById(index.getAppointment_id());
+//                Appointment newAppointment =dbHandler.getAppointmentById(index.getAppointment_id());
+                logMessage = "Customer Name: "+customerProfile.getName();
 
                 String sendMessage = "";
 
                 if (settings.getBoolean(SharedPreferencesConstants.SYSTEM_DEFAULT_SMS_IS_CHECKED, false)) {
 
+                    logMessage += " Default message ," ;
+
                     sendMessage += context.getResources().getString(R.string.system_sms_1_add_name) +
                             customerProfile.getName() +
                             context.getResources().getString(R.string.system_sms_2_add_time) +
-                            DateUtils.getDateAndTime(newAppointment.getcDateAndTime()) +
+                            DateUtils.getDateAndTime(index.getExecute_time()) +
                             context.getResources().getString(R.string.system_sms_3add_business) +
                             settings.getString(UserDBConstants.USER_BUSINESS_NAME, ".");
                 } else {
+                    logMessage += " custom message ," ;
                     sendMessage += settings.getString(UserDBConstants.USER_DEFAULT_SMS, "");
                 }
 
-
+/*
                 SmsManager sms = SmsManager.getDefault();
                 sms.sendTextMessage(customerProfile.getPhone(), null, sendMessage, sentPI, deliveredPI);
 
@@ -112,8 +118,12 @@ public class MJobExecuter extends AsyncTask <Void,Void,String>{
                         context, customerProfile.getEmail(), context.getResources().getString(R.string.emailSubject), sendMessage);
 
                 //Executing send mail to send etEmail
-                sm.execute();
-
+                sm.execute();*/
+               if(dbHandler.deleteRemainderById(index.getId())){
+                   Log.d(TAG,"Appointment remainder have been deleted.");
+               } else{
+                   Log.d(TAG,"failed to delete remainder .");
+               }
 
             }else{
                 Toast.makeText(context, "Failed to send customer message remainder", Toast.LENGTH_SHORT).show();
@@ -124,7 +134,7 @@ public class MJobExecuter extends AsyncTask <Void,Void,String>{
 
         Log.d(TAG,"Background Long Running Task Finished...");
 
-        return "Sms db have been tested.";
+        return logMessage;
     }
 
 

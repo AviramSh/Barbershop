@@ -49,6 +49,7 @@ import com.esh_tech.aviram.barbershop.data.AlarmService;
 import com.esh_tech.aviram.barbershop.data.Appointment;
 import com.esh_tech.aviram.barbershop.data.Customer;
 import com.esh_tech.aviram.barbershop.R;
+import com.esh_tech.aviram.barbershop.data.Message;
 import com.esh_tech.aviram.barbershop.data.Purchase;
 
 import java.text.SimpleDateFormat;
@@ -132,6 +133,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         theDate = (Button)findViewById(R.id.btDate);
         theTime= (TextView)findViewById(R.id.tv_opening_hours);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        allAppointments = new ArrayList<>();
 
         appointmentCalendar = Calendar.getInstance();
         appointmentCalendar.add(Calendar.DAY_OF_MONTH,1);
@@ -732,44 +734,61 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
     private void setRemainder() {
 
-            if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
-                    != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS},
-                        MY_PERMISSIONS_REQUEST_SEND_SMS);
-            }
-        Intent m = new Intent(NewAppointmentActivity.this, AlarmService.class);
-        m.putExtra(SharedPreferencesConstants.USER_PHONE_SMS, customerProfile.getPhone());
-        try {
-            String sendMessage="";
-
-            if(settings.getBoolean(SharedPreferencesConstants.SYSTEM_DEFAULT_SMS_IS_CHECKED,false)){
-                sendMessage +=getResources().getString(R.string.system_sms_1_add_name)+
-                        customerProfile.getName()+
-                        getResources().getString(R.string.system_sms_2_add_time)+
-                        DateUtils.getDateAndTime(newAppointment.getcDateAndTime())+
-                        getResources().getString(R.string.system_sms_3add_business)+
-                        settings.getString(UserDBConstants.USER_BUSINESS_NAME,".");
-            }else{
-                sendMessage +=settings.getString(UserDBConstants.USER_DEFAULT_SMS,"");
-            }
-
-            m.putExtra(
-                    SharedPreferencesConstants.USER_SMS_CONTENT,sendMessage);
-
-            pIntent = PendingIntent.getService(getApplicationContext(), 0, m, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            aManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-
-//                    settings.getInt(UserDBConstants.USER_SMS_TIME,1);
-
-            aManager.set(AlarmManager.RTC_WAKEUP, smsScheduleTime(settings.getInt(UserDBConstants.USER_SMS_TIME,1)), pIntent);
-
-            Toast.makeText(this, R.string.smsScheduled, Toast.LENGTH_SHORT).show();
-        } catch (NullPointerException e) {
-            e.getMessage();
-            Toast.makeText(this, R.string.smsNotScheduled, Toast.LENGTH_SHORT).show();
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS},
+                    MY_PERMISSIONS_REQUEST_SEND_SMS);
         }
+
+
+        ArrayList<Appointment> scApp = dbHandler.getAllAppointments(newAppointment.getcDateAndTime());
+        for (Appointment index :
+                scApp) {
+            if(index.getCustomerID() == customerProfile.get_id()){
+                newAppointment.set_id(index.get_id());
+                break;
+            }
+        }
+
+        if(dbHandler.addMessageRemainder(
+                new Message(
+                        0,customerProfile.get_id(),newAppointment.get_id(),0,newAppointment.getcDateAndTime())))
+            Toast.makeText(this, R.string.smsScheduled, Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(this, R.string.smsNotScheduled, Toast.LENGTH_SHORT).show();
+//        Intent m = new Intent(NewAppointmentActivity.this, AlarmService.class);
+//        m.putExtra(SharedPreferencesConstants.USER_PHONE_SMS, customerProfile.getPhone());
+//        try {
+//            String sendMessage="";
+//
+//            if(settings.getBoolean(SharedPreferencesConstants.SYSTEM_DEFAULT_SMS_IS_CHECKED,false)){
+//                sendMessage +=getResources().getString(R.string.system_sms_1_add_name)+
+//                        customerProfile.getName()+
+//                        getResources().getString(R.string.system_sms_2_add_time)+
+//                        DateUtils.getDateAndTime(newAppointment.getcDateAndTime())+
+//                        getResources().getString(R.string.system_sms_3add_business)+
+//                        settings.getString(UserDBConstants.USER_BUSINESS_NAME,".");
+//            }else{
+//                sendMessage +=settings.getString(UserDBConstants.USER_DEFAULT_SMS,"");
+//            }
+//
+//            m.putExtra(
+//                    SharedPreferencesConstants.USER_SMS_CONTENT,sendMessage);
+//
+//            pIntent = PendingIntent.getService(getApplicationContext(), 0, m, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//            aManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+//
+//
+////                    settings.getInt(UserDBConstants.USER_SMS_TIME,1);
+//
+//            aManager.set(AlarmManager.RTC_WAKEUP, smsScheduleTime(settings.getInt(UserDBConstants.USER_SMS_TIME,1)), pIntent);
+//
+//            Toast.makeText(this, R.string.smsScheduled, Toast.LENGTH_SHORT).show();
+//        } catch (NullPointerException e) {
+//            e.getMessage();
+//            Toast.makeText(this, R.string.smsNotScheduled, Toast.LENGTH_SHORT).show();
+//        }
 
     }
 

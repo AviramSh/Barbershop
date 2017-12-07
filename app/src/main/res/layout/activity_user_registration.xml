@@ -12,20 +12,18 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.484"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp">
+        app:layout_constraintVertical_bias="0.114">
 
         <TextView
             android:id="@+id/textView8"
@@ -34,16 +32,16 @@
             android:gravity="start"
             android:text="@string/nameTV"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp" />
+            android:textSize="24sp" />
 
         <EditText
             android:id="@+id/etUserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"
+            android:gravity="start"
             android:maxLength="25"
             android:maxLines="1"
-            android:gravity="start" />
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/textView6"
@@ -52,16 +50,16 @@
             android:gravity="start"
             android:text="@string/familyname"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp" />
+            android:textSize="24sp" />
 
         <EditText
             android:id="@+id/etPassword"
-            android:singleLine="true"
-            android:maxLines="1"
-            android:maxLength="25"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="start" />
+            android:gravity="start"
+            android:maxLength="25"
+            android:maxLines="1"
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/textView9"
@@ -70,18 +68,18 @@
             android:gravity="start"
             android:text="@string/phone"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp" />
+            android:textSize="24sp" />
 
         <EditText
             android:id="@+id/etUserTelephone"
-            android:inputType="phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:singleLine="true"
-            android:maxLines="1"
+            android:inputType="phone"
             android:maxLength="15"
-            android:textSize="18sp" />
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/textView11"
@@ -90,16 +88,16 @@
             android:gravity="start"
             android:text="@string/businessName"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp" />
+            android:textSize="24sp" />
 
         <EditText
             android:id="@+id/etBusinessName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="start"
             android:maxLength="25"
-            android:singleLine="true"
             android:maxLines="1"
-            android:gravity="start" />
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/textView13"
@@ -108,17 +106,17 @@
             android:gravity="start"
             android:text="@string/phonebusines"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp" />
+            android:textSize="24sp" />
 
         <EditText
             android:id="@+id/etBusinessPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="start"
             android:inputType="phone"
             android:maxLength="15"
-            android:singleLine="true"
             android:maxLines="1"
-            android:gravity="start" />
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/textView15"
@@ -127,36 +125,35 @@
             android:gravity="start"
             android:text="@string/businessAddress"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp" />
+            android:textSize="24sp" />
 
         <EditText
             android:id="@+id/etBusinessAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="start"
             android:maxLength="30"
-            android:singleLine="true"
             android:maxLines="1"
-            android:gravity="start" />
+            android:singleLine="true" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:paddingTop="20dp"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="415dp">
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:paddingTop="20dp"-->
+        <!--tools:layout_editor_absoluteX="8dp"-->
+        <!--tools:layout_editor_absoluteY="415dp">-->
 
-            <ImageButton
-                android:id="@+id/imageButton4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/background"
-                android:onClick="passwordActivityNext"
-                app:srcCompat="@drawable/barberscissors"
-                tools:layout_editor_absoluteX="272dp"
-                tools:layout_editor_absoluteY="395dp" />
-        </LinearLayout>
+        <!--</LinearLayout>-->
+
+        <ImageButton
+            android:id="@+id/imageButton4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/background"
+            android:onClick="passwordActivityNext"
+            app:srcCompat="@drawable/barberscissors" />
 
     </LinearLayout>
 

@@ -813,7 +813,7 @@ public class BarbershopDBHandler {
                     ProductsCursor.getInt(ProductsCursor.getColumnIndex(ProductsDBConstants.PRODUCT_ID)),
                     ProductsCursor.getString(ProductsCursor.getColumnIndex(ProductsDBConstants.PRODUCT_NAME)),
                     ProductsCursor.getInt(ProductsCursor.getColumnIndex(ProductsDBConstants.PRODUCT_QUANTITY)),
-                    ProductsCursor.getInt(ProductsCursor.getColumnIndex(ProductsDBConstants.PRODUCT_PRICE))
+                    ProductsCursor.getDouble(ProductsCursor.getColumnIndex(ProductsDBConstants.PRODUCT_PRICE))
             ));
 
         ProductsCursor.close();
@@ -1165,7 +1165,7 @@ public class BarbershopDBHandler {
         columnValues.put(MessageDBConstants.MESSAGE_EXECUTE, message.getIsMessageExecute());
         columnValues.put(MessageDBConstants.MESSAGE_TIME, DateUtils.getDateAndTime(message.getExecute_time()));
 
-        long result = db.insertOrThrow(PurchaseDBConstants.PURCHASES_TABLE_NAME,null,columnValues);
+        long result = db.insertOrThrow(MessageDBConstants.MESSAGES_TABLE_NAME,null,columnValues);
         db.close();
 
         return (result != -1);
@@ -1193,5 +1193,13 @@ public class BarbershopDBHandler {
 
         messagesCursor.close();
         return messagesList;
+    }
+
+    public boolean deleteRemainderById(int id) {
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        return db.delete(MessageDBConstants.MESSAGES_TABLE_NAME,
+                MessageDBConstants.MESSAGES_ID+" = "+id,null)>0;
     }
 }

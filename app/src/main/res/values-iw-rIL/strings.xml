@@ -245,6 +245,7 @@
     <string name="product_deleted">מוצר נמחק</string>
     <string name="filed_to_delete">נכשל למחוק</string>
     <string name="album">אלבום</string>
+    <string name="messages_settings">Messages Settings</string>
 
 
     <string-array name="spinner_hours">
