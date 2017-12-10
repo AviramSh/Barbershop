@@ -110,15 +110,16 @@ public class MJobExecuter extends AsyncTask <Void,Void,String>{
                     sendMessage += settings.getString(UserDBConstants.USER_DEFAULT_SMS, "");
                 }
 
-/*
                 SmsManager sms = SmsManager.getDefault();
                 sms.sendTextMessage(customerProfile.getPhone(), null, sendMessage, sentPI, deliveredPI);
 
-                SendMail sm = new SendMail(
-                        context, customerProfile.getEmail(), context.getResources().getString(R.string.emailSubject), sendMessage);
+//                SendMail sm = new SendMail(
+//                        context, customerProfile.getEmail(), context.getResources().getString(R.string.emailSubject), sendMessage);
 
                 //Executing send mail to send etEmail
-                sm.execute();*/
+//                sm.execute();
+
+
                if(dbHandler.deleteRemainderById(index.getId())){
                    Log.d(TAG,"Appointment remainder have been deleted.");
                } else{
@@ -126,7 +127,8 @@ public class MJobExecuter extends AsyncTask <Void,Void,String>{
                }
 
             }else{
-                Toast.makeText(context, "Failed to send customer message remainder", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Failed to send customer message remainder", Toast.LENGTH_SHORT).show();
+                Log.d(TAG,"failed to send remainder .");
             }
 
 

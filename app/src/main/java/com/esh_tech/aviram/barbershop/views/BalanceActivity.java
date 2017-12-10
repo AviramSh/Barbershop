@@ -157,9 +157,9 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    public void closeBalance(View view) {
-        this.finish();
-    }
+//    public void closeBalance(View view) {
+//        this.finish();
+//    }
 
     public void showDialog(View v) {
 
@@ -383,8 +383,6 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
                 Toast.makeText(BalanceActivity.this, R.string.report_generated, Toast.LENGTH_LONG).show();
             else
                 Toast.makeText(BalanceActivity.this, R.string.report_failure, Toast.LENGTH_LONG).show();
-
-            finish();
         }
 
         @Override

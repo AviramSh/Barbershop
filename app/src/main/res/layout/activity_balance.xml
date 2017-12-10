@@ -65,37 +65,31 @@
         android:id="@+id/ibCalcHaircut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onClick"
-        app:srcCompat="@drawable/calculator96"
-        android:background="@color/background"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/background"
+        android:onClick="onClick"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.498"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        app:srcCompat="@drawable/calculator96" />
 
     <TextView
         android:id="@+id/etPayment"
         android:layout_width="150dp"
         android:layout_height="45dp"
-        android:textSize="24sp"
-        android:gravity="center"
-        android:background="@color/empty"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="36dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/empty"
+        android:gravity="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.675"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.502" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -116,56 +110,36 @@
         android:id="@+id/etCounter"
         android:layout_width="80dp"
         android:layout_height="36dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/empty"
         android:ems="10"
         android:gravity="center"
-        android:background="@color/empty"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/etPayment"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
+        app:layout_constraintHorizontal_bias="0.589"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.527" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/editText13"
         android:layout_width="88dp"
         android:layout_height="31dp"
         android:inputType="textPersonName"
-        android:textSize="24dp"
         android:text="@string/haircuts"
-        android:layout_marginEnd="8dp"
+        android:textSize="24dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/etCounter"
-        tools:layout_editor_absoluteX="16dp" />
+        tools:layout_editor_absoluteX="49dp" />
 
     <TextView
         android:id="@+id/editText123"
         android:layout_width="69dp"
         android:layout_height="32dp"
         android:inputType="textPersonName"
-        android:textSize="24dp"
         android:text="@string/pay"
-        android:layout_marginEnd="16dp"
+        android:textSize="24dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/etPayment"
-        tools:layout_editor_absoluteX="10dp" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:text="@string/back"
-        android:onClick="closeBalance"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp" />
+        tools:layout_editor_absoluteX="43dp" />
 
     <TextView
         android:id="@+id/textView30"
@@ -208,13 +182,13 @@
         android:id="@+id/ibCreateReport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/background"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:background="@color/background"
         app:layout_constraintBottom_toTopOf="@+id/textView31"
+        app:layout_constraintHorizontal_bias="0.409"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/ibCalcHaircut"
-        app:srcCompat="@drawable/clipboard80"
-        app:layout_constraintHorizontal_bias="0.437" />
+        app:srcCompat="@drawable/clipboard80" />
 </android.support.constraint.ConstraintLayout>

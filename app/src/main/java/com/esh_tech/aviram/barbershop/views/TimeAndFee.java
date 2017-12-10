@@ -42,22 +42,23 @@ public class TimeAndFee extends AppCompatActivity implements View.OnClickListene
         etWomanPrice = (EditText)findViewById(R.id.etWomanPrice);
         etWomanTime = (EditText)findViewById(R.id.etWomanTime);
 
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(TimeAndFee.this);
+        settings = PreferenceManager.getDefaultSharedPreferences(this);
 
-        etManPrice.setText(String.valueOf(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_PRICE,35)));
-        etManTime.setText(String.valueOf(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_TIME,35)));
+        etManPrice.setText(String.valueOf(settings.getInt(USER_MALE_HAIRCUT_PRICE,35)));
+        etManTime.setText(String.valueOf(settings.getInt(USER_MALE_HAIRCUT_TIME,35)));
 
-        etWomanPrice.setText(String.valueOf(settings.getInt(UserDBConstants.USER_FEMALE_HAIRCUT_PRICE,35)));
-        etWomanPrice.setText(String.valueOf(settings.getInt(UserDBConstants.USER_FEMALE_HAIRCUT_TIME,35)));
+        etWomanPrice.setText(String.valueOf(settings.getInt(USER_FEMALE_HAIRCUT_PRICE,35)));
+        etWomanTime.setText(String.valueOf(settings.getInt(USER_FEMALE_HAIRCUT_TIME,35)));
 //        Get Values
         register = settings.getBoolean(USER_IS_REGISTER, false);
-        editor = settings.edit();
+
 
 
     }
 
     public void fillCustomers() {
         boolean flag = true;
+        editor = settings.edit();
         int haircutTime=0;
         int haircutPrice=0;
 
@@ -75,8 +76,12 @@ public class TimeAndFee extends AppCompatActivity implements View.OnClickListene
             editor.putInt(USER_MALE_HAIRCUT_PRICE,Integer.parseInt(etManPrice.getText().toString()));
             editor.putInt(USER_MALE_HAIRCUT_TIME,Integer.parseInt(etManTime.getText().toString()));
 
-            editor.apply();
         }else flag = false;
+
+
+
+        haircutTime=0;
+        haircutPrice=0;
 
         try {
             haircutTime = Integer.parseInt(etWomanTime.getText().toString());
@@ -92,8 +97,9 @@ public class TimeAndFee extends AppCompatActivity implements View.OnClickListene
             editor.putInt(USER_FEMALE_HAIRCUT_PRICE, Integer.parseInt(etWomanPrice.getText().toString()));
             editor.putInt(USER_FEMALE_HAIRCUT_TIME,Integer.parseInt(etWomanTime.getText().toString()));
 
-            editor.apply();
         }else flag = false;
+
+        editor.apply();
 
         if(flag) {
             if (register) {
@@ -106,6 +112,7 @@ public class TimeAndFee extends AppCompatActivity implements View.OnClickListene
         }else {
             Toast.makeText(this, R.string.wrongData, Toast.LENGTH_SHORT).show();
         }
+//        editor.apply();
     }
 
     @Override

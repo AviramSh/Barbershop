@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.nfc.Tag;
 import android.preference.PreferenceManager;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -31,7 +30,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 import com.esh_tech.aviram.barbershop.JobsHandler.MJobScheduler;
 import com.esh_tech.aviram.barbershop.Utils.DateUtils;
@@ -261,10 +259,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBuilder.setTitle(R.string.manageAppointment);
         mBuilder.setMessage(R.string.theCustomerGetAnHaircut);
 
-        mBuilder.setNeutralButton(R.string.getHaircut, new DialogInterface.OnClickListener() {
+        mBuilder.setNeutralButton(R.string.gatHaircut, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(MainActivity.this, R.string.getHaircut, Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, R.string.gatHaircut, Toast.LENGTH_LONG).show();
 
                 Appointment appointment = allAppointments.get(position);
 
