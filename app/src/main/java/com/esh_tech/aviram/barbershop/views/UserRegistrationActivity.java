@@ -38,7 +38,6 @@ public class UserRegistrationActivity extends AppCompatActivity {
 
         //        SharedPreference
         settings = PreferenceManager.getDefaultSharedPreferences(this);
-        editor = settings.edit();
 
         name = (EditText)findViewById(R.id.etUserName);
         lastName = (EditText)findViewById(R.id.etPassword);
@@ -84,6 +83,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
         String testString;
         String errorMassage="Error : \n";
 
+        editor = settings.edit();
         boolean flag = true;
 
 

@@ -71,8 +71,8 @@ public class SplashScreenActivity extends AppCompatActivity {
         loading.computeScroll();
 
 
-        if (!settings.getBoolean(USER_IS_REGISTER,false))
-                setUpDefaultData();
+//        if (!settings.getBoolean(USER_IS_REGISTER,false))
+//                setUpDefaultData();
 
 
         Thread myThread = new Thread() {
