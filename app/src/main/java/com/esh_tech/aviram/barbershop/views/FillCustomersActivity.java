@@ -196,7 +196,7 @@ public class FillCustomersActivity extends AppCompatActivity {
             }
     }
 
-//    Customer Data
+    //    Customer Data
     private String retrieveContactName() {
 
 
@@ -327,6 +327,11 @@ public class FillCustomersActivity extends AppCompatActivity {
         return contactNumber;
     }
 
-    
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        customersAdapter.notifyDataSetChanged();
+    }
 }

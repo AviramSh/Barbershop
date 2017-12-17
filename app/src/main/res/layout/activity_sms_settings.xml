@@ -75,7 +75,7 @@
             android:layout_marginTop="8dp"
             android:background="#ffff"
             android:gravity="start"
-            android:hint="@string/customSms"
+            android:hint="@string/your_message_here"
             android:padding="10dp"
             app:layout_constraintBottom_toTopOf="@+id/btSave"
             app:layout_constraintHorizontal_bias="0.514"

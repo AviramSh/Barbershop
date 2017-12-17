@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void init() {
 
         etUsername = (EditText)findViewById(R.id.etUsername);
-        etUserPassword = (EditText)findViewById(R.id.etPassword);
+        etUserPassword = (EditText)findViewById(R.id.et_password);
         cbAutoRegister = (CheckBox)findViewById(R.id.cbSavePassword);
         forgetPassword = (TextView)findViewById(R.id.tvForgetPassword);
         btLogin = (Button)findViewById(R.id.btLogin);

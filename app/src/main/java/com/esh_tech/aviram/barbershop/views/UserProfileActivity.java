@@ -37,7 +37,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         etUserName = (EditText)findViewById(R.id.etUserName);
-        etUserLastName = (EditText)findViewById(R.id.etPassword);
+        etUserLastName = (EditText)findViewById(R.id.et_password);
         etUserTelephone= (EditText)findViewById(R.id.etUserTelephone);
 
         etBusinessName = (EditText)findViewById(R.id.etBusinessName);

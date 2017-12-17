@@ -182,7 +182,17 @@
     <string name="invalidMessage">הודעה לא תקינה</string>
     <string name="emailSubject">תור לספר</string>
     <string name="messageSent">ההודעה נשלחה</string>
-    <string name="aboutActivityContent">פירוט על האפליקציה...</string>
+
+
+    <string name="aboutActivityContent">
+        גרסה: v.1.0.0
+    \n\n
+        מפתחים: אבירם שרעבי
+    \n\n
+
+    </string>
+
+
     <string name="picture_not_exist">תמונה לא קימת</string>
     <string name="picture_saved">התמונה נשמרה</string>
     <string name="picture_didnt_saved">התמונה לא נשמרה</string>
@@ -246,6 +256,10 @@
     <string name="filed_to_delete">נכשל למחוק</string>
     <string name="album">אלבום</string>
     <string name="messages_settings">Messages Settings</string>
+    <string name="title_gmail_account">Gmail Account</string>
+    <string name="enter_your_gmail_account">Enter your Gmail account</string>
+    <string name="enter_your_gmail_password">Enter your gmail password</string>
+    <string name="your_message_here">Your message here...</string>
 
 
     <string-array name="spinner_hours">

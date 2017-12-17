@@ -1,6 +1,7 @@
 package com.esh_tech.aviram.barbershop.views;
 
 import com.esh_tech.aviram.barbershop.Constants.BundleConstants;
+import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.data.*;
 import com.esh_tech.aviram.barbershop.R;
 import android.Manifest;
@@ -8,11 +9,13 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -33,6 +36,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -45,6 +49,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.prefs.PreferenceChangeEvent;
 
 public class CustomersListActivity extends AppCompatActivity {
 
@@ -56,6 +61,8 @@ public class CustomersListActivity extends AppCompatActivity {
 
     EditText customerFilterText;
     MyCustomerAdapter customersAdapter;
+
+    ImageButton ibNext;
 
     ArrayList<Customer> allCustomers =new ArrayList<Customer>();
     ListView customerListView;
@@ -108,6 +115,31 @@ public class CustomersListActivity extends AppCompatActivity {
 ////        Connect adapter with custom view
 //        usersAdapter = new MyCustomersAdapter(this, R.layout.custom_contact_row, allCustomers);
 //        customerListView.setAdapter(usersAdapter);
+        final SharedPreferences settings;
+        settings = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if(!settings.getBoolean(UserDBConstants.USER_IS_REGISTER,false)) {
+            ibNext = findViewById(R.id.ib_next);
+
+            ibNext.setVisibility(View.VISIBLE);
+            ibNext.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    SharedPreferences.Editor editor;//To add values
+                    editor = settings.edit();
+                    editor.putBoolean(UserDBConstants.USER_IS_REGISTER,true);
+                    editor.apply();
+
+                    Intent intent = new Intent(CustomersListActivity.this,MainActivity.class);
+                    startActivity(intent);
+                    CustomersListActivity.this.finish();
+                }
+            });
+
+        }/*else{
+
+        }*/
+
 
         customerListView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
@@ -370,7 +402,7 @@ public class CustomersListActivity extends AppCompatActivity {
             contactID = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
             contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
 
-            Toast.makeText(this, "contact name is " + contactName, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "contact name is " + contactName, Toast.LENGTH_SHORT).show();
 
             cursor.close();
 

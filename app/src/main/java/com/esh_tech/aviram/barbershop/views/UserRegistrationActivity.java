@@ -40,7 +40,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
         settings = PreferenceManager.getDefaultSharedPreferences(this);
 
         name = (EditText)findViewById(R.id.etUserName);
-        lastName = (EditText)findViewById(R.id.etPassword);
+        lastName = (EditText)findViewById(R.id.et_password);
         phone = (EditText)findViewById(R.id.etUserTelephone);
 
         businessName = (EditText)findViewById(R.id.etBusinessName);

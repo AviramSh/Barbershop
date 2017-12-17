@@ -105,7 +105,7 @@ public class TimeAndFee extends AppCompatActivity implements View.OnClickListene
             if (register) {
                 this.finish();
             } else {
-                Intent fillCustomersActivity = new Intent(this, FillCustomersActivity.class);
+                Intent fillCustomersActivity = new Intent(this, CustomersListActivity.class);
                 startActivity(fillCustomersActivity);
                 this.finish();
             }

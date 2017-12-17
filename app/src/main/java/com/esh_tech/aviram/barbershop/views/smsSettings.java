@@ -47,6 +47,8 @@ public class smsSettings extends AppCompatActivity implements View.OnClickListen
     }
 
     private void init() {
+
+
         settings = PreferenceManager.getDefaultSharedPreferences(this);
 //        editor = settings.edit();
         //        boolean register = settings.getBoolean(USER_IS_REGISTER, false);
@@ -56,7 +58,13 @@ public class smsSettings extends AppCompatActivity implements View.OnClickListen
         rbDefault = (RadioButton)findViewById(R.id.rbDefaultMessage);
         userPic = settings.getInt(UserDBConstants.USER_SMS_TIME,0);
 
-        Toast.makeText(this, "User position : "+userPic, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "User position : "+userPic, Toast.LENGTH_SHORT).show();
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS},
+                    MY_PERMISSIONS_REQUEST_SEND_SMS);
+        }
 
         sMessageTime = (Spinner)findViewById(R.id.etSandTime);
 
@@ -71,8 +79,6 @@ public class smsSettings extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 userPic = i;
-
-
             }
 
             @Override
@@ -115,16 +121,11 @@ public class smsSettings extends AppCompatActivity implements View.OnClickListen
     }
 
     private boolean saveMessageSettings() {
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS},
-                    MY_PERMISSIONS_REQUEST_SEND_SMS);
-        }
 
         editor = settings.edit();
         editor.putInt(UserDBConstants.USER_SMS_TIME,userPic);
         editor.apply();
-        Toast.makeText(this, "User position saved : "+userPic, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "User position saved : "+userPic, Toast.LENGTH_SHORT).show();
 
         if(rbDefault.isChecked()){
 //            TODO Setup system default message.
@@ -138,7 +139,7 @@ public class smsSettings extends AppCompatActivity implements View.OnClickListen
                 editor.putString(UserDBConstants.USER_DEFAULT_SMS,etEtMessageContent.getText().toString());
                 editor.putBoolean(SharedPreferencesConstants.SYSTEM_DEFAULT_SMS_IS_CHECKED,false);
                 editor.apply();
-                Toast.makeText(this, settings.getString(UserDBConstants.USER_DEFAULT_SMS,""), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, settings.getString(UserDBConstants.USER_DEFAULT_SMS,"Haircut Appointment."), Toast.LENGTH_SHORT).show();
                 return true;
             }else{
                 Toast.makeText(this, R.string.messageToShort, Toast.LENGTH_SHORT).show();

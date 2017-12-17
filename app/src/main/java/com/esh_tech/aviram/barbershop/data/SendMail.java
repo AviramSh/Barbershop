@@ -2,11 +2,13 @@ package com.esh_tech.aviram.barbershop.data;
 
 import javax.mail.Session;
 
-        import android.app.ProgressDialog;
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
         import android.content.Context;
         import android.os.AsyncTask;
         import android.widget.Toast;
 
+import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.R;
 
 import java.util.Properties;
@@ -23,6 +25,7 @@ import java.util.Properties;
 public class SendMail extends AsyncTask<Void,Void,Void> {
 
     //Declaring Variables
+    @SuppressLint("StaticFieldLeak")
     private Context context;
     private Session session;
 
@@ -78,7 +81,9 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
                 new javax.mail.Authenticator() {
                     //Authenticating the password
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(Config.EMAIL, Config.PASSWORD);
+//                        return new PasswordAuthentication(Config.EMAIL, Config.PASSWORD);
+                        return new PasswordAuthentication(UserDBConstants.USER_EMAIL, UserDBConstants.USER_EMAIL_PASSWORD);
+
                     }
                 });
 

@@ -2,15 +2,14 @@ package com.esh_tech.aviram.barbershop.views;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,8 +21,8 @@ import java.util.regex.Pattern;
 
 public class UserEmailActivity extends AppCompatActivity implements View.OnClickListener{
 
-    Button sendVerify;
-    Button save;
+//    Button sendVerify;
+    ImageButton save;
     EditText password;
     EditText rePassword;
 
@@ -48,15 +47,16 @@ public class UserEmailActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void init() {
-        sendVerify = (Button)findViewById(R.id.btVerify);
+//        sendVerify = (Button)findViewById(R.id.btVerify);
         emailValid =false;
         passwordValid = false;
-        password = (EditText)findViewById(R.id.etPassword);
-        rePassword = (EditText)findViewById(R.id.etRePassword);
-        rePassword = (EditText)findViewById(R.id.etRePassword);
-        save = (Button) findViewById(R.id.btSave);
+        setTitle(R.string.title_gmail_account);
+        password = (EditText)findViewById(R.id.et_password);
+//        rePassword = (EditText)findViewById(R.id.etRePassword);
+//        rePassword = (EditText)findViewById(R.id.etRePassword);
+        save = (ImageButton) findViewById(R.id.btSave);
 
-        sendVerify.setOnClickListener(this);
+//        sendVerify.setOnClickListener(this);
         save.setOnClickListener(this);
 
         settings = PreferenceManager.getDefaultSharedPreferences(this);
@@ -66,6 +66,7 @@ public class UserEmailActivity extends AppCompatActivity implements View.OnClick
         tvValidError = (TextView)findViewById(R.id.tvErrorLable);
         setTextValid();
         emailValidate.setText(settings.getString(UserDBConstants.USER_EMAIL,""));
+        password.setText(settings.getString(UserDBConstants.USER_EMAIL_PASSWORD,""));
 
     }
 
@@ -122,35 +123,14 @@ public class UserEmailActivity extends AppCompatActivity implements View.OnClick
         password.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable userInput) {
-                if(userInput.length()<4 && userInput.length()>0)
+                if(userInput.length()<4 && userInput.length()>0) {
                     passError.setVisibility(View.VISIBLE);
-                else passError.setVisibility(View.INVISIBLE);
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-        });
-//        RePassword
-        rePassword.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable userInput) {
-
-                if(password.getText().toString().equals(userInput.toString())){
-                    rePassError.setVisibility(View.INVISIBLE);
-                    passwordValid =true;
-
-                }else{
-                    rePassError.setVisibility(View.VISIBLE);
                     passwordValid =false;
                 }
-
+                else {
+                    passError.setVisibility(View.INVISIBLE);
+                    passwordValid =true;
+                }
             }
 
             @Override
@@ -163,6 +143,32 @@ public class UserEmailActivity extends AppCompatActivity implements View.OnClick
 
             }
         });
+////        RePassword
+//        /*rePassword.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void afterTextChanged(Editable userInput) {
+//
+//                if(password.getText().toString().equals(userInput.toString())){
+//                    rePassError.setVisibility(View.INVISIBLE);
+//                    passwordValid =true;
+//
+//                }else{
+//                    rePassError.setVisibility(View.VISIBLE);
+//                    passwordValid =false;
+//                }
+//
+//            }
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//        });*/
 
 
     }
@@ -173,9 +179,9 @@ public class UserEmailActivity extends AppCompatActivity implements View.OnClick
 
         switch (view.getId()){
 
-            case R.id.btVerify:
-                sendVerifyCode();
-                break;
+//            case R.id.btVerify:
+//                sendVerifyCode();
+//                break;
             case R.id.btSave:
                 testVerifyCode();
                 break;
@@ -186,35 +192,47 @@ public class UserEmailActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-    private void sendVerifyCode() {
-
-//        TODO Send Verification code to user email ,Thread time Email Handler
-
-        if(passwordValid && emailValid){
-
-            save.setVisibility(View.VISIBLE);
-            sendVerify.setBackgroundResource(R.color.background);
-            passwordValid =false;
-            Toast.makeText(UserEmailActivity.this, R.string.verification_code_send_to_your_email, Toast.LENGTH_SHORT).show();
-            //TODO This solution will leak memory!  Don't use!!!
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    sendVerify.setBackgroundResource(R.color.colorAccent);
-                    passwordValid =true;
-                }
-            }, 20000);
-
-        }
-    }
+//    private void sendVerifyCode() {
+//
+////        TODO Send Verification code to user email ,Thread time Email Handler
+//
+//        if(passwordValid && emailValid){
+//
+//            editor = settings.edit();
+//            editor.putString(UserDBConstants.USER_EMAIL,emailValidate.getText().toString());
+//            editor.putString(UserDBConstants.USER_EMAIL_PASSWORD,password.getText().toString());
+//            editor.putString(Config.EMAIL,emailValidate.getText().toString());
+//            editor.putString(Config.PASSWORD,password.getText().toString());
+//            editor.apply();
+////            String emailTo = emailValidate.getText().toString();
+////            String subject = "Verify Code .";
+////
+////            SendMail sm = new SendMail(this,
+////                    settings.getString(UserDBConstants.USER_EMAIL,""),
+////                    subject, ""+ new Random().nextInt(600)+1);sm.execute();
+////
+////            save.setVisibility(View.VISIBLE);
+////            sendVerify.setBackgroundResource(R.color.background);
+////            passwordValid =false;
+////            Toast.makeText(UserEmailActivity.this, R.string.verification_code_send_to_your_email, Toast.LENGTH_SHORT).show();
+////            //TODO This solution will leak memory!  Don't use!!!
+////            Handler handler = new Handler();
+////            handler.postDelayed(new Runnable() {
+////                @Override
+////                public void run() {
+////                    sendVerify.setBackgroundResource(R.color.colorAccent);
+////                    passwordValid =true;
+////                }
+////            }, 20000);
+//        }
+//    }
 
     private void testVerifyCode() {
 
 
 //        TODO if verify code match continue activity
 
-        if(emailValid) {
+        if(emailValid&&passwordValid) {
 
             editor = settings.edit();
             editor.putString(UserDBConstants.USER_EMAIL,emailValidate.getText().toString());
