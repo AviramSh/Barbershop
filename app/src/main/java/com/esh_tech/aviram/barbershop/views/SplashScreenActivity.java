@@ -64,7 +64,10 @@ public class SplashScreenActivity extends AppCompatActivity {
 //        jobScheduler = (JobScheduler)getSystemService(JOB_SCHEDULER_SERVICE);
 //
 //        jobScheduler.schedule(jobInfo);
-
+        dbHandler = new BarbershopDBHandler(this);
+        if(dbHandler.getCustomerByID(1)==null){
+            dbHandler.addCustomer(new Customer());
+        }
 
         settings = PreferenceManager.getDefaultSharedPreferences(this);
         loading = (ProgressBar) findViewById(R.id.progressBar);

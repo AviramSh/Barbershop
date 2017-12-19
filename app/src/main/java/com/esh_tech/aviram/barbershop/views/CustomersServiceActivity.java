@@ -61,9 +61,9 @@ public class CustomersServiceActivity extends AppCompatActivity implements View.
     public void onClick(View v) {
 
         switch (v.getId()){
-            case R.id.btSend:
-                sandMessageToAllCustomers();
-                break;
+//            case R.id.btSend:
+//                sandMessageToAllCustomers();
+//                break;
 
             case R.id.btClose:
                 this.finish();

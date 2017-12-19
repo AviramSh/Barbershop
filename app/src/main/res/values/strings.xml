@@ -48,7 +48,7 @@
     <string name="search">Search</string>
     <string name="phone2">Phone 2</string>
     <string name="haircutcounter">Hair cut counter</string>
-    <string name="credit">Credit Card</string>
+    <string name="credit">Credit</string>
     <string name="saveBt">Save</string>
     <string name="cancel">Cancel</string>
     <string name="reminder">Reminder</string>
@@ -93,7 +93,7 @@
     <string name="appointmentsScreenTitle">Appointment</string>
     <string name="emailEx">AAA@MMM.com</string>
     <string name="send">Send</string>
-    <string name="newAppointment">New appointment</string>
+    <string name="newAppointment">New \nappointment</string>
     <string name="newCustomer">New customer</string>
     <string name="error">Error</string>
     <string name="edit">Edit</string>
@@ -257,6 +257,7 @@
     <string name="enter_your_gmail_account">Enter your Gmail account</string>
     <string name="enter_your_gmail_password">Enter your gmail password</string>
     <string name="your_message_here">Your message here...</string>
+    <string name="please_enter_a_valid_email">Please enter a valid email</string>
 
 
     <string-array name="spinner_hours">

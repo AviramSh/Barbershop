@@ -57,6 +57,7 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
     TextView tvCustomerName;
     TextView tvCustomerPhone;
     TextView tvCustomerEmail;
+    TextView tvCustomerBill;
 
 
     @Override
@@ -94,11 +95,15 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
         tvCustomerName = (TextView)findViewById(R.id.tvCustomerName);
         tvCustomerPhone = (TextView)findViewById(R.id.tvCustomerPhone);
         tvCustomerEmail = (TextView)findViewById(R.id.tvCustomerEmail);
+        tvCustomerBill = (TextView)findViewById(R.id.tv_user_bill);
 
         if (customerProfile.get_id()!=-1){
+
             tvCustomerName.setText(customerProfile.getName());
             tvCustomerPhone.setText(customerProfile.getPhone());
             tvCustomerEmail.setText(customerProfile.getEmail());
+            tvCustomerBill.setText(String.valueOf(customerProfile.getBill()));
+
             customerAlbum = dbHandler.getAllPicturesByUserID(customerProfile.get_id());
             setCustomerPics();
 

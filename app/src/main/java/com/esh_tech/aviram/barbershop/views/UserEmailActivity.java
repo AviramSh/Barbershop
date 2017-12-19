@@ -246,6 +246,13 @@ public class UserEmailActivity extends AppCompatActivity implements View.OnClick
                 startActivity(smsIntent);
                 this.finish();
             }
+        }else{
+            if(!emailValid){
+                Toast.makeText(this, R.string.please_enter_a_valid_email, Toast.LENGTH_SHORT).show();
+            }
+            /*else if(!passwordValid){
+                Toast.makeText(this, R.string.please_enter_a_valid_email, Toast.LENGTH_SHORT).show();
+            }*/
         }
     }
 }
