@@ -16,13 +16,12 @@ public class Customer {
     private double bill;
 
 
-    private int gender;
+    private int gender; // 1 male / 2 female
     private int remainder;
     private Bitmap photo;
 
 
     public Customer() {
-
         this(-1,"Guest","","1/1/1900","",0.0,1,0);
     }
 

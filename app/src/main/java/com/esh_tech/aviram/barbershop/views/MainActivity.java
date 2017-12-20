@@ -41,6 +41,8 @@ import java.util.Calendar;
 import java.util.List;
 
 import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_AUTO_LOGIN;
+import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_FEMALE_HAIRCUT_PRICE;
+import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.USER_MALE_HAIRCUT_PRICE;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -105,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void init() {
         this.setTitle("");
 
+        settings = PreferenceManager.getDefaultSharedPreferences(this);
 
 //        PERMISSION
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
@@ -231,7 +234,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        settings = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
                         editor = settings.edit();
                         editor.putBoolean(USER_AUTO_LOGIN,false);
                         editor.apply();
@@ -254,75 +256,165 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        Toast.makeText(this, customer.getName()+"", Toast.LENGTH_SHORT).show();
 
 
-        final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
-
-        mBuilder.setTitle(R.string.manageAppointment);
-        mBuilder.setMessage(R.string.theCustomerGetAnHaircut);
-
-        mBuilder.setNeutralButton(R.string.gatHaircut, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(MainActivity.this, R.string.gatHaircut, Toast.LENGTH_LONG).show();
-
-                Appointment appointment = allAppointments.get(position);
-
-
-                if(appointment != null) {
-//                    purchase.setAppointmentID(appointment.get_id());
-//                    purchase.setCustomerID(appointment.getCustomerID());
-//                    purchase.setPrice(appointment.getHaircutPrice());//
-//                    if (customer != null) {
-//                        settings = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+//        final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
 //
-//                        if(customer.getGender()==1){
-//                            purchase.setPrice(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_PRICE,0));
+//        mBuilder.setTitle(R.string.manageAppointment);
+//        mBuilder.setMessage(R.string.theCustomerGetAnHaircut);
 //
-//                        }else{
-//                            purchase.setPrice(settings.getInt(UserDBConstants.USER_FEMALE_HAIRCUT_PRICE,0));
+//        mBuilder.setNeutralButton(R.string.gatHaircut, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                Toast.makeText(MainActivity.this, R.string.gatHaircut, Toast.LENGTH_LONG).show();
+//
+//                Appointment appointment = allAppointments.get(position);
+//
+//
+//                if(appointment != null) {
+////                    purchase.setAppointmentID(appointment.get_id());
+////                    purchase.setCustomerID(appointment.getCustomerID());
+////                    purchase.setPrice(appointment.getHaircutPrice());//
+////                    if (customer != null) {
+////                        settings = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+////
+////                        if(customer.getGender()==1){
+////                            purchase.setPrice(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_PRICE,0));
+////
+////                        }else{
+////                            purchase.setPrice(settings.getInt(UserDBConstants.USER_FEMALE_HAIRCUT_PRICE,0));
+////                        }
+////                        if(customer.getName().equals(getResources().getString(R.string.guest))){
+////                            dbHandler.deleteCustomerById(customer.get_id());
+////                            Toast.makeText(MainActivity.this, "Delete :"+R.string.guest, Toast.LENGTH_SHORT).show();
+////                        }
+////                    }
+//                    //                Need to update database
+//                    appointment.setTackAnHaircut(1);
+//
+//                    Purchase purchase = new Purchase(appointment);
+//                    if(dbHandler.addPurchase(purchase)){
+//                        Log.d(TAG,"Purchase saved:");
+//                    }else Log.d(TAG,"Purchase Unsaved:");
+//
+//                }
+//
+//
+//                if(dbHandler.updateAppointment(appointment)){
+////                    Toast.makeText(MainActivity.this, "Record updated", Toast.LENGTH_SHORT).show();
+//                    assert appointment != null;
+//                    Log.d(TAG,"Appointment ID:"+appointment.get_id()+" - Record updated");
+//                }
+//
+//                allAppointments.remove(position);
+//                appointmentAdapter.notifyDataSetChanged();
+//            }
+//        });
+//
+//
+//        mBuilder.setNegativeButton(R.string.DidntGetHaircut, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//                Toast.makeText(MainActivity.this, R.string.DidntGetHaircut, Toast.LENGTH_LONG).show();
+//
+//                allAppointments.remove(position);
+//                appointmentAdapter.notifyDataSetChanged();
+//            }
+//        });
+//
+//
+//
+//
+//        AlertDialog dialog = mBuilder.create();
+//        dialog.show();
+
+
+        final Customer customer =dbHandler.getCustomerByID(allAppointments.get(position).getCustomerID());
+        final CharSequence[] items = {" Got haircut"," Payed"};
+        final boolean[] haircutAndFee = {false,false};
+
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle(customer.getName()+" "+ getResources().getString(R.string.appointment))
+                .setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
+//                        if (isChecked) {
+//                            haircutAndFee[indexSelected]=isChecked;
+//                            Toast.makeText(MainActivity.this, "Checked "+indexSelected, Toast.LENGTH_SHORT).show();
+//                        } else{
+//                            Toast.makeText(MainActivity.this, "Unchecked "+indexSelected, Toast.LENGTH_SHORT).show();
 //                        }
-//                        if(customer.getName().equals(getResources().getString(R.string.guest))){
-//                            dbHandler.deleteCustomerById(customer.get_id());
-//                            Toast.makeText(MainActivity.this, "Delete :"+R.string.guest, Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-                    //                Need to update database
-                    appointment.setTackAnHaircut(1);
+                        haircutAndFee[indexSelected]=isChecked;
 
-                    Purchase purchase = new Purchase(appointment);
-                    if(dbHandler.addPurchase(purchase)){
-                        Log.d(TAG,"Purchase saved:");
-                    }else Log.d(TAG,"Purchase Unsaved:");
+                    }
+                }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
 
-                }
+                        Appointment appointment = allAppointments.get(position);
 
 
-                if(dbHandler.updateAppointment(appointment)){
-//                    Toast.makeText(MainActivity.this, "Record updated", Toast.LENGTH_SHORT).show();
-                    assert appointment != null;
-                    Log.d(TAG,"Appointment ID:"+appointment.get_id()+" - Record updated");
-                }
+                        if(appointment != null) {
+                            //                    purchase.setAppointmentID(appointment.get_id());
+                            //                    purchase.setCustomerID(appointment.getCustomerID());
+                            //                    purchase.setPrice(appointment.getHaircutPrice());//
+                            //                    if (customer != null) {
+                            //                        settings = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                            //
+                            //                        if(customer.getGender()==1){
+                            //                            purchase.setPrice(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_PRICE,0));
+                            //
+                            //                        }else{
+                            //                            purchase.setPrice(settings.getInt(UserDBConstants.USER_FEMALE_HAIRCUT_PRICE,0));
+                            //                        }
+                            //                        if(customer.getName().equals(getResources().getString(R.string.guest))){
+                            //                            dbHandler.deleteCustomerById(customer.get_id());
+                            //                            Toast.makeText(MainActivity.this, "Delete :"+R.string.guest, Toast.LENGTH_SHORT).show();
+                            //                        }
+                            //                    }
+                            //                Need to update database
+                            if (haircutAndFee[0]){
+                                appointment.setTackAnHaircut(1);
+                            }
+                            if(!haircutAndFee[1]) {
+                                if(customer.getGender()==1) {
+                                    double fee = customer.getBill() - settings.getInt(USER_MALE_HAIRCUT_PRICE, 0);
+                                    customer.setBill(fee);
+                                }else{
+                                    double fee = customer.getBill() - settings.getInt(USER_FEMALE_HAIRCUT_PRICE, 0);
+                                    customer.setBill(fee);
+                                }
 
-                allAppointments.remove(position);
-                appointmentAdapter.notifyDataSetChanged();
-            }
-        });
+
+                                if(dbHandler.updateCustomer(customer))
+                                    Log.d(TAG,"Failed to update customer bill");
+                            }
+
+                            Purchase purchase = new Purchase(appointment);
+                            if(dbHandler.addPurchase(purchase)){
+                                Log.d(TAG,"Purchase saved:");
+                            }else Log.d(TAG,"Purchase Unsaved:");
+
+                        }
 
 
-        mBuilder.setNegativeButton(R.string.DidntGetHaircut, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+                        if(dbHandler.updateAppointment(appointment)){
+        //                    Toast.makeText(MainActivity.this, "Record updated", Toast.LENGTH_SHORT).show();
+                            assert appointment != null;
+                            Log.d(TAG,"Appointment ID:"+appointment.get_id()+" - Record updated");
+                        }
 
-                Toast.makeText(MainActivity.this, R.string.DidntGetHaircut, Toast.LENGTH_LONG).show();
+                        allAppointments.remove(position);
+                        appointmentAdapter.notifyDataSetChanged();
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
 
-                allAppointments.remove(position);
-                appointmentAdapter.notifyDataSetChanged();
-            }
-        });
 
-
-        AlertDialog dialog = mBuilder.create();
+                    }
+                }).create();
         dialog.show();
-
     }
 
     private void populateAppointment() {

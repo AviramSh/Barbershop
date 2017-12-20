@@ -103,6 +103,10 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
             tvCustomerPhone.setText(customerProfile.getPhone());
             tvCustomerEmail.setText(customerProfile.getEmail());
             tvCustomerBill.setText(String.valueOf(customerProfile.getBill()));
+            if(customerProfile.getBill() >= 0)
+                tvCustomerBill.setTextColor(getResources().getColor(android.R.color.holo_green_light));
+            else
+                tvCustomerBill.setTextColor(getResources().getColor(android.R.color.holo_red_light));
 
             customerAlbum = dbHandler.getAllPicturesByUserID(customerProfile.get_id());
             setCustomerPics();
@@ -446,13 +450,14 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
     }
 
     @Override
-    protected void onPostResume() {
-        super.onPostResume();
-        customerProfile = dbHandler.getCustomerByID(customerProfile.get_id());
-        tvCustomerName.setText(customerProfile.getName());
-        tvCustomerPhone.setText(customerProfile.getPhone());
-        tvCustomerEmail.setText(customerProfile.getEmail());
-        customerAlbum = dbHandler.getAllPicturesByUserID(customerProfile.get_id());
-        setCustomerPics();
+    protected void onResume() {
+        super.onResume();
+//        customerProfile = dbHandler.getCustomerByID(customerProfile.get_id());
+//        tvCustomerName.setText(customerProfile.getName());
+//        tvCustomerPhone.setText(customerProfile.getPhone());
+//        tvCustomerEmail.setText(customerProfile.getEmail());
+//        customerAlbum = dbHandler.getAllPicturesByUserID(customerProfile.get_id());
+//        setCustomerPics();
+        init();
     }
 }
