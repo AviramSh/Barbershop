@@ -47,6 +47,10 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 myIntent = new Intent(this,UserProfileActivity.class);
                 startActivity(myIntent);
                 break;
+            case R.id.layMail:
+                myIntent = new Intent(this,UserEmailActivity.class);
+                startActivity(myIntent);
+                break;
 
             case R.id.layHaircut:
                 myIntent = new Intent(this,TimeAndFee.class);

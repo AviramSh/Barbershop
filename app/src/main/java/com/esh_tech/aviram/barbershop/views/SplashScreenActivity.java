@@ -20,6 +20,8 @@ import com.esh_tech.aviram.barbershop.JobsHandler.MJobScheduler;
 import com.esh_tech.aviram.barbershop.R;
 import com.esh_tech.aviram.barbershop.data.Customer;
 
+import java.util.Calendar;
+
 import static com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants.*;
 import static com.esh_tech.aviram.barbershop.Constants.UserDBConstants.*;
 
@@ -103,6 +105,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                         SplashScreenActivity.this.finish();
 
                     } else if (!register) {
+                        setDayAndHours();
                         Intent myIntent = new Intent(SplashScreenActivity.this, UserRegistrationActivity.class);
                         startActivity(myIntent);
                         SplashScreenActivity.this.finish();
@@ -120,16 +123,37 @@ public class SplashScreenActivity extends AppCompatActivity {
         myThread.start();
     }
 
+    private void setDayAndHours() {
+
+        editor = settings.edit();
+
+        editor.putString(SUNDAY_TIME_OPEN,"06:00:18:00");
+
+        editor.putString(MONDAY_TIME_OPEN,"06:00:18:00");
+
+        editor.putString(TUESDAY_TIME_OPEN,"06:00:18:00");
+
+        editor.putString(WEDNESDAY_TIME_OPEN,"06:00:18:00");
+
+        editor.putString(THURSDAY_TIME_OPEN,"06:00:18:00");
+
+        editor.putString(FRIDAY_TIME_OPEN,"06:00:13:00");
+
+        editor.putString(SATURDAY_TIME_OPEN,"");
+
+        editor.apply();
+    }
+
     private void setUpDefaultData() {
 
         editor = settings.edit();
 
-        editor.putString(USER_NAME, "אורן");
-        editor.putString(USER_LAST_NAME, "לוי");
+        editor.putString(USER_NAME, "Oren");
+        editor.putString(USER_LAST_NAME, "Levi");
         editor.putString(USER_PHONE, "0506792353");
-        editor.putString(USER_BUSINESS_NAME, "אורן עיצוב");
-        editor.putString(USER_BUSINESS_PHONE, "039000000");
-        editor.putString(USER_BUSINESS_ADDRESS, "מרבד הקסמים 1 ראש העין");
+        editor.putString(USER_BUSINESS_NAME, "Oren Design");
+        editor.putString(USER_BUSINESS_PHONE, "039806040");
+        editor.putString(USER_BUSINESS_ADDRESS, "Marvad Haksamim 1 Rosh Ha'Ayin");
 
         editor.putString(USER_PASSWORD, "1234");
         editor.putBoolean(USER_AUTO_LOGIN, true);
@@ -138,7 +162,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         editor.putInt(USER_FEMALE_HAIRCUT_TIME, 45);
         editor.putInt(USER_MALE_HAIRCUT_PRICE, 35);
         editor.putInt(USER_MALE_HAIRCUT_TIME, 35);
-        editor.putInt(USER_FEMALE_HAIRCUT_PRICE, 45);
+        editor.putInt(USER_FEMALE_HAIRCUT_PRICE, 150);
         editor.putInt(USER_FEMALE_HAIRCUT_TIME, 45);
 
         editor.putString(UserDBConstants.USER_EMAIL, "aviram.note@gmail.com");
@@ -157,16 +181,71 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         editor.putString(THURSDAY_TIME_OPEN,"06:00:18:00");
 
-        editor.putString(FRIDAY_TIME_OPEN,"06:00:18:00");
+        editor.putString(FRIDAY_TIME_OPEN,"06:00:13:00");
 
         editor.putString(SATURDAY_TIME_OPEN,"");
 
         dbHandler = new BarbershopDBHandler(SplashScreenActivity.this);
 
-        Customer p1 =new Customer();
-        p1.set_id(1);
-        p1.setName(getResources().getString(R.string.guest));
-        dbHandler.addCustomer(p1);
+
+//        Create customers
+//        public Customer(String name, String phone, String birthday, String email, Double bill, Bitmap photo, int gender, int remainder)
+
+
+        dbHandler.addCustomer(
+                new Customer(
+                        "Sharon","0500000001","1/1/1900","AAA@MMM.com",0.0,null,0,1));
+
+        dbHandler.addCustomer(
+                new Customer(
+                        "Alon Moshe","0500000002","1/1/1900","AAA@MMM.com",0.0,null,1,1));
+        dbHandler.addCustomer(
+                new Customer(
+                        "Meir Eli","0500000003","1/1/1900","AAA@MMM.com",0.0,null,1,1));
+        dbHandler.addCustomer(
+                new Customer(
+                        "Elad Bear","0500000004","1/1/1900","AAA@MMM.com",0.0,null,1,1));
+        dbHandler.addCustomer(
+                new Customer(
+                        "Liat Natan","0500000005","1/1/1900","AAA@MMM.com",0.0,null,0,1));
+        dbHandler.addCustomer(
+                new Customer(
+                        "Nir Sher","0500000006","1/1/1900","AAA@MMM.com",0.0,null,1,1));
+        dbHandler.addCustomer(
+                new Customer(
+                        "Moran Shamesh","0500000007","1/1/1900","AAA@MMM.com",0.0,null,0,1));
+
+        dbHandler.addCustomer(
+                new Customer(
+                        "Adi Kohen","0500000008","1/1/1900","AAA@MMM.com",0.0,null,0,1));
+
+        dbHandler.addCustomer(
+                new Customer(
+                        "Arik Nagar","0500000009","1/1/1900","AAA@MMM.com",0.0,null,1,1));
+        dbHandler.addCustomer(
+                new Customer(
+                        "Erez Mor","0500000003","1/1/1900","AAA@MMM.com",0.0,null,1,1));
+        dbHandler.addCustomer(
+                new Customer(
+                        "Itay Yhoda","0500000004","1/1/1900","AAA@MMM.com",0.0,null,1,1));
+        dbHandler.addCustomer(
+                new Customer(
+                        "Shiran Moshe","0500000005","1/1/1900","AAA@MMM.com",0.0,null,0,1));
+        dbHandler.addCustomer(
+                new Customer(
+                        "Michael Mor","0500000006","1/1/1900","AAA@MMM.com",0.0,null,1,1));
+        dbHandler.addCustomer(
+                new Customer(
+                        "Reut Levin","0500000007","1/1/1900","AAA@MMM.com",0.0,null,0,1));
+
+
+
+
+
+
+        Calendar myCalendar = Calendar.getInstance();
+
+
 
 //        Appointment appointment = new Appointment();
 //        Calendar calendar = Calendar.getInstance();
