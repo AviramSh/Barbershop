@@ -36,9 +36,12 @@
     <!--<string name="systemSms">שלום \"שם הלקוח\" להזכירך תורך ב\"שעה ותאריך\" בתודה \"שם העסק\".</string>-->
     <string name="systemSms">Hello \"Customer name \" ,you have haircut appointment in \"Date\" </string>
 
+
     <string name="system_sms_1_add_name">Hello </string>
-    <string name="system_sms_2_add_time"> you have appointment in </string>
+    <string name="system_sms_2_add_time"> you have an haircut appointment at </string>
     <string name="system_sms_3add_business"> thank you </string>
+
+
     <string name="smstime"> Message time</string>
     <string name="customerretention">Customers \n Retention</string>
     <string name="nextturn">Next turn</string>

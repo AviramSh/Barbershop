@@ -22,7 +22,7 @@ public class Customer {
 
 
     public Customer() {
-        this(-1,"Guest","","1/1/1900","",0.0,1,0);
+        this(-1,"Guest","","1/1/1900","",0.0,1,1);
     }
 
     public Customer(String name, String phone, String birthday, String email, Double bill, Bitmap photo, int gender, int remainder) {

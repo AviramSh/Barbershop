@@ -41,7 +41,7 @@
     <string name="customSms">משתמש</string>
     <string name="systemSms">שלום \"שם הלקוח\" להזכירך תורך ב\"שעה ותאריך\" תודה</string>
     <string name="system_sms_1_add_name">שלום </string>
-    <string name="system_sms_2_add_time"> להזכירך תורך ב</string>
+    <string name="system_sms_2_add_time"> להזכירך תורך לספר ב</string>
     <string name="system_sms_3add_business"> בתודה </string>
     <string name="smstime">זמן לשליחת הודעה</string>
     <string name="customerretention">שימור לקוחת</string>
