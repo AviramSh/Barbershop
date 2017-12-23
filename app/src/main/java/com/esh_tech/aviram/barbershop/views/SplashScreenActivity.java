@@ -12,14 +12,21 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 import com.esh_tech.aviram.barbershop.JobsHandler.MJobScheduler;
 import com.esh_tech.aviram.barbershop.R;
+import com.esh_tech.aviram.barbershop.data.Appointment;
 import com.esh_tech.aviram.barbershop.data.Customer;
+import com.esh_tech.aviram.barbershop.data.Message;
+import com.esh_tech.aviram.barbershop.data.Product;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import static com.esh_tech.aviram.barbershop.Constants.SharedPreferencesConstants.*;
@@ -240,10 +247,20 @@ public class SplashScreenActivity extends AppCompatActivity {
 
 
 
+//        /////////////////////////////////////////////////////////////////////////////////////////////
 
 
+//        Create Products
+//        Product(String name, int quantity, double price)
+        dbHandler.addProduct(new Product("Shampoo",19,12.90));
+        dbHandler.addProduct(new Product("Scissors",7,15.00));
+        dbHandler.addProduct(new Product("Wax",14,25.00));
+        dbHandler.addProduct(new Product("Hair Gel",32,20.00));
+        dbHandler.addProduct(new Product("Razor",150,5.00));
+        dbHandler.addProduct(new Product("Haircut Machine",5,399.90));
+        dbHandler.addProduct(new Product("Black Color",16,65.00));
+        dbHandler.addProduct(new Product("Brown Color",11,85.00));
 
-        Calendar myCalendar = Calendar.getInstance();
 
 
 
@@ -267,6 +284,69 @@ public class SplashScreenActivity extends AppCompatActivity {
 //        appointment2.setCustomerID(1);
 //        dbHandler.addAppointment(appointment2);
         editor.apply();
+
+
+
+//        Appointments
+
+
+        ArrayList<Customer> customerList = dbHandler.getAllCustomers();
+
+
+        Calendar myCalendar = Calendar.getInstance();
+
+        myCalendar.set(Calendar.DAY_OF_MONTH,1);
+        myCalendar.set(Calendar.HOUR_OF_DAY,6);
+        myCalendar.set(Calendar.MINUTE,0);
+
+
+        for (Customer customerProfile :
+                customerList) {
+
+//            Appointment(int _id, Calendar cDateAndTime, int customerID, int tackAnHaircut, int haircutTime , double haircutPrice)
+            Appointment appointment;
+
+
+
+            if(customerProfile.getGender()==1) {
+                appointment = new Appointment(
+                        -1,
+                        myCalendar,
+                        customerProfile.get_id(),
+                        1,
+                        settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_TIME,25),
+                        settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_PRICE,35)
+                        );
+                myCalendar.add(Calendar.MINUTE,settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_TIME,45));
+
+            }else{
+                appointment = new Appointment(
+                        -1,
+                        myCalendar,
+                        customerProfile.get_id(),
+                        1,
+                        settings.getInt(UserDBConstants.USER_FEMALE_HAIRCUT_TIME,45),
+                        settings.getInt(UserDBConstants.USER_FEMALE_HAIRCUT_PRICE,150)
+                );
+                myCalendar.add(Calendar.MINUTE,settings.getInt(UserDBConstants.USER_FEMALE_HAIRCUT_TIME,45));
+            }
+
+
+            if(dbHandler.addAppointment(appointment)) {
+                Log.d("Defalut Date", "New Appointment");
+
+//                NewAppointmentActivity.this.finish();
+            }
+
+//            if(customerProfile.getRemainder()==1){
+//                dbHandler.addMessageRemainder(
+//                        new Message(
+//                                0,customerProfile.get_id(),newAppointment.get_id(),0,newAppointment.getcDateAndTime()));
+//            }
+//
+
+        }
     }
+
 }
 

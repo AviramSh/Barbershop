@@ -819,7 +819,6 @@ public class BarbershopDBHandler {
         ProductsCursor.close();
         return productsList;
     }
-
 //    public Product getProductByID(int id) {
 //
 //        SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -839,7 +838,6 @@ public class BarbershopDBHandler {
 //        return null;
 //
 //    }
-
     public boolean upDateProduct(Product product) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -857,19 +855,18 @@ public class BarbershopDBHandler {
 
         return (result != -1);
     }
-//    public Product getProductByName(String name) {
-//
-//        ArrayList<Product> productsList =getAllProducts();
-//
-//        for (Product index:
-//             productsList) {
-//            if(index.getName().equals(name))
-//                return index;
-//        }
-//
-//        return null;
-//    }
+    public Product getProductByName(String name) {
 
+        ArrayList<Product> productsList =getAllProducts();
+
+        for (Product index:
+             productsList) {
+            if(index.getName().equals(name))
+                return index;
+        }
+
+        return null;
+    }
     public boolean deleteProductById(int id) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 

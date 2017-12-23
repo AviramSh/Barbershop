@@ -314,9 +314,9 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         final AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
 
         mBuilder.setTitle(R.string.newAppointment);
-        mBuilder.setMessage(getResources().getString(R.string.customer)+":"+customerProfile.getName()+"\n"+
+        mBuilder.setMessage(getResources().getString(R.string.customer)+": "+customerProfile.getName()+"\n"+
                 getResources().getString(R.string.save_this_appointment)+
-                ": "+DateUtils.getDateAndTime(allAppointments.get(position).getcDateAndTime()));
+                " "+DateUtils.getDateAndTime(allAppointments.get(position).getcDateAndTime()));
 
         mBuilder.setNeutralButton(R.string.save, new DialogInterface.OnClickListener() {
             @Override
@@ -742,6 +742,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
 
         ArrayList<Appointment> scApp = dbHandler.getAllAppointments(newAppointment.getcDateAndTime());
+
         for (Appointment index :
                 scApp) {
             if(index.getCustomerID() == customerProfile.get_id()){
