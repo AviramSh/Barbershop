@@ -111,7 +111,8 @@ public class MJobExecuter extends AsyncTask <Void,Void,String>{
                 }
 
                 SmsManager sms = SmsManager.getDefault();
-                sms.sendTextMessage(customerProfile.getPhone(), null, sendMessage, sentPI, deliveredPI);
+                if(!customerProfile.getPhone().equals("")&&customerProfile.getPhone()!=null)
+                    sms.sendTextMessage(customerProfile.getPhone(), null, sendMessage, sentPI, deliveredPI);
 
 //                SendMail sm = new SendMail(
 //                        context, customerProfile.getEmail(), context.getResources().getString(R.string.emailSubject), sendMessage);
