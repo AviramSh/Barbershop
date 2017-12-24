@@ -326,6 +326,8 @@ public class StockActivity extends AppCompatActivity implements View.OnClickList
 
                 viewHolder.title.setText(getItem(position).getName());
                 viewHolder.quantity.setText(String.valueOf(getItem(position).getQuantity()));
+                if(getItem(position).getQuantity() <0)
+                    viewHolder.quantity.setTextColor(getResources().getColor(android.R.color.holo_red_light));
                 viewHolder.price.setText(String.valueOf(getItem(position).getPrice()));
 
                 convertView.setTag(viewHolder);
@@ -333,7 +335,7 @@ public class StockActivity extends AppCompatActivity implements View.OnClickList
             }else{
 
                 mainViewHolder = (ViewHolder)convertView.getTag();
-                Toast.makeText(StockActivity.this, "Name :"+getItem(position).getName(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(StockActivity.this, "Name :"+getItem(position).getName(), Toast.LENGTH_SHORT).show();
 
                 mainViewHolder.title.setText(getItem(position).getName());
                 mainViewHolder.quantity.setText(String.valueOf(getItem(position).getQuantity()));
