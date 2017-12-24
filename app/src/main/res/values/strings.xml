@@ -261,6 +261,8 @@
     <string name="enter_your_gmail_password">Enter your gmail password</string>
     <string name="your_message_here">Your message here...</string>
     <string name="please_enter_a_valid_email">Please enter a valid email</string>
+    <string name="product_exists">Product Exists</string>
+    <string name="product_list_empty">Product list empty.</string>
 
 
     <string-array name="spinner_hours">
