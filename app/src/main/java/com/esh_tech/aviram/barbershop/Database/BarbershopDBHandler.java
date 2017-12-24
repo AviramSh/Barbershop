@@ -548,6 +548,7 @@ public class BarbershopDBHandler {
         return true;
     }
     public boolean testIfAppointmentAvailable(Appointment appointmentToTest) {
+
         ArrayList<Appointment> appointmentsList = getAllAppointments(
                 appointmentToTest.getcDateAndTime());
 
@@ -666,14 +667,11 @@ public class BarbershopDBHandler {
         return true;
     }
 
-
-
-
-
-
     public ArrayList<Appointment> getTodayFreeAppointmentsList(Calendar cTodayTest, int startHour, int startMin, int endHour, int endMin) {
 
+        return testMethod(cTodayTest, startHour, startMin, endHour, endMin);
 
+/*
         Calendar cStart = Calendar.getInstance();
         cStart.setTime(cTodayTest.getTime());
 
@@ -742,6 +740,181 @@ public class BarbershopDBHandler {
         Log.d("FreeAppointments","List Lang : "+freeAppointmentsList.size());
 
 //        return (!freeAppointmentsList.isEmpty())? freeAppointmentsList : null;
+        return freeAppointmentsList;*/
+    }
+
+
+    private ArrayList<Appointment>  testMethod(Calendar cTodayTest, int startHour, int startMin, int endHour, int endMin){
+
+        Calendar cStart = Calendar.getInstance();
+        cStart.setTime(cTodayTest.getTime());
+
+        Calendar cEnd = Calendar.getInstance();
+        cEnd.setTime(cTodayTest.getTime());
+
+        cStart.set(Calendar.HOUR_OF_DAY,startHour);
+        cStart.set(Calendar.MINUTE,startMin);
+
+        cEnd.set(Calendar.HOUR_OF_DAY,endHour);
+        cEnd.set(Calendar.MINUTE,endMin);
+
+
+        Log.d("FreeAppointments","Start Date: "+startHour+":"+startMin+" -- "+endHour+":"+endMin);
+
+
+
+
+
+//        Log.d("FreeAppointments","Start Date: "+appointment.getDateAndTimeToDisplay()+" End Date: "+DateUtils.getFullSDF(cEnd));
+
+        int haircutTime = settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_TIME,20);
+        ArrayList<Appointment> freeAppointmentsList = new ArrayList<>();
+        ArrayList<Appointment> scheduledAppointmentsList = getAllAppointments(cTodayTest);
+
+//        int i=0;
+
+        while (cStart.before(cEnd)){
+//            Log.d("FreeAppointments","While: "+appointment.getDateAndTimeToDisplay()+" End Date: "+DateUtils.getFullSDF(cEnd));
+//            Log.d("FreeAppointments",++i+")New Date "+appointment.getDateAndTimeToDisplay());
+//            cStart
+//          07:00
+//          07:10   07:20
+//          07:20
+//          07:30   07:40
+            boolean add =true;
+
+//            Calendar startAppointment = Calendar.getInstance();
+//            Calendar endAppointment = Calendar.getInstance();
+//
+//            startAppointment.setTime(cStart.getTime());
+//            endAppointment.setTime(cStart.getTime());
+//            endAppointment.add(Calendar.MINUTE,haircutTime);
+
+            Calendar cFreeAppointmentStart = Calendar.getInstance();
+            Calendar cFreeAppointmentEnd= Calendar.getInstance();
+
+            cFreeAppointmentStart.setTime(cStart.getTime());
+
+            cFreeAppointmentEnd.setTime(cStart.getTime());
+            cFreeAppointmentEnd.add(Calendar.MINUTE,haircutTime);
+            add = true;
+            for (Appointment testApp:
+                 scheduledAppointmentsList) {
+                Calendar cScheduledAppointmentStart = Calendar.getInstance();
+                Calendar cScheduledAppointmentEnd= Calendar.getInstance();
+
+                cScheduledAppointmentStart.setTime(testApp.getcDateAndTime().getTime());
+                cScheduledAppointmentEnd.setTime(testApp.getcDateAndTime().getTime());
+                cScheduledAppointmentEnd.add(Calendar.MINUTE, testApp.getHaircutTime());
+
+                cScheduledAppointmentStart.set(Calendar.SECOND,0);
+                cScheduledAppointmentEnd.set(Calendar.SECOND,0);
+                cFreeAppointmentStart.set(Calendar.SECOND,0);
+                cFreeAppointmentEnd.set(Calendar.SECOND,0);
+//
+                if(DateUtils.getDateAndTime(cFreeAppointmentStart).equals(DateUtils.getDateAndTime(cScheduledAppointmentStart))||
+                        cFreeAppointmentStart.before(cScheduledAppointmentStart) &&
+                        cFreeAppointmentEnd.after(cScheduledAppointmentStart)){
+//                    cStart.setTime(cScheduledAppointmentEnd.getTime());
+                    add = false;
+                    break;
+                }else if(cScheduledAppointmentStart.before(cFreeAppointmentStart) &&
+                        cScheduledAppointmentEnd.after(cFreeAppointmentStart) /*&& !DateUtils.getDateAndTime(cScheduledAppointmentEnd).equals(DateUtils.getDateAndTime(cFreeAppointmentStart))*/){
+                    add = false;
+                    break;
+                }
+//                if((testApp.getcDateAndTime().after(startAppointment)||testApp.getcDateAndTime().equals(startAppointment))&&
+//                        (testApp.getcDateAndTime().before(endAppointment)/*||testApp.getcDateAndTime().equals(endAppointment)*/)){
+//                    Calendar activAppointment = Calendar.getInstance();
+//                    activAppointment.setTime(testApp.getcDateAndTime().getTime());
+//                    activAppointment.add(Calendar.MINUTE,testApp.getHaircutTime());
+//                    if(activAppointment.before(endAppointment)||activAppointment.equals(endAppointment)){
+//                        break;
+//                    }else {
+//                        add = false;
+//                        break;
+//                    }
+//                }
+
+
+//
+////                   -40            07:00                -       07:40       ;
+//                long totalTime = cStart.getTimeInMillis() - testApp.getcDateAndTime().getTimeInMillis();
+//
+//
+////                      40   <      45              &&      -40     <=   0
+//
+//                if(Math.abs(totalTime) < testApp.getHaircutTime()/* || Math.abs(totalTime) < haircutTime*/){
+//
+//                    if( totalTime <= 0 ) {
+////                    cStart < appointment time
+//                        cStart.add(Calendar.MINUTE,haircutTime);
+//
+//                        if(cStart.getTimeInMillis()-testApp.getcDateAndTime().getTimeInMillis()<0) {
+//                            cStart.setTime(testApp.getcDateAndTime().getTime());
+//                            cStart.add(Calendar.MINUTE, haircutTime);
+//
+////                          Add Free Appointment before
+//                            Appointment appointment = new Appointment();
+//                            appointment.setcDateAndTime(cStart);
+//                            appointment.setHaircutTime(haircutTime);
+//                            freeAppointmentsList.add(appointment);
+//                            break;
+//                        }
+//                    }else //        40     <    45              &&      40     >   0
+//                        if(totalTime > 0){
+//
+////                    cStart < appointment time
+//                            cStart.setTime(testApp.getcDateAndTime().getTime());
+//                            cStart.add(Calendar.MINUTE,testApp.getHaircutTime());
+//                            break;
+//                        }
+//                }
+//
+            }
+//            if(testIfAppointmentAvailable(appointment)&&
+//                    (Calendar.getInstance().equals(appointment.getcDateAndTime())|| Calendar.getInstance().before(appointment.getcDateAndTime()))) {
+//                Log.d("FreeAppointments","Add an'appintment to list : "+
+//                        DateUtils.setCalendarToDB(appointment.getcDateAndTime()));
+//                freeAppointmentsList.add(appointment);
+//            }else{Log.d("FreeAppointments","Not Free Date : "+DateUtils.setCalendarToDB(appointment.getcDateAndTime()));}
+//
+//            Log.d("FreeAppointments","Testing Date: "+DateUtils.setCalendarToDB(appointment.getcDateAndTime()));
+            if(add){
+//                Add Free Appointment
+                Appointment appointment = new Appointment();
+                appointment.setcDateAndTime(cStart);
+                appointment.setHaircutTime(haircutTime);
+                freeAppointmentsList.add(appointment);
+//                cStart.add(Calendar.MINUTE ,appointment.getHaircutTime());
+
+            }
+            cStart.add(Calendar.MINUTE,5);
+
+//            cStart.add(Calendar.MINUTE, appointment.getHaircutTime());
+//
+//            Calendar temp = Calendar.getInstance();
+//            temp.setTime(cStart.getTime());
+//
+//            appointment.setcDateAndTime(temp);
+        }
+
+//        Calendar temp = Calendar.getInstance();
+//        temp.setTime(cStart.getTime());
+//        temp.add(Calendar.MINUTE,-(haircutTime/2));
+//
+//        Appointment appointment =new Appointment();
+//        appointment.setcDateAndTime(temp);
+//        appointment.setHaircutTime(haircutTime);
+//
+//        if(testIfAppointmentAvailable(appointment)) {
+//            appointment.setcDateAndTime(cStart);
+//            freeAppointmentsList.add(appointment);
+//        }
+//
+//        Log.d("FreeAppointments","List Lang : "+freeAppointmentsList.size());
+//
+////        return (!freeAppointmentsList.isEmpty())? freeAppointmentsList : null;
         return freeAppointmentsList;
     }
 
@@ -819,6 +992,7 @@ public class BarbershopDBHandler {
         ProductsCursor.close();
         return productsList;
     }
+
 //    public Product getProductByID(int id) {
 //
 //        SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -838,6 +1012,7 @@ public class BarbershopDBHandler {
 //        return null;
 //
 //    }
+
     public boolean upDateProduct(Product product) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 

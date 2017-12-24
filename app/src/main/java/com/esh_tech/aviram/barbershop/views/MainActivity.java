@@ -381,9 +381,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 if(customer.getGender()==1) {
                                     double fee = customer.getBill() - settings.getInt(USER_MALE_HAIRCUT_PRICE, 0);
                                     customer.setBill(fee);
+                                    appointment.setHaircutPrice(fee);
                                 }else{
                                     double fee = customer.getBill() - settings.getInt(USER_FEMALE_HAIRCUT_PRICE, 0);
                                     customer.setBill(fee);
+                                    appointment.setHaircutPrice(fee);
                                 }
 
 
