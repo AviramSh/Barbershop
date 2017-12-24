@@ -263,6 +263,8 @@
     <string name="please_enter_a_valid_email">Please enter a valid email</string>
     <string name="product_exists">Product Exists</string>
     <string name="product_list_empty">Product list empty.</string>
+    <string name="delete_appointment">Delete Appointment</string>
+    <string name="today_appointments">Today Appointments</string>
 
 
     <string-array name="spinner_hours">

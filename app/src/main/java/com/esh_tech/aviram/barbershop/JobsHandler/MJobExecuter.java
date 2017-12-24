@@ -53,7 +53,7 @@ public class MJobExecuter extends AsyncTask <Void,Void,String>{
 
     @Override
     protected String doInBackground(Void... voids) {
-//        TODO Create an SMS Handler Scheduler for this service.
+
         String logMessage = "Message Background Task : \n";
 
         Calendar cSendTime = Calendar.getInstance();

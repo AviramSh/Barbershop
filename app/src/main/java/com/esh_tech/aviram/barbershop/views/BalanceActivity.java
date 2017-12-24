@@ -414,17 +414,19 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
 
                     for (Appointment appointment : appointmentList) {
 
+                        if(appointment.getTackAnHaircut() == 1){
 
-                        Customer customer = dbHandler.getCustomerByID(appointment.getCustomerID());
+                            Customer customer = dbHandler.getCustomerByID(appointment.getCustomerID());
 
-                        writer.println(
-                                appointment.get_id() + "," +
-                                        customer.getName() + "," +
-                                        customer.getPhone() + "," +
-                                        customer.getBill() + "," +
-                                        DateUtils.setCalendarToDB(appointment.getcDateAndTime()) + "," +
-                                        appointment.getHaircutPrice());
-                        calc +=appointment.getHaircutPrice();
+                            writer.println(
+                                    appointment.get_id() + "," +
+                                            customer.getName() + "," +
+                                            customer.getPhone() + "," +
+                                            customer.getBill() + "," +
+                                            DateUtils.setCalendarToDB(appointment.getcDateAndTime()) + "," +
+                                            appointment.getHaircutPrice());
+                            calc +=appointment.getHaircutPrice();
+                        }
                     }
                     writer.println(
                             "Total" + "," +

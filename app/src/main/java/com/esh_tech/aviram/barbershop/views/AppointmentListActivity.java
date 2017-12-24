@@ -1,8 +1,10 @@
 package com.esh_tech.aviram.barbershop.views;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.LayoutRes;
@@ -105,8 +107,27 @@ public class AppointmentListActivity extends AppCompatActivity implements View.O
         lvAppointment.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(AppointmentListActivity.this, " "+i, Toast.LENGTH_SHORT).show();
 
+
+                final Customer c1 = dbHandler.getCustomerByID(allAppointments.get(i).getCustomerID());
+                Toast.makeText(AppointmentListActivity.this, " "+c1.getName(), Toast.LENGTH_SHORT).show();
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(AppointmentListActivity.this);
+                builder.setTitle(R.string.manageAppointment)
+                        .setPositiveButton(R.string.gatHaircut, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Toast.makeText(AppointmentListActivity.this, c1.getName()+" Got Haircut", Toast.LENGTH_SHORT).show();
+                            }
+                        }).setPositiveButton(R.string.delete_appointment, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(AppointmentListActivity.this, c1.getName()+" Delete", Toast.LENGTH_SHORT).show();
+
+                    }
+                }).create();
+
+                builder.show();
 
 
                 return true;
