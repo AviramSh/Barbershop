@@ -95,7 +95,7 @@ public class MJobExecuter extends AsyncTask <Void,Void,String>{
 
                 String sendMessage = "";
 
-                if (settings.getBoolean(SharedPreferencesConstants.SYSTEM_DEFAULT_SMS_IS_CHECKED, false)) {
+                if (settings.getBoolean(SharedPreferencesConstants.SYSTEM_DEFAULT_SMS_IS_CHECKED, true)) {
 
                     logMessage += " Default message ," ;
 
