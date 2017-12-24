@@ -2,11 +2,14 @@ package com.esh_tech.aviram.barbershop.views;
 
 import com.esh_tech.aviram.barbershop.Constants.BundleConstants;
 import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
+import com.esh_tech.aviram.barbershop.Utils.DateUtils;
+import com.esh_tech.aviram.barbershop.Utils.MailUtils;
 import com.esh_tech.aviram.barbershop.data.*;
 import com.esh_tech.aviram.barbershop.R;
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.ContentUris;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,11 +18,10 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -28,32 +30,30 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.esh_tech.aviram.barbershop.Constants.CustomersDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.prefs.PreferenceChangeEvent;
 
 public class CustomersListActivity extends AppCompatActivity {
 
     private int MY_PERMISSIONS_REQUEST_IMPORT_CONTACT = 2;
+    public static final int WRITE_EXTERNAL_STORAGE_REQUEST = 145;
     private static final String TAG = "Aviram";//FillCustomersActivity.class.getSimpleName();
     private static final int REQUEST_CODE_PICK_CONTACTS = 1;
     private Uri uriContact;
@@ -70,6 +70,8 @@ public class CustomersListActivity extends AppCompatActivity {
 
 //    Database
     BarbershopDBHandler dbHandler;
+
+    String reportEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +118,9 @@ public class CustomersListActivity extends AppCompatActivity {
 //        usersAdapter = new MyCustomersAdapter(this, R.layout.custom_contact_row, allCustomers);
 //        customerListView.setAdapter(usersAdapter);
         final SharedPreferences settings;
+
         settings = PreferenceManager.getDefaultSharedPreferences(this);
+        reportEmail = settings.getString(UserDBConstants.USER_EMAIL,"");
 
         if(!settings.getBoolean(UserDBConstants.USER_IS_REGISTER,false)) {
             ibNext = findViewById(R.id.ib_next);
@@ -521,5 +525,105 @@ public class CustomersListActivity extends AppCompatActivity {
     protected void onPostResume() {
         super.onPostResume();
         populateCustomers();
+    }
+
+    public void createReport(View view) {
+        if(!reportEmail.equals("")) {
+            if (allCustomers.size() > 0) {
+                new GenerateReportTask(allCustomers).execute();
+            } else {
+                Toast.makeText(CustomersListActivity.this, R.string.customers_list_is_empty, Toast.LENGTH_LONG).show();
+            }
+        }else{
+            Toast.makeText(CustomersListActivity.this, R.string.report_filed, Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+
+    @SuppressLint("StaticFieldLeak")
+    class GenerateReportTask extends AsyncTask<Void, Void, Boolean> {
+
+        ArrayList<Customer> customersList;
+        ProgressDialog pd;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pd = new ProgressDialog(CustomersListActivity.this);
+            pd.show();
+        }
+
+        public GenerateReportTask(ArrayList<Customer> CustomersList) {
+            this.customersList = CustomersList;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            pd.dismiss();
+            if (result)
+                Toast.makeText(CustomersListActivity.this, R.string.report_generated, Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(CustomersListActivity.this, R.string.report_failure, Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            if (ContextCompat.checkSelfPermission(CustomersListActivity.this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(CustomersListActivity.this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        WRITE_EXTERNAL_STORAGE_REQUEST);
+            } else {
+
+                File folder = new File(Environment.getExternalStorageDirectory() + "/Barbershop");
+
+                boolean var = false;
+                if (!folder.exists())
+                    var = folder.mkdir();
+
+
+                final String filename = folder.toString() + "/" + "Report1.csv";
+
+                try {
+
+                    PrintWriter writer = new PrintWriter(filename, "UTF-8");
+                    writer.write('\ufeff');
+                    writer.println(" ID , Name , Phone , Bill , Gender , Birthday ");
+
+                    double calc = 0;
+
+                    for (Customer customer : customersList) {
+
+                        writer.println(
+                                customer.get_id() + "," +
+                                        customer.getName() + "," +
+                                        customer.getPhone() + "," +
+                                        customer.getBill() + "," +
+                                        customer.getGender() + "," +
+                                        customer.getBirthday());
+
+                    }
+//                    writer.println(
+//                            "Total" + "," +
+//                                    "" + "," +
+//                                    "" + "," +
+//                                    "" + "," +
+//                                    "" + "," +
+//                                    calc);
+
+                    writer.close();
+
+                    MailUtils.sendMail(CustomersListActivity.this, reportEmail, filename);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+
+            return true;
+
+        }
     }
 }
