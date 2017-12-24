@@ -8,134 +8,148 @@
     tools:context="com.esh_tech.aviram.barbershop.views.BarbershopActivity">
 
 
+    <LinearLayout
+        android:id="@+id/linearLayout12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout18"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/btSave"
+            tools:layout_editor_absoluteX="8dp">
+
+            <TextView
+                android:id="@+id/tvBusinessPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:text="@string/businessPhone"
+                android:textSize="24sp"
+                android:textStyle="bold|italic"
+                tools:layout_editor_absoluteX="195dp"
+                tools:layout_editor_absoluteY="142dp" />
+
+            <EditText
+                android:id="@+id/etBusinessPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="phone"
+                tools:layout_editor_absoluteX="-32dp"
+                tools:layout_editor_absoluteY="142dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout15"
+            tools:layout_editor_absoluteX="16dp">
+
+            <TextView
+                android:id="@+id/tvBusinessAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:text="@string/businessAddress"
+                android:textSize="24sp"
+                android:textStyle="bold|italic"
+                tools:layout_editor_absoluteX="195dp"
+                tools:layout_editor_absoluteY="142dp" />
+
+            <EditText
+                android:id="@+id/etBusinessAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="-32dp"
+                tools:layout_editor_absoluteY="142dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout15"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="124dp">
+
+
+            <TextView
+                android:id="@+id/tvBusinessName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:text="@string/businessName"
+                android:textSize="24sp"
+                android:textStyle="bold|italic"
+                tools:layout_editor_absoluteX="195dp"
+                tools:layout_editor_absoluteY="142dp" />
+
+            <EditText
+                android:id="@+id/etBusinessName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="-32dp"
+                tools:layout_editor_absoluteY="142dp" />
+        </LinearLayout>
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/imageView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout12"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/shop"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout15"
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7"
-        tools:layout_editor_absoluteX="8dp">
-
-
-        <TextView
-            android:id="@+id/tvBusinessName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textStyle="bold|italic"
-            android:textSize="18sp"
-            android:ems="10"
-            android:text="@string/businessName"
-            tools:layout_editor_absoluteX="195dp"
-            tools:layout_editor_absoluteY="142dp" />
-
-        <EditText
-            android:id="@+id/etBusinessName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            tools:layout_editor_absoluteX="-32dp"
-            tools:layout_editor_absoluteY="142dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout16"
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout15"
-        tools:layout_editor_absoluteX="8dp">
-
-        <TextView
-            android:id="@+id/tvBusinessAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold|italic"
-            android:textSize="18sp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:text="@string/businessAddress"
-            tools:layout_editor_absoluteX="195dp"
-            tools:layout_editor_absoluteY="142dp" />
-
-        <EditText
-            android:id="@+id/etBusinessAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName"
-            tools:layout_editor_absoluteX="-32dp"
-            tools:layout_editor_absoluteY="142dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout18"
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/btSave"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout16"
-        tools:layout_editor_absoluteX="8dp">
-
-        <TextView
-            android:id="@+id/tvBusinessPhone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textStyle="bold|italic"
-            android:layout_weight="1"
-            android:ems="10"
-            android:text="@string/businessPhone"
-            tools:layout_editor_absoluteX="195dp"
-            tools:layout_editor_absoluteY="142dp" />
-
-        <EditText
-            android:id="@+id/etBusinessPhone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="phone"
-            tools:layout_editor_absoluteX="-32dp"
-            tools:layout_editor_absoluteY="142dp" />
-    </LinearLayout>
+        app:srcCompat="@drawable/shop" />
 
     <ImageButton
         android:id="@+id/btSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/barberscissors"
+        android:layout_marginBottom="32dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
         android:background="@color/background"
         android:onClick="onClick"
+        android:src="@drawable/barberscissors"
         android:text="@string/back"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="32dp" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout12" />
 
 </android.support.constraint.ConstraintLayout>
