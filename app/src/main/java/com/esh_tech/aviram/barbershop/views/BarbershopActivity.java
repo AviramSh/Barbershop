@@ -66,9 +66,9 @@ public class BarbershopActivity extends AppCompatActivity implements View.OnClic
 //            this.finish();
 //        }
         switch (v.getId()){
-            case R.id.btBack:
-
-                break;
+//            case R.id.btBack:
+//
+//                break;
             case R.id.btSave:
                 if(saveBusinessData())this.finish();
                 else Toast.makeText(this, R.string.fields_are_not_full, Toast.LENGTH_SHORT).show();

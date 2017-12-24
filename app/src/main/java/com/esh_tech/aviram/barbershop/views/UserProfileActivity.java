@@ -75,7 +75,27 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         
         editor = settings.edit();
 
+        if(!etUserName.getText().toString().isEmpty()&& etUserName.getText().toString().length()>2)
+            editor.putString(USER_NAME,etUserName.getText().toString());
+
+        if(!etUserLastName.getText().toString().isEmpty()&& etUserLastName.getText().toString().length()>2)
+            editor.putString(USER_LAST_NAME,etUserLastName.getText().toString());
+
+        if(!etUserTelephone.getText().toString().isEmpty()&& etUserTelephone.getText().toString().length()>6)
+            editor.putString(USER_PHONE,etUserTelephone.getText().toString());
+
+        if(!etBusinessName.getText().toString().isEmpty()&& etBusinessName.getText().toString().length()>2)
+            editor.putString(USER_BUSINESS_NAME,etBusinessName.getText().toString());
+
+        if(!etBusinessPhone.getText().toString().isEmpty()&& etBusinessPhone.getText().toString().length()>6)
+            editor.putString(USER_BUSINESS_PHONE,etBusinessPhone.getText().toString());
+
+        if(!etBusinessAddress.getText().toString().isEmpty()&& etBusinessAddress.getText().toString().length()>4)
+            editor.putString(USER_BUSINESS_ADDRESS,etBusinessAddress.getText().toString());
 
         editor.apply();
+
+        Toast.makeText(this, R.string.save, Toast.LENGTH_SHORT).show();
+        this.finish();
     }
 }
