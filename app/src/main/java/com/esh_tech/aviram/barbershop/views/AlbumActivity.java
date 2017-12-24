@@ -61,7 +61,7 @@ public class AlbumActivity extends AppCompatActivity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(AlbumActivity.this, "Item position : "+i, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(AlbumActivity.this, "Item position : "+i, Toast.LENGTH_SHORT).show();
                 final int picPosition = i;
 
 

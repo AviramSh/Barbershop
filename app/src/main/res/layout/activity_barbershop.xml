@@ -24,6 +24,39 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/linearLayout15"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="124dp">
+
+
+            <TextView
+                android:id="@+id/tvBusinessName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:text="@string/businessName"
+                android:textSize="24sp"
+                android:textStyle="bold|italic"
+                tools:layout_editor_absoluteX="195dp"
+                tools:layout_editor_absoluteY="142dp" />
+
+            <EditText
+                android:id="@+id/etBusinessName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="-32dp"
+                tools:layout_editor_absoluteY="142dp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/linearLayout18"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -88,38 +121,6 @@
                 tools:layout_editor_absoluteY="142dp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linearLayout15"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="124dp">
-
-
-            <TextView
-                android:id="@+id/tvBusinessName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:text="@string/businessName"
-                android:textSize="24sp"
-                android:textStyle="bold|italic"
-                tools:layout_editor_absoluteX="195dp"
-                tools:layout_editor_absoluteY="142dp" />
-
-            <EditText
-                android:id="@+id/etBusinessName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                tools:layout_editor_absoluteX="-32dp"
-                tools:layout_editor_absoluteY="142dp" />
-        </LinearLayout>
     </LinearLayout>
 
     <ImageView

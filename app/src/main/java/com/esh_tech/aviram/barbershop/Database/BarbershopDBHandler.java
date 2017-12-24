@@ -1284,7 +1284,8 @@ public class BarbershopDBHandler {
 
         BitmapDBUtility picsHandler = new BitmapDBUtility();
 
-        Cursor picturesCursor = db.query(PicturesDBConstants.PICTURES_TABLE_NAME,null,null,null,null,null,null);
+        Cursor picturesCursor = db.query(PicturesDBConstants.PICTURES_TABLE_NAME,
+                null,null,null,null,null,PicturesDBConstants.PICTURE_NAME+" DESC");
 
         while (picturesCursor.moveToNext()) {
             if (picturesCursor.getInt(picturesCursor.getColumnIndex(PicturesDBConstants.CUSTOMER_ID)) == id) {

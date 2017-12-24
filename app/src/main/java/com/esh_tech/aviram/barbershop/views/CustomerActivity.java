@@ -7,12 +7,14 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -35,6 +37,7 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
 
     private static final int GALLERY_REQUEST_CODE = 3;
     private static final int CAMERA_REQUEST_CODE = 4;
+    private static final String TAG = "MyDebug";
     //    Database
     BarbershopDBHandler dbHandler;
 
@@ -118,9 +121,8 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
                     customerProfile.setRemainder(1);
-                    dbHandler.updateCustomer(customerProfile);
                 }else{
-                    dbHandler.updateCustomer(customerProfile);
+                    customerProfile.setRemainder(0);
                 }
             }
         });
@@ -221,6 +223,10 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
                 startActivity(myIntent);
 
                 break;
+                case R.id.btSave:
+                        dbHandler.updateCustomer(customerProfile);
+                        this.finish();
+                    break;
             case R.id.btCallCustomer:
                 myIntent = new Intent(Intent.ACTION_DIAL);
                 myIntent.setData(Uri.parse("tel:" + customerProfile.getPhone()));
@@ -415,6 +421,7 @@ public class CustomerActivity extends AppCompatActivity implements View.OnLongCl
 
         } catch (NullPointerException e) {
             e.printStackTrace();
+            Log.d(TAG,"Didn't save the pic");
         }
 
 
