@@ -85,7 +85,7 @@
         <ListView
             android:id="@+id/lvAppointment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             tools:layout_editor_absoluteX="148dp"
             tools:layout_editor_absoluteY="160dp" />
 

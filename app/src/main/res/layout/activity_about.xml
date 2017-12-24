@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:textStyle="bold|italic|normal"
-        android:textSize="24dp"
+        android:textSize="24sp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
@@ -38,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/aboutContent"
+            android:textSize="18sp"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp" />
     </FrameLayout>
