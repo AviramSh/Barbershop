@@ -1,10 +1,20 @@
 package com.esh_tech.aviram.barbershop.views;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.AsyncTask;
+import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +23,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -21,10 +30,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.esh_tech.aviram.barbershop.Constants.UserDBConstants;
 import com.esh_tech.aviram.barbershop.Database.BarbershopDBHandler;
 import com.esh_tech.aviram.barbershop.R;
+import com.esh_tech.aviram.barbershop.Utils.MailUtils;
 import com.esh_tech.aviram.barbershop.data.Product;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +48,9 @@ public class StockActivity extends AppCompatActivity implements View.OnClickList
     EditText mProductName;
     EditText mProductQuantity;
     EditText mProductPrice;
+
+    String reportEmail;
+    public static final int WRITE_EXTERNAL_STORAGE_REQUEST = 145;
 
     View mView;
     Product mProduct;
@@ -62,6 +79,11 @@ public class StockActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void init() {
+
+        final SharedPreferences settings;
+
+        settings = PreferenceManager.getDefaultSharedPreferences(this);
+        reportEmail = settings.getString(UserDBConstants.USER_EMAIL,"");
 
         //        Database
         dbHandler = new BarbershopDBHandler(this);
@@ -654,6 +676,103 @@ public class StockActivity extends AppCompatActivity implements View.OnClickList
         });
 
         builder.show();
+    }
+
+
+
+    public void createReport(View view) {
+        if(!reportEmail.equals("")) {
+            if (allProducts.size() > 0) {
+                new StockActivity.GenerateReportTask(allProducts).execute();
+            } else {
+                Toast.makeText(StockActivity.this, R.string.product_list_empty, Toast.LENGTH_LONG).show();
+            }
+        }else{
+            Toast.makeText(StockActivity.this, R.string.report_filed, Toast.LENGTH_LONG).show();
+        }
+
+    }
+    @SuppressLint("StaticFieldLeak")
+    class GenerateReportTask extends AsyncTask<Void, Void, Boolean> {
+
+        ArrayList<Product> productsList;
+        ProgressDialog pd;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pd = new ProgressDialog(StockActivity.this);
+            pd.show();
+        }
+
+        public GenerateReportTask(ArrayList<Product> productList) {
+            this.productsList = productList;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            pd.dismiss();
+            if (result)
+                Toast.makeText(StockActivity.this, R.string.report_generated, Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(StockActivity.this, R.string.report_failure, Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            if (ContextCompat.checkSelfPermission(StockActivity.this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(StockActivity.this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        WRITE_EXTERNAL_STORAGE_REQUEST);
+            } else {
+
+                File folder = new File(Environment.getExternalStorageDirectory() + "/Barbershop");
+
+                boolean var = false;
+                if (!folder.exists())
+                    var = folder.mkdir();
+
+
+                final String filename = folder.toString() + "/" + "Report1.csv";
+
+                try {
+
+                    PrintWriter writer = new PrintWriter(filename, "UTF-8");
+                    writer.write('\ufeff');
+                    writer.println(" ID , Name , Quantity , Price");
+
+                    double calc = 0;
+
+                    for (Product product : productsList) {
+
+                        writer.println(
+                                product.get_id() + "," +
+                                        product.getName() + "," +
+                                        product.getQuantity() + "," +
+                                        product.getPrice());
+                    }
+//                    writer.println(
+//                            "Total" + "," +
+//                                    "" + "," +
+//                                    "" + "," +
+//                                    "" + "," +
+//                                    "" + "," +
+//                                    calc);
+
+                    writer.close();
+
+                    MailUtils.sendMail(StockActivity.this, reportEmail, filename);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+
+            return true;
+
+        }
     }
 }
 
