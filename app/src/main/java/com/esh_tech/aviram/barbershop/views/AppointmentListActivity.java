@@ -110,22 +110,29 @@ public class AppointmentListActivity extends AppCompatActivity implements View.O
 
 
                 final Customer c1 = dbHandler.getCustomerByID(allAppointments.get(i).getCustomerID());
+                final Appointment a1 = allAppointments.get(i);
                 Toast.makeText(AppointmentListActivity.this, " "+c1.getName(), Toast.LENGTH_SHORT).show();
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(AppointmentListActivity.this);
                 builder.setTitle(R.string.manageAppointment)
+                        .setMessage(getResources().getString(
+                                R.string.are_you_sure_you_whant_to_delete)+
+                                " \n"+getResources().getString(R.string.appointment)
+                                +": "+c1.getName()+" "+DateUtils.getDateAndTime(a1.getcDateAndTime())
+                        )
+                        .setNegativeButton(R.string.delete_appointment, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Toast.makeText(AppointmentListActivity.this, c1.getName()+" Delete", Toast.LENGTH_SHORT).show();
+
+                            }
+                        })
                         .setPositiveButton(R.string.gatHaircut, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Toast.makeText(AppointmentListActivity.this, c1.getName()+" Got Haircut", Toast.LENGTH_SHORT).show();
                             }
-                        }).setPositiveButton(R.string.delete_appointment, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(AppointmentListActivity.this, c1.getName()+" Delete", Toast.LENGTH_SHORT).show();
-
-                    }
-                }).create();
+                        }).create();
 
                 builder.show();
 
