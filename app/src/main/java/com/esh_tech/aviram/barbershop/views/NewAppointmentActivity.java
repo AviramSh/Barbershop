@@ -540,8 +540,6 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 //    };
 
 
-
-
     private String[] getOpenDaysAndHours(int day) {
 
         switch (day){
@@ -580,8 +578,6 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         }
     }
 
-
-
     private void setTime(Calendar appointmentCalendar) {
 
         switch (appointmentCalendar.get(Calendar.MINUTE)%10){
@@ -613,9 +609,6 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
         this.appointmentCalendar = appointmentCalendar;
     }
-
-
-
 
 
     public void saveAppointment() {
@@ -823,8 +816,6 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
         }
     }
-
-
     public void importCustomer() {
 
             Intent getCustomerIntent = new Intent(this , CustomersListActivity.class);
@@ -834,11 +825,6 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
             startActivityForResult(getCustomerIntent, REQUEST_CODE_GET_USER);
     }
-
-
-
-
-
     //Choose phone in contact and set edit text
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -875,7 +861,6 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
             }
     }
-
 
     private class MyAppointmentsAdapter extends ArrayAdapter<Appointment> {
 
