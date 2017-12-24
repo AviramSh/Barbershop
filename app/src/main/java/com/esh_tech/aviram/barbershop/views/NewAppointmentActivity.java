@@ -265,6 +265,8 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 //        theTime.setText(DateUtils.getTimeSDF(appointmentCalendar.getTime()));
 
     }
+
+
     private void populateAppointment() {
 //
 //        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy \n EEEE", Locale.getDefault());
@@ -326,7 +328,9 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
                 Appointment appointment = allAppointments.get(position);
                 if(customerProfile.getGender()==1) {
                     appointment.setHaircutPrice(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_PRICE,0));
+                    appointment.setHaircutTime(settings.getInt(USER_MALE_HAIRCUT_TIME,45));
                 }else{
+                    appointment.setHaircutTime(settings.getInt(USER_FEMALE_HAIRCUT_TIME,45));
                     appointment.setHaircutPrice(settings.getInt(UserDBConstants.USER_FEMALE_HAIRCUT_PRICE,0));
                 }
                 appointment.setCustomerID(customerProfile.get_id());
@@ -658,22 +662,24 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         newAppointment.setcDateAndTime(appointmentCalendar);
 
 
-//                TODO Schedule customer test with DB
-        if(!dbHandler.isCustomerSchedule(newAppointment)&&
-                dbHandler.testIfAppointmentAvailable(this,newAppointment)){
+        if(!dbHandler.isCustomerSchedule(newAppointment)){
+            if(dbHandler.testIfAppointmentAvailable(this,newAppointment)){
 
-            if (dbHandler.addAppointment(newAppointment)) {
-                //                Remainder Sms Handler
-                if (customerProfile.getRemainder() == 1) {
-                    setRemainder();
-                    Toast.makeText(this, R.string.remainder_saved, Toast.LENGTH_SHORT).show();
+                if (dbHandler.addAppointment(newAppointment)) {
+                    //                Remainder Sms Handler
+                    if (customerProfile.getRemainder() == 1) {
+                        setRemainder();
+                        Toast.makeText(this, R.string.remainder_saved, Toast.LENGTH_SHORT).show();
+                    }
+                    Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
+                    this.finish();
+
+                } else {
+                    Toast.makeText(this, R.string.failedToSave, Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
-                this.finish();
-
-            } else {
-                Toast.makeText(this, R.string.failedToSave, Toast.LENGTH_SHORT).show();
             }
+        }else{
+            Toast.makeText(this, R.string.customer_is_schedule, Toast.LENGTH_SHORT).show();
         }
     }
 
