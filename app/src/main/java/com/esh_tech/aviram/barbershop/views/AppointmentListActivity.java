@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -93,12 +94,24 @@ public class AppointmentListActivity extends AppCompatActivity implements View.O
 //        Connect list view
         lvAppointment = (ListView) findViewById(R.id.lvAppointment);
 
+
+
 //        fill components
         populateAppointment();
 
 //        Connect adapter with custom view
         appointmentAdapter = new MyAppointmentsAdapter(this, R.layout.custom_appointment_row, allAppointments);
         lvAppointment.setAdapter(appointmentAdapter);
+        lvAppointment.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(AppointmentListActivity.this, " "+i, Toast.LENGTH_SHORT).show();
+
+
+
+                return true;
+            }
+        });
     }
 
     @Override
