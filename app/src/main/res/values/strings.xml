@@ -265,6 +265,7 @@
     <string name="product_list_empty">Product list empty.</string>
     <string name="delete_appointment">Delete Appointment</string>
     <string name="today_appointments">Today Appointments</string>
+    <string name="deleted">Deleted</string>
 
 
     <string-array name="spinner_hours">

@@ -415,7 +415,17 @@ public class BarbershopDBHandler {
         return false;
 
     }
+    public boolean deleteAppointmentById(int id) {
 
+        if(deleteAppointmentRemainderById(id)){
+            Log.d(TAG,"Remainder was deleted.");
+        }
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        return db.delete(AppointmentsDBConstants.APPOINTMENTS_TABLE_NAME,
+                AppointmentsDBConstants.APPOINTMENT_ID+" = "+id,null)>0;
+    }
     public Appointment getAppointmentById(int appointment_id) {
         ArrayList<Appointment>appointments= getAllAppointments(Calendar.getInstance());
 
@@ -1365,12 +1375,18 @@ public class BarbershopDBHandler {
         messagesCursor.close();
         return messagesList;
     }
-
     public boolean deleteRemainderById(int id) {
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         return db.delete(MessageDBConstants.MESSAGES_TABLE_NAME,
                 MessageDBConstants.MESSAGES_ID+" = "+id,null)>0;
+    }
+    public boolean deleteAppointmentRemainderById(int id) {
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        return db.delete(MessageDBConstants.MESSAGES_TABLE_NAME,
+                MessageDBConstants.APPOINTMENT_ID+" = "+id,null)>0;
     }
 }

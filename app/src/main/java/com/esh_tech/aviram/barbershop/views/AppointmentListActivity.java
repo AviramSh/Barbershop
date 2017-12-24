@@ -123,14 +123,20 @@ public class AppointmentListActivity extends AppCompatActivity implements View.O
                         .setNegativeButton(R.string.delete_appointment, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Toast.makeText(AppointmentListActivity.this, c1.getName()+" Delete", Toast.LENGTH_SHORT).show();
-
+                                if(dbHandler.deleteAppointmentById(a1.get_id())) {
+                                    Toast.makeText(AppointmentListActivity.this, c1.getName() + " " +
+                                            getResources().getString(R.string.deleted), Toast.LENGTH_SHORT).show();
+                                    populateAppointment();
+                                }
                             }
                         })
                         .setPositiveButton(R.string.gatHaircut, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Toast.makeText(AppointmentListActivity.this, c1.getName()+" Got Haircut", Toast.LENGTH_SHORT).show();
+                                a1.setTackAnHaircut(1);
+                                dbHandler.updateAppointment(a1);
+                                populateAppointment();
                             }
                         }).create();
 
