@@ -102,12 +102,12 @@ public class MJobExecuter extends AsyncTask <Void,Void,String>{
                     sendMessage += context.getResources().getString(R.string.system_sms_1_add_name) +" "+
                             customerProfile.getName() +" "+
                             context.getResources().getString(R.string.system_sms_2_add_time) +": "+
-                            DateUtils.getDateAndTime(index.getExecute_time()) +" "+
+                            DateUtils.getDateAndTime(dbHandler.getAppointmentById(index.getAppointment_id()).getcDateAndTime()) +" "+
                             context.getResources().getString(R.string.system_sms_3add_business) +" "+
                             settings.getString(UserDBConstants.USER_BUSINESS_NAME, ".");
                 } else {
                     logMessage += " custom message ," ;
-                    sendMessage += settings.getString(UserDBConstants.USER_DEFAULT_SMS, "");
+                    sendMessage += settings.getString(UserDBConstants.USER_DEFAULT_SMS, "Haircut appointment.");
                 }
 
                 SmsManager sms = SmsManager.getDefault();

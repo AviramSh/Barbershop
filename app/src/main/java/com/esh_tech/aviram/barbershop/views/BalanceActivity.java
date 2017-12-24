@@ -424,10 +424,10 @@ public class BalanceActivity extends AppCompatActivity implements View.OnClickLi
                                         customer.getBill() + "," +
                                         DateUtils.setCalendarToDB(appointment.getcDateAndTime()) + "," +
                                         appointment.getHaircutPrice());
-                        calc += 0;appointment.getHaircutPrice();
+                        calc +=appointment.getHaircutPrice();
                     }
                     writer.println(
-                            "" + "," +
+                            "Total" + "," +
                                     "" + "," +
                                     "" + "," +
                                     "" + "," +
