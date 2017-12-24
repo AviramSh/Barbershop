@@ -94,25 +94,33 @@ public class MJobExecuter extends AsyncTask <Void,Void,String>{
                 logMessage = "Customer Name: "+customerProfile.getName();
 
                 String sendMessage = "";
+                String theDate = "";
+                try {
+                    theDate +=DateUtils.getDateAndTime(dbHandler.getAppointmentById(index.getAppointment_id()).getcDateAndTime());
 
-                if (settings.getBoolean(SharedPreferencesConstants.SYSTEM_DEFAULT_SMS_IS_CHECKED, true)) {
+                    if (settings.getBoolean(SharedPreferencesConstants.SYSTEM_DEFAULT_SMS_IS_CHECKED, true)) {
 
-                    logMessage += " Default message ," ;
+                        logMessage += " Default message ," ;
 
-                    sendMessage += context.getResources().getString(R.string.system_sms_1_add_name) +" "+
-                            customerProfile.getName() +" "+
-                            context.getResources().getString(R.string.system_sms_2_add_time) +": "+
-                            DateUtils.getDateAndTime(dbHandler.getAppointmentById(index.getAppointment_id()).getcDateAndTime()) +" "+
-                            context.getResources().getString(R.string.system_sms_3add_business) +" "+
-                            settings.getString(UserDBConstants.USER_BUSINESS_NAME, ".");
-                } else {
-                    logMessage += " custom message ," ;
-                    sendMessage += settings.getString(UserDBConstants.USER_DEFAULT_SMS, "Haircut appointment.");
+                        sendMessage += context.getResources().getString(R.string.system_sms_1_add_name) +" "+
+                                customerProfile.getName() +" "+
+                                context.getResources().getString(R.string.system_sms_2_add_time) +": "+
+                                theDate +" "+
+                                context.getResources().getString(R.string.system_sms_3add_business) +" "+
+                                settings.getString(UserDBConstants.USER_BUSINESS_NAME, ".");
+                    } else {
+                        logMessage += " custom message ," ;
+                        sendMessage += settings.getString(UserDBConstants.USER_DEFAULT_SMS, "Haircut appointment.");
+                    }
+
+                    SmsManager sms = SmsManager.getDefault();
+
+                    if(!customerProfile.getPhone().equals("")&&customerProfile.getPhone()!=null)
+                        sms.sendTextMessage(customerProfile.getPhone(), null, sendMessage, sentPI, deliveredPI);
+                }catch (Exception e){
+                    theDate = "";
                 }
 
-                SmsManager sms = SmsManager.getDefault();
-                if(!customerProfile.getPhone().equals("")&&customerProfile.getPhone()!=null)
-                    sms.sendTextMessage(customerProfile.getPhone(), null, sendMessage, sentPI, deliveredPI);
 
 //                SendMail sm = new SendMail(
 //                        context, customerProfile.getEmail(), context.getResources().getString(R.string.emailSubject), sendMessage);
