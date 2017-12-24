@@ -246,7 +246,6 @@ public class BarbershopDBHandler {
 
 
     public boolean addAppointment(Appointment appointment){
-//          TODO Check why NewAppointmentActivity not saving guest appointment
         if(!testIfAppointmentAvailable(appointment) ||
                 isCustomerSchedule(appointment)){
             return false;

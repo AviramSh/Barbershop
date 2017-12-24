@@ -34,8 +34,6 @@ public class BarbershopActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void init() {
-//        TODO add change settings with Shared preferences
-//        TODO need to convert shared preferences Key Value in registration
 
         settings = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -81,7 +79,7 @@ public class BarbershopActivity extends AppCompatActivity implements View.OnClic
     }
 
     private boolean saveBusinessData() {
-//                TODO Save data in shared Preferences is user want to save data
+
 
         if(businessName.getText().toString().equals("")||
                 businessPhone.getText().toString().equals("")||

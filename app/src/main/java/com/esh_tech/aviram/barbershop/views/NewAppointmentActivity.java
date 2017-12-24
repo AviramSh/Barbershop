@@ -136,7 +136,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         allAppointments = new ArrayList<>();
 
         appointmentCalendar = Calendar.getInstance();
-        appointmentCalendar.add(Calendar.DAY_OF_MONTH,1);
+//        appointmentCalendar.add(Calendar.DAY_OF_MONTH,1);
 
         customerProfile = dbHandler.getCustomerByID(1);
         customerProfile.setName(getResources().getString(R.string.guest));
@@ -290,9 +290,16 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         String[] workTime = getOpenDaysAndHours(appointmentCalendar.get(Calendar.DAY_OF_WEEK));
 
         if(workTime!=null && workTime.length > 3) {
-            allAppointments = dbHandler.getTodayFreeAppointmentsList(appointmentCalendar,
-                    Integer.parseInt(workTime[0]),Integer.parseInt(workTime[1]),
-                    Integer.parseInt(workTime[2]),Integer.parseInt(workTime[3]));
+            if(DateUtils.getOnlyDate(Calendar.getInstance()).equals(DateUtils.getOnlyDate(appointmentCalendar))) {
+                allAppointments = dbHandler.getTodayFreeAppointmentsList(appointmentCalendar,
+                        appointmentCalendar.get(Calendar.HOUR_OF_DAY), appointmentCalendar.get(Calendar.MINUTE),
+                        Integer.parseInt(workTime[2]), Integer.parseInt(workTime[3]));
+            }else{
+
+                allAppointments = dbHandler.getTodayFreeAppointmentsList(appointmentCalendar,
+                        Integer.parseInt(workTime[0]),Integer.parseInt(workTime[1]),
+                        Integer.parseInt(workTime[2]),Integer.parseInt(workTime[3]));
+            }
         }
 //        appointmentAdapter.notifyDataSetChanged();
         //        Connect adapter with custom view
