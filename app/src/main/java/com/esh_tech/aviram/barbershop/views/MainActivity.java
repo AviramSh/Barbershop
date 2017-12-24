@@ -353,51 +353,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         Appointment appointment = allAppointments.get(position);
 
-
-                        if(appointment != null) {
-                            //                    purchase.setAppointmentID(appointment.get_id());
-                            //                    purchase.setCustomerID(appointment.getCustomerID());
-                            //                    purchase.setPrice(appointment.getHaircutPrice());//
-                            //                    if (customer != null) {
-                            //                        settings = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-                            //
-                            //                        if(customer.getGender()==1){
-                            //                            purchase.setPrice(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_PRICE,0));
-                            //
-                            //                        }else{
-                            //                            purchase.setPrice(settings.getInt(UserDBConstants.USER_FEMALE_HAIRCUT_PRICE,0));
-                            //                        }
-                            //                        if(customer.getName().equals(getResources().getString(R.string.guest))){
-                            //                            dbHandler.deleteCustomerById(customer.get_id());
-                            //                            Toast.makeText(MainActivity.this, "Delete :"+R.string.guest, Toast.LENGTH_SHORT).show();
-                            //                        }
-                            //                    }
-                            //                Need to update database
-                            if (haircutAndFee[0]){
-                                appointment.setTackAnHaircut(1);
-                            }
-
-                            if(!haircutAndFee[1]) {
-                                if(customer.getGender()==1) {
-                                    double fee = customer.getBill() - settings.getInt(USER_MALE_HAIRCUT_PRICE, 0);
-                                    customer.setBill(fee);
-                                    appointment.setHaircutPrice(fee);
-                                }else{
-                                    double fee = customer.getBill() - settings.getInt(USER_FEMALE_HAIRCUT_PRICE, 0);
-                                    customer.setBill(fee);
-                                    appointment.setHaircutPrice(fee);
+                        if(haircutAndFee[0]||haircutAndFee[1]) {
+                            if (appointment != null) {
+                                //                    purchase.setAppointmentID(appointment.get_id());
+                                //                    purchase.setCustomerID(appointment.getCustomerID());
+                                //                    purchase.setPrice(appointment.getHaircutPrice());//
+                                //                    if (customer != null) {
+                                //                        settings = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                                //
+                                //                        if(customer.getGender()==1){
+                                //                            purchase.setPrice(settings.getInt(UserDBConstants.USER_MALE_HAIRCUT_PRICE,0));
+                                //
+                                //                        }else{
+                                //                            purchase.setPrice(settings.getInt(UserDBConstants.USER_FEMALE_HAIRCUT_PRICE,0));
+                                //                        }
+                                //                        if(customer.getName().equals(getResources().getString(R.string.guest))){
+                                //                            dbHandler.deleteCustomerById(customer.get_id());
+                                //                            Toast.makeText(MainActivity.this, "Delete :"+R.string.guest, Toast.LENGTH_SHORT).show();
+                                //                        }
+                                //                    }
+                                //                Need to update database
+                                if (haircutAndFee[0]) {
+                                    appointment.setTackAnHaircut(1);
                                 }
 
+                                if (!haircutAndFee[1]) {
+                                    if (customer.getGender() == 1) {
+                                        double fee = customer.getBill() - settings.getInt(USER_MALE_HAIRCUT_PRICE, 0);
+                                        customer.setBill(fee);
+                                        appointment.setHaircutPrice(fee);
+                                    } else {
+                                        double fee = customer.getBill() - settings.getInt(USER_FEMALE_HAIRCUT_PRICE, 0);
+                                        customer.setBill(fee);
+                                        appointment.setHaircutPrice(fee);
+                                    }
 
-                                if(dbHandler.updateCustomer(customer))
-                                    Log.d(TAG,"Failed to update customer bill");
+
+                                    if (dbHandler.updateCustomer(customer))
+                                        Log.d(TAG, "Failed to update customer bill");
+                                }
+
+                                Purchase purchase = new Purchase(appointment);
+                                if (dbHandler.addPurchase(purchase)) {
+                                    Log.d(TAG, "Purchase saved:");
+                                } else Log.d(TAG, "Purchase Unsaved:");
+
                             }
-
-                            Purchase purchase = new Purchase(appointment);
-                            if(dbHandler.addPurchase(purchase)){
-                                Log.d(TAG,"Purchase saved:");
-                            }else Log.d(TAG,"Purchase Unsaved:");
-
                         }
 
 

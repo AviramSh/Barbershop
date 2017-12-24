@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/chooseDate"
-                android:textSize="18sp"
+                style="@style/new_appointment_title_item"
                 app:layout_constraintBaseline_toBaselineOf="@+id/btDate"
                 app:layout_constraintHorizontal_bias="0.538"
                 app:layout_constraintLeft_toRightOf="@+id/btDate"
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="18sp"
+                style="@style/new_appointment_title_item"
                 android:text="@string/opening_hours"/>
         </LinearLayout>
 
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="@string/customerSearch"
-            android:textSize="18sp"
+            style="@style/new_appointment_title_item"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="@+id/linearLayout11"
             app:layout_constraintRight_toRightOf="@+id/linearLayout11"
@@ -116,9 +116,9 @@
 
         </LinearLayout>
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            style="@style/new_appointment_title_item"
             android:padding="10dp"
             android:text="@string/choose_appointment"
             />

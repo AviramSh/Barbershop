@@ -136,6 +136,18 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
         allAppointments = new ArrayList<>();
 
         appointmentCalendar = Calendar.getInstance();
+
+        String[] workTime = getOpenDaysAndHours(appointmentCalendar.get(Calendar.DAY_OF_WEEK));
+
+        if (workTime != null) {
+            appointmentCalendar.set(Calendar.HOUR_OF_DAY,Integer.parseInt(workTime[0]));
+            appointmentCalendar.set(Calendar.MINUTE,Integer.parseInt(workTime[1]));
+            appointmentCalendar.set(Calendar.SECOND,0);
+        }
+        if(Calendar.getInstance().after(appointmentAdapter)){
+            appointmentCalendar = Calendar.getInstance();
+        }
+
 //        appointmentCalendar.add(Calendar.DAY_OF_MONTH,1);
 
         customerProfile = dbHandler.getCustomerByID(1);
@@ -291,6 +303,7 @@ public class NewAppointmentActivity extends AppCompatActivity implements View.On
 
         if(workTime!=null && workTime.length > 3) {
             if(DateUtils.getOnlyDate(Calendar.getInstance()).equals(DateUtils.getOnlyDate(appointmentCalendar))) {
+
                 allAppointments = dbHandler.getTodayFreeAppointmentsList(appointmentCalendar,
                         appointmentCalendar.get(Calendar.HOUR_OF_DAY), appointmentCalendar.get(Calendar.MINUTE),
                         Integer.parseInt(workTime[2]), Integer.parseInt(workTime[3]));

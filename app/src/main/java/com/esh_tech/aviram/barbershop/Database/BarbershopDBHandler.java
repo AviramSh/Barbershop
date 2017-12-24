@@ -967,6 +967,11 @@ public class BarbershopDBHandler {
     //    Add Product ID(String name, int quantity, double price)
     public boolean addProduct(Product product){
 
+
+        if(getProductByName(product.getName())!=null){
+            Toast.makeText(context, R.string.product_exists, Toast.LENGTH_SHORT).show();
+            return false;
+        }
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues columnValues = new ContentValues();

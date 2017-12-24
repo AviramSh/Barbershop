@@ -23,7 +23,7 @@ public class MJobScheduler extends JobService {
             @Override
             protected void onPostExecute(String s) {
 //                Log.d(TAG,"Background Long Running Task Finished...");
-                Toast.makeText(getApplicationContext(), s+"", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), s+"", Toast.LENGTH_SHORT).show();
                 jobFinished(jobParameters,true);
             }
         };
