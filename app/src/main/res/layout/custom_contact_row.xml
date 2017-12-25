@@ -27,6 +27,7 @@
             android:id="@+id/customerNameET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:textStyle="bold|normal|italic"
             android:layout_weight="50"
             android:gravity="start"
@@ -37,7 +38,8 @@
             android:id="@+id/customerPhoneEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold|normal|italic"
+            android:textSize="18sp"
+            android:textStyle="normal|italic"
             android:layout_weight="50"
             android:gravity="left"
             android:text="@string/emptyField" />
